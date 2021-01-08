@@ -161,9 +161,17 @@ public class BoardController {
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
 		
 		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
 			mv.addObject("bList", bList)
 				.addObject("pi", pi)
 				.addObject("atList", atList)
+				.addObject("contentArr", contentArr)
+				.addObject("wiseArr", wiseArr)
 				.setViewName("BookReview");
 		}else {
 			throw new BoardException("책리뷰 게시글 전체 조회에 실패하였습니다.");

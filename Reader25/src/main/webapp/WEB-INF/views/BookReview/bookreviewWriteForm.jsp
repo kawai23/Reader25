@@ -133,7 +133,7 @@
 				<div class="title">title</div>
 				<input type="text" name="bTitle" placeholder="제목을 작성하세요">
 				<select name="cate">
-					<option selected="selected">분류</option>
+					<option selected="selected" value="null">분류</option>
 					<option value="총류">총류</option>
 					<option value="철학">철학</option>
 					<option value="종교">종교</option>
