@@ -262,7 +262,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.re") //*------------------------------------------이거 두개
-	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
+	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
@@ -273,15 +273,19 @@ public class BoardController {
 		Member member = (Member)(request.getSession().getAttribute("loginUser"));
 		String userId = member.getId();
 		b.setUserId(userId);
+		b.setCode(2);
 		
 		Attachment at = null;
+		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
+			// ! 만일 파일이 한 개 일 시
+			at.setAtcLevel(0);
+			result = bService.insertBoardAndFile(b, at);
+		}else {
+			result = bService.insertBoard(b);
 		}
-		b.setCode(2);
-		// ! 만일 파일이 한 개 일 시
-		at.setAtcLevel(0);
-		int result = bService.insertBoardAndFile(b, at);
+		
 		
 		if(result > 0) {
 			return "redirect:book.re";

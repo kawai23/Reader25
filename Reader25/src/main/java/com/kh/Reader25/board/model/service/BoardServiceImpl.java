@@ -285,6 +285,10 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
+	@Override
+	public int insertBoard(Board b) {
+		return bDAO.insertBoard(sqlSession, b);
+	}
 
 	
 }

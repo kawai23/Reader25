@@ -93,5 +93,7 @@ public interface BoardService {
 
 	int deleteBoardAndFile(int boardNo);
 
+	int insertBoard(Board b);
+
 	
 }
