@@ -22,6 +22,8 @@ public interface MemberService {
 
 	int updatePwd(HashMap<String, String> map);
 
+	int UpdateMember(Member m);
+
 
 
 }

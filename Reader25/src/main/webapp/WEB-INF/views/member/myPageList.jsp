@@ -41,9 +41,9 @@
  	  <div class="col-sm-2"></div>
 	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
 	  
-	  <img alt=" " src="">
+<!-- 	  <img src=""> -->
 	  
-	  <a  style="margin-left: 50px; color: white;">${loginUser.name }</a> <br><br>
+	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
 	  
 	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
 	  

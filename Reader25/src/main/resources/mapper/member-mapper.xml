@@ -62,6 +62,15 @@
 	</update>
 	
 	
+	<update id="UpdateMember">
+		UPDATE member SET PWD = #{ pwd } , MNAME = #{ name },
+						  GENDER = #{ gender },BIRTHDAY = #{ birthDay },EMAIL = #{ email },PHONE = #{ phone },ADDRESS = #{ address }
+						  , MBTI = #{ mbti }
+		
+		WHERE user_id = #{ id }
+	</update>
+	
+	
 	
 	
 </mapper>

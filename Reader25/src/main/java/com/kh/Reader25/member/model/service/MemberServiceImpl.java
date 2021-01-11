@@ -66,6 +66,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updatePwd(sqlSession, map);
 	}
 
+	@Override
+	public int UpdateMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.UpdateMember(sqlSession, m);
+	}
+
 
 	
 
