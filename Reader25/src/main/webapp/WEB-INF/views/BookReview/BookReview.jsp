@@ -46,7 +46,7 @@ select::-ms-expand {
 
 .search-option {
 	border: none;
-	width: 50px;
+	width: 70px;
 }
 
 #search-input {
@@ -140,6 +140,11 @@ select::-ms-expand {
 
 .title-li {
 	font-weight: bold;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	height: 18px;
+	width: 180px;
 }
 
 .tag-li {
@@ -153,8 +158,12 @@ select::-ms-expand {
 
 .wise-li {
 	font-size: 13px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	height: 15px;
+	width: 190px;
 }
-
 .paging-div {
 	width: 250px;
 	margin: auto;
@@ -209,10 +218,12 @@ select::-ms-expand {
 	<section>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option">
-					<option selected="selected">title</option>
-					<option>author</option>
-					<option>writer</option>
+				<select class="search-option" name="searchConditon">
+					<option selected="selected" value="title">title</option>
+					<option value="author">author</option>
+					<option value="book">book</option>
+					<option value="writer">writer</option>
+					<option value="content">content</option>
 				</select>
 				<input type="text" id="search-input">
 				<span class="img-span">
@@ -221,7 +232,9 @@ select::-ms-expand {
 			</div>
 			<script>
 				$('#search-icon').click(function(){
-					location.href="<%=request.getContextPath()%>/search";
+					var searchConditon = $('#searchConditon').val();
+					var searchValue = $('#search-input').val();
+					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
 				});				
 			</script>
 			<div class="sort-div">
@@ -236,30 +249,37 @@ select::-ms-expand {
 			<%
 				ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
 				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+				String[] wiseArr = (String[])request.getAttribute("wiseArr");
+				String[] contentArr = (String[])request.getAttribute("contentArr");
 			%>
-			<% for(Board b : bList){ %>
+			<% for(int i = 0; i < bList.size();i++){ %>
 				<div class="list-div">
 					<div class="img-div">
 						<%for(Attachment at: atList){%>
-							<%if(b.getBoardNo() == at.getBoardNo()){ %>
+							<%if(bList.get(i).getBoardNo() == at.getBoardNo()){ %>
 								<img class="list-img" src="resources/buploadFiles/<%=at.getAtcName()%>">
 							<%}else{ %>
 								<img class="list-img">
 							<%} %>
 						<%} %>
 					</div>
-					<input type="hidden" id="boardNo" value="<%=b.getBoardNo()%>">
+					<input type="hidden" id="boardNo" value="<%=bList.get(i).getBoardNo()%>">
 					<div class="content-div">
 						<ul class="content-ul">
-							<li class="title-li"><%=b.getbTitle()%></li>
+							<li class="title-li"><%=bList.get(i).getbTitle()%></li>
 							<li class="tag-li">
-								#<%=b.getUserId() %> 
-								<% if(b.getCate() != null){ %>
-								#<%=b.getCate() %>
+								#<%=bList.get(i).getUserId() %> 
+								<% if(!bList.get(i).getCate().equals("null")){ %>
+								#<%=bList.get(i).getCate() %>
 								<%} %>
 							</li>
-							<li class="writer-li"><%=b.getUserId() %></li>
-							<li class="wise-li">명언</li>
+							<li class="writer-li"><%=bList.get(i).getUserId() %></li>
+							<li class="wise-li">
+								<%=wiseArr[i] %>
+								<%if(wiseArr[i].equals("")){ %>
+									<%=contentArr[i] %>
+								<%} %>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -302,13 +322,13 @@ select::-ms-expand {
 			</c:forEach>
 			
 			<!-- 다음 -->
-			<c:if test="${ pi.currentPage >= pi.endPage }">
+			<c:if test="${ pi.currentPage < pi.endPage }">
 				<c:url var="next" value="${ loc }">
 					<c:param name="page" value="${ pi.currentPage + 1 }"/>
 				</c:url>
 				<a href="${next}">&gt;</a>
 			</c:if>
-			<c:if test="${pi.currentPage < pi.endPage }">
+			<c:if test="${pi.currentPage >= pi.endPage }">
 				<p>&gt;</p>
 			</c:if>
 			

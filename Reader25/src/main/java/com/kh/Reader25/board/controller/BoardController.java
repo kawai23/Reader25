@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.vo.Member;
 
@@ -258,9 +257,17 @@ public class BoardController {
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
 		
 		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
 			mv.addObject("bList", bList)
 				.addObject("pi", pi)
 				.addObject("atList", atList)
+				.addObject("contentArr", contentArr)
+				.addObject("wiseArr", wiseArr)
 				.setViewName("BookReview");
 		}else {
 			throw new BoardException("책리뷰 게시글 전체 조회에 실패하였습니다.");
@@ -359,7 +366,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.re") //*------------------------------------------이거 두개
-	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
+	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
@@ -370,15 +377,19 @@ public class BoardController {
 		Member member = (Member)(request.getSession().getAttribute("loginUser"));
 		String userId = member.getId();
 		b.setUserId(userId);
+		b.setCode(2);
 		
 		Attachment at = null;
+		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
+			// ! 만일 파일이 한 개 일 시
+			at.setAtcLevel(0);
+			result = bService.insertBoardAndFile(b, at);
+		}else {
+			result = bService.insertBoard(b);
 		}
-		b.setCode(2);
-		// ! 만일 파일이 한 개 일 시
-		at.setAtcLevel(0);
-		int result = bService.insertBoardAndFile(b, at);
+		
 		
 		if(result > 0) {
 			return "redirect:book.re";
@@ -456,6 +467,31 @@ public class BoardController {
 		}else {
 			throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
 		}
+	}
+	// 검색
+	@RequestMapping("search.re")
+	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
+								HttpServletResponse response, ModelAndView mv) {
+		String condition = request.getParameter("searcCondition");
+		String value = request.getParameter("searchValue");
+		
+		if(condition.equals("title")) {
+			sr.setTitle(value);
+		}else if(condition.equals("author")){
+			sr.setAuthor(value);
+		}else if(condition.equals("content")) {
+			sr.setContent(value);
+		}else if(condition.equals("book")) {
+			sr.setBook(value);
+		}else {
+			sr.setWriter(value);
+		}
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSearchReviewListCount(sr);
+		return mv;
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 

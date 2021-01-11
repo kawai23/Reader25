@@ -15,6 +15,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 
 @Repository("bDAO")
 public class BoardDAO {
@@ -257,6 +258,7 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
 	}
 
+
 	public int insertIn(SqlSessionTemplate sqlSession, Board b) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("boardMapper.insertIn", b);
@@ -270,6 +272,11 @@ public class BoardDAO {
 	public int seachBoardNo(SqlSessionTemplate sqlSession, Board b) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("boardMapper.seachBoardNo", b);
+	}
+
+	public int getSearchReviewListCount(SqlSessionTemplate sqlSession, SearchReview sr) {
+		return sqlSession.selectOne("boardMapper.selectSearchReviewCount", sr);
+
 	}
 
 

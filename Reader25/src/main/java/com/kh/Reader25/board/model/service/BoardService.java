@@ -10,6 +10,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 
 public interface BoardService {
 
@@ -94,11 +95,17 @@ public interface BoardService {
 
 	int deleteBoardAndFile(int boardNo);
 
+
 	int insertIn(Board b);
 
 	int insetFile(ArrayList<Attachment> atList);
 
 	int seachBoardNo(Board b);
+
+	int insertBoard(Board b);
+
+	int getSearchReviewListCount(SearchReview sr);
+
 
 	
 }

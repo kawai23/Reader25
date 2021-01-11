@@ -225,6 +225,14 @@
 		<result property="boardNo" column="BOARD_NO"/>
 	</resultMap>
 	
+	<select id="selectSearchReviewCount" parameterType="SearchReview" resultType="_int">
+		select count(*)
+		from board
+		where b_status = 'Y'
+		<if test="${}">
+		</if>
+	</select>
+	
 	<select id="getReListCount" resultType="_int">
 		select count(*)
 		from board
