@@ -1,4 +1,4 @@
-package com.kh.Reader25.member.model.vo;
+package com.kh.Reader25.naver;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
