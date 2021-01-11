@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/smartedit/js/service/HuskyEZCreator.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- jqyery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
   	section{
   		background:rgba(246, 246, 246, 1);
@@ -123,15 +126,97 @@
 		background: rgba(75, 73, 73, 1);
 		font-weight: bolder;
 	}
+	.jquery-modal blocker current {
+		visibility: none;
+	}
+	.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+	}
+	.modal-back {
+		display: none; 
+		position: fixed; 
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto; 
+		background: rgba(0, 0, 0, 0.4); 
+	}
+	.modal-close ,.modal-accept{
+		background-color: rgba(137, 18, 18, 1);
+		color:white;
+		width: 80px;
+		height: 30px;
+		border:none;
+		display:inline-block;
+		left: 40%;
+	}
+	.modal-accept{
+		background-color: rgba(85, 83, 83, 1);
+	}
+	.modal p{
+		display:inline-block;
+	}
+	.modal img{
+		position:relative;
+		top: 10px;
+	}
+	
 </style>
 </head>
 <body>
 	<%@include file="../common/menubar.jsp" %>
+	<!-- 에러 모달창 -->
+	<div class="modal-back" id="t-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>제목을 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="Close">Close</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>내용을 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="Close">Close</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="book-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>책 제목, 작가, 명언을 입력하지 않으십니까??</p>
+				<br>
+				<button class="modal-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+			$('.modal-accept').click(function(){
+				$('#write-book').submit();
+			});
+		});
+	</script>
 	<section>
 		<form action="insert.re" id="write-book" method="post" enctype="multipart/form-data" >
 			<div class="title-div">
 				<div class="title">title</div>
-				<input type="text" name="bTitle" placeholder="제목을 작성하세요">
+				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
 				<select name="cate">
 					<option selected="selected" value="null">분류</option>
 					<option value="총류">총류</option>
@@ -155,12 +240,12 @@
 				</div>
 				<div class="wise-div">
 					<img src="resources/images/bookreview/quote4.png">
-					<input name="wise" type="text" placeholder="명언을 작성해주세요">
+					<input name="wise" type="text" id="wise"placeholder="명언을 작성해주세요">
 					<img src="resources/images/bookreview/quote3.png">
 				</div>
 				<div class="tag-div">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="booktitle" placeholder="책제목">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="author" placeholder="작가">
+					<p class="tag">#</p><input type="text" class="bookInfo" name="booktitle" id="booktitle" placeholder="책제목">
+					<p class="tag">#</p><input type="text" class="bookInfo" name="author" id="author" placeholder="작가">
 				</div>
 				<div class="content-edit" style="text-align:center;">
 					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
@@ -182,8 +267,30 @@
 			});
 			$('#submit-btn').click(function(){
 				oEditors.getById["smart_edit"].exec("UPDATE_CONTENTS_FIELD",[]);
-				
-				$('#write-book').submit();
+				title = $('#bTitle').val();
+				content = $('#smart_edit').val();
+				booktitle = $('#booktitle').val();
+				author = $('#author').val();
+				wise = $('#wise').val();
+				if(title == ''){
+					event.preventDefault();
+					this.blur();
+					$('#t-modal').show();
+					$('#t-modal .modal').show();
+					return false;
+				}else if(content == '<p><br></p>'){
+					event.preventDefault();
+					this.blur();
+					$('#c-modal').show();
+					$('#c-modal .modal').show();
+				}else if(booktitle == ''|| wise == '' || author == ''){
+					event.preventDefault();
+					this.blur();
+					$('#book-modal').show();
+					$('#book-modal .modal').show();
+				}else{
+					$('#write-book').submit();
+				}
 			});
 			$('#file-img').click(function(){
 				$('#input-file')[0].click();
