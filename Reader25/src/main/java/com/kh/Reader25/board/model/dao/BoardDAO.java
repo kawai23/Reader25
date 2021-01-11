@@ -279,6 +279,12 @@ public class BoardDAO {
 
 	}
 
+	public ArrayList<Board> searchReviewList(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.searchReviewList", sr, rowBounds);
+	}
+
 
 
 

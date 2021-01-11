@@ -478,11 +478,11 @@ public class BoardController {
 		if(condition.equals("title")) {
 			sr.setTitle(value);
 		}else if(condition.equals("author")){
-			sr.setAuthor(value);
+			sr.setAuthor(value+"#작가");
 		}else if(condition.equals("content")) {
 			sr.setContent(value);
 		}else if(condition.equals("book")) {
-			sr.setBook(value);
+			sr.setBook(value +"#책제목");
 		}else {
 			sr.setWriter(value);
 		}
@@ -491,6 +491,25 @@ public class BoardController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		int listCount = bService.getSearchReviewListCount(sr);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		
+		ArrayList<Board> bList = bService.selectSearchReviewList(sr, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList);
+			mv.addObject("atList", atList)
+				.addObject("contentArr", contentArr)
+				.addObject("wiseArr", wiseArr)
+				.setViewName("BookReview");
+		}
 		return mv;
 	}
 	//책리뷰 code = 2-------------------------------------------------------------

@@ -106,6 +106,8 @@ public interface BoardService {
 
 	int getSearchReviewListCount(SearchReview sr);
 
+	ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi);
+
 
 	
 }

@@ -314,5 +314,10 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.seachBoardNo(sqlSession, b);
 	}
 
+	@Override
+	public ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi) {
+		return bDAO.searchReviewList(sqlSession,sr, pi);
+	}
+
 	
 }
