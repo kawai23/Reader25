@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.vo.Member;
 
@@ -148,30 +147,98 @@ public class BoardController {
 	//문의사항 작성 컨트롤러
 	@RequestMapping("inInsert.in")
 	public String insertInquiry(@ModelAttribute Board b,
-							@RequestParam("uploadFile") MultipartFile[] uploadFile,
+							@RequestParam("uploadFile") MultipartFile uploadFile,
 							HttpServletRequest request) {
-		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
-		if(uploadFile.length != 0) {
-			b.setCode(1); //문의사항 코드
-			for(int i = 0; i < uploadFile.length; i++ ){
-				Attachment at = saveFile2(uploadFile[i], request, 1, b.getBoardNo());
-				if(i <= uploadFile.length) {
-					at.setAtcLevel(0);
-				}else {
-					at.setAtcLevel(1);
-				}
-				atList.add(at);
-			}
-		}
-		System.out.println("atList"+atList);
-		System.out.println("getBoardNo"+b.getBoardNo());
-		int result = bService.insertBoardAndFiles(b, atList);
+		
+		int result = bService.insertIn(b);
+		System.out.println("b입니다"+b);
+		
+		int boardNo = bService.seachBoardNo(b);
+		b.setBoardNo(boardNo);
 
+		if(uploadFile != null) {//첨부파일이 있다면
+			ArrayList<Attachment> atList =  new ArrayList<Attachment>();
+			Attachment at = saveFile2(uploadFile, request, 1);
+			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
+			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
+			at.setAtcLevel(0);
+			at.setBoardNo(boardNo);
+			
+			atList.add(at);
+			System.out.println("at이쥬"+at);
+			System.out.println("atList이네"+atList);
+			
+			int resultF = bService.insetFile(atList);
+			System.out.println("atList얍"+atList);
+		}
+		
 		if(result > 0) {
-			return "redirect:inquiry.in";
+			return "redirect:notice.no";
 		}else {
 			throw new BoardException("공지사항 게시글 작성에 실패하였습니다.");
 		}
+		
+		
+	}
+	
+	public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code) {
+		
+		System.out.println("file이에요"+file);
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
+								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+		String renamePath = folder + "\\" + renameFileName;
+		Attachment at = new Attachment();
+		at.setAtcCode(code);
+		at.setAtcOrigin(file.getOriginalFilename());
+		at.setAtcName(renameFileName);
+		at.setAtcPath(savePath);
+
+		
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return at;
+	}
+	
+	public String saveInFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		//웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
+		System.out.println("file이야"+file);
+		String savePath = root + "\\inuploadRiles";
+		
+		File folder = new File(savePath);
+		
+		if(!folder.exists()) {
+			folder.mkdirs(); // 폴더가 없다면 폴더를 만들어준다.
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String atcOrigin = file.getOriginalFilename();
+		String atcName = sdf.format(new Date(System.currentTimeMillis()))
+				+ "." + atcOrigin.substring(atcOrigin.lastIndexOf(".") + 1);
+		
+		String atcPath = folder + "\\" + atcName;
+		
+		try {
+			file.transferTo(new File(atcPath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 : " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return atcName;
 	}
 	
 	// 책 리뷰 = 2 ----------------------------------------------------
@@ -190,9 +257,17 @@ public class BoardController {
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
 		
 		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
 			mv.addObject("bList", bList)
 				.addObject("pi", pi)
 				.addObject("atList", atList)
+				.addObject("contentArr", contentArr)
+				.addObject("wiseArr", wiseArr)
 				.setViewName("BookReview");
 		}else {
 			throw new BoardException("책리뷰 게시글 전체 조회에 실패하였습니다.");
@@ -291,7 +366,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.re") //*------------------------------------------이거 두개
-	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile,
+	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
@@ -302,15 +377,19 @@ public class BoardController {
 		Member member = (Member)(request.getSession().getAttribute("loginUser"));
 		String userId = member.getId();
 		b.setUserId(userId);
+		b.setCode(2);
 		
 		Attachment at = null;
+		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
+			// ! 만일 파일이 한 개 일 시
+			at.setAtcLevel(0);
+			result = bService.insertBoardAndFile(b, at);
+		}else {
+			result = bService.insertBoard(b);
 		}
-		b.setCode(2);
-		// ! 만일 파일이 한 개 일 시
-		at.setAtcLevel(0);
-		int result = bService.insertBoardAndFile(b, at);
+		
 		
 		if(result > 0) {
 			return "redirect:book.re";
@@ -388,6 +467,31 @@ public class BoardController {
 		}else {
 			throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
 		}
+	}
+	// 검색
+	@RequestMapping("search.re")
+	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
+								HttpServletResponse response, ModelAndView mv) {
+		String condition = request.getParameter("searcCondition");
+		String value = request.getParameter("searchValue");
+		
+		if(condition.equals("title")) {
+			sr.setTitle(value);
+		}else if(condition.equals("author")){
+			sr.setAuthor(value);
+		}else if(condition.equals("content")) {
+			sr.setContent(value);
+		}else if(condition.equals("book")) {
+			sr.setBook(value);
+		}else {
+			sr.setWriter(value);
+		}
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSearchReviewListCount(sr);
+		return mv;
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
@@ -818,36 +922,7 @@ public class BoardController {
 	}
 
 	
-	// 파일 이름 변경 메소드(혜진) ----------------------------------------------------
-		public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code, int boardNo) {
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "\\buploadFiles";
-			File folder = new File(savePath);
-			if(!folder.exists()) {
-				folder.mkdir();
-			}
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String originFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
-									+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
-			String renamePath = folder + "\\" + renameFileName;
-			Attachment at = new Attachment();
-			at.setAtcCode(code);
-			at.setAtcOrigin(file.getOriginalFilename());
-			at.setAtcName(renameFileName);
-			at.setAtcPath(savePath);
-			at.setBoardNo(boardNo);
-
-			
-			try {
-				file.transferTo(new File(renamePath));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return at;
-		}
+	
 
 
 	private void deleteFile(String atcName, HttpServletRequest request) {

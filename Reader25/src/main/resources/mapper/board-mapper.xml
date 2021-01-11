@@ -94,7 +94,7 @@
 				default, sysdate, sysdate, #{cate}, #{code}, #{userId})
 	</insert>
 	
-	<insert id="insertAttachment">
+	<insert id="insertAttachment" parameterType="Attachment">
 		insert into attachment
 		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
 				#{atcPath}, sysdate, default, #{boardNo})
@@ -224,6 +224,14 @@
 		<result property="atcStatus" column="ATC_STATUS"/>
 		<result property="boardNo" column="BOARD_NO"/>
 	</resultMap>
+	
+	<select id="selectSearchReviewCount" parameterType="SearchReview" resultType="_int">
+		select count(*)
+		from board
+		where b_status = 'Y'
+		<if test="${}">
+		</if>
+	</select>
 	
 	<select id="getReListCount" resultType="_int">
 		select count(*)
@@ -366,6 +374,24 @@
 		from comments
 		where board_no =#{boardNo}
 		order by com_no desc
+	</select>
+	
+	<insert id="insertIn" parameterType="Board">
+		insert into board
+		values (seq_bid.nextval, #{bTitle}, #{bContent}, default, default, default,
+				default, sysdate, sysdate, #{cate}, '1', #{userId})
+	</insert>
+	
+	<insert id="insetFile" parameterType="Attachment">
+		insert into attachment
+		values(seq_atc.nextval, '0', '1', #{atcOrigin}, #{atcName},
+				#{atcPath}, sysdate, default, #{boardNo})
+	</insert>
+	
+	<select id="seachBoardNo" resultType="_int">
+		select board_no
+		from board
+		where b_title=#{bTitle} and b_content =#{bContent} and user_id=#{userId}
 	</select>
 
 </mapper>
