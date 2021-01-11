@@ -31,6 +31,10 @@ h3 {
 	</div>
 	<div style="text-align:center">${result}</div>
 	<br>
+	<div align="center">
+		<button onclick="history.back();">이전 페이지</button>
+		<button onclick="location.href='<%= request.getContextPath() %>/'">홈으로 돌아가기</button>
+	</div>
 	
 
 </body>

@@ -16,8 +16,6 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-<!--  	<bean id="naverLoginBO" class="com.kh.Reader25.member.model.dao.NaverLoginBO" />  -->
-   <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
 	
 	<context:component-scan base-package="com.kh.Reader25"/>
 	

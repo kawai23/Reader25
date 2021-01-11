@@ -474,16 +474,22 @@ public class BoardController {
 		String condition = request.getParameter("searchConditon");
 		String value = request.getParameter("searchValue");
 		
+		int searchCate = 0;
 		if(condition.equals("title")) {
 			sr.setTitle(value);
+			searchCate = 1;
 		}else if(condition.equals("author")){
 			sr.setAuthor(value+"#작가");
-		}else if(condition.equals("content")) {
-			sr.setContent(value);
+			searchCate = 2;
 		}else if(condition.equals("book")) {
 			sr.setBook(value +"#책제목");
-		}else {
+			searchCate = 3;
+		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
+			searchCate = 4;
+		}else {
+			sr.setContent(value);
+			searchCate = 5;
 		}
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
@@ -499,6 +505,7 @@ public class BoardController {
 		if(bList != null) {
 			String[] wiseArr = new String[bList.size()];
 			String[] contentArr = new String[bList.size()];
+			
 			for(int i = 0; i < bList.size(); i++) {
 				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
 				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
@@ -507,7 +514,9 @@ public class BoardController {
 			mv.addObject("atList", atList)
 				.addObject("contentArr", contentArr)
 				.addObject("wiseArr", wiseArr)
-				.setViewName("BookReview");
+				.addObject("searchCate", searchCate)
+				.addObject("searchValue", value)
+				.setViewName("BookReviewSearch");
 		}
 		return mv;
 	}

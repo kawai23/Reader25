@@ -13,14 +13,14 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import com.kh.Reader25.member.model.vo.NaverLoginApi;
+import com.kh.Reader25.naver.NaverLoginApi;
 
 
 public class NaverLoginBO {
 
 	private final static String CLIENT_ID = "9srqfQzo1Gq6lbpcwkwF";
 	private final static String CLIENT_SECRET = "cp3ql4G3EZ";
-	private final static String REDIRECT_URI = "http://localhost:8105/Reader25/callback";
+	private final static String REDIRECT_URI = "http://localhost:8105/Reader25/callback.me";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL */
     private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
