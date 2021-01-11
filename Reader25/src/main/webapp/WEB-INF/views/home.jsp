@@ -9,5 +9,7 @@
 	<c:import url="common/menubar.jsp"></c:import>
 	<c:import url="common/mainPage.jsp"></c:import>
 	
+	
+	
 </body>
 </html>
