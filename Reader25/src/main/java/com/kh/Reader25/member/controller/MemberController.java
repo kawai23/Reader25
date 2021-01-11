@@ -286,6 +286,20 @@ public class MemberController {
 
 	}
 	
+	
+	
+	
+	@RequestMapping("myDeleteForm.me")
+	public String myDeleteForm() {
+	
+
+		
+		
+		return "deleteForm";
+		
+
+	}
+	
 	@RequestMapping("myUpdate.me")
 	public String myUpdate(@ModelAttribute Member m,@RequestParam("pwd") String pwd ,@RequestParam("newPwd2") String newPwd2 , @RequestParam("joinPostal") String post,
 			@RequestParam("joinAddress1") String address1,

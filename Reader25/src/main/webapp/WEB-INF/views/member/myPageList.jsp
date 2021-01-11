@@ -55,7 +55,7 @@
 
 				
 						<a href="myUpdateForm.me" class="list-group-item">내 정보 수정</a> 
-						<a href="#" class="list-group-item">회원 탈퇴 </a> 
+						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a> 
 						<hr>
 						
 						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
