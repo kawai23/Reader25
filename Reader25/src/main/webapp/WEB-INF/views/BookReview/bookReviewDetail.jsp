@@ -19,7 +19,22 @@
   		margin:auto;
   		min-width: 1000px;
   	}
+  	.list-info{
+  		border-bottom: 1px solid rgb(200, 200, 200);
+  		padding-top: 30px;
+  		padding-bottom: 10px;
+  		width: 80%;
+		margin:auto;
+		max-width: 1000px;
+  	}
+  	.list-info p{
+  		display:inline-block;
+  		color:rgb(100, 100, 100);
+  		margin-left: 10px;
+  	}
+  	.count-p{float:right; margin-right: 10px}
 	.bookreview-div{
+		clear:both;
 		margin-top: 20px;
 	}
 	.info{
@@ -79,47 +94,50 @@
 	#quote1{float:left;}
 	#quote2{float:right;}
 	.wise-content{display:inline-block; margin-top: 10px;}
-	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px;}
+	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);}
 	.contents>p{margin:15px;}
-	.list{
+	.list-box{
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
 		max-width: 1000px;
+		background: white;
+		border-radius: 5px;
+	}
+	.list{
+		margin: 10px;
 	}
 	.list-header{
-		background:rgba(247, 180, 94, 1);
-		padding-left: 20px;
 		height: 35px;
 		line-height: 35px;
+		border-bottom: 1px solid rgb(200, 200, 200);
 	}
 	.list-header p{
 		display:inline;
 	}
-	.list-contents{
-		background: rgba(229, 229, 229, 1);
-		padding: 10px;
-	}
 	.list-table{
-		width: 95%;
+		width: 100%;
 		border-collapse: collapse;
 		margin:auto;
 	}
+	.list-table tr{border-bottom: 1px solid rgb(240, 240, 240);}
 	.list-table tr:hover{
-		background: white;
 		cursor: pointer;
+		background: rgb(240, 240, 240);
 	}
 	.list-table td{
 		text-align: center;
+		color:gray;
 	}
-	.list-table td[class=td-left]{
-		text-align: left;
-	}
+	.list-table td[class=td-left]{text-align: left;}
+	.list-table td[class=td-right]{text-align: right; color:rgb(180, 180, 180);}
 	.paging-btn{
 		width: 200px;
+		height: 35px;
 		margin: auto;
-		margin-top: 10px;
+		padding: 0;
 		text-align: center;
+		font-size: 15px;
 	}
 	.paging-btn a, .paging-btn p{
 		display:inline-block;
@@ -131,8 +149,8 @@
 	}
 	.btns-div{
 		font-size: 18px;
+		margin-top: 10px;
 		height: 25px;
-		position: relative;
 		float: right;
 		margin-right: 10%;
 		top: -30px;
@@ -170,9 +188,8 @@
 		cursor:pointer;
 	}
 	.jquery-modal blocker current {
-	visibility: none;
-}
-
+		visibility: none;
+	}
 	.modal {
 		margin: 40% auto; 
 		padding: 20px;
@@ -234,6 +251,10 @@
 	</script>
 	
 	<section>
+		<div class="list-info">
+			<p>${ board.userId } ${board.updateDay }</p>
+			<p class="count-p">조회수 : ${ board.bCount } </p>
+		</div>
 		<div class="bookreview-div">
 			<div class="info">
 				<div class="img-div">
@@ -266,20 +287,23 @@
 				${board.bContent}
 			</div>
 		</div>
-		<div class="list">
-			<div class="list-header">
-				<p>이 책의 다른 리뷰</p>
+		<div class="list-box">
+			<div class="list">
+				<div class="list-header">
+					<p>이 책의 다른 리뷰</p>
+				</div>
+				<div class="list-contents">
+					<table class="list-table" id="reTable">
+						<!-- 리뷰 게시뮬 -->
+					</table>
+				</div>
 			</div>
-			<div class="list-contents">
-				<table class="list-table" id="reTable">
-					<!-- 리뷰 게시뮬 -->
-				</table>
+			<div class="paging-btn" id="re-paging">
+			<!-- 다른 리뷰 페이징 -->
 			</div>
 		</div>
 
-		<div class="paging-btn" id="re-paging">
-		<!-- 다른 리뷰 페이징 -->
-		</div>
+		
 		<script>
 			var reList;
 			$(function(){
@@ -345,7 +369,7 @@
 									$tdNo = $('<td>').text(reList[i].boardNo);
 									$tdTitle = $('<td class="td-left">').text(reList[i].bTitle);
 									$tdWriter = $('<td>').text(reList[i].userId);
-									$tdDate = $('<td>').text(reList[i].updateDay);
+									$tdDate = $('<td class="td-right">').text(reList[i].updateDay);
 									$tdCount = $('<td>').text(reList[i].bCount);
 									$tr.append($tdNo);
 									$tr.append($tdTitle);
@@ -362,17 +386,20 @@
 			}
 		</script>
 		
-		<div class="list">
-			<div class="list-header">
-				<p>명대사</p>
+		<div class="list-box">
+			<div class="list">
+				<div class="list-header">
+					<p>명대사</p>
+				</div>
+				<div class="list-contents">
+					<table class="list-table" id="wiseTable">
+					</table>
+				</div>
 			</div>
-			<div class="list-contents">
-				<table class="list-table" id="wiseTable">
-				</table>
+			<div class="paging-btn" id="wise-paging">
 			</div>
 		</div>
-		<div class="paging-btn" id="wise-paging">
-		</div>
+		
 		<script>
 			$(function(){
 				getWiseList(1);
@@ -431,7 +458,7 @@
 									$tdNo = $('<td>').text(wiseList[i].boardNo);
 									$tdTitle = $('<td class="td-left">').text(wiseList[i].bTitle);
 									$tdWriter = $('<td>').text(wiseList[i].userId);
-									$tdDate = $('<td>').text(wiseList[i].updateDay);
+									$tdDate = $('<td class="td-right">').text(wiseList[i].updateDay);
 									$tdCount = $('<td>').text(wiseList[i].bCount);
 									$tdWise = $('<td>').text(wiseArr[i]);
 

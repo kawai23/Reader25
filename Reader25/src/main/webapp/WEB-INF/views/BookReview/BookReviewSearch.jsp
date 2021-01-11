@@ -245,11 +245,19 @@ select::-ms-expand {
 			</div>
 			<script>
 				$('#search-icon').click(function(){
+					search();
+				});
+				$('#search-input').keydown(function(key){
+					if(key.keyCode == 13){
+						search();
+					}
+				});	
+				function search(){
 					var searchConditon = $('#searchConditon').val();
 					var searchValue = $('#search-input').val();
 					
 					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
-				});				
+				}
 			</script>
 			<div class="sort-div">
 				<h4 class="sort-h4">최신순</h4>

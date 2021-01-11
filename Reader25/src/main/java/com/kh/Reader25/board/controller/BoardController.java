@@ -274,7 +274,7 @@ public class BoardController {
 		}
 		return mv;
 	}
-	@RequestMapping("write.re")//****-------------------이거랑
+	@RequestMapping("write.re")
 	public String bookreviewWriteForm() {
 		return "bookreviewWriteForm";
 	}
@@ -365,7 +365,7 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping("insert.re") //*------------------------------------------이거 두개
+	@RequestMapping("insert.re") 
 	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
@@ -512,6 +512,7 @@ public class BoardController {
 			}
 			mv.addObject("bList", bList);
 			mv.addObject("atList", atList)
+				.addObject("pi", pi)
 				.addObject("contentArr", contentArr)
 				.addObject("wiseArr", wiseArr)
 				.addObject("searchCate", searchCate)
@@ -520,6 +521,14 @@ public class BoardController {
 		}
 		return mv;
 	}
+	//분류하기
+	@RequestMapping("sort.re")
+	public String sortBookReviewList(@RequestParam("sortValue") String sortValue) {
+		
+		
+		return "BookReview";
+	}
+	
 	//책리뷰 code = 2-------------------------------------------------------------
 
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////
