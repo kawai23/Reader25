@@ -218,7 +218,7 @@ select::-ms-expand {
 	<section>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option" name="searchConditon">
+				<select class="search-option" name="searchConditon" id="searchConditon">
 					<option selected="selected" value="title">title</option>
 					<option value="author">author</option>
 					<option value="book">book</option>
@@ -234,6 +234,7 @@ select::-ms-expand {
 				$('#search-icon').click(function(){
 					var searchConditon = $('#searchConditon').val();
 					var searchValue = $('#search-input').val();
+					
 					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
 				});				
 			</script>

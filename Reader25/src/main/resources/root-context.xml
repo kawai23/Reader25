@@ -31,6 +31,7 @@
 		<property name="maxInMemorySize" value="100000000"/>
 	</bean>
 	
+	<bean id="naverLoginBO" class="com.kh.Reader25.member.model.dao.NaverLoginBO" />
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		

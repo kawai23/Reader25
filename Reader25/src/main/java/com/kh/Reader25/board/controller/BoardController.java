@@ -390,7 +390,6 @@ public class BoardController {
 			result = bService.insertBoard(b);
 		}
 		
-		
 		if(result > 0) {
 			return "redirect:book.re";
 		}else {
@@ -472,7 +471,7 @@ public class BoardController {
 	@RequestMapping("search.re")
 	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
 								HttpServletResponse response, ModelAndView mv) {
-		String condition = request.getParameter("searcCondition");
+		String condition = request.getParameter("searchConditon");
 		String value = request.getParameter("searchValue");
 		
 		if(condition.equals("title")) {
