@@ -2,6 +2,7 @@ package com.kh.Reader25.member.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,12 +43,12 @@ public class MemberController {
 	/* NaverLoginBO */
 	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
-
 	/* NaverLoginBO */
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
 		this.naverLoginBO = naverLoginBO;
 	}
+
 	
 	//로그인 클릭시 로그인 페이지로 이동 컨트롤러
 	@RequestMapping("loginView.me")
@@ -68,19 +69,21 @@ public class MemberController {
 	}
 	
 	//네이버 로그인 성공시 callback호출 메소드
-	@RequestMapping("callback")
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
-		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-	    oauthToken = naverLoginBO.getAccessToken(session, code, state);
-	      //로그인 사용자 정보를 읽어온다.
-		apiResult = naverLoginBO.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
+		@RequestMapping(value = "/callback.me", method = { RequestMethod.GET, RequestMethod.POST })
+		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+				throws IOException {
+			System.out.println("여기는 callback");
+			OAuth2AccessToken oauthToken;
+		    oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		      //로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBO.getUserProfile(oauthToken);
+			model.addAttribute("result", apiResult);
 
-	    /* 네이버 로그인 성공 페이지 View 호출 */
-		return "callback";
-	}
+		    /* 네이버 로그인 성공 페이지 View 호출 */
+			return "redirect:home.do";
+		}
+
+
 		
 	//회원가입 후 로그인 컨트롤러
 		@RequestMapping("login.me")

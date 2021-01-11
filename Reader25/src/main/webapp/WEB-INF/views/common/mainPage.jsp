@@ -286,5 +286,6 @@ background: #C95F12;
 		    }
 		}
 	</script>
+	<div style="text-align:center">${result}</div>
 </body>
 </html>
