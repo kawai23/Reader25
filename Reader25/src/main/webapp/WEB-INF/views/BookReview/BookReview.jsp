@@ -218,10 +218,12 @@ select::-ms-expand {
 	<section>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option">
-					<option selected="selected">title</option>
-					<option>author</option>
-					<option>writer</option>
+				<select class="search-option" name="searchConditon">
+					<option selected="selected" value="title">title</option>
+					<option value="author">author</option>
+					<option value="book">book</option>
+					<option value="writer">writer</option>
+					<option value="content">content</option>
 				</select>
 				<input type="text" id="search-input">
 				<span class="img-span">
@@ -230,7 +232,9 @@ select::-ms-expand {
 			</div>
 			<script>
 				$('#search-icon').click(function(){
-					location.href="<%=request.getContextPath()%>/search";
+					var searchConditon = $('#searchConditon').val();
+					var searchValue = $('#search-input').val();
+					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
 				});				
 			</script>
 			<div class="sort-div">

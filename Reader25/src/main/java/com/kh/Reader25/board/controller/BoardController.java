@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.vo.Member;
 
@@ -400,6 +399,31 @@ public class BoardController {
 		}else {
 			throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
 		}
+	}
+	// 검색
+	@RequestMapping("search.re")
+	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
+								HttpServletResponse response, ModelAndView mv) {
+		String condition = request.getParameter("searcCondition");
+		String value = request.getParameter("searchValue");
+		
+		if(condition.equals("title")) {
+			sr.setTitle(value);
+		}else if(condition.equals("author")){
+			sr.setAuthor(value);
+		}else if(condition.equals("content")) {
+			sr.setContent(value);
+		}else if(condition.equals("book")) {
+			sr.setBook(value);
+		}else {
+			sr.setWriter(value);
+		}
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSearchReviewListCount(sr);
+		return mv;
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
