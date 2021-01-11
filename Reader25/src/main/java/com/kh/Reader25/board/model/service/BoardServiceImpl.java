@@ -286,5 +286,23 @@ public class BoardServiceImpl implements BoardService{
 		return result;
 	}
 
+	@Override
+	public int insertIn(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.insertIn(sqlSession, b);
+	}
+
+	@Override
+	public int insetFile(ArrayList<Attachment> atList) {
+		// TODO Auto-generated method stub
+		return bDAO.insetFile(sqlSession, atList);
+	}
+
+	@Override
+	public int seachBoardNo(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.seachBoardNo(sqlSession, b);
+	}
+
 	
 }

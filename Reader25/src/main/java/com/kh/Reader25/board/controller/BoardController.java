@@ -148,30 +148,98 @@ public class BoardController {
 	//문의사항 작성 컨트롤러
 	@RequestMapping("inInsert.in")
 	public String insertInquiry(@ModelAttribute Board b,
-							@RequestParam("uploadFile") MultipartFile[] uploadFile,
+							@RequestParam("uploadFile") MultipartFile uploadFile,
 							HttpServletRequest request) {
-		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
-		if(uploadFile.length != 0) {
-			b.setCode(1); //문의사항 코드
-			for(int i = 0; i < uploadFile.length; i++ ){
-				Attachment at = saveFile2(uploadFile[i], request, 1, b.getBoardNo());
-				if(i <= uploadFile.length) {
-					at.setAtcLevel(0);
-				}else {
-					at.setAtcLevel(1);
-				}
-				atList.add(at);
-			}
-		}
-		System.out.println("atList"+atList);
-		System.out.println("getBoardNo"+b.getBoardNo());
-		int result = bService.insertBoardAndFiles(b, atList);
+		
+		int result = bService.insertIn(b);
+		System.out.println("b입니다"+b);
+		
+		int boardNo = bService.seachBoardNo(b);
+		b.setBoardNo(boardNo);
 
+		if(uploadFile != null) {//첨부파일이 있다면
+			ArrayList<Attachment> atList =  new ArrayList<Attachment>();
+			Attachment at = saveFile2(uploadFile, request, 1);
+			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
+			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
+			at.setAtcLevel(0);
+			at.setBoardNo(boardNo);
+			
+			atList.add(at);
+			System.out.println("at이쥬"+at);
+			System.out.println("atList이네"+atList);
+			
+			int resultF = bService.insetFile(atList);
+			System.out.println("atList얍"+atList);
+		}
+		
 		if(result > 0) {
-			return "redirect:inquiry.in";
+			return "redirect:notice.no";
 		}else {
 			throw new BoardException("공지사항 게시글 작성에 실패하였습니다.");
 		}
+		
+		
+	}
+	
+	public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code) {
+		
+		System.out.println("file이에요"+file);
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
+								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+		String renamePath = folder + "\\" + renameFileName;
+		Attachment at = new Attachment();
+		at.setAtcCode(code);
+		at.setAtcOrigin(file.getOriginalFilename());
+		at.setAtcName(renameFileName);
+		at.setAtcPath(savePath);
+
+		
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return at;
+	}
+	
+	public String saveInFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		//웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
+		System.out.println("file이야"+file);
+		String savePath = root + "\\inuploadRiles";
+		
+		File folder = new File(savePath);
+		
+		if(!folder.exists()) {
+			folder.mkdirs(); // 폴더가 없다면 폴더를 만들어준다.
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String atcOrigin = file.getOriginalFilename();
+		String atcName = sdf.format(new Date(System.currentTimeMillis()))
+				+ "." + atcOrigin.substring(atcOrigin.lastIndexOf(".") + 1);
+		
+		String atcPath = folder + "\\" + atcName;
+		
+		try {
+			file.transferTo(new File(atcPath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 : " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return atcName;
 	}
 	
 	// 책 리뷰 = 2 ----------------------------------------------------
@@ -818,36 +886,7 @@ public class BoardController {
 	}
 
 	
-	// 파일 이름 변경 메소드(혜진) ----------------------------------------------------
-		public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code, int boardNo) {
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "\\buploadFiles";
-			File folder = new File(savePath);
-			if(!folder.exists()) {
-				folder.mkdir();
-			}
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String originFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
-									+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
-			String renamePath = folder + "\\" + renameFileName;
-			Attachment at = new Attachment();
-			at.setAtcCode(code);
-			at.setAtcOrigin(file.getOriginalFilename());
-			at.setAtcName(renameFileName);
-			at.setAtcPath(savePath);
-			at.setBoardNo(boardNo);
-
-			
-			try {
-				file.transferTo(new File(renamePath));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return at;
-		}
+	
 
 
 	private void deleteFile(String atcName, HttpServletRequest request) {

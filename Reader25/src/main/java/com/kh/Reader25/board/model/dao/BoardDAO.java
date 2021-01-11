@@ -257,6 +257,21 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
 	}
 
+	public int insertIn(SqlSessionTemplate sqlSession, Board b) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insertIn", b);
+	}
+
+	public int insetFile(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insetFile", atList);
+	}
+
+	public int seachBoardNo(SqlSessionTemplate sqlSession, Board b) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.seachBoardNo", b);
+	}
+
 
 
 

@@ -94,5 +94,11 @@ public interface BoardService {
 
 	int deleteBoardAndFile(int boardNo);
 
+	int insertIn(Board b);
+
+	int insetFile(ArrayList<Attachment> atList);
+
+	int seachBoardNo(Board b);
+
 	
 }
