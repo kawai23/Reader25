@@ -61,7 +61,16 @@
 	<!-- 토론방 작성 -->
 	<insert id="insertDiscuss">
 		INSERT INTO DISCUSS
-		VALUES(D_SEQ.NEXTVAL, #{dTitle}, #{dContent}, SYSDATE, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SEQ_ATC.CURRVAL, #{dWriter})
+		VALUES(D_SEQ.NEXTVAL, #{dTitle}, #{dContent}, SYSDATE, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+		<choose>
+			<when test="atcNo == 1">
+				SEQ_ATC.CURRVAL,
+			</when>
+			<otherwise>
+				0,
+			</otherwise>
+		</choose>
+		#{dWriter})
 	</insert>
 	
 	<!-- 토론방 상세페이지 -->
@@ -77,10 +86,12 @@
 		FROM ATTACHMENT
 		WHERE ATC_NO = #{atcNo}
 	</select>
+	
 	<!-- 토론방 파일 수정시 -->
 	<update id="updateAt">
 		UPDATE ATTACHMENT SET ATC_ORIGIN = #{atcOrigin}, ATC_NAME= #{atcName} WHERE ATC_NO=#{atcNo}
 	</update>
+	
 	<!-- 토론방 수정 -->
 	<update id="updateDiscuss">
 		UPDATE DISCUSS SET D_TITLE=#{dTitle}, D_CONTENT=#{dContent} WHERE D_NO = #{dNo}

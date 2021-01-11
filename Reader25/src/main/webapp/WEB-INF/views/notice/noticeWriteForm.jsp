@@ -293,4 +293,5 @@ section {
 
 		</script>
 	</section>
+</body>
 </html>

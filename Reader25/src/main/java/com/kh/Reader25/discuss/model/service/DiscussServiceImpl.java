@@ -20,16 +20,17 @@ public class DiscussServiceImpl  implements DiscussService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 토론방 있는지 체크
 	@Override
 	public int getListCount() {
 		return dDAO.getListCount(sqlSession);
 	}
-
+	// 토론방 전체 리스트 검색
 	@Override
 	public ArrayList<Discuss> selectList(PageInfo pi) {
 		return dDAO.selectList(sqlSession, pi);
 	}
-
+	// 토론방 작성
 	@Override
 	public int insertDiscuss(Discuss d, Attachment at) {
 		int result = 1;
@@ -41,27 +42,27 @@ public class DiscussServiceImpl  implements DiscussService{
 		}
 		return result;
 	}
-
+	// 상세페이지 게시판 검색
 	@Override
 	public Discuss selectDiscuss(int dNo) {
 		return dDAO.selectDiscussDetail(sqlSession, dNo);
 	}
-
+	// 토론방 전체 페이지 파일 가져오기
 	@Override
 	public ArrayList<Attachment> selectatList() {
 		return dDAO.selectAtList(sqlSession);
 	}
-
+	// 이미지 수정
 	@Override
 	public Attachment selectAt(int atcNo) {
 		return dDAO.selectAt(sqlSession, atcNo);
 	}
-
+	// 토론방 수정
 	@Override
 	public int updateDiscuss(Discuss d) {
 		return dDAO.updateDiscuss(sqlSession, d);
 	}
-
+	// 토론방 파일 수정
 	@Override
 	public int updateAtno(Attachment att, int no) {
 		int result = 0;
@@ -72,7 +73,7 @@ public class DiscussServiceImpl  implements DiscussService{
 		}
 		return result;
 	}
-
+	// 토론방 삭제
 	@Override
 	public int deleteDiscuss(int dNo) {
 		return dDAO.deleteDisucss(sqlSession, dNo);

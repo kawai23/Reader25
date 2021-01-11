@@ -232,6 +232,7 @@ select::-ms-expand {
 					<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
 				</span>
 			</div>
+			
 			<script>
 				$('#search-icon').click(function(){
 					location.href="<%=request.getContextPath()%>/search";

@@ -6,27 +6,39 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/smartedit/js/service/HuskyEZCreator.js"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<!-- jqyery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <style>
-section{
+section {
 	background: rgba(246, 246, 246, 1);
 	min-height: 900px;
 	width: 80%;
 	min-width: 1000px;
-	margin:auto;
+	margin: auto;
 }
+
 .header-div {
 	width: 80%;
 	margin: auto;
 	max-width: 1100px;
 }
+
 .header-div>h2 {
 	display: inline-block;
 }
-.file-div{
-	display:inline-block;
-	float:right;
-	margin-top:40px;
+
+.file-div {
+	display: inline-block;
+	float: right;
+	margin-top: 40px;
 }
+
 .file-div label {
 	display: inline-block;
 	padding: .5em .75em;
@@ -49,24 +61,27 @@ section{
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-.file-upload>img{
+
+.file-upload>img {
 	max-height: 300px;
 	max-width: 500px;
 }
-.upload-name { 
-	display: inline-block; 
-	padding: .5em .75em; /* label의 패딩값과 일치 */ 
-	font-size: 12px; 
-	line-height: normal; 
+
+.upload-name {
+	display: inline-block;
+	padding: .5em .75em; /* label의 패딩값과 일치 */
+	font-size: 12px;
+	line-height: normal;
 	vertical-align: middle;
 	background-color: #f5f5f5;
-	border: 1px solid #ebebeb; 
-	border-bottom-color: #e2e2e2; 
-	border-radius: 5px; 
-	-webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: 5px;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
 	-moz-appearance: none;
-	appearance: none; 
+	appearance: none;
 }
+
 .title-div {
 	clear: both;
 	width: 80%;
@@ -94,52 +109,119 @@ section{
 	width: 91%;
 	border: 1px solid rgba(235, 235, 235, 1);
 }
-.contents{
+
+.contents {
 	width: 80%;
 	margin: auto;
 	margin-top: 20px;
 	max-width: 1100px;
 	min-height: 500px;
 }
-#smart_edit{
-	height:500px;
+
+#smart_edit {
+	height: 500px;
 }
-.btn-div{
+
+.btn-div {
 	width: 80%;
-	max-width:1100px;
-	margin:auto;
+	max-width: 1100px;
+	margin: auto;
 }
-.btn{
+
+.btn {
 	float: right;
 	width: 100px;
 	height: 40px;
-	margin-top:20px;
+	margin-top: 20px;
 	margin-right: 10px;
 	background: rgba(255, 195, 152, 1);
 	border: none;
 }
-#submit-btn{
-	background:rgba(201, 95, 18, 1);
+
+#submit-btn {
+	background: rgba(201, 95, 18, 1);
 }
-.btn:hover{
+
+.btn:hover {
 	font-weight: bolder;
-	color:white;
+	color: white;
 	cursor: pointer;
+}
+
+.jquery-modal blocker current {
+	visibility: none;
+}
+
+.modal {
+	margin: 40% auto; 
+	padding: 20px;
+	text-align: center;
+}
+.modal-back {
+	display: none; 
+	position: fixed; 
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%;
+	overflow: auto; 
+	background: rgba(0, 0, 0, 0.4); 
+}
+.modal-close{
+	background-color: rgba(137, 18, 18, 1);
+	color:white;
+	width: 100px;
+	height: 30px;
+	border:none;
+	display:block;
+	position: relative;
+	left: 40%;
+}
+.modal p{
+	display:inline-block;
+}
+.modal img{
+	position:relative;
+	top: 10px;
 }
 </style>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
-	<section>
-	<form id="notice-form">	
+	
+	<!-- 에러 모달창 -->
+	<div class="modal-back">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>제목을 입력해 주세요</p>
+				<button class="modal-close" value="Close">Close</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+		});
+	</script>
+	
+	<section>	
+	<form id="inquiry-form" method="post" enctype="multipart/form-data" action="inInsert.in">	
 		<div class="header-div">
 			<h2>문의사항 작성</h2>
 			<div class="file-div">
 				<input class="upload-name" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
-				<input type="file" id="file-input">
+				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
 			</div>
-		</div>
+			<div class="file-upload">
+				<img src="" id="load-img">
+			</div>
+		
 			<script>
 				function loadImg(value){
 					if (value.files[0]){
@@ -166,13 +248,19 @@ section{
 						}
 					}
 				}
+				$(function(){
+					$('.modal').hide();
+				});
 			</script>
+		</div>
+		
 			<div class="title-div">
 				<div class="title">title</div>
-				<input type="text" placeholder="제목을 작성하세요">
+				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
+				<input type="hidden" name="userId" value="${ loginUser.id }">
 			</div>
 			<div class="contents">
-					<textarea name="smart_edit" id="smart_edit" style="width:100%;"></textarea>
+					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
 			</div>
 			<div class="btn-div">
 				<button id="submit-btn" class="btn">작성완료</button>
@@ -190,8 +278,18 @@ section{
 			});
 			$('#submit-btn').click(function(){
 				oEditors.getById["smart_edit"].exec("UPDATE_CONTENTS_FIELD",[]);
-				
-				$('#notice-form').submit();
+
+				// validate 검증하기
+				 var title = $('#bTitle').val()
+				 if(title == ""){
+					 event.preventDefault();
+					 this.blur();
+					 $('.modal-back').show();
+					 $('.modal').show();
+					return false;
+				}else{
+					$('#notice-form').submit();
+				}
 			});
 		</script>
 	</section>

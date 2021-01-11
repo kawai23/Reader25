@@ -136,15 +136,13 @@
 				<c:forEach var="d" items="${ dList }">
 					<tr class="dtr2">
 						<c:forEach var="at" items="${ atList }">
-							<c:choose>
-								<c:when test="${ d.atcNo == at.atcNo}">
-									<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
-								</c:when>
-								<c:otherwise>
-									<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
-								</c:otherwise>
-							</c:choose>
+							<c:if test="${ d.atcNo == at.atcNo}">
+								<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
+							</c:if>
 						</c:forEach>
+						<c:if test="${ d.atcNo == 0 }">
+							<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
+						</c:if>
 						<td><p>${ d.getdContent() }</p></td>
 					</tr>
 					<tr class="dtr">
@@ -153,18 +151,19 @@
 						<td>찬성 : ${d.getdPros()}% 중립 : ${ d.getdNeutrality() }% 반대 : ${ d.getdCons() }% 댓글참여 : ${ d.getdCount() }개</td>
 					</tr>					
 				</c:forEach>
+				
 					<!-- 페이징 처리 -->
 					<tr align="center" height="20" id="buttonTab">
 						<td colspan="6">
 							<!-- [이전] -->
 							<c:if test="${ pi.currentPage <= 1 }">
-								[이전] &nbsp;
+								[<] &nbsp;
 							</c:if>
 							<c:if test="${ pi.currentPage > 1 }">
-								<c:url var="before" value="blist.bo">
+								<c:url var="before" value="discuss.di">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
 								</c:url>
-								<a href="${ before }">[이전]</a> &nbsp;
+								<a href="${ before }">[<]</a> &nbsp;
 							</c:if>
 							
 							<!-- 페이지 -->
@@ -174,7 +173,7 @@
 								</c:if>
 								
 								<c:if test="${ p ne pi.currentPage }">
-									<c:url var="pagination" value="blist.bo">
+									<c:url var="pagination" value="discuss.di">
 										<c:param name="page" value="${ p }"/>
 									</c:url>
 									<a href="${ pagination }">${ p }</a> &nbsp;
@@ -183,13 +182,13 @@
 							
 							<!-- [다음] -->
 							<c:if test="${ pi.currentPage >= pi.maxPage }">
-								[다음]
+								[>]
 							</c:if>
 							<c:if test="${ pi.currentPage < pi.maxPage }">
-								<c:url var="after" value="blist.bo">
+								<c:url var="after" value="discuss.di">
 									<c:param name="page" value="${ pi.currentPage + 1 }"/>
 								</c:url> 
-								<a href="${ after }">[다음]</a>
+								<a href="${ after }">[>]</a>
 							</c:if>
 						</td>
 					</tr>

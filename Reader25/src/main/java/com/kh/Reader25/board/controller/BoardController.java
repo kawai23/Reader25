@@ -124,9 +124,7 @@ public class BoardController {
 		if(page != null) {
 			currentPage = page;
 		}
-		if(page == 0) {
-			currentPage = 1;
-		}
+		
 		int code = 1;
 		int listCount = bService.getListCount(code);
 		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
@@ -140,9 +138,40 @@ public class BoardController {
 		}
 		return mv;
 	}
+	
+	//문의사항 작성 페이지 컨트롤러
 	@RequestMapping("write.in")
 	public String inquiryWriteForm() {
 		return "inquiryWriteForm";
+	}
+	
+	//문의사항 작성 컨트롤러
+	@RequestMapping("inInsert.in")
+	public String insertInquiry(@ModelAttribute Board b,
+							@RequestParam("uploadFile") MultipartFile[] uploadFile,
+							HttpServletRequest request) {
+		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
+		if(uploadFile.length != 0) {
+			b.setCode(1); //문의사항 코드
+			for(int i = 0; i < uploadFile.length; i++ ){
+				Attachment at = saveFile2(uploadFile[i], request, 1, b.getBoardNo());
+				if(i <= uploadFile.length) {
+					at.setAtcLevel(0);
+				}else {
+					at.setAtcLevel(1);
+				}
+				atList.add(at);
+			}
+		}
+		System.out.println("atList"+atList);
+		System.out.println("getBoardNo"+b.getBoardNo());
+		int result = bService.insertBoardAndFiles(b, atList);
+
+		if(result > 0) {
+			return "redirect:inquiry.in";
+		}else {
+			throw new BoardException("공지사항 게시글 작성에 실패하였습니다.");
+		}
 	}
 	
 	// 책 리뷰 = 2 ----------------------------------------------------
@@ -799,6 +828,40 @@ public class BoardController {
 		}
 		return at;
 	}
+
+	
+	// 파일 이름 변경 메소드(혜진) ----------------------------------------------------
+		public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code, int boardNo) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\buploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) {
+				folder.mkdir();
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
+									+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			String renamePath = folder + "\\" + renameFileName;
+			Attachment at = new Attachment();
+			at.setAtcCode(code);
+			at.setAtcOrigin(file.getOriginalFilename());
+			at.setAtcName(renameFileName);
+			at.setAtcPath(savePath);
+			at.setBoardNo(boardNo);
+
+			
+			try {
+				file.transferTo(new File(renamePath));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return at;
+		}
+
+
 	private void deleteFile(String atcName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root+"\\buploadFiles";
@@ -808,6 +871,7 @@ public class BoardController {
 		}
 	}
 	//----------------------------------------------------------------------------
+
 	
 	
 	@RequestMapping("mBlistDelete.me")

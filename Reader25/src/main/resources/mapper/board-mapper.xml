@@ -97,7 +97,7 @@
 	<insert id="insertAttachment">
 		insert into attachment
 		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
-				#{atcPath}, sysdate, default,seq_bid.currval)
+				#{atcPath}, sysdate, default, #{boardNo})
 	</insert>
 	
 

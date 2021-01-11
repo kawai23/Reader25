@@ -39,9 +39,9 @@ public class DiscussController {
 		if(page != null) {
 			currentPage = page;
 		}
-		int code = 0;
+
 		int listCount = dService.getListCount();
-		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		ArrayList<Discuss> dList = dService.selectList(pi);
 		ArrayList<Attachment> atList = dService.selectatList();
 		if(dList != null) {
@@ -50,7 +50,7 @@ public class DiscussController {
 				.addObject("atList", atList)
 				.setViewName("discussList");
 		}else {
-			throw new DiscussException("공지사항 게시글 전체 조회에 실패하였습니다.");
+			throw new DiscussException("토론방 전체 조회에 실패하였습니다.");
 		}
 		return mv;
 	}
@@ -69,6 +69,7 @@ public class DiscussController {
 		Attachment at = null;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request);
+			d.setAtcNo(1);
 		}
 		int result = dService.insertDiscuss(d, at);
 		if(result >0) {
@@ -159,7 +160,7 @@ public class DiscussController {
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
 		String renamePath = folder + "\\" + renameFileName;
 		Attachment at = new Attachment();
-		at.setAtcOrigin(file.getOriginalFilename());
+		at.setAtcOrigin(originFileName);
 		at.setAtcName(renameFileName);
 		at.setAtcPath(savePath);
 		at.setAtcLevel(0);

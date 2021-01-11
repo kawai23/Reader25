@@ -21,7 +21,7 @@ public class DiscussDAO {
 	public ArrayList<Discuss> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int offset = pi.getBoardLimit() * (pi.getCurrentPage() -1);
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("DiscussMapper.selectList", rowBounds);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.selectList", null, rowBounds);
 	}
 
 
