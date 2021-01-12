@@ -102,28 +102,10 @@
 		<hr>
 		<div class="Argument">
 			<select id="stime">
-				<option selected>오래된순</option>
-				<option>최신순</option>
+				<option value="1" selected>오래된순</option>
+				<option value="2">최신순</option>
 			</select><br>
-			<ol id="rol">
-				<li>
-					<div class="Atext">
-						<img src="" id="people-img"><br>
-						아이디 찬성
-					</div>
-					<div class="Atext" id="text">우선 이 주제에 대해 배경지식을 깔고 갈 필요가 있다. 직업의 귀천이란 없다고들 하지만 돈을 많이 버는 직업에는 그 이유가 있다. 창문닦이 알바가 돈을 많이 번다고 합당하지 못한거 같나? 노가다 일이 돈을 많이 번다고 합당하지 못한거 같나? 그만큼의 위험수당과 생명수당이 따르고 노동에 대한 대가를 치루기 때문에 비싼 것이다. 의사도 그렇다. 하지만 돈을 많이 버는 직업이라고 해서, 공공적 성격을 띄고 있다고 해서 의사라는 직업을 공공재로만 보고 그 안에 담긴 직업으로서의 성격을 이해하지 못하고 있다고 생각이 든다. 코로나 사태를 겪으면서 의사들의 수가 부족해 보이는가? 그전에 의사들과 간호사들의 열악한 환경에 대해서는 보이지 않는가에 대해서 묻고 싶다. 당장 의사수를 늘린다고 치자. 부족한 특수 의원들을 주로 뽑아서 지역에 의무적으로 근무하게 한다고 치자. 그 의무기간이 끝난다면..? 지금 현실에서 의사수를 늘리는 것은 밑빠진 독에 물 붙는 격이다. 밑빠진 독에 물을 부을 때가 아닌, 독을 고쳐야 한다. 독을 고치고 나서 물을 붓는 행위에 대해서는 찬성한다. 그러기 위해서는 지방의사들의 처우가 개선되서 의무기간을 정해야만 지방에 인력을 확충되는게 아닌 제도적으로 전문의들의 지방행이 보편화되도록 만들어야 할 것이고, 전문적이고 특수 직종에 대해서 봉급을 늘린다든지, 워라밸을 보장하여 전문의들의 삶을 보장하는등 지원을 아끼지 않아야 할 것이다. 그후의 의사수를 늘이는 것도 전혀 늦지 않을 것이다.</div>
-					<div style="clear:both;"></div><br>
-				</li>
-				<li>
-					
-						<div class="Atext" id="text"><p>대충 반대이라는 글</p></div>
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 반대
-						</div>
-					<div style="clear:both;"></div><br>
-				</li>
-				
+			<ol id="rol"><!-- 댓글달릴부분 -->
 			</ol>
 		</div>
 			<select class="wid" id="dis">
@@ -143,6 +125,9 @@
 				$(function(){
 					getRList();
 				});
+				$('#stime').on('change', function(){
+					getRList();
+				});
 				$('#btn3').click(function(){
 					var id = $('#id').val();
 					var content = $('#area1').val();
@@ -157,12 +142,13 @@
 						}
 					});
 				});
+				
 				function getRList(){
 					var dNo = ${d.dNo};
-
+					var cho = $('#stime').val();
 					$.ajax({
 						url:"rList.di",
-						data: {dNo:dNo},
+						data: {dNo:dNo, cho:cho},
 						success: function(data){
 							console.log(data);
 							$olBody = $('#rol');
@@ -184,7 +170,7 @@
 									$div2 = $('<div class="Atext"id="text">');
 									$div3 = $('<div style="clear:both;"><br>');
 									if(data[i].rWhether == 'C'){
-									$id = $('<h3>').text(data[i].rWriter + " 반대");
+									$id = $('<h3>').text(data[i].rWriter + "님의 반대 의견");
 										$div1.append($img);
 										$div2.append($id);
 										$div2.append($rContent);
@@ -194,9 +180,9 @@
 										$olBody.append($li);
 									} else {
 										if(data[i].rWhether == 'P'){
-											$id = $('<h3>').text(data[i].rWriter + " 찬성");
+											$id = $('<h3>').text(data[i].rWriter + "님의 찬성 의견");
 										}else{
-											$id = $('<h3>').text(data[i].rWriter + " 중립");
+											$id = $('<h3>').text(data[i].rWriter + "님의 중립 의견");
 										}
 										$div1.append($img);
 										$div2.append($id);

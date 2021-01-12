@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,17 +138,34 @@
 					<tr class="dtr2">
 						<c:forEach var="at" items="${ atList }">
 							<c:if test="${ d.atcNo == at.atcNo}">
-								<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
+								<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
 							</c:if>
 						</c:forEach>
 						<c:if test="${ d.atcNo == 0 }">
-							<td><input type="hidden" value="${ d.getdNo() }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
+							<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
 						</c:if>
-						<td><p>${ d.getdContent() }</p></td>
+						<td><p>${ d.dContent }</p></td>
 					</tr>
 					<tr class="dtr">
-						<td><input type="hidden" value="${ d.getdNo() }">찬반여론</td>
-						<td>찬성 : ${d.getdPros()}% 중립 : ${ d.getdNeutrality() }% 반대 : ${ d.getdCons() }% 댓글참여 : ${ d.getdCount() }개</td>
+						<td><input type="hidden" value="${ d.dNo }">찬반여론</td>
+						<td>
+						<c:if test="${ d.dCount > 0}">
+						<c:set var="P" value="${d.dPros/(d.dPros+d.dNeutrality + d.dCons)}"/>
+						<c:set var="N" value="${d.dNeutrality/(d.dPros+d.dNeutrality + d.dCons)}"/>
+						<c:set var="C" value="${d.dCons/(d.dPros+d.dNeutrality + d.dCons)}"/>
+						<c:if test="${(P*100)+(N*100)+(C*100) != 100 }">
+								<c:if test="${d.dCons > 0 }">
+									<c:set var="C" value="${C + 0.01}"/>
+								</c:if>
+						</c:if>
+						찬성 : <fmt:formatNumber value="${P}" type="percent"/> 
+						중립 : <fmt:formatNumber value="${N}" type="percent"/>
+						반대 : <fmt:formatNumber value="${C}" type="percent"/>
+						</c:if>
+						<c:if test="${d.dCount == 0 }">
+							찬성 : 0%  중립 : 0%  반대 : 0% 
+						</c:if>
+						댓글참여 : ${ d.dCount }개</td>
 					</tr>					
 				</c:forEach>
 				
@@ -193,6 +211,7 @@
 					</tr>
 				</table>
 				<script>
+					//상세페이지이동
 					$(function(){
 						$('.dtr').mouseenter(function(){
 							$(this).css({'cursor':'pointer'});

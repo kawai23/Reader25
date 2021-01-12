@@ -166,8 +166,8 @@ public class DiscussController {
 	
 	// 댓글 리스트 불러오기
 	@RequestMapping("rList.di")
-	public void selectRList(@RequestParam("dNo") int dNo, HttpServletResponse response) {
-		ArrayList<Reply> rList = dService.selectRList(dNo); 
+	public void selectRList(@RequestParam("dNo") int dNo, @RequestParam("cho") int cho, HttpServletResponse response) {
+		ArrayList<Reply> rList = dService.selectRList(dNo, cho); 
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
 		try {

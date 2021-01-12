@@ -102,6 +102,23 @@
 		UPDATE DISCUSS SET D_STATUS='N' WHERE D_NO = #{dNo}
 	</update>
 	
+	<!-- 댓글 추가시 카운터 증가 -->
+	<update id="updateCount">
+		UPDATE DISCUSS SET D_COUNT = D_COUNT + 1,
+		<choose>
+			<when test='rWhether == "P"'>
+				D_PROS = D_PROS + 1
+			</when>
+			<when test='rWhether == "C"'>
+				D_CONS = D_CONS + 1
+			</when>
+			<otherwise>
+				D_NEUTRALITY = D_NEUTRALITY + 1
+			</otherwise>
+		</choose>
+		 WHERE D_NO = ${dNo}
+	</update>
+	
 	<!-- 댓글 추가 -->
 	<insert id="insertReply">
 		INSERT INTO RELPY 
@@ -113,6 +130,12 @@
 		SELECT *
 		FROM RELPY
 		WHERE STATUS = 'Y' AND D_NO = #{dNo}
+		<if test="cho == 1">
+			ORDER BY R_NO ASC
+		</if>
+		<if test="cho == 2">
+			ORDER BY R_NO DESC
+		</if>
 	</select>
 	
 	<!-- 댓글 리절트 셋 -->
