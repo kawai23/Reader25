@@ -69,48 +69,60 @@ public class MemberController {
 	}
 	
 	//네이버 로그인 성공시 callback호출 메소드
-		@RequestMapping(value = "/callback.me", method = { RequestMethod.GET, RequestMethod.POST })
-		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-				throws IOException {
-			System.out.println("여기는 callback");
-			OAuth2AccessToken oauthToken;
-		    oauthToken = naverLoginBO.getAccessToken(session, code, state);
+	@RequestMapping(value = "/callback.me", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException {
+		System.out.println("여기는 callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		      //로그인 사용자 정보를 읽어온다.
-			apiResult = naverLoginBO.getUserProfile(oauthToken);
-			model.addAttribute("result", apiResult);
+		apiResult = naverLoginBO.getUserProfile(oauthToken);
+		model.addAttribute("result", apiResult);
+		session.setAttribute("result", apiResult);
+		
+		//Member loginUser = new Member();
+		
+		
+		System.out.println("apiResult"+apiResult);
+		System.out.println("model"+model);
+		System.out.println("session"+session);
+		//System.out.println("loginUser"+loginUser);
 
-		    /* 네이버 로그인 성공 페이지 View 호출 */
-			return "redirect:home.do";
-		}
+		/* 네이버 로그인 성공 페이지 View 호출 */
+		return "redirect:home.do";
+	}
+	
+	
 
 
 		
 	//회원가입 후 로그인 컨트롤러
-		@RequestMapping("login.me")
-		public String login(Member m, Model model) {
+	@RequestMapping("login.me")
+	public String login(Member m, Model model, HttpSession session) {
 			//m:입력한 아이디, 비번 //model:디비에 있는 데이터
 
-			Member loginUser = mService.memberLogin(m);
+		Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
 			
+		System.out.println("session"+session);
 			
 			
 			
-			
-			if(bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
-				model.addAttribute("loginUser", loginUser);
-				return "redirect:home.do";
-			} else {
+		if(bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
+			model.addAttribute("loginUser", loginUser);
+			return "redirect:home.do";
+		} else {
 				//model.addAttribute("message", "로그인에 실패하였습니다.");
 				//return "../common/errorPage";
-				throw new MemberException("로그인에 실패했습니다.");
-			}		
-		}
+			throw new MemberException("로그인에 실패했습니다.");
+		}		
+	}
 	
 	// 로그아웃용 컨트롤러 (@SessionAttributes을 사용했을 때 가능)
 	@RequestMapping("logout.me")
-	public String logout(SessionStatus status) {
+	public String logout(SessionStatus status, HttpSession session) {
 		status.setComplete(); // 모든걸 다 없애줌
+		session.invalidate();
 				
 		return "redirect:home.do";
 	}

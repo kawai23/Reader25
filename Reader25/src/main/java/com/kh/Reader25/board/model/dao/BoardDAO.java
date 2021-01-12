@@ -2,7 +2,6 @@ package com.kh.Reader25.board.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +12,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -277,6 +277,21 @@ public class BoardDAO {
 	public int getSearchReviewListCount(SqlSessionTemplate sqlSession, SearchReview sr) {
 		return sqlSession.selectOne("boardMapper.selectSearchReviewCount", sr);
 
+	}
+
+	public int getMyPayListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		return sqlSession.selectOne("boardMapper.MyPayListCount", sc);
+	}
+
+	public ArrayList<Pay> SeachMyPayList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.SeachMyPayList",sc , rowBounds);
 	}
 
 

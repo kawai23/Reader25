@@ -10,6 +10,7 @@
 	<c:import url="common/mainPage.jsp"></c:import>
 	
 	
+
 	<script>
 	
 		$(function () {
@@ -25,5 +26,8 @@
 	
 	
 	</script>
+
+	
+
 </body>
 </html>

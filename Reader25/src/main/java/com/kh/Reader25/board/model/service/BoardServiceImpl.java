@@ -16,6 +16,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -312,6 +313,16 @@ public class BoardServiceImpl implements BoardService{
 	public int seachBoardNo(Board b) {
 		// TODO Auto-generated method stub
 		return bDAO.seachBoardNo(sqlSession, b);
+	}
+
+	@Override
+	public int getMyPayListCount(SearchCondition sc) {
+		return bDAO.getMyPayListCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<Pay> SeachMyPayList(SearchCondition sc, PageInfo pi) {
+		return bDAO.SeachMyPayList(sqlSession,sc, pi);
 	}
 
 	

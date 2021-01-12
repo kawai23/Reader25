@@ -87,9 +87,12 @@
 
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
-							<th>번호</th>
-							<th>제목</th>
-							<th>조회수</th>
+							<th>구매번호</th>
+							<th>책이름</th>
+							<th>수량</th>
+							<th>가격</th>
+							<th>결제일</th>
+							<th>결제상태</th>
 							
 							
 						 </tr>
@@ -109,14 +112,19 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
 								
 								
-								<td >${ b.boardNo }</td>
-								<td >${ b.bTitle }</td>
+								<td >${ b.pay_no }</td>
+								<td >${ b.book_name }</td>
 								
 								
-								<td >${ b.bCount }</td>
+								<td >${ b.book_v }</td>
+								<td >${ b.price }</td>
+								<td >${ b.PAY_DATE }</td>
+								<td >${ b.pay_status }</td>
+								
+								
 								<td>
 								
 							</tr>
@@ -151,8 +159,8 @@
 								</button>
 								<ul class="dropdown-menu" role="menu" id="search1" style="overflow: visible;">
 									
-									<li value="Title"><a href="#">Title</a></li>
-									<li value="내용"><a href="#">내용</a></li>
+									<li value="Title"><a href="#">번호</a></li>
+									<li value="내용"><a href="#">책이름</a></li>
 								</ul>
 							</div>
 							<!-- /btn-group -->
@@ -192,49 +200,9 @@
 				
 				
 				
-				$(function(){
-					
-					var code = ${code};
-					
-					
-					switch (code) {
-					
-					case 1:
-						
-						
-						$('#c1').addClass('active');
-						break;
-						
-					case 2:
-						$('#c2').addClass('active');
-						break;
-						
-					case 4:
-						$('#c4').addClass('active');
-						break;
-						
-					case 5:
-						$('#c5').addClass('active');
-						break;
-
-					
-					}
-					
-					
-				});
 				
-				$('#search1 li > a').on('click', function() {
-			    	
-			    	
-					   
-				    $('#Search1').text($(this).text());
-				    
-				    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
-				    // 선택된 항목 값(value) 얻기
-				    
-				    
-				    
-				});
+				
+			
 				
 				 $('#searchList').click(function() {
 			    	
@@ -242,7 +210,7 @@
 			    	
 			    	var data = '';
 			    	
-			    	var code = ${code};
+			    	
 			    		
 			    		
 			    	var searchCondition = $('#Search1').text();
@@ -252,7 +220,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
+ 		    	location.href='myPayList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -288,7 +256,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myList.me"></c:set>
+						<c:set var="loc" value="myPayList.me"></c:set>
 						
  
 				    
@@ -503,8 +471,26 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
+						
+						
+						
+						
 
 	<script>
+	
+	
+	$('#search1 li > a').on('click', function() {
+    	
+    	
+		   
+	    $('#Search1').text($(this).text());
+	    
+	    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
+	    // 선택된 항목 값(value) 얻기
+	    
+	    
+	    
+	});
 						
 						
 						
@@ -513,7 +499,7 @@
 					        	
 					        	console.log("?");
 								
-					        	var code = ${code};
+					        	
 					        	
 					        	var check = ${ !empty searchValue } ; 
 					        	
@@ -559,7 +545,7 @@
 							    	
 				 			    	
 				 			    	//console.log(select_obj);
-							    	 location.href='mBlistDelete.me?inFo='+Id + "&code=" + code+'&page='+ ${pi.currentPage}+path;
+							    	 location.href='myPayList.me?inFo='+Id + "&code=" + code+'&page='+ ${pi.currentPage}+path;
 							    	
 				 			    }else{
 							    	
@@ -567,7 +553,7 @@
 				 			    	
 				 			    	
 								    
-								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
+								    location.href='myPayList.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
 							    	
 				 			    }
 							    
