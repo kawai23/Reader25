@@ -98,7 +98,7 @@ public interface BoardService {
 
 	int insertIn(Board b);
 
-	int insetFile(ArrayList<Attachment> atList);
+	int insetFile(Attachment at);
 
 	int seachBoardNo(Board b);
 
@@ -115,6 +115,11 @@ public interface BoardService {
 	int getSearchAndSortCount(HashMap<String, String> map);
 
 	ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi);
+	
+	ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map);
+
+//	ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id);
+
 
 	
 }

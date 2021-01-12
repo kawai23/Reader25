@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.discuss.model.vo.Reply;
 
 public interface DiscussService {
 	
@@ -26,5 +27,9 @@ public interface DiscussService {
 	int updateAtno(Attachment att, int atcno);
 	// 토론방 삭제
 	int deleteDiscuss(int dNo);
+	// 댓글 추가
+	int insertReply(Reply r);
+	// 댓글 리스트 가져오기
+	ArrayList<Reply> selectRList(int dNo);
 
 }

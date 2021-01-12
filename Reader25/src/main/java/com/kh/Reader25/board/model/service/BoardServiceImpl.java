@@ -302,11 +302,7 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.insertIn(sqlSession, b);
 	}
 
-	@Override
-	public int insetFile(ArrayList<Attachment> atList) {
-		// TODO Auto-generated method stub
-		return bDAO.insetFile(sqlSession, atList);
-	}
+	
 
 	@Override
 	public int seachBoardNo(Board b) {
@@ -338,6 +334,24 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi) {
 		return bDAO.selectSearchSortList(sqlSession, map, pi);
 	}
+	
+	@Override
+	public int insetFile(Attachment at) {
+		// TODO Auto-generated method stub
+		return bDAO.insetFile(sqlSession, at);
+	}
+
+	@Override
+	public ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.selectAdminCommentList(sqlSession, map);
+	}
+
+//	@Override
+//	public ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id) {
+//		// TODO Auto-generated method stub
+//		return bDAO.selectAdminCommentList(sqlSession, boardNo, user_id);
+//	}
 
 	
 }

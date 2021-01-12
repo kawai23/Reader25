@@ -115,6 +115,7 @@ public class BoardController {
 		}
 		return mv;
 	}
+	
 	// 문의사항 = 1----------------------------------------------------
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
@@ -146,44 +147,43 @@ public class BoardController {
 	
 	//문의사항 작성 컨트롤러
 	@RequestMapping("inInsert.in")
-	public String insertInquiry(@ModelAttribute Board b,
+	public String insertInquiry(@ModelAttribute Board b, @ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							HttpServletRequest request) {
 		
 		int result = bService.insertIn(b);
-		System.out.println("b입니다"+b);
+		//System.out.println("b입니다"+b);
+		//System.out.println("uploadFile입니다"+uploadFile);
 		
 		int boardNo = bService.seachBoardNo(b);
 		b.setBoardNo(boardNo);
 
 		if(uploadFile != null) {//첨부파일이 있다면
-			ArrayList<Attachment> atList =  new ArrayList<Attachment>();
-			Attachment at = saveFile2(uploadFile, request, 1);
+			at = saveFile2(uploadFile, request, 1);
 			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
 			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
 			at.setAtcLevel(0);
 			at.setBoardNo(boardNo);
-			
-			atList.add(at);
-			System.out.println("at이쥬"+at);
-			System.out.println("atList이네"+atList);
-			
-			int resultF = bService.insetFile(atList);
-			System.out.println("atList얍"+atList);
+			//System.out.println("at이쥬"+at);
+			int resultF = bService.insetFile(at);
+			//System.out.println("at얍"+at);
+			if(resultF > 0) {
+				System.out.println("파일업로드 성공");
+			} else {
+				System.out.println("파일업로드 실패");
+			}
 		}
-		
 		if(result > 0) {
-			return "redirect:notice.no";
+			return "redirect:inquiry.in";
 		}else {
 			throw new BoardException("공지사항 게시글 작성에 실패하였습니다.");
 		}
-		
-		
 	}
 	
+	//문의사항 파일 저장 컨트롤러
 	public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code) {
 		
-		System.out.println("file이에요"+file);
+		//System.out.println("file이에요"+file);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		File folder = new File(savePath);
@@ -212,35 +212,81 @@ public class BoardController {
 		return at;
 	}
 	
-	public String saveInFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		//웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
-		System.out.println("file이야"+file);
-		String savePath = root + "\\inuploadRiles";
-		
-		File folder = new File(savePath);
-		
-		if(!folder.exists()) {
-			folder.mkdirs(); // 폴더가 없다면 폴더를 만들어준다.
+	//(4) 상세보기
+	@RequestMapping("idetail.in")
+	public ModelAndView indetailView(@RequestParam("boardNo") int boardNo,
+									@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
+		//System.out.println("boardNo입니다"+boardNo);
+		Board board = bService.selectBoard(boardNo);
+		//System.out.println("board입니다"+board);
+		ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+		//System.out.println("atList입니다"+atList);
+		Member login = (Member)session.getAttribute("loginUser");
+		//String loginUser = login.getId();
+		//System.out.println(loginUser);
+		if(board != null) {
+			mv.addObject("board", board)
+				.addObject("page", page)
+				//.addObject("loginUser", loginUser)
+				.setViewName("inquiryDetail");
+			if(atList != null) {
+				mv.addObject("atList", atList);
+			}
+		}else {
+			throw new BoardException("문의사항 상세보기가 실패하였습니다.");
 		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String atcOrigin = file.getOriginalFilename();
-		String atcName = sdf.format(new Date(System.currentTimeMillis()))
-				+ "." + atcOrigin.substring(atcOrigin.lastIndexOf(".") + 1);
-		
-		String atcPath = folder + "\\" + atcName;
-		
-		try {
-			file.transferTo(new File(atcPath));
-		} catch (Exception e) {
-			System.out.println("파일 전송 에러 : " + e.getMessage());
-			e.printStackTrace();
-		}
-		
-		return atcName;
+		return mv;
 	}
 	
+	//문의사항 관리자 댓글 작성
+	@RequestMapping("addAdminComments.in")
+	@ResponseBody
+	public String addAdminComments(@ModelAttribute Comments c, @RequestParam("comment") String comment, HttpSession session) {
+		//System.out.println("ok");
+		//System.out.println("C1:"+c);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String userId = loginUser.getId();
+			
+		c.setUserId(userId);
+		c.setComment(comment);
+			 
+		//System.out.println("C2:"+c);
+			
+		int result = bService.insertComments(c);
+		int upCount = bService.updateCount(c);
+			
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new BoardException("댓글 등록에 실패하였습니다.");
+		}
+	}
+	
+	//관리자 댓글 불러오기
+	@RequestMapping("aCList.in")
+	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
+		System.out.println("boardNo입니다"+boardNo);
+		System.out.println("user_id입니다"+userId);
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("boardNo", boardNo);
+		map.put("userId", userId);
+		System.out.println("map입니다"+map);
+		
+		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
+		System.out.println("aCList입니다"+aCList);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(aCList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
 	// 책 리뷰 = 2 ----------------------------------------------------
 	@RequestMapping("book.re")
 	public ModelAndView bookreviewList(@RequestParam(value="page", required=false) Integer page,
