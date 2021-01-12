@@ -329,5 +329,15 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.selectSortList(sqlSession, sortValue, pi);
 	}
 
+	@Override
+	public int getSearchAndSortCount(HashMap<String, String> map) {
+		return bDAO.getSearchAndSortCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi) {
+		return bDAO.selectSearchSortList(sqlSession, map, pi);
+	}
+
 	
 }

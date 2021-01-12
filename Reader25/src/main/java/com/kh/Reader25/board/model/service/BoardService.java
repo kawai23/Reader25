@@ -112,6 +112,9 @@ public interface BoardService {
 
 	ArrayList<Board> selectSortList(String sortValue, PageInfo pi);
 
+	int getSearchAndSortCount(HashMap<String, String> map);
+
+	ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi);
 
 	
 }

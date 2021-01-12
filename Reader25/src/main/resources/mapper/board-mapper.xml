@@ -268,6 +268,66 @@
 		order by board_no desc
 	</select>
 	
+	<select id="getSearchAndSortCount" resultType="_int">
+		select count(*)
+		from board
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="selectSearchSortList" parameterType="SearchReview" resultMap="boardResultSet">
+		select *
+		from board
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
 	<select id="getSortListCount" resultType="_int">
 		select count(*)
 		from board

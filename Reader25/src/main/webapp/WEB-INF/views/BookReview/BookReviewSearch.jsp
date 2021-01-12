@@ -83,7 +83,7 @@ select::-ms-expand {
 	cursor: pointer;
 }
 
-#like-h4 {
+#like-sort {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	padding-left: 5px;
@@ -260,11 +260,42 @@ select::-ms-expand {
 				}
 			</script>
 			<div class="sort-div">
-				<h4 class="sort-h4">최신순</h4>
-				<h4 class="sort-h4" id="like-h4">좋아요</h4>
-				<h4 class="sort-h4">북마크</h4>
+				<% String sortValue = (String)request.getAttribute("sortValue"); %>
+				<% if(sortValue != null){ %>
+					<% if(sortValue.equals("lated")){ %>
+						<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;" >최신순</h4>
+					<%}else{ %>
+						<h4 class="sort-h4" id="lated-sort">최신순</h4>
+					<%} %>
+					<% if(sortValue.equals("like")){ %>
+						<h4 class="sort-h4" id="like-sort" style="font-weight: bolder;">좋아요</h4>
+					<%}else{ %>			
+						<h4 class="sort-h4" id="like-sort">좋아요</h4>
+					<%} %>
+					<% if(sortValue.equals("count")){ %>
+						<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
+					<%}else{ %>
+						<h4 class="sort-h4" id="count-sort">조회순</h4>
+					<%} %>
+				<%}else{ %>
+					<h4 class="sort-h4" id="lated-sort">최신순</h4>
+					<h4 class="sort-h4" id="like-sort">좋아요</h4>
+					<h4 class="sort-h4" id="count-sort">조회순</h4>
+				<%} %>
 			</div>
 		</div>
+		
+		<script>
+			$('#lated-sort').click(function(){sort('lated');});
+			$('#like-sort').click(function(){sort('like');});
+			$('#count-sort').click(function(){sort('count');});
+			function sort(value){
+				var searchConditon = $('#searchConditon').val();
+				var searchValue = $('#search-input').val();
+				
+				location.href="searchsort.re?sortValue=" + value +"&searchConditon=" + searchConditon +"&searchValue=" + searchValue;;
+			}
+		</script>
 		
 		<div class="list-all-div">
 			

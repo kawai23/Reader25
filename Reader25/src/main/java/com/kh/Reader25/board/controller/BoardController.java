@@ -578,7 +578,73 @@ public class BoardController {
 		}
 		return mv;
 	}
-	
+	// 검색 후 분류하기
+	@RequestMapping("searchsort.re")
+	public ModelAndView searchAndSortReview(ModelAndView mv, @RequestParam("sortValue") String sortValue,
+											 HttpServletRequest request, @ModelAttribute SearchReview sr) {
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		String condition = request.getParameter("searchConditon");
+		String value = request.getParameter("searchValue");
+		int searchCate = 0;
+		if(condition.equals("title")) {
+			sr.setTitle(value);
+			searchCate = 1;
+		}else if(condition.equals("author")){
+			sr.setAuthor(value+"#작가");
+			searchCate = 2;
+		}else if(condition.equals("book")) {
+			sr.setBook(value +"#책제목");
+			searchCate = 3;
+		}else if(condition.equals("writer")) {
+			sr.setWriter(value);
+			searchCate = 4;
+		}else {
+			sr.setContent(value);
+			searchCate = 5;
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("sortValue", sortValue);
+		map.put("writer",sr.getWriter());
+		map.put("content",sr.getContent());
+		map.put("book",sr.getBook());
+		map.put("author",sr.getAuthor());
+		map.put("title",sr.getTitle());
+		
+		int listCount = bService.getSearchAndSortCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		ArrayList<Board> bList = bService.selectSearchSortList(map, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
+		System.out.println(listCount);
+		System.out.println(bList);
+		
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList)
+			  .addObject("atList", atList)
+			  .addObject("pi", pi)
+			  .addObject("contentArr", contentArr)
+			  .addObject("wiseArr", wiseArr)
+			  .addObject("sortValue", sortValue)
+			  .addObject("searchCate", searchCate)
+			  .addObject("searchValue", value)
+			  .setViewName("BookReviewSearch");
+		}else {
+			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");
+		}
+		return mv;
+	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////

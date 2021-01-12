@@ -97,6 +97,15 @@
 	.wise-content{display:inline-block; margin-top: 10px;}
 	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);}
 	.contents>p{margin:15px;}
+	.comment-box{
+		width: 80%;
+		margin:auto;
+		margin-top:10px;
+		max-width: 1000px;
+		border-bottom: 1px solid rgb(200, 200, 200);
+		padding-bottom: 20px;
+	}
+	*{border: 1px solid pink;}
 	.list-box{
 		width: 80%;
 		margin:auto;
@@ -330,6 +339,10 @@
 					<span class="info" id="author">${booktitle }</span>
 					<p class="tag">#작가</p>
 					<span class="info" id="sort">${author }</span>
+					<c:if test="${board.cate ne null}">
+						<p class="tag">#분야</p>
+						<span class="info" id="cate">${board.cate }</span>
+					</c:if>
 					<br>
 					<p class="tag">#글쓴이</p>
 					<span class="info" id="sort">${board.userId }</span>
@@ -346,6 +359,25 @@
 				${board.bContent}
 			</div>
 		</div>
+		
+		<div class="comment-box">
+			<div class="comment-info">
+				
+			</div>
+		</div>
+		<script>
+		 $(function(){
+			 getComments();
+		 })
+		 function getComments(){
+			 var boardNo = ${boardNo};
+			 
+			 $.ajax({
+				 
+			 });
+		 }
+		</script>
+		 
 		<div class="list-box">
 			<div class="list">
 				<div class="list-header">
@@ -410,7 +442,6 @@
 						//2) 게시물리스트 넣기
 						reList = data.reList;
 						
-						
 						$reTable = $('#reTable');
 						$reTable.html('');
 						if(reList.length <= 1){
@@ -440,6 +471,7 @@
 								}
 							}
 						}
+						
 					}
 				});
 			}
