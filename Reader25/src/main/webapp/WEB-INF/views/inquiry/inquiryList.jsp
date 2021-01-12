@@ -108,18 +108,18 @@
 				</tr>
 				<c:forEach var="b" items="${iList}">
 					<tr class="contentTR">
+						<td>${ b.boardNo }</td>
 						<td>
 							<c:url var="inDetail" value="idetail.in">
-								<c:param name="boardNo" value="${ iList.boardNo }"/>
+								<c:param name="boardNo" value="${ b.boardNo }"/>
 								<c:param name="page" value="${pi.currentPage }"/>
 							</c:url>
-							<a href="${ inDetail }">${ iList.boardNo }</a>
+							<a href="${ inDetail }">${ b.bTitle }</a>
 						</td>
 						
-						<td>${ iList.bTitle }</td>
-						<td>${ iList.bCount }</td>
-						<td>${ iList.userId }</td>
-						<td>${ iList.enrollDay }</td>
+						<td>${ b.bCount }</td>
+						<td>${ b.userId }</td>
+						<td>${ b.enrollDay }</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -138,11 +138,11 @@
 		</script>
 		
 		<!-- 1. 로그인 시 -------------->
-<%-- 		<c:if test="${ !empty loginUser }"> --%>
-		<div class="write-btn">
-			<img src="${ contextPath }/resources/images/bookreview/write.png"/>
-		</div>
-<%-- 		</c:if> --%>
+ 		<c:if test="${ !empty loginUser }"> 
+			<div class="write-btn">
+				<img src="${ contextPath }/resources/images/bookreview/write.png"/>
+			</div>
+ 		</c:if> 
 		
 		<script>
 			$('.write-btn').click(function(){

@@ -31,7 +31,7 @@
 	<div class="menubar">
 		<div class="small-menu">
 			<ul>
-				<c:if test="${ empty sessionScope.loginUser }">
+				<c:if test="${ empty sessionScope.loginUser  && empty sessionScope.result }">
 					<li><a href="loginView.me">로그인</a></li>
 					<li class="li"><a href="notice.no">공지사항</a></li>
 					<li><a href="inquiry.in">문의사항</a></li>
@@ -39,7 +39,14 @@
 				<c:if test="${ sessionScope.loginUser eq 'admin'}">
 					<li><a href="admin.ad">관리자창</a></li>
 				</c:if>
-				<c:if test="${ !empty sessionScope.loginUser }">
+				<c:if test="${ !empty sessionScope.loginUser || !empty sessionScope.result }">
+					<li><a href="logout.me">로그아웃</a></li>
+
+					<li><a href="myList.me?code=2">마이페이지</a></li>
+					<li class="li"><a href="notice.no">공지사항</a></li>
+					<li><a href="inquiry.in">문의사항</a></li>
+				</c:if>
+				<c:if test="${ !empty result }}">
 					<li><a href="logout.me">로그아웃</a></li>
 
 					<li><a href="myList.me?code=2">마이페이지</a></li>

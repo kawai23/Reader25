@@ -12,7 +12,7 @@
 
 		<typeAlias type="com.kh.Reader25.board.model.vo.SearchCondition" alias="SearchCondition"/>
 
-		
+		<typeAlias type="com.kh.Reader25.board.model.vo.SearchReview" alias="SearchReview"/>
 
 		<typeAlias type="com.kh.Reader25.board.model.vo.Liketo" alias="Liketo"/>
 

@@ -151,7 +151,6 @@ section {
 .jquery-modal blocker current {
 	visibility: none;
 }
-
 .modal {
 	margin: 40% auto; 
 	padding: 20px;

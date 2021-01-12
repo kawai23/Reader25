@@ -189,7 +189,7 @@ background: #C95F12;
 		<span id = "find_pwd" ><a>비밀번호 찾기</a></span>
 		</div>
 	</c:if>
-	<c:if test="${ !empty sessionScope.loginUser }">
+	<c:if test="${ !empty sessionScope.loginUser  }">
 		<div id = "UserImage">사진</div>
 		<div id = "UserInfomation">
 		<h2><c:out value="${loginUser.name}"/></h2>
@@ -285,6 +285,11 @@ background: #C95F12;
 		      })
 		    }
 		}
+		
+		//
+		
+	
 	</script>
+	
 </body>
 </html>

@@ -18,6 +18,7 @@ import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService{
@@ -284,6 +285,33 @@ public class BoardServiceImpl implements BoardService{
 			}
 		}
 		return result;
+	}
+	@Override
+	public int insertBoard(Board b) {
+		return bDAO.insertBoard(sqlSession, b);
+	}
+
+	@Override
+	public int getSearchReviewListCount(SearchReview sr) {
+		return bDAO.getSearchReviewListCount(sqlSession, sr);
+	}
+
+	@Override
+	public int insertIn(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.insertIn(sqlSession, b);
+	}
+
+	@Override
+	public int insetFile(ArrayList<Attachment> atList) {
+		// TODO Auto-generated method stub
+		return bDAO.insetFile(sqlSession, atList);
+	}
+
+	@Override
+	public int seachBoardNo(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.seachBoardNo(sqlSession, b);
 	}
 
 	
