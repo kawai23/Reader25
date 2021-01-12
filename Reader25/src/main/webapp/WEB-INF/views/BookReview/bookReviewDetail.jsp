@@ -103,10 +103,35 @@
 		margin-top:10px;
 		max-width: 1000px;
 		border-bottom: 1px solid rgb(200, 200, 200);
-		padding-bottom: 20px;
+		padding-bottom: 40px;
 	}
-	*{border: 1px solid pink;}
+	.comment-date{color:rgb(180, 180, 180);display:inline-block; margin-left: 10px; font-size: 12px;}
+	.comment-write{
+		border: 1px solid rgb(200, 200, 200);
+		background: white;
+		height: 100px;
+	}
+	.comment-box button{
+		font-size: 13px;
+		height: 25px;
+		float: right;
+		background:rgba(85, 83, 83, 1);
+		width: 80px;
+		margin: 5px;
+		color:white;
+	}
+	.user-div{width: 97%;margin:auto;}
+	.text-count{float:right; color:rgb(200, 200, 200);}
+	.comment-box textarea{
+		clear:both;
+		margin: 8px;
+		width: 97%;
+		height: 55%;
+		resize: none;
+		border: none;
+	}
 	.list-box{
+		clear:both;
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
@@ -197,6 +222,7 @@
 		background:rgba(245, 185, 142, 1);
 		cursor:pointer;
 	}
+	/* modal */
 	.jquery-modal blocker current {
 		visibility: none;
 	}
@@ -257,8 +283,28 @@
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 				<p>로그인이 필요한 서비스입니다.</p>
 				<br>
-				<button class="modal-accept" value="accept">확인</button>
+				<button class="modal-accept" value="accept">로그인하기</button>
 				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="check-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 작성되었습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="content-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>내용을 입력해주세요</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
 			</div>
 		</div>
 	</div>
@@ -267,6 +313,9 @@
 			$('.modal-close').click(function(){
 				$('.modal').hide();
 				$('.modal-back').hide();
+			});
+			$('#login-modal .modal-accept').click(function(){
+				location.href="loginView.me";
 			});
 		});
 	</script>
@@ -280,13 +329,10 @@
 		<script>
 			$(function(){
 				var heartval = ${heart};
-				console.log(heartval);
 				if(heartval > 0){
-					console.log('0보다 크다');
 					$('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
 					$(".heart").prop('name',heartval)
 				}else{
-					console.log('0보다 작다');
 					$(".heart").prop('name',heartval)
 					$('#heart-img').mouseenter(function(){
 						$(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
@@ -316,9 +362,6 @@
 					}else{
 						$('#login-modal').show();
 						$('#login-modal .modal').show();
-						$('#login-modal .modal-accept').click(function(){
-							location.href="loginView.me";
-						});
 					}
 				});
 			});
@@ -361,19 +404,120 @@
 		</div>
 		
 		<div class="comment-box">
-			<div class="comment-info">
-				
+			<div class="commentList">
 			</div>
+			<div class="paging-btn" id="co-paging">
+			</div>
+			<div class="comment-write">
+				<div class="user-div">
+					<c:if test="${loginUser eq null }">
+						로그인 시 댓글 등록이 가능합니다.
+					</c:if>
+					<c:if test="${loginUser ne null }">
+						${loginUser.id}
+					</c:if>
+					<span class="text-count" id="counter">0/500</span>
+				</div>
+				<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+			</div>
+			<button id="comment-add">댓글 등록</button>
 		</div>
 		<script>
 		 $(function(){
 			 getComments();
-		 })
-		 function getComments(){
-			 var boardNo = ${boardNo};
-			 
+			 $('#comment-input').keyup(function(){
+				 var content = $(this).val();
+				 $('#counter').html(content.length +'/500');
+			 });
+			 $('#comment-add').click(function(){
+				if('${loginUser}' == ''){
+					$('#login-modal').show();
+					$('#login-modal .modal').show();
+				}else{
+					addComments();
+				}
+			 });
+			 setInterval(function(){
+				 var page0 = $('.page0-no').text();
+				getComments(page0);
+			 }, 1000); 
+		 });
+		 function addComments(){
+			 var boardNo = ${board.boardNo};
+			 var comment = $('#comment-input').val();
+			 if(comment != ''){
+				 $.ajax({
+					url:  "addComments.to",
+					data:{boardNo:boardNo,comment:comment},
+					success: function(data){
+						$('#comment-input').val('');
+						if(data == 'success'){
+							$('#check-modal').show();
+							$('#check-modal .modal').show();
+						}
+						getComments(1);
+					}
+				});
+			 }else{
+				 $('#content-modal').show();
+				 $('#content-modal .modal').show();
+			 }
+		 }
+		 function getComments(value){
+			 var boardNo = ${board.boardNo};
+			 var page0 = value;
 			 $.ajax({
-				 
+				 url:'comments.re',
+				 data:{boardNo:boardNo,page0:page0},
+				 success: function(data){
+					//1) 페이징 버튼 넣기
+					pi0 = data.pi0;
+					$copaging = $('#co-paging');
+					$copaging.html('');
+					if(pi0.currentPage <= 1){
+						$before = $('<p>').text('<');
+					}else{
+						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
+					}
+					$copaging.append($before);
+
+					for(var i = pi0.startPage; i <= pi0.endPage; i++){
+						if(pi0.currentPage == i){
+							$pNo = $('<p class="page0-no">').text(i);
+						}else{
+							$pNo = $('<a>').on('click', function(){
+								getComments($(this).text());
+							}).text(i);
+						}
+						$copaging.append($pNo);
+					}
+					if(pi0.currentPage >= pi0.endPage){
+						$next = $('<p>').text(">");
+					}else{
+						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
+					}
+					$copaging.append($next);
+					//2)값넣기
+					cList = data.cList;
+					$comments = $('.commentList');
+					$comments.html('');
+					
+					for(var i in cList){
+						$comment = $('<div class="comment">');
+						
+						$top = $('<div class="comment-top">')
+						$idspan = $('<span class="comment-user">').text(cList[i].userId);
+						$datespan = $('<span class="comment-date">').text(cList[i].comDate);
+						$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
+						
+						$top.append($idspan);
+						$top.append($datespan);
+						
+						$comment.append($top);
+						$comment.append($commentDiv);
+						$comments.append($comment);
+					}
+				 }
 			 });
 		 }
 		</script>
@@ -585,7 +729,7 @@
 				$('#del-modal').show();
 				 $('#del-modal .modal').show();
 				 $('#del-modal .modal-accept').click(function(){
-					location.href='delete.re?boardNo='+${board.boardNo}
+					location.href='delete.re?boardNo='+${board.boardNo};
 				});
 			}
 		</script>

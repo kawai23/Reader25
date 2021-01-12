@@ -387,7 +387,7 @@ public class BoardController {
 		map.put("reList", reList);
 		map.put("pi1", pi1);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
 		 try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
@@ -420,7 +420,7 @@ public class BoardController {
 		map.put("pi2", pi2);
 		map.put("wiseArr", wiseArr);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
 		 try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
@@ -459,7 +459,7 @@ public class BoardController {
 			throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 		}
 	}
-	// 수정하기
+	// 수정하기 뷰
 	@RequestMapping("modify.re")
 	public ModelAndView reviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
 									ModelAndView mv) {
@@ -488,6 +488,7 @@ public class BoardController {
 		
 		return mv;
 	}
+	// 수정하기
 	@RequestMapping("update.re")
 	public ModelAndView updateReviewBoard(@RequestParam("page") int page, @ModelAttribute Board b,
 									@RequestParam("reloadFile") MultipartFile reloadFile,
@@ -525,6 +526,7 @@ public class BoardController {
 		}
 		return mv;
 	}
+	// 삭제하기
 	@RequestMapping("delete.re")
 	public String deleteReviewBoard(@RequestParam("boardNo") int boardNo) {
 		int result = bService.deleteBoardAndFile(boardNo);
@@ -690,6 +692,36 @@ public class BoardController {
 			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");
 		}
 		return mv;
+	}
+	//댓글 가져오기
+	@RequestMapping("comments.re")
+	public void getCommentsReviewList(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
+			@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+
+		response.setContentType("application/json; charset=UTF-8");
+		int currentPage1 = 1;
+
+		if (page0 != null) {
+			currentPage1 = page0;
+		}
+
+		int listCount = bService.getCommentListCount(boardNo);
+		PageInfo pi0 = Pagination.getPageInfo5_1(currentPage1, listCount);
+		ArrayList<Comments> cList = bService.selectAnotherComments(boardNo, pi0);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cList", cList);
+		map.put("pi0", pi0);
+		System.out.println(cList);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
