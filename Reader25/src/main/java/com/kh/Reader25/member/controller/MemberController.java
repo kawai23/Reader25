@@ -303,6 +303,36 @@ public class MemberController {
 
 	}
 	
+	 @RequestMapping("mdelete.me")
+		public ModelAndView memberDelete(@ModelAttribute Member m , SessionStatus status, ModelAndView mv) {
+			
+			
+		 
+		 System.out.println(m);
+		 
+		 int result = mService.memberDelete(m);
+			
+			
+			
+			if( result > 0) {
+				
+				status.setComplete();
+				
+				
+				mv.addObject("msg", "회원 탈퇴 완료");
+				mv.setViewName("../home");
+				
+				return mv ;
+			}else {
+				
+				throw new MemberException("회원 탈퇴  실패");
+			}
+		 
+		 
+		 
+			
+		}
+	
 	@RequestMapping("myUpdate.me")
 	public String myUpdate(@ModelAttribute Member m,@RequestParam("pwd") String pwd ,@RequestParam("newPwd2") String newPwd2 , @RequestParam("joinPostal") String post,
 			@RequestParam("joinAddress1") String address1,

@@ -125,7 +125,11 @@ td{ margin: 5px; padding: 5px }
 				
 				<div style="text-align: center;">
 				
-					<button style="margin: 5px" class=" btn btn-danger"  onclick="location.href='home.do'">탈퇴</button>
+					<c:url var="mdelete" value="mdelete.me">
+						<c:param name="id" value="${ loginUser.id }"/>
+					</c:url>
+				
+					<button style="margin: 5px" class=" btn btn-danger"  onclick="location.href='${mdelete}'">탈퇴</button>
 				
 					<button style="margin: 5px"class="btn btn-default " onclick="location.href='home.do'">취소</button>
 
@@ -146,6 +150,8 @@ td{ margin: 5px; padding: 5px }
 
  </div>
 
+
+	
 
 </body>
 </html>

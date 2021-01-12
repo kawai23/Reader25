@@ -72,5 +72,14 @@
 	
 	
 	
+	<update id="memberDelete"  >
+ 	
+		UPDATE member SET STATUS= 'N'
+		
+		WHERE user_id = #{ id }
+ 		
+ 	</update>
+	
+	
 	
 </mapper>

@@ -58,11 +58,13 @@ public class MemberDAO {
 	public int UpdateMember(SqlSessionTemplate sqlSession, Member m) {
 	
 		
-		System.out.println(m);
 		
-		System.out.println(sqlSession.update("memberMapper.UpdateMember", m));
 		
 		return sqlSession.update("memberMapper.UpdateMember", m);
+	}
+
+	public int memberDelete(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.memberDelete", m);
 	}
 	
 	
