@@ -10,6 +10,7 @@ import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.discuss.model.dao.DiscussDAO;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.discuss.model.vo.Reply;
 
 @Service("dService")
 public class DiscussServiceImpl  implements DiscussService{
@@ -52,7 +53,7 @@ public class DiscussServiceImpl  implements DiscussService{
 	public ArrayList<Attachment> selectatList() {
 		return dDAO.selectAtList(sqlSession);
 	}
-	// 이미지 수정
+	// 이미지 검색
 	@Override
 	public Attachment selectAt(int atcNo) {
 		return dDAO.selectAt(sqlSession, atcNo);
@@ -77,6 +78,17 @@ public class DiscussServiceImpl  implements DiscussService{
 	@Override
 	public int deleteDiscuss(int dNo) {
 		return dDAO.deleteDisucss(sqlSession, dNo);
+	}
+	
+	// 댓글 추가
+	@Override
+	public int insertReply(Reply r) {
+		return dDAO.insertReply(sqlSession, r);
+	}
+	// 댓글 리스트불러오기
+	@Override
+	public ArrayList<Reply> selectRList(int dNo) {
+		return dDAO.selectRList(sqlSession, dNo);
 	}
 
 }

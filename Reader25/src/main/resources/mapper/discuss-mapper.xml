@@ -101,4 +101,28 @@
 	<update id="deleteDiscuss">
 		UPDATE DISCUSS SET D_STATUS='N' WHERE D_NO = #{dNo}
 	</update>
+	
+	<!-- 댓글 추가 -->
+	<insert id="insertReply">
+		INSERT INTO RELPY 
+		VALUES(R_SEQ.NEXTVAL, #{rContent}, SYSDATE, DEFAULT, #{rWhether}, #{rWriter}, #{dNo})
+	</insert>
+	
+	<!-- 댓글 리스트 가져오기 -->
+	<select id="selectRList" resultMap="ReplyResultSet">
+		SELECT *
+		FROM RELPY
+		WHERE STATUS = 'Y' AND D_NO = #{dNo}
+	</select>
+	
+	<!-- 댓글 리절트 셋 -->
+	<resultMap type="Reply" id="ReplyResultSet">
+		<id property="rNo" column="R_NO"/>
+		<result property="rContent" column="R_CONTENT"/>
+		<result property="rDate" column="R_DATE"/>
+		<result property="rStatus" column="STATUS"/>
+		<result property="rWhether" column="R_WHETHER"/>
+		<result property="rWriter" column="R_WRITER"/>
+		<result property="dNo" column="D_NO"/>
+	</resultMap>
 </mapper>

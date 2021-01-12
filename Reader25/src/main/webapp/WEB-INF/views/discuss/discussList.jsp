@@ -147,7 +147,6 @@
 					</tr>
 					<tr class="dtr">
 						<td><input type="hidden" value="${ d.getdNo() }">찬반여론</td>
-<%-- 						<td>찬성 : ${ ((d.getdPros() + d.getdCons() + d.getdNeutrality())/d.getdCons())*100}% 중립: ${((d.getdPros() + d.getdCons() + d.getdNeutrality())/d.getdCons())*100}% 반대: ${((d.getdPros() + d.getdCons() + d.getdNeutrality())/d.getdNeutrality())*100}% 댓글참여 : ${ d.getdCount() }개</td> --%>
 						<td>찬성 : ${d.getdPros()}% 중립 : ${ d.getdNeutrality() }% 반대 : ${ d.getdCons() }% 댓글참여 : ${ d.getdCount() }개</td>
 					</tr>					
 				</c:forEach>

@@ -41,14 +41,13 @@
   	.Argument{
   		background: #FFC398;
   		width:100%;
-  		min-height:435px;
+  		min-height:100px;
   	}
   	#stime{float:right;}
    	ol{list-style: none;}
-  	.dfom{display:block;}
   	.Atext{float:left; margin-right: 10px;}
-  	#text{background: white; border: 1px solid black; width:1300px;}
-  	#people-img{wdith:115px; height:80px;}
+  	#text{background: white; border: 1px solid black; width:85%;}
+  	#people-img{wdith:50px; height:50px;}
   	.wid{width:100%; margin: 3px;}
 </style>
 </head>
@@ -106,46 +105,122 @@
 				<option selected>오래된순</option>
 				<option>최신순</option>
 			</select><br>
-			<ol>
+			<ol id="rol">
 				<li>
-					<div class="dfom">
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 찬성
-						</div>
-						<div class="Atext" id="text"><p>대충 찬성이라는 글</p></div><br><br>
-					</div><div style="clear:both;"></div>
+					<div class="Atext">
+						<img src="" id="people-img"><br>
+						아이디 찬성
+					</div>
+					<div class="Atext" id="text">우선 이 주제에 대해 배경지식을 깔고 갈 필요가 있다. 직업의 귀천이란 없다고들 하지만 돈을 많이 버는 직업에는 그 이유가 있다. 창문닦이 알바가 돈을 많이 번다고 합당하지 못한거 같나? 노가다 일이 돈을 많이 번다고 합당하지 못한거 같나? 그만큼의 위험수당과 생명수당이 따르고 노동에 대한 대가를 치루기 때문에 비싼 것이다. 의사도 그렇다. 하지만 돈을 많이 버는 직업이라고 해서, 공공적 성격을 띄고 있다고 해서 의사라는 직업을 공공재로만 보고 그 안에 담긴 직업으로서의 성격을 이해하지 못하고 있다고 생각이 든다. 코로나 사태를 겪으면서 의사들의 수가 부족해 보이는가? 그전에 의사들과 간호사들의 열악한 환경에 대해서는 보이지 않는가에 대해서 묻고 싶다. 당장 의사수를 늘린다고 치자. 부족한 특수 의원들을 주로 뽑아서 지역에 의무적으로 근무하게 한다고 치자. 그 의무기간이 끝난다면..? 지금 현실에서 의사수를 늘리는 것은 밑빠진 독에 물 붙는 격이다. 밑빠진 독에 물을 부을 때가 아닌, 독을 고쳐야 한다. 독을 고치고 나서 물을 붓는 행위에 대해서는 찬성한다. 그러기 위해서는 지방의사들의 처우가 개선되서 의무기간을 정해야만 지방에 인력을 확충되는게 아닌 제도적으로 전문의들의 지방행이 보편화되도록 만들어야 할 것이고, 전문적이고 특수 직종에 대해서 봉급을 늘린다든지, 워라밸을 보장하여 전문의들의 삶을 보장하는등 지원을 아끼지 않아야 할 것이다. 그후의 의사수를 늘이는 것도 전혀 늦지 않을 것이다.</div>
+					<div style="clear:both;"></div><br>
 				</li>
 				<li>
-					<div class="dfom">
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 찬성
-						</div>
-						<div class="Atext" id="text"><p>대충 찬성이라는 글</p></div><br><br>
-					</div><div style="clear:both;"></div>
-				</li>
-				<li>
-					<div class="dfom">
-						<br><div class="Atext" id="text"><p>대충 반대이라는 글</p></div>
+					
+						<div class="Atext" id="text"><p>대충 반대이라는 글</p></div>
 						<div class="Atext">
 							<img src="" id="people-img"><br>
 							아이디 반대
 						</div>
-					</div><div style="clear:both;"></div>
+					<div style="clear:both;"></div><br>
 				</li>
 				
 			</ol>
 		</div>
-		<form>
-			<select class="wid">
-				<option selected>찬성</option>
-				<option>반대</option>
+			<select class="wid" id="dis">
+				<option selected value="P">찬성</option>
+				<option value="N">중립</option>
+				<option value="C">반대</option>
 			</select><br>
-			<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			<c:if test="${ !empty loginUser }">
+				<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			</c:if>
 			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
 			<button class="btn" id="btn3">작성하기</button>
-		</form>
+			<script>
+				$(function(){
+					getRList();
+				});
+				$('#btn3').click(function(){
+					var id = $('#id').val();
+					var content = $('#area1').val();
+					var dNo = ${d.dNo};
+					var dis = $('#dis option:selected').val();
+					$.ajax({
+						url: 'addReply.di',
+						data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
+						success: function(data){
+							$('#area1').val('');
+							getRList();
+						}
+					});
+				});
+				function getRList(){
+					var dNo = ${d.dNo};
+
+					$.ajax({
+						url:"rList.di",
+						data: {dNo:dNo},
+						success: function(data){
+							console.log(data);
+							$olBody = $('#rol');
+							$olBody.html('');
+							var $li;
+							var $div1;
+							var $div2;
+							var $img;
+							var $id;
+							var $rContent;
+							var $div3;
+
+							if(data.length > 0){
+								for(var i in data){
+									$li = $('<li>');
+									$div1 = $('<div class="Atext">');
+									$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
+									$rContent = data[i].rContent;
+									$div2 = $('<div class="Atext"id="text">');
+									$div3 = $('<div style="clear:both;"><br>');
+									if(data[i].rWhether == 'C'){
+									$id = $('<h3>').text(data[i].rWriter + " 반대");
+										$div1.append($img);
+										$div2.append($id);
+										$div2.append($rContent);
+										$li.append($div2);
+										$li.append($div1);
+										$li.append($div3);
+										$olBody.append($li);
+									} else {
+										if(data[i].rWhether == 'P'){
+											$id = $('<h3>').text(data[i].rWriter + " 찬성");
+										}else{
+											$id = $('<h3>').text(data[i].rWriter + " 중립");
+										}
+										$div1.append($img);
+										$div2.append($id);
+										$div2.append($rContent);
+										$li.append($div1);
+										$li.append($div2);
+										$li.append($div3);
+										$olBody.append($li);
+									}
+									
+								}
+							} else{
+								$li = $('<li>');
+								$div1 = $('<div class="Atext">').text('등록된 댓글이 없습니다.');
+								$li.append($div1);
+								$olBody.append($li);
+							}
+						}
+					});
+				}
+				$('.btn').mouseenter(function(){
+					$(this).css({'cursor':'pointer'});
+				});
+			</script>
 	</section>
 </body>
 </html>

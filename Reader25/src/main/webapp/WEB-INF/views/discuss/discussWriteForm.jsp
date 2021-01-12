@@ -84,11 +84,11 @@
 				<input type="file" id="input-file" name="uploadFile" onchange="loadImg(this);" 
 				accept="image/jpg, image/jpeg, image/png">
 			</div>
-			<div class="file-div">
-				<div class="file-img" id="file-img">
-					<img src="#" id="load-img" >
-				</div>
-			</div>
+<!-- 			<div class="file-div"> -->
+<!-- 				<div class="file-img" id="file-img"> -->
+<!-- 					<img src="#" id="load-img" > -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 <!-- 				<span class="btn0" id="spanbtn">이미지 추가</span> -->
 			<div class="content">
 				<div class="content-edit">
