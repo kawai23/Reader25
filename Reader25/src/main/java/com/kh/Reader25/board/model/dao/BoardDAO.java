@@ -264,10 +264,6 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.insertIn", b);
 	}
 
-	public int insetFile(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("boardMapper.insetFile", atList);
-	}
 
 	public int seachBoardNo(SqlSessionTemplate sqlSession, Board b) {
 		// TODO Auto-generated method stub
@@ -278,6 +274,21 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectSearchReviewCount", sr);
 
 	}
+
+	public int insetFile(SqlSessionTemplate sqlSession, Attachment at) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insetFile", at);
+	}
+
+	public ArrayList<Comments> selectAdminCommentList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAdminCommentList", map);
+	}
+
+//	public ArrayList<Comments> selectAdminCommentList(SqlSessionTemplate sqlSession, int boardNo, String user_id) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSession.selectList("boardMapper.selectAdminCommentList", boardNo, user_id);
+//	}
 
 
 

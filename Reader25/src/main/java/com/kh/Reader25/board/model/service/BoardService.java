@@ -98,13 +98,17 @@ public interface BoardService {
 
 	int insertIn(Board b);
 
-	int insetFile(ArrayList<Attachment> atList);
+	int insetFile(Attachment at);
 
 	int seachBoardNo(Board b);
 
 	int insertBoard(Board b);
 
 	int getSearchReviewListCount(SearchReview sr);
+
+	ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map);
+
+//	ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id);
 
 
 	

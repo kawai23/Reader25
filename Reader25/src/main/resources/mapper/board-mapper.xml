@@ -393,5 +393,11 @@
 		from board
 		where b_title=#{bTitle} and b_content =#{bContent} and user_id=#{userId}
 	</select>
+	
+	<select id="selectAdminCommentList" resultMap="commentsResultSet">
+		select *
+		from comments
+		where board_no =#{boardNo} and user_id=#{userId}
+	</select>
 
 </mapper>
