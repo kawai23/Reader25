@@ -278,12 +278,26 @@ public class BoardController {
 	public String bookreviewWriteForm() {
 		return "bookreviewWriteForm";
 	}
+	// 리뷰 게시판 상세페이지
 	@RequestMapping("redetail.re")
 	public ModelAndView bookreviewDetailView(@RequestParam("boardNo") int boardNo,
 											 @RequestParam("page") int page,
-											 ModelAndView mv) {
+											 ModelAndView mv, HttpServletRequest request) {
 		Board board = bService.selectBoard(boardNo);
 		Attachment at = bService.selectAttachment(boardNo);
+		
+		// 좋아요 
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int heart = 0;
+		if(loginUser != null) {
+			String id = loginUser.getId();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("loginUser", id);
+			map.put("boardNo", boardNo);
+						
+			heart = bService.findLike(map) == 1? 1:0;
+		}
+		
 		if(board != null) {
 			
 			String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
@@ -301,7 +315,10 @@ public class BoardController {
 			mv.addObject("author", author);
 			mv.addObject("wise", wise);
 			mv.addObject("page", page);
+			mv.addObject("heart", heart);
 			mv.setViewName("bookReviewDetail");
+		}else {
+			throw new BoardException("리뷰 게시판 상세보기에 실패하였습니다.");
 		}
 		return mv;
 	}
@@ -402,23 +419,27 @@ public class BoardController {
 									ModelAndView mv) {
 		Board board = bService.selectBoardExceptAddCount(boardNo);
 		Attachment at = bService.selectAttachment(boardNo); 
+		if(board != null) {
+			String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
+			String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목")+4);
+			String author = exbook.substring(0,exbook.indexOf("#작가"));
+			String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
+			String wise = exauthor.substring(0,exauthor.indexOf("#명언"));
+			String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
+			
+			board.setbContent(content);
+			
+			mv.addObject("board", board)
+				.addObject("page", page)
+				.addObject("booktitle", booktitle)
+				.addObject("author", author)
+				.addObject("wise", wise)
+				.addObject("at", at)
+				.setViewName("bookUpdateForm");
+		}else {
+			throw new BoardException("리뷰 게시판 수정하기에 값을 불러오는데 실패하였습니다.");
+		}
 		
-		String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
-		String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목")+4);
-		String author = exbook.substring(0,exbook.indexOf("#작가"));
-		String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
-		String wise = exauthor.substring(0,exauthor.indexOf("#명언"));
-		String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
-		
-		board.setbContent(content);
-		
-		mv.addObject("board", board)
-			.addObject("page", page)
-			.addObject("booktitle", booktitle)
-			.addObject("author", author)
-			.addObject("wise", wise)
-			.addObject("at", at)
-			.setViewName("bookUpdateForm");
 		return mv;
 	}
 	@RequestMapping("update.re")
@@ -518,15 +539,44 @@ public class BoardController {
 				.addObject("searchCate", searchCate)
 				.addObject("searchValue", value)
 				.setViewName("BookReviewSearch");
+		}else {
+			throw new BoardException("리뷰 게시판 검색하기에 실패하였습니다.");
 		}
 		return mv;
 	}
 	//분류하기
 	@RequestMapping("sort.re")
-	public String sortBookReviewList(@RequestParam("sortValue") String sortValue) {
+	public ModelAndView sortBookReviewList(@RequestParam("sortValue") String sortValue, HttpServletRequest request,
+											ModelAndView mv) {
 		
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSortListCount(sortValue);
 		
-		return "BookReview";
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		ArrayList<Board> bList = bService.selectSortList(sortValue, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList)
+			  .addObject("atList", atList)
+			  .addObject("pi", pi)
+			  .addObject("contentArr", contentArr)
+			  .addObject("wiseArr", wiseArr)
+			  .addObject("sortValue", sortValue)
+			  .setViewName("BookReview");
+		}else {
+			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");
+		}
+		return mv;
 	}
 	
 	//책리뷰 code = 2-------------------------------------------------------------

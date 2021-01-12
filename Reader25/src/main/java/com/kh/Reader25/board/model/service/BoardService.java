@@ -108,6 +108,10 @@ public interface BoardService {
 
 	ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi);
 
+	int getSortListCount(String sortValue);
+
+	ArrayList<Board> selectSortList(String sortValue, PageInfo pi);
+
 
 	
 }

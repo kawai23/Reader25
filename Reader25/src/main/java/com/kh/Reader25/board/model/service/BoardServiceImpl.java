@@ -319,5 +319,15 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.searchReviewList(sqlSession,sr, pi);
 	}
 
+	@Override
+	public int getSortListCount(String sortValue) {
+		return bDAO.getSortListCount(sqlSession, sortValue);
+	}
+
+	@Override
+	public ArrayList<Board> selectSortList(String sortValue, PageInfo pi) {
+		return bDAO.selectSortList(sqlSession, sortValue, pi);
+	}
+
 	
 }

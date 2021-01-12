@@ -247,9 +247,28 @@ select::-ms-expand {
 				}
 			</script>
 			<div class="sort-div">
+			<% String sortValue = (String)request.getAttribute("sortValue"); %>
+			<% if(sortValue != null){ %>
+				<% if(sortValue.equals("lated")){ %>
+					<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;" >최신순</h4>
+				<%}else{ %>
+					<h4 class="sort-h4" id="lated-sort">최신순</h4>
+				<%} %>
+				<% if(sortValue.equals("like")){ %>
+					<h4 class="sort-h4" id="like-sort" style="font-weight: bolder;">좋아요</h4>
+				<%}else{ %>			
+					<h4 class="sort-h4" id="like-sort">좋아요</h4>
+				<%} %>
+				<% if(sortValue.equals("count")){ %>
+					<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
+				<%}else{ %>
+					<h4 class="sort-h4" id="count-sort">조회순</h4>
+				<%} %>
+			<%}else{ %>
 				<h4 class="sort-h4" id="lated-sort">최신순</h4>
 				<h4 class="sort-h4" id="like-sort">좋아요</h4>
 				<h4 class="sort-h4" id="count-sort">조회순</h4>
+			<%} %>
 			</div>
 		</div>
 		<script>

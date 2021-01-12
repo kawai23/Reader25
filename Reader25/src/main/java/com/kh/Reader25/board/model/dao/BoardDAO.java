@@ -285,6 +285,16 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.searchReviewList", sr, rowBounds);
 	}
 
+	public int getSortListCount(SqlSessionTemplate sqlSession, String sortValue) {
+		return sqlSession.selectOne("boardMapper.getSortListCount", sortValue);
+	}
+
+	public ArrayList<Board> selectSortList(SqlSessionTemplate sqlSession, String sortValue, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSortList", sortValue, rowBounds);
+	}
+
 
 
 

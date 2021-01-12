@@ -268,12 +268,43 @@
 		order by board_no desc
 	</select>
 	
+	<select id="getSortListCount" resultType="_int">
+		select count(*)
+		from board
+		where code = 2 and b_status = 'Y'
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="selectSortList" resultMap="boardResultSet">
+		select *
+		from board
+		where code = 2 and b_status = 'Y'
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
 	<select id="getReListCount" resultType="_int">
 		select count(*)
 		from board
 		where code = 2 and b_status = 'Y' 
 			and b_content like '%' || #{book} || '%'
 	</select>
+	
 	<select id="selectAnotherReview" resultMap="boardResultSet">
 		select *
 		from board

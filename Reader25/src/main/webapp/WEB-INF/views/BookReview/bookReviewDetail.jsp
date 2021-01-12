@@ -27,6 +27,7 @@
 		margin:auto;
 		max-width: 1000px;
   	}
+  	.list-info img{position:relative; bottom: -10px;}
   	.list-info p{
   		display:inline-block;
   		color:rgb(100, 100, 100);
@@ -229,12 +230,23 @@
 </head>
 <body>
 	<%@include file="../common/menubar.jsp" %>
-		<!-- 에러 모달창 -->
-	<div class="modal-back">
+	<!-- 에러 모달창 -->
+	<div class="modal-back" id="del-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 				<p>정말로 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-accept" value="accept">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="login-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>로그인이 필요한 서비스입니다.</p>
 				<br>
 				<button class="modal-accept" value="accept">확인</button>
 				<button class="modal-close" value="Close">취소</button>
@@ -252,9 +264,56 @@
 	
 	<section>
 		<div class="list-info">
+			<a class="heart"><img id="heart-img" src="resources/images/bookreview/heart1.png"/></a>
 			<p>${ board.userId } ${board.updateDay }</p>
 			<p class="count-p">조회수 : ${ board.bCount } </p>
 		</div>
+		<script>
+			$(function(){
+				var heartval = ${heart};
+				console.log(heartval);
+				if(heartval > 0){
+					console.log('0보다 크다');
+					$('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
+					$(".heart").prop('name',heartval)
+				}else{
+					console.log('0보다 작다');
+					$(".heart").prop('name',heartval)
+					$('#heart-img').mouseenter(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
+					}).mouseout(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart1.png');
+						
+					});
+				}
+				$('.heart').click(function(){
+					if('${loginUser}' != ''){
+						var heartC = $('.heart');
+						$.ajax({
+							url: 'heart.to',
+							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
+							success:function(data){
+								heartC.prop('name', data);
+								console.log(data);
+								if(data == 1){
+									$('#heart-img').prop('src','resources/images/bookreview/heart2.png');
+									location.reload();
+								}else{
+									$('#heart-img').prop('src','resources/images/bookreview/heart1.png');
+									location.reload();
+								}
+							}
+						});
+					}else{
+						$('#login-modal').show();
+						$('#login-modal .modal').show();
+						$('#login-modal .modal-accept').click(function(){
+							location.href="loginView.me";
+						});
+					}
+				});
+			});
+		</script>
 		<div class="bookreview-div">
 			<div class="info">
 				<div class="img-div">
@@ -491,9 +550,9 @@
 		</div>
 		<script>
 			function deleteReview(){
-				$('.modal-back').show();
-				 $('.modal').show();
-				 $('.modal-accept').click(function(){
+				$('#del-modal').show();
+				 $('#del-modal .modal').show();
+				 $('#del-modal .modal-accept').click(function(){
 					location.href='delete.re?boardNo='+${board.boardNo}
 				});
 			}
