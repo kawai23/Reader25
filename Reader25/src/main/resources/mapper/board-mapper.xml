@@ -399,5 +399,28 @@
 		from comments
 		where board_no =#{boardNo} and user_id=#{userId}
 	</select>
+	
+	<select id="selectupInquiryBoard" resultMap="boardResultSet">
+		select *
+		from board
+		where code='1' and b_status='Y' and board_no =#{boardNo}
+	</select>
+	
+	<update id="updateInquiryBoard">
+		update board
+		set B_TITLE=#{bTitle}, B_CONTENT=#{bContent}, UPDATE_DAY=sysdate
+		where BOARD_NO=#{boardNo}
+	</update>
+	
+	<delete id="deleteFile">
+		DELETE FROM attachment
+		WHERE BOARD_NO = #{b_no}
+    </delete>
+    
+    <update id="deleteInquiryBoard">
+		update board
+		set B_STATUS='N'
+		where BOARD_NO=#{boardNo}
+	</update>
 
 </mapper>

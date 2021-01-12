@@ -212,7 +212,7 @@ public class BoardController {
 		return at;
 	}
 	
-	//(4) 상세보기
+	//문의사항 상세보기
 	@RequestMapping("idetail.in")
 	public ModelAndView indetailView(@RequestParam("boardNo") int boardNo,
 									@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
@@ -262,7 +262,7 @@ public class BoardController {
 		}
 	}
 	
-	//관리자 댓글 불러오기
+	//문의사항 관리자 댓글 불러오기
 	@RequestMapping("aCList.in")
 	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
 		System.out.println("boardNo입니다"+boardNo);
@@ -285,6 +285,77 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//문의사항 글 수정 컨트롤러
+	@RequestMapping("inquiryUpView.in")
+	public ModelAndView inquiryUpView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page, 
+										ModelAndView mv) {
+		
+		Board board = bService.selectupInquiryBoard(boardNo);
+		
+		mv.addObject("board", board)
+		  .addObject("page", page)
+		  .setViewName("inquiryUpdateForm");
+		
+		return mv;
+	}
+	
+	//문의사항 글 수정
+	@RequestMapping("inquiryUp.in")
+	public ModelAndView inquiryUp(
+							@ModelAttribute Board b, @RequestParam("boardNo") int boardNo,
+							@RequestParam("page") int page, HttpServletRequest request,
+							@ModelAttribute Attachment at,
+							@RequestParam("uploadFile") MultipartFile uploadFile,
+							ModelAndView mv) {
+		System.out.println("board입니다"+b);
+		
+		b.setBoardNo(boardNo);
+		
+		int result = bService.updateInquiryBoard(b);
+		//System.out.println(b);
+		//System.out.println(result);
+		//System.out.println(b.getBoardNo());
+		
+		if(uploadFile != null) {//첨부파일이 있다면
+			int resultD = bService.deleteFile(boardNo);
+			at = saveFile2(uploadFile, request, 1);
+			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
+			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
+			at.setAtcLevel(0);
+			at.setBoardNo(boardNo);
+			//System.out.println("at이쥬"+at);
+			int resultF = bService.insetFile(at);
+			//System.out.println("at얍"+at);
+			if(resultF > 0) {
+				System.out.println("파일업로드 성공");
+			} else {
+				System.out.println("파일업로드 실패");
+			}
+		}
+		
+		if(result > 0) {
+			mv.addObject("page", page)
+			  .setViewName("redirect:idetail.in?boardNo=" + b.getBoardNo());
+		} else {
+			throw new BoardException("문의사항 게시글 수정에 실패하였습니다.");
+		}
+		
+		return mv;
+	}
+	
+	//오늘은 나도 작가 = 5 게시글 삭제 
+	@RequestMapping("inquiryDel.in")
+	public String inquiryDel(@RequestParam("boardNo") int boardNo) {
+				
+		int result = bService.deleteInquiryBoard(boardNo);
+				
+		if(result > 0) {
+			return "redirect:inquiry.in";
+		} else {
+			throw new BoardException("게시글 삭제에 실패했습니다.");
+		}
+	}	
 	
 		
 	// 책 리뷰 = 2 ----------------------------------------------------

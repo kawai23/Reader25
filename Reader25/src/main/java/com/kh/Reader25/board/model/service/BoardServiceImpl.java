@@ -322,11 +322,31 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.selectAdminCommentList(sqlSession, map);
 	}
 
-//	@Override
-//	public ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id) {
-//		// TODO Auto-generated method stub
-//		return bDAO.selectAdminCommentList(sqlSession, boardNo, user_id);
-//	}
+	@Override
+	public Board selectupInquiryBoard(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.selectupInquiryBoard(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateInquiryBoard(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.updateInquiryBoard(sqlSession, b);
+	}
+
+	@Override
+	public int deleteFile(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteFile(sqlSession, boardNo);
+	}
+
+	@Override
+	public int deleteInquiryBoard(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteInquiryBoard(sqlSession, boardNo);
+	}
+
+
 
 	
 }

@@ -108,6 +108,14 @@ public interface BoardService {
 
 	ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map);
 
+	Board selectupInquiryBoard(int boardNo);
+
+	int updateInquiryBoard(Board b);
+
+	int deleteFile(int boardNo);
+
+	int deleteInquiryBoard(int boardNo);
+
 //	ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id);
 
 
