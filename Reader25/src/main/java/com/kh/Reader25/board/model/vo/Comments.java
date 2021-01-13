@@ -1,18 +1,20 @@
 package com.kh.Reader25.board.model.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comments {
 	private int comNo;
 	private String comment;
-	private Date comDate;
+	private Timestamp comDate;
 	private String status;
 	private int boardNo;
 	private String userId;
 	
 	public Comments() {}
-
-	public Comments(int comNo, String comment, Date comDate, String status, int boardNo, String userId) {
+	
+	
+	
+	public Comments(int comNo, String comment, Timestamp comDate, String status, int boardNo, String userId) {
 		super();
 		this.comNo = comNo;
 		this.comment = comment;
@@ -21,6 +23,8 @@ public class Comments {
 		this.boardNo = boardNo;
 		this.userId = userId;
 	}
+
+
 
 	public int getComNo() {
 		return comNo;
@@ -38,11 +42,11 @@ public class Comments {
 		this.comment = comment;
 	}
 
-	public Date getComDate() {
+	public Timestamp getComDate() {
 		return comDate;
 	}
 
-	public void setComDate(Date comDate) {
+	public void setComDate(Timestamp comDate) {
 		this.comDate = comDate;
 	}
 
@@ -70,9 +74,13 @@ public class Comments {
 		this.userId = userId;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Comments [comNo=" + comNo + ", comment=" + comment + ", comDate=" + comDate + ", status=" + status
 				+ ", boardNo=" + boardNo + ", userId=" + userId + "]";
 	}
+
+	
 }

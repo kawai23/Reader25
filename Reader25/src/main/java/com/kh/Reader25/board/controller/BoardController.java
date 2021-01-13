@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -697,7 +699,7 @@ public class BoardController {
 	@RequestMapping("comments.re")
 	public void getCommentsReviewList(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
 			@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
-
+		
 		response.setContentType("application/json; charset=UTF-8");
 		int currentPage1 = 1;
 
@@ -712,7 +714,6 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("cList", cList);
 		map.put("pi0", pi0);
-		System.out.println(cList);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 		try {

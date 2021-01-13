@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,6 +121,8 @@
 		margin: 5px;
 		color:white;
 	}
+	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
+	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
 	.user-div{width: 97%;margin:auto;}
 	.text-count{float:right; color:rgb(200, 200, 200);}
 	.comment-box textarea{
