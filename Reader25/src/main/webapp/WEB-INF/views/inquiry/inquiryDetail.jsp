@@ -148,10 +148,10 @@
 				</div>
 				
 				<div class="reply-writer" id="acuserId">
-					<span ></span>
+					
 				</div>
 				<div class="reply-div" id="acComment">
-					<span ></span>
+					
 				</div>
 				
 				<div class="adminComments">
@@ -194,8 +194,8 @@
 					var boardNo = ${ board.boardNo };
 					var userId = 'admin';
 					//console.log(value);
-					var $acuserId;
-					var $acComment;
+					$acuserId = $('#acuserId');
+					$acComment = $('#acComment');
 					
 					$.ajax({
 						url: "aCList.in",
@@ -207,15 +207,17 @@
 							
 							if(data.length > 0){
 								for(var i in data){
-									$userId = text(data[i].userId);
-									$Comment = text(data[i].comment);
+									$userId = data[i].userId;
+									$Comment = data[i].comment;
+									
+									$acuserId.html($userId);
+									$acComment.html($Comment);
 								}
 							} else {
 								$acuserId = $('');
 								$acComment = $('아직 답변이 없습니다');
 							}
-							$acuserId.append($userId);
-							$acComment.append($Comment);
+							
 						}
 					});
 				}
@@ -249,17 +251,22 @@
 			</div>
 		</form>
 		<div class="btn-div">
-			<!-- 관리자아이디  또는 글쓴이  -->
-			<button class="list-btn" id="modify-btn">수정하기</button>
-			<button class="list-btn" id="delete-btn">삭제하기</button>
-			<!-- ------- -->
-			<button class="list-btn">목록으로</button>
+			<c:url var="inquiryUpdate" value="inquiryUpView.in">
+				<c:param name="boardNo" value="${ board.boardNo }"/>
+				<c:param name="page" value="${ page }"/>
+			</c:url>
+			<c:url var="inquiryDelete" value="inquiryDel.in">
+				<c:param name="boardNo" value="${ board.boardNo }"/>
+			</c:url>
+			<c:url var="goInquiryList" value="inquiry.in">
+				<c:param name="page" value="${ page }"/>
+			</c:url>
+			<c:if test="${ loginUser.id eq board.userId || loginUser.id eq 'admin' }">
+				<button class="list-btn" id="modify-btn" onclick="location.href='${ inquiryUpdate }'">수정하기</button>
+				<button class="list-btn" id="delete-btn" onclick="location.href='${ inquiryDelete }'">삭제하기</button>
+			</c:if>
+			<button class="list-btn"  onclick="location.href='${ goInquiryList }'">목록으로</button>
 		</div>
-		<script>
-			$('#list-btn').click(function(){
-				//location.href = ${loc}; // 이전으로 가기historyback
-			});
-		</script>
 	</section>
 </body>
 </html>

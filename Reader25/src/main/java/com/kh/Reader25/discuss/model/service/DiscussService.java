@@ -30,6 +30,6 @@ public interface DiscussService {
 	// 댓글 추가
 	int insertReply(Reply r);
 	// 댓글 리스트 가져오기
-	ArrayList<Reply> selectRList(int dNo);
+	ArrayList<Reply> selectRList(int dNo, int cho);
 
 }

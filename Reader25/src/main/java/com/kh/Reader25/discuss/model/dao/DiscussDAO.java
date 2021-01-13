@@ -1,6 +1,8 @@
 package com.kh.Reader25.discuss.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -61,7 +63,14 @@ public class DiscussDAO {
 		return sqlSession.insert("DiscussMapper.insertReply", r);
 	}
 	// 댓글 리스트 가져오기
-	public ArrayList<Reply> selectRList(SqlSessionTemplate sqlSession, int dNo) {
-		return (ArrayList)sqlSession.selectList("DiscussMapper.selectRList",dNo);
+	public ArrayList<Reply> selectRList(SqlSessionTemplate sqlSession, int dNo, int cho) {
+		Map<String, Integer> d = new HashMap<String, Integer>();
+		d.put("dNo", dNo);
+		d.put("cho", cho);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.selectRList", d);
+	}
+	// 댓글수 업데이트
+	public int updateCount(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("DiscussMapper.updateCount", r);
 	}
 }

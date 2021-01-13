@@ -83,12 +83,16 @@ public class DiscussServiceImpl  implements DiscussService{
 	// 댓글 추가
 	@Override
 	public int insertReply(Reply r) {
-		return dDAO.insertReply(sqlSession, r);
+		int result = dDAO.updateCount(sqlSession, r);
+		if(result > 0 ) {
+			return dDAO.insertReply(sqlSession, r);
+		}
+		return 0;
 	}
 	// 댓글 리스트불러오기
 	@Override
-	public ArrayList<Reply> selectRList(int dNo) {
-		return dDAO.selectRList(sqlSession, dNo);
+	public ArrayList<Reply> selectRList(int dNo, int cho) {
+		return dDAO.selectRList(sqlSession, dNo, cho);
 	}
 
 }

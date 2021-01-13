@@ -311,10 +311,27 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAdminCommentList", map);
 	}
 
-//	public ArrayList<Comments> selectAdminCommentList(SqlSessionTemplate sqlSession, int boardNo, String user_id) {
-//		// TODO Auto-generated method stub
-//		return (ArrayList)sqlSession.selectList("boardMapper.selectAdminCommentList", boardNo, user_id);
-//	}
+	public Board selectupInquiryBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectupInquiryBoard", boardNo);
+	}
+
+	public int updateInquiryBoard(SqlSessionTemplate sqlSession, Board b) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateInquiryBoard", b);
+	}
+
+	public int deleteFile(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("boardMapper.deleteFile",boardNo);
+	}
+
+	public int deleteInquiryBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
+	}
+
+
 
 
 
