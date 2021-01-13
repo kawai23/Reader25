@@ -383,6 +383,12 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.selectuserComments(sqlSession, boardNo, pi0, userId);
 	}
 
+	@Override
+	public ArrayList<Board> select() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 }

@@ -121,6 +121,8 @@ public class BoardController {
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
 							ModelAndView mv) {
+		ArrayList<Board> bb = bService.select();
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;

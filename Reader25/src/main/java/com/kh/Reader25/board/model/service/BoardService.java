@@ -130,6 +130,8 @@ public interface BoardService {
 
 	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
+	ArrayList<Board> select();
+
 //	ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id);
 
 
