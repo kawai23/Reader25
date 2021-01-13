@@ -277,10 +277,10 @@
 			}
 
 		$(function(){
-			//getCList();
-			/* setInterval(function(){
+			getCList();
+			 setInterval(function(){
 				getCList(1);
-			}, 1000); */
+			}, 1000); 
 		});
 		</script>
 	</div>

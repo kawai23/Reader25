@@ -41,14 +41,13 @@
   	.Argument{
   		background: #FFC398;
   		width:100%;
-  		min-height:435px;
+  		min-height:100px;
   	}
   	#stime{float:right;}
    	ol{list-style: none;}
-  	.dfom{display:block;}
   	.Atext{float:left; margin-right: 10px;}
-  	#text{background: white; border: 1px solid black; width:1300px;}
-  	#people-img{wdith:115px; height:80px;}
+  	#text{background: white; border: 1px solid black; width:85%;}
+  	#people-img{wdith:50px; height:50px;}
   	.wid{width:100%; margin: 3px;}
 </style>
 </head>
@@ -103,49 +102,111 @@
 		<hr>
 		<div class="Argument">
 			<select id="stime">
-				<option selected>오래된순</option>
-				<option>최신순</option>
+				<option value="1" selected>오래된순</option>
+				<option value="2">최신순</option>
 			</select><br>
-			<ol>
-				<li>
-					<div class="dfom">
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 찬성
-						</div>
-						<div class="Atext" id="text"><p>대충 찬성이라는 글</p></div><br><br>
-					</div><div style="clear:both;"></div>
-				</li>
-				<li>
-					<div class="dfom">
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 찬성
-						</div>
-						<div class="Atext" id="text"><p>대충 찬성이라는 글</p></div><br><br>
-					</div><div style="clear:both;"></div>
-				</li>
-				<li>
-					<div class="dfom">
-						<br><div class="Atext" id="text"><p>대충 반대이라는 글</p></div>
-						<div class="Atext">
-							<img src="" id="people-img"><br>
-							아이디 반대
-						</div>
-					</div><div style="clear:both;"></div>
-				</li>
-				
+			<ol id="rol"><!-- 댓글달릴부분 -->
 			</ol>
 		</div>
-		<form>
-			<select class="wid">
-				<option selected>찬성</option>
-				<option>반대</option>
+			<select class="wid" id="dis">
+				<option selected value="P">찬성</option>
+				<option value="N">중립</option>
+				<option value="C">반대</option>
 			</select><br>
-			<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			<c:if test="${ !empty loginUser }">
+				<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			</c:if>
 			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
 			<button class="btn" id="btn3">작성하기</button>
-		</form>
+			<script>
+				$(function(){
+					getRList();
+				});
+				$('#stime').on('change', function(){
+					getRList();
+				});
+				$('#btn3').click(function(){
+					var id = $('#id').val();
+					var content = $('#area1').val();
+					var dNo = ${d.dNo};
+					var dis = $('#dis option:selected').val();
+					$.ajax({
+						url: 'addReply.di',
+						data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
+						success: function(data){
+							$('#area1').val('');
+							getRList();
+						}
+					});
+				});
+				
+				function getRList(){
+					var dNo = ${d.dNo};
+					var cho = $('#stime').val();
+					$.ajax({
+						url:"rList.di",
+						data: {dNo:dNo, cho:cho},
+						success: function(data){
+							console.log(data);
+							$olBody = $('#rol');
+							$olBody.html('');
+							var $li;
+							var $div1;
+							var $div2;
+							var $img;
+							var $id;
+							var $rContent;
+							var $div3;
+
+							if(data.length > 0){
+								for(var i in data){
+									$li = $('<li>');
+									$div1 = $('<div class="Atext">');
+									$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
+									$rContent = data[i].rContent;
+									$div2 = $('<div class="Atext"id="text">');
+									$div3 = $('<div style="clear:both;"><br>');
+									if(data[i].rWhether == 'C'){
+									$id = $('<h3>').text(data[i].rWriter + "님의 반대 의견");
+										$div1.append($img);
+										$div2.append($id);
+										$div2.append($rContent);
+										$li.append($div2);
+										$li.append($div1);
+										$li.append($div3);
+										$olBody.append($li);
+									} else {
+										if(data[i].rWhether == 'P'){
+											$id = $('<h3>').text(data[i].rWriter + "님의 찬성 의견");
+										}else{
+											$id = $('<h3>').text(data[i].rWriter + "님의 중립 의견");
+										}
+										$div1.append($img);
+										$div2.append($id);
+										$div2.append($rContent);
+										$li.append($div1);
+										$li.append($div2);
+										$li.append($div3);
+										$olBody.append($li);
+									}
+									
+								}
+							} else{
+								$li = $('<li>');
+								$div1 = $('<div class="Atext">').text('등록된 댓글이 없습니다.');
+								$li.append($div1);
+								$olBody.append($li);
+							}
+						}
+					});
+				}
+				$('.btn').mouseenter(function(){
+					$(this).css({'cursor':'pointer'});
+				});
+			</script>
 	</section>
 </body>
 </html>

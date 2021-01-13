@@ -264,10 +264,6 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.insertIn", b);
 	}
 
-	public int insetFile(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("boardMapper.insetFile", atList);
-	}
 
 	public int seachBoardNo(SqlSessionTemplate sqlSession, Board b) {
 		// TODO Auto-generated method stub
@@ -278,6 +274,7 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectSearchReviewCount", sr);
 
 	}
+
 
 	public int getMyPayListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		
@@ -293,6 +290,70 @@ public class BoardDAO {
 		
 		return  (ArrayList)sqlSession.selectList("boardMapper.SeachMyPayList",sc , rowBounds);
 	}
+
+	public ArrayList<Board> searchReviewList(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.searchReviewList", sr, rowBounds);
+	}
+
+	public int getSortListCount(SqlSessionTemplate sqlSession, String sortValue) {
+		return sqlSession.selectOne("boardMapper.getSortListCount", sortValue);
+	}
+
+	public ArrayList<Board> selectSortList(SqlSessionTemplate sqlSession, String sortValue, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSortList", sortValue, rowBounds);
+	}
+
+	public int getSearchAndSortCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("boardMapper.getSearchAndSortCount", map);
+	}
+
+	public ArrayList<Board> selectSearchSortList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+			PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchSortList", map, rowBounds);
+	}
+	public int insetFile(SqlSessionTemplate sqlSession, Attachment at) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insetFile", at);
+	}
+
+	public ArrayList<Comments> selectAdminCommentList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAdminCommentList", map);
+	}
+
+	public Board selectupInquiryBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectupInquiryBoard", boardNo);
+	}
+
+	public int updateInquiryBoard(SqlSessionTemplate sqlSession, Board b) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateInquiryBoard", b);
+	}
+
+	public int deleteFile(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("boardMapper.deleteFile",boardNo);
+	}
+
+	public int deleteInquiryBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
+	}
+
+	
+	public int myPayDelete(SqlSessionTemplate sqlSession, String s) {
+		return sqlSession.update("boardMapper.myPayDelete",s);
+	}
+
+
+
 
 
 

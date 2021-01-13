@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -116,6 +118,7 @@ public class BoardController {
 		}
 		return mv;
 	}
+	
 	// 문의사항 = 1----------------------------------------------------
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
@@ -147,44 +150,43 @@ public class BoardController {
 	
 	//문의사항 작성 컨트롤러
 	@RequestMapping("inInsert.in")
-	public String insertInquiry(@ModelAttribute Board b,
+	public String insertInquiry(@ModelAttribute Board b, @ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							HttpServletRequest request) {
 		
 		int result = bService.insertIn(b);
-		System.out.println("b입니다"+b);
+		//System.out.println("b입니다"+b);
+		//System.out.println("uploadFile입니다"+uploadFile);
 		
 		int boardNo = bService.seachBoardNo(b);
 		b.setBoardNo(boardNo);
 
 		if(uploadFile != null) {//첨부파일이 있다면
-			ArrayList<Attachment> atList =  new ArrayList<Attachment>();
-			Attachment at = saveFile2(uploadFile, request, 1);
+			at = saveFile2(uploadFile, request, 1);
 			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
 			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
 			at.setAtcLevel(0);
 			at.setBoardNo(boardNo);
-			
-			atList.add(at);
-			System.out.println("at이쥬"+at);
-			System.out.println("atList이네"+atList);
-			
-			int resultF = bService.insetFile(atList);
-			System.out.println("atList얍"+atList);
+			//System.out.println("at이쥬"+at);
+			int resultF = bService.insetFile(at);
+			//System.out.println("at얍"+at);
+			if(resultF > 0) {
+				System.out.println("파일업로드 성공");
+			} else {
+				System.out.println("파일업로드 실패");
+			}
 		}
-		
 		if(result > 0) {
-			return "redirect:notice.no";
+			return "redirect:inquiry.in";
 		}else {
 			throw new BoardException("공지사항 게시글 작성에 실패하였습니다.");
 		}
-		
-		
 	}
 	
+	//문의사항 파일 저장 컨트롤러
 	public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code) {
 		
-		System.out.println("file이에요"+file);
+		//System.out.println("file이에요"+file);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		File folder = new File(savePath);
@@ -213,35 +215,152 @@ public class BoardController {
 		return at;
 	}
 	
-	public String saveInFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		//웹 서버 contextPath를 불러와 폴더의 경로 받아옴(webapp 하위의 resources 폴더)
-		System.out.println("file이야"+file);
-		String savePath = root + "\\inuploadRiles";
-		
-		File folder = new File(savePath);
-		
-		if(!folder.exists()) {
-			folder.mkdirs(); // 폴더가 없다면 폴더를 만들어준다.
+	//문의사항 상세보기
+	@RequestMapping("idetail.in")
+	public ModelAndView indetailView(@RequestParam("boardNo") int boardNo,
+									@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
+		//System.out.println("boardNo입니다"+boardNo);
+		Board board = bService.selectBoard(boardNo);
+		//System.out.println("board입니다"+board);
+		ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+		//System.out.println("atList입니다"+atList);
+		Member login = (Member)session.getAttribute("loginUser");
+		//String loginUser = login.getId();
+		//System.out.println(loginUser);
+		if(board != null) {
+			mv.addObject("board", board)
+				.addObject("page", page)
+				//.addObject("loginUser", loginUser)
+				.setViewName("inquiryDetail");
+			if(atList != null) {
+				mv.addObject("atList", atList);
+			}
+		}else {
+			throw new BoardException("문의사항 상세보기가 실패하였습니다.");
 		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String atcOrigin = file.getOriginalFilename();
-		String atcName = sdf.format(new Date(System.currentTimeMillis()))
-				+ "." + atcOrigin.substring(atcOrigin.lastIndexOf(".") + 1);
-		
-		String atcPath = folder + "\\" + atcName;
-		
-		try {
-			file.transferTo(new File(atcPath));
-		} catch (Exception e) {
-			System.out.println("파일 전송 에러 : " + e.getMessage());
-			e.printStackTrace();
-		}
-		
-		return atcName;
+		return mv;
 	}
 	
+	//문의사항 관리자 댓글 작성
+	@RequestMapping("addAdminComments.in")
+	@ResponseBody
+	public String addAdminComments(@ModelAttribute Comments c, @RequestParam("comment") String comment, HttpSession session) {
+		//System.out.println("ok");
+		//System.out.println("C1:"+c);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String userId = loginUser.getId();
+			
+		c.setUserId(userId);
+		c.setComment(comment);
+			 
+		//System.out.println("C2:"+c);
+			
+		int result = bService.insertComments(c);
+		int upCount = bService.updateCount(c);
+			
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new BoardException("댓글 등록에 실패하였습니다.");
+		}
+	}
+	
+	//문의사항 관리자 댓글 불러오기
+	@RequestMapping("aCList.in")
+	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
+		System.out.println("boardNo입니다"+boardNo);
+		System.out.println("user_id입니다"+userId);
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("boardNo", boardNo);
+		map.put("userId", userId);
+		System.out.println("map입니다"+map);
+		
+		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
+		System.out.println("aCList입니다"+aCList);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(aCList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//문의사항 글 수정 컨트롤러
+	@RequestMapping("inquiryUpView.in")
+	public ModelAndView inquiryUpView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page, 
+										ModelAndView mv) {
+		
+		Board board = bService.selectupInquiryBoard(boardNo);
+		
+		mv.addObject("board", board)
+		  .addObject("page", page)
+		  .setViewName("inquiryUpdateForm");
+		
+		return mv;
+	}
+	
+	//문의사항 글 수정
+	@RequestMapping("inquiryUp.in")
+	public ModelAndView inquiryUp(
+							@ModelAttribute Board b, @RequestParam("boardNo") int boardNo,
+							@RequestParam("page") int page, HttpServletRequest request,
+							@ModelAttribute Attachment at,
+							@RequestParam("uploadFile") MultipartFile uploadFile,
+							ModelAndView mv) {
+		System.out.println("board입니다"+b);
+		
+		b.setBoardNo(boardNo);
+		
+		int result = bService.updateInquiryBoard(b);
+		//System.out.println(b);
+		//System.out.println(result);
+		//System.out.println(b.getBoardNo());
+		
+		if(uploadFile != null) {//첨부파일이 있다면
+			int resultD = bService.deleteFile(boardNo);
+			at = saveFile2(uploadFile, request, 1);
+			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
+			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
+			at.setAtcLevel(0);
+			at.setBoardNo(boardNo);
+			//System.out.println("at이쥬"+at);
+			int resultF = bService.insetFile(at);
+			//System.out.println("at얍"+at);
+			if(resultF > 0) {
+				System.out.println("파일업로드 성공");
+			} else {
+				System.out.println("파일업로드 실패");
+			}
+		}
+		
+		if(result > 0) {
+			mv.addObject("page", page)
+			  .setViewName("redirect:idetail.in?boardNo=" + b.getBoardNo());
+		} else {
+			throw new BoardException("문의사항 게시글 수정에 실패하였습니다.");
+		}
+		
+		return mv;
+	}
+	
+	//오늘은 나도 작가 = 5 게시글 삭제 
+	@RequestMapping("inquiryDel.in")
+	public String inquiryDel(@RequestParam("boardNo") int boardNo) {
+				
+		int result = bService.deleteInquiryBoard(boardNo);
+				
+		if(result > 0) {
+			return "redirect:inquiry.in";
+		} else {
+			throw new BoardException("게시글 삭제에 실패했습니다.");
+		}
+	}	
+	
+		
 	// 책 리뷰 = 2 ----------------------------------------------------
 	@RequestMapping("book.re")
 	public ModelAndView bookreviewList(@RequestParam(value="page", required=false) Integer page,
@@ -275,16 +394,30 @@ public class BoardController {
 		}
 		return mv;
 	}
-	@RequestMapping("write.re")//****-------------------이거랑
+	@RequestMapping("write.re")
 	public String bookreviewWriteForm() {
 		return "bookreviewWriteForm";
 	}
+	// 리뷰 게시판 상세페이지
 	@RequestMapping("redetail.re")
 	public ModelAndView bookreviewDetailView(@RequestParam("boardNo") int boardNo,
 											 @RequestParam("page") int page,
-											 ModelAndView mv) {
+											 ModelAndView mv, HttpServletRequest request) {
 		Board board = bService.selectBoard(boardNo);
 		Attachment at = bService.selectAttachment(boardNo);
+		
+		// 좋아요 
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int heart = 0;
+		if(loginUser != null) {
+			String id = loginUser.getId();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("loginUser", id);
+			map.put("boardNo", boardNo);
+						
+			heart = bService.findLike(map) == 1? 1:0;
+		}
+		
 		if(board != null) {
 			
 			String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
@@ -302,7 +435,10 @@ public class BoardController {
 			mv.addObject("author", author);
 			mv.addObject("wise", wise);
 			mv.addObject("page", page);
+			mv.addObject("heart", heart);
 			mv.setViewName("bookReviewDetail");
+		}else {
+			throw new BoardException("리뷰 게시판 상세보기에 실패하였습니다.");
 		}
 		return mv;
 	}
@@ -325,7 +461,7 @@ public class BoardController {
 		map.put("reList", reList);
 		map.put("pi1", pi1);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
 		 try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
@@ -358,7 +494,7 @@ public class BoardController {
 		map.put("pi2", pi2);
 		map.put("wiseArr", wiseArr);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
 		 try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
@@ -366,7 +502,7 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping("insert.re") //*------------------------------------------이거 두개
+	@RequestMapping("insert.re") 
 	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
@@ -391,38 +527,42 @@ public class BoardController {
 			result = bService.insertBoard(b);
 		}
 		
-		
 		if(result > 0) {
 			return "redirect:book.re";
 		}else {
 			throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 		}
 	}
-	// 수정하기
+	// 수정하기 뷰
 	@RequestMapping("modify.re")
 	public ModelAndView reviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
 									ModelAndView mv) {
 		Board board = bService.selectBoardExceptAddCount(boardNo);
 		Attachment at = bService.selectAttachment(boardNo); 
+		if(board != null) {
+			String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
+			String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목")+4);
+			String author = exbook.substring(0,exbook.indexOf("#작가"));
+			String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
+			String wise = exauthor.substring(0,exauthor.indexOf("#명언"));
+			String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
+			
+			board.setbContent(content);
+			
+			mv.addObject("board", board)
+				.addObject("page", page)
+				.addObject("booktitle", booktitle)
+				.addObject("author", author)
+				.addObject("wise", wise)
+				.addObject("at", at)
+				.setViewName("bookUpdateForm");
+		}else {
+			throw new BoardException("리뷰 게시판 수정하기에 값을 불러오는데 실패하였습니다.");
+		}
 		
-		String booktitle = board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
-		String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목")+4);
-		String author = exbook.substring(0,exbook.indexOf("#작가"));
-		String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
-		String wise = exauthor.substring(0,exauthor.indexOf("#명언"));
-		String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
-		
-		board.setbContent(content);
-		
-		mv.addObject("board", board)
-			.addObject("page", page)
-			.addObject("booktitle", booktitle)
-			.addObject("author", author)
-			.addObject("wise", wise)
-			.addObject("at", at)
-			.setViewName("bookUpdateForm");
 		return mv;
 	}
+	// 수정하기
 	@RequestMapping("update.re")
 	public ModelAndView updateReviewBoard(@RequestParam("page") int page, @ModelAttribute Board b,
 									@RequestParam("reloadFile") MultipartFile reloadFile,
@@ -460,6 +600,7 @@ public class BoardController {
 		}
 		return mv;
 	}
+	// 삭제하기
 	@RequestMapping("delete.re")
 	public String deleteReviewBoard(@RequestParam("boardNo") int boardNo) {
 		int result = bService.deleteBoardAndFile(boardNo);
@@ -473,26 +614,187 @@ public class BoardController {
 	@RequestMapping("search.re")
 	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
 								HttpServletResponse response, ModelAndView mv) {
-		String condition = request.getParameter("searcCondition");
+		String condition = request.getParameter("searchConditon");
 		String value = request.getParameter("searchValue");
 		
+		int searchCate = 0;
 		if(condition.equals("title")) {
 			sr.setTitle(value);
+			searchCate = 1;
 		}else if(condition.equals("author")){
-			sr.setAuthor(value);
-		}else if(condition.equals("content")) {
-			sr.setContent(value);
+			sr.setAuthor(value+"#작가");
+			searchCate = 2;
 		}else if(condition.equals("book")) {
-			sr.setBook(value);
-		}else {
+			sr.setBook(value +"#책제목");
+			searchCate = 3;
+		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
+			searchCate = 4;
+		}else {
+			sr.setContent(value);
+			searchCate = 5;
 		}
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		int listCount = bService.getSearchReviewListCount(sr);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		
+		ArrayList<Board> bList = bService.selectSearchReviewList(sr, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList);
+			mv.addObject("atList", atList)
+				.addObject("pi", pi)
+				.addObject("contentArr", contentArr)
+				.addObject("wiseArr", wiseArr)
+				.addObject("searchCate", searchCate)
+				.addObject("searchValue", value)
+				.setViewName("BookReviewSearch");
+		}else {
+			throw new BoardException("리뷰 게시판 검색하기에 실패하였습니다.");
+		}
 		return mv;
+	}
+	//분류하기
+	@RequestMapping("sort.re")
+	public ModelAndView sortBookReviewList(@RequestParam("sortValue") String sortValue, HttpServletRequest request,
+											ModelAndView mv) {
+		
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSortListCount(sortValue);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		ArrayList<Board> bList = bService.selectSortList(sortValue, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList)
+			  .addObject("atList", atList)
+			  .addObject("pi", pi)
+			  .addObject("contentArr", contentArr)
+			  .addObject("wiseArr", wiseArr)
+			  .addObject("sortValue", sortValue)
+			  .setViewName("BookReview");
+		}else {
+			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	// 검색 후 분류하기
+	@RequestMapping("searchsort.re")
+	public ModelAndView searchAndSortReview(ModelAndView mv, @RequestParam("sortValue") String sortValue,
+											 HttpServletRequest request, @ModelAttribute SearchReview sr) {
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		String condition = request.getParameter("searchConditon");
+		String value = request.getParameter("searchValue");
+		int searchCate = 0;
+		if(condition.equals("title")) {
+			sr.setTitle(value);
+			searchCate = 1;
+		}else if(condition.equals("author")){
+			sr.setAuthor(value+"#작가");
+			searchCate = 2;
+		}else if(condition.equals("book")) {
+			sr.setBook(value +"#책제목");
+			searchCate = 3;
+		}else if(condition.equals("writer")) {
+			sr.setWriter(value);
+			searchCate = 4;
+		}else {
+			sr.setContent(value);
+			searchCate = 5;
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("sortValue", sortValue);
+		map.put("writer",sr.getWriter());
+		map.put("content",sr.getContent());
+		map.put("book",sr.getBook());
+		map.put("author",sr.getAuthor());
+		map.put("title",sr.getTitle());
+		
+		int listCount = bService.getSearchAndSortCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		ArrayList<Board> bList = bService.selectSearchSortList(map, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
+		System.out.println(listCount);
+		System.out.println(bList);
+		
+		if(bList != null) {
+			String[] wiseArr = new String[bList.size()];
+			String[] contentArr = new String[bList.size()];
+			
+			for(int i = 0; i < bList.size(); i++) {
+				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
+				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
+			}
+			mv.addObject("bList", bList)
+			  .addObject("atList", atList)
+			  .addObject("pi", pi)
+			  .addObject("contentArr", contentArr)
+			  .addObject("wiseArr", wiseArr)
+			  .addObject("sortValue", sortValue)
+			  .addObject("searchCate", searchCate)
+			  .addObject("searchValue", value)
+			  .setViewName("BookReviewSearch");
+		}else {
+			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	//댓글 가져오기
+	@RequestMapping("comments.re")
+	public void getCommentsReviewList(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
+			@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+		
+		response.setContentType("application/json; charset=UTF-8");
+		int currentPage1 = 1;
+
+		if (page0 != null) {
+			currentPage1 = page0;
+		}
+
+		int listCount = bService.getCommentListCount(boardNo);
+		PageInfo pi0 = Pagination.getPageInfo5_1(currentPage1, listCount);
+		ArrayList<Comments> cList = bService.selectAnotherComments(boardNo, pi0);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cList", cList);
+		map.put("pi0", pi0);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
@@ -1035,7 +1337,7 @@ public class BoardController {
 		} catch (BoardException e) {
 			
 			
-			throw new BoardException("마이페이지 게시글 검색 실패");
+			throw new BoardException("구매 리스트 삭제 실패");
 			
 		}
 		
@@ -1044,6 +1346,62 @@ public class BoardController {
 		
 		
 		return mv; 
+	}
+	
+	@RequestMapping("myPayDelete.me")
+	public ModelAndView myPayDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		int result = bService.myPayDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myPayList.me");
+		} else {
+
+			throw new BoardException("구매 리스트 삭제 실패");
+		}
+
+		return mv;
+
 	}
 	
 	@RequestMapping("mBlistDelete.me")

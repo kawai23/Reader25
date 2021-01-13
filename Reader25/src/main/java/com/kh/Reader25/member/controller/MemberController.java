@@ -76,6 +76,7 @@ public class MemberController {
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		      //로그인 사용자 정보를 읽어온다.
+
 		apiResult = naverLoginBO.getUserProfile(oauthToken);
 		model.addAttribute("result", apiResult);
 		session.setAttribute("result", apiResult);
@@ -93,7 +94,6 @@ public class MemberController {
 	}
 	
 	
-
 
 		
 	//회원가입 후 로그인 컨트롤러

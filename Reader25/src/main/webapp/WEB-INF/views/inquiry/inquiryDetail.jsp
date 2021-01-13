@@ -126,33 +126,111 @@
 	<section>
 		<div class="inquiry-div">
 			<div class="inquiry-header">문의사항</div>
+			<h8 align="center">${ board.boardNo }번 글 상세보기</h8>
 			<div id="inquiry-contents">
 				<div class="title">
 					<span class="title-span">제목</span>
-					<span>이 기능 추가해주시면 안될까요???</span>
+					<span>${ board.bTitle }</span>
 				</div>
 				<div class="writer">
 					<span class="title-span">작성자</span>
-					<span>강건강</span>
+					<span>${ board.userId }</span>
 				</div>
 				
 				<!-- 이미지 파일 넣기 -->
 				<div class="image-div">
-					<img src="<%=request.getContextPath()%>/images/bookEX.jpg">
+					<img src="<%=request.getContextPath()%>/buploadFiles/${ Attachment.atcName }">
 				</div>
 				<!-- ---------- -->
 				
 				<div class="contents">
-					제가 이거를 1년 썼는데 
-					장바구니를 이렇게 롸롸 기능 추가하는건 어때요??
+					<span>${ board.bContent }</span>
 				</div>
-				<div class="reply-writer">
-					관리자
+				
+				<div class="reply-writer" id="acuserId">
+					
 				</div>
-				<div class="reply-div">
-					오호 좋네요
-					포인트 150점 드립니다.
+				<div class="reply-div" id="acComment">
+					
 				</div>
+				
+				<div class="adminComments">
+					<c:if test="${ loginUser.id eq 'admin' }">
+						<table class="adminCommentsTable"  align="center">
+							<tr>
+								<td rowspan="2"><textarea rows="3" cols="55" id="comment" placeholder="댓글을 입력해 주세요"></textarea></td>
+								<td><input type="text" name="userId" id="writer" readonly value="${ loginUser.id }"></td>
+							</tr>
+							<tr>
+								<td><button id="cSubmit">등록하기</button></td>
+							</tr>
+						</table>
+					</c:if>
+				</div>
+				
+				<script>
+				
+				//관리자 댓글 등록
+				$('#cSubmit').on('click', function(){
+					var comment = $('#comment').val();
+					var boardNo = ${board.boardNo};
+					
+					$.ajax({
+						url: "addAdminComments.in",
+						data: {comment:comment, boardNo:boardNo},
+						success: function(data){
+							console.log(data);
+							if(data=="success"){
+								$("#comment").val("");
+								getACList();
+								alert("댓글이 등록되었습니다.");
+							}
+						}
+					});
+				});
+				
+				//관리자 댓글 리스트 불러오기
+				function getACList(){
+					var boardNo = ${ board.boardNo };
+					var userId = 'admin';
+					//console.log(value);
+					$acuserId = $('#acuserId');
+					$acComment = $('#acComment');
+					
+					$.ajax({
+						url: "aCList.in",
+						data: {boardNo:boardNo, userId:userId},
+						success: function(data){
+							console.log(data)
+							//댓글 넣기
+							
+							
+							if(data.length > 0){
+								for(var i in data){
+									$userId = data[i].userId;
+									$Comment = data[i].comment;
+									
+									$acuserId.html($userId);
+									$acComment.html($Comment);
+								}
+							} else {
+								$acuserId = $('');
+								$acComment = $('아직 답변이 없습니다');
+							}
+							
+						}
+					});
+				}
+				
+				$(function(){
+					getACList();
+					 setInterval(function(){
+						 getACList(1);
+					}, 1000); 
+				});
+				
+				</script>
+				
 			</div>
 		</div>
 		<form id="comments-form" action="<%=request.getContextPath()%>/write.co">
@@ -173,17 +251,22 @@
 			</div>
 		</form>
 		<div class="btn-div">
-			<!-- 관리자아이디  또는 글쓴이  -->
-			<button class="list-btn" id="modify-btn">수정하기</button>
-			<button class="list-btn" id="delete-btn">삭제하기</button>
-			<!-- ------- -->
-			<button class="list-btn">목록으로</button>
+			<c:url var="inquiryUpdate" value="inquiryUpView.in">
+				<c:param name="boardNo" value="${ board.boardNo }"/>
+				<c:param name="page" value="${ page }"/>
+			</c:url>
+			<c:url var="inquiryDelete" value="inquiryDel.in">
+				<c:param name="boardNo" value="${ board.boardNo }"/>
+			</c:url>
+			<c:url var="goInquiryList" value="inquiry.in">
+				<c:param name="page" value="${ page }"/>
+			</c:url>
+			<c:if test="${ loginUser.id eq board.userId || loginUser.id eq 'admin' }">
+				<button class="list-btn" id="modify-btn" onclick="location.href='${ inquiryUpdate }'">수정하기</button>
+				<button class="list-btn" id="delete-btn" onclick="location.href='${ inquiryDelete }'">삭제하기</button>
+			</c:if>
+			<button class="list-btn"  onclick="location.href='${ goInquiryList }'">목록으로</button>
 		</div>
-		<script>
-			$('#list-btn').click(function(){
-				//location.href = ${loc}; // 이전으로 가기historyback
-			});
-		</script>
 	</section>
 </body>
 </html>

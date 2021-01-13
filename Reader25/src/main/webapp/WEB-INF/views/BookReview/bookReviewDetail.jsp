@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,23 @@
   		margin:auto;
   		min-width: 1000px;
   	}
+  	.list-info{
+  		border-bottom: 1px solid rgb(200, 200, 200);
+  		padding-top: 30px;
+  		padding-bottom: 10px;
+  		width: 80%;
+		margin:auto;
+		max-width: 1000px;
+  	}
+  	.list-info img{position:relative; bottom: -10px;}
+  	.list-info p{
+  		display:inline-block;
+  		color:rgb(100, 100, 100);
+  		margin-left: 10px;
+  	}
+  	.count-p{float:right; margin-right: 10px}
 	.bookreview-div{
+		clear:both;
 		margin-top: 20px;
 	}
 	.info{
@@ -79,47 +96,86 @@
 	#quote1{float:left;}
 	#quote2{float:right;}
 	.wise-content{display:inline-block; margin-top: 10px;}
-	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px;}
+	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);}
 	.contents>p{margin:15px;}
-	.list{
+	.comment-box{
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
 		max-width: 1000px;
+		border-bottom: 1px solid rgb(200, 200, 200);
+		padding-bottom: 40px;
+	}
+	.comment-date{color:rgb(180, 180, 180);display:inline-block; margin-left: 10px; font-size: 12px;}
+	.comment-write{
+		border: 1px solid rgb(200, 200, 200);
+		background: white;
+		height: 100px;
+	}
+	.comment-box button{
+		font-size: 13px;
+		height: 25px;
+		float: right;
+		background:rgba(85, 83, 83, 1);
+		width: 80px;
+		margin: 5px;
+		color:white;
+	}
+	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
+	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
+	.user-div{width: 97%;margin:auto;}
+	.text-count{float:right; color:rgb(200, 200, 200);}
+	.comment-box textarea{
+		clear:both;
+		margin: 8px;
+		width: 97%;
+		height: 55%;
+		resize: none;
+		border: none;
+	}
+	.list-box{
+		clear:both;
+		width: 80%;
+		margin:auto;
+		margin-top:10px;
+		max-width: 1000px;
+		background: white;
+		border-radius: 5px;
+	}
+	.list{
+		margin: 10px;
 	}
 	.list-header{
-		background:rgba(247, 180, 94, 1);
-		padding-left: 20px;
 		height: 35px;
 		line-height: 35px;
+		border-bottom: 1px solid rgb(200, 200, 200);
 	}
 	.list-header p{
 		display:inline;
 	}
-	.list-contents{
-		background: rgba(229, 229, 229, 1);
-		padding: 10px;
-	}
 	.list-table{
-		width: 95%;
+		width: 100%;
 		border-collapse: collapse;
 		margin:auto;
 	}
+	.list-table tr{border-bottom: 1px solid rgb(240, 240, 240);}
 	.list-table tr:hover{
-		background: white;
 		cursor: pointer;
+		background: rgb(240, 240, 240);
 	}
 	.list-table td{
 		text-align: center;
+		color:gray;
 	}
-	.list-table td[class=td-left]{
-		text-align: left;
-	}
+	.list-table td[class=td-left]{text-align: left;}
+	.list-table td[class=td-right]{text-align: right; color:rgb(180, 180, 180);}
 	.paging-btn{
 		width: 200px;
+		height: 35px;
 		margin: auto;
-		margin-top: 10px;
+		padding: 0;
 		text-align: center;
+		font-size: 15px;
 	}
 	.paging-btn a, .paging-btn p{
 		display:inline-block;
@@ -131,8 +187,8 @@
 	}
 	.btns-div{
 		font-size: 18px;
+		margin-top: 10px;
 		height: 25px;
-		position: relative;
 		float: right;
 		margin-right: 10%;
 		top: -30px;
@@ -169,10 +225,10 @@
 		background:rgba(245, 185, 142, 1);
 		cursor:pointer;
 	}
+	/* modal */
 	.jquery-modal blocker current {
-	visibility: none;
-}
-
+		visibility: none;
+	}
 	.modal {
 		margin: 40% auto; 
 		padding: 20px;
@@ -212,8 +268,8 @@
 </head>
 <body>
 	<%@include file="../common/menubar.jsp" %>
-		<!-- 에러 모달창 -->
-	<div class="modal-back">
+	<!-- 에러 모달창 -->
+	<div class="modal-back" id="del-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
@@ -224,16 +280,95 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="login-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>로그인이 필요한 서비스입니다.</p>
+				<br>
+				<button class="modal-accept" value="accept">로그인하기</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="check-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 작성되었습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="content-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>내용을 입력해주세요</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
 				$('.modal').hide();
 				$('.modal-back').hide();
 			});
+			$('#login-modal .modal-accept').click(function(){
+				location.href="loginView.me";
+			});
 		});
 	</script>
 	
 	<section>
+		<div class="list-info">
+			<a class="heart"><img id="heart-img" src="resources/images/bookreview/heart1.png"/></a>
+			<p>${ board.userId } ${board.updateDay }</p>
+			<p class="count-p">조회수 : ${ board.bCount } </p>
+		</div>
+		<script>
+			$(function(){
+				var heartval = ${heart};
+				if(heartval > 0){
+					$('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
+					$(".heart").prop('name',heartval)
+				}else{
+					$(".heart").prop('name',heartval)
+					$('#heart-img').mouseenter(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
+					}).mouseout(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart1.png');
+						
+					});
+				}
+				$('.heart').click(function(){
+					if('${loginUser}' != ''){
+						var heartC = $('.heart');
+						$.ajax({
+							url: 'heart.to',
+							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
+							success:function(data){
+								heartC.prop('name', data);
+								console.log(data);
+								if(data == 1){
+									$('#heart-img').prop('src','resources/images/bookreview/heart2.png');
+									location.reload();
+								}else{
+									$('#heart-img').prop('src','resources/images/bookreview/heart1.png');
+									location.reload();
+								}
+							}
+						});
+					}else{
+						$('#login-modal').show();
+						$('#login-modal .modal').show();
+					}
+				});
+			});
+		</script>
 		<div class="bookreview-div">
 			<div class="info">
 				<div class="img-div">
@@ -250,6 +385,10 @@
 					<span class="info" id="author">${booktitle }</span>
 					<p class="tag">#작가</p>
 					<span class="info" id="sort">${author }</span>
+					<c:if test="${board.cate ne null}">
+						<p class="tag">#분야</p>
+						<span class="info" id="cate">${board.cate }</span>
+					</c:if>
 					<br>
 					<p class="tag">#글쓴이</p>
 					<span class="info" id="sort">${board.userId }</span>
@@ -266,20 +405,143 @@
 				${board.bContent}
 			</div>
 		</div>
-		<div class="list">
-			<div class="list-header">
-				<p>이 책의 다른 리뷰</p>
+		
+		<div class="comment-box">
+			<div class="commentList">
 			</div>
-			<div class="list-contents">
-				<table class="list-table" id="reTable">
-					<!-- 리뷰 게시뮬 -->
-				</table>
+			<div class="paging-btn" id="co-paging">
+			</div>
+			<div class="comment-write">
+				<div class="user-div">
+					<c:if test="${loginUser eq null }">
+						로그인 시 댓글 등록이 가능합니다.
+					</c:if>
+					<c:if test="${loginUser ne null }">
+						${loginUser.id}
+					</c:if>
+					<span class="text-count" id="counter">0/500</span>
+				</div>
+				<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+			</div>
+			<button id="comment-add">댓글 등록</button>
+		</div>
+		<script>
+		 $(function(){
+			 getComments();
+			 $('#comment-input').keyup(function(){
+				 var content = $(this).val();
+				 $('#counter').html(content.length +'/500');
+			 });
+			 $('#comment-add').click(function(){
+				if('${loginUser}' == ''){
+					$('#login-modal').show();
+					$('#login-modal .modal').show();
+				}else{
+					addComments();
+				}
+			 });
+			 setInterval(function(){
+				 var page0 = $('.page0-no').text();
+				getComments(page0);
+			 }, 1000); 
+		 });
+		 function addComments(){
+			 var boardNo = ${board.boardNo};
+			 var comment = $('#comment-input').val();
+			 if(comment != ''){
+				 $.ajax({
+					url:  "addComments.to",
+					data:{boardNo:boardNo,comment:comment},
+					success: function(data){
+						$('#comment-input').val('');
+						if(data == 'success'){
+							$('#check-modal').show();
+							$('#check-modal .modal').show();
+						}
+						getComments(1);
+					}
+				});
+			 }else{
+				 $('#content-modal').show();
+				 $('#content-modal .modal').show();
+			 }
+		 }
+		 function getComments(value){
+			 var boardNo = ${board.boardNo};
+			 var page0 = value;
+			 $.ajax({
+				 url:'comments.re',
+				 data:{boardNo:boardNo,page0:page0},
+				 success: function(data){
+					//1) 페이징 버튼 넣기
+					pi0 = data.pi0;
+					$copaging = $('#co-paging');
+					$copaging.html('');
+					if(pi0.currentPage <= 1){
+						$before = $('<p>').text('<');
+					}else{
+						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
+					}
+					$copaging.append($before);
+
+					for(var i = pi0.startPage; i <= pi0.endPage; i++){
+						if(pi0.currentPage == i){
+							$pNo = $('<p class="page0-no">').text(i);
+						}else{
+							$pNo = $('<a>').on('click', function(){
+								getComments($(this).text());
+							}).text(i);
+						}
+						$copaging.append($pNo);
+					}
+					if(pi0.currentPage >= pi0.endPage){
+						$next = $('<p>').text(">");
+					}else{
+						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
+					}
+					$copaging.append($next);
+					//2)값넣기
+					cList = data.cList;
+					$comments = $('.commentList');
+					$comments.html('');
+					
+					for(var i in cList){
+						$comment = $('<div class="comment">');
+						
+						$top = $('<div class="comment-top">')
+						$idspan = $('<span class="comment-user">').text(cList[i].userId);
+						$datespan = $('<span class="comment-date">').text(cList[i].comDate);
+						$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
+						
+						$top.append($idspan);
+						$top.append($datespan);
+						
+						$comment.append($top);
+						$comment.append($commentDiv);
+						$comments.append($comment);
+					}
+				 }
+			 });
+		 }
+		</script>
+		 
+		<div class="list-box">
+			<div class="list">
+				<div class="list-header">
+					<p>이 책의 다른 리뷰</p>
+				</div>
+				<div class="list-contents">
+					<table class="list-table" id="reTable">
+						<!-- 리뷰 게시뮬 -->
+					</table>
+				</div>
+			</div>
+			<div class="paging-btn" id="re-paging">
+			<!-- 다른 리뷰 페이징 -->
 			</div>
 		</div>
 
-		<div class="paging-btn" id="re-paging">
-		<!-- 다른 리뷰 페이징 -->
-		</div>
+		
 		<script>
 			var reList;
 			$(function(){
@@ -327,7 +589,6 @@
 						//2) 게시물리스트 넣기
 						reList = data.reList;
 						
-						
 						$reTable = $('#reTable');
 						$reTable.html('');
 						if(reList.length <= 1){
@@ -345,7 +606,7 @@
 									$tdNo = $('<td>').text(reList[i].boardNo);
 									$tdTitle = $('<td class="td-left">').text(reList[i].bTitle);
 									$tdWriter = $('<td>').text(reList[i].userId);
-									$tdDate = $('<td>').text(reList[i].updateDay);
+									$tdDate = $('<td class="td-right">').text(reList[i].updateDay);
 									$tdCount = $('<td>').text(reList[i].bCount);
 									$tr.append($tdNo);
 									$tr.append($tdTitle);
@@ -357,22 +618,26 @@
 								}
 							}
 						}
+						
 					}
 				});
 			}
 		</script>
 		
-		<div class="list">
-			<div class="list-header">
-				<p>명대사</p>
+		<div class="list-box">
+			<div class="list">
+				<div class="list-header">
+					<p>명대사</p>
+				</div>
+				<div class="list-contents">
+					<table class="list-table" id="wiseTable">
+					</table>
+				</div>
 			</div>
-			<div class="list-contents">
-				<table class="list-table" id="wiseTable">
-				</table>
+			<div class="paging-btn" id="wise-paging">
 			</div>
 		</div>
-		<div class="paging-btn" id="wise-paging">
-		</div>
+		
 		<script>
 			$(function(){
 				getWiseList(1);
@@ -431,7 +696,7 @@
 									$tdNo = $('<td>').text(wiseList[i].boardNo);
 									$tdTitle = $('<td class="td-left">').text(wiseList[i].bTitle);
 									$tdWriter = $('<td>').text(wiseList[i].userId);
-									$tdDate = $('<td>').text(wiseList[i].updateDay);
+									$tdDate = $('<td class="td-right">').text(wiseList[i].updateDay);
 									$tdCount = $('<td>').text(wiseList[i].bCount);
 									$tdWise = $('<td>').text(wiseArr[i]);
 
@@ -464,10 +729,10 @@
 		</div>
 		<script>
 			function deleteReview(){
-				$('.modal-back').show();
-				 $('.modal').show();
-				 $('.modal-accept').click(function(){
-					location.href='delete.re?boardNo='+${board.boardNo}
+				$('#del-modal').show();
+				 $('#del-modal .modal').show();
+				 $('#del-modal .modal-accept').click(function(){
+					location.href='delete.re?boardNo='+${board.boardNo};
 				});
 			}
 		</script>

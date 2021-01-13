@@ -99,7 +99,7 @@ public interface BoardService {
 
 	int insertIn(Board b);
 
-	int insetFile(ArrayList<Attachment> atList);
+	int insetFile(Attachment at);
 
 	int seachBoardNo(Board b);
 
@@ -107,9 +107,34 @@ public interface BoardService {
 
 	int getSearchReviewListCount(SearchReview sr);
 
+
 	int getMyPayListCount(SearchCondition sc);
 
 	ArrayList<Pay> SeachMyPayList(SearchCondition sc, PageInfo pi);
+
+	ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi);
+
+	int getSortListCount(String sortValue);
+
+	ArrayList<Board> selectSortList(String sortValue, PageInfo pi);
+
+	int getSearchAndSortCount(HashMap<String, String> map);
+
+	ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi);
+	
+	ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map);
+
+	Board selectupInquiryBoard(int boardNo);
+
+	int updateInquiryBoard(Board b);
+
+	int deleteFile(int boardNo);
+
+	int deleteInquiryBoard(int boardNo);
+
+	int myPayDelete(String[] lists);
+
+
 
 
 	

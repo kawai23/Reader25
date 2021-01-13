@@ -97,7 +97,7 @@
 	<insert id="insertAttachment" parameterType="Attachment">
 		insert into attachment
 		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
-				#{atcPath}, sysdate, default, #{boardNo})
+				#{atcPath}, sysdate, default, seq_bid.currval)
 	</insert>
 	
 
@@ -192,6 +192,15 @@
  		order by PAY_NO desc
  	
  	</select>
+ 	
+ 	
+ 	
+ 	<update id="myPayDelete">
+ 	
+ 		UPDATE pay SET STATUS = 'N' WHERE PAY_NO=#{s}
+ 	
+ 	
+ 	</update>
 	
 	
 	<select id="SeachMyList" parameterType="SearchCondition" resultMap="boardResultSet">
@@ -292,8 +301,133 @@
 	<select id="selectSearchReviewCount" parameterType="SearchReview" resultType="_int">
 		select count(*)
 		from board
-		where b_status = 'Y'
-		<if test="${}">
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+	</select>
+	
+	<select id="searchReviewList" parameterType="SearchReview" resultMap="boardResultSet">
+		select *
+		from board
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+		order by board_no desc
+	</select>
+	
+	<select id="getSearchAndSortCount" resultType="_int">
+		select count(*)
+		from board
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="selectSearchSortList" parameterType="SearchReview" resultMap="boardResultSet">
+		select *
+		from board
+		where b_status = 'Y' and code = 2
+		<if test="writer != null">
+			and user_id = #{writer}
+		</if>
+		<if test="content != null">
+			and b_content like '%' || #{content} || '%'
+		</if>
+		<if test="book != null">
+			and b_content like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and b_content like '%' || #{author} || '%'
+		</if>
+		<if test="title != null">
+			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="getSortListCount" resultType="_int">
+		select count(*)
+		from board
+		where code = 2 and b_status = 'Y'
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="selectSortList" resultMap="boardResultSet">
+		select *
+		from board
+		where code = 2 and b_status = 'Y'
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'like'">
+			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
 		</if>
 	</select>
 	
@@ -303,11 +437,13 @@
 		where code = 2 and b_status = 'Y' 
 			and b_content like '%' || #{book} || '%'
 	</select>
+	
 	<select id="selectAnotherReview" resultMap="boardResultSet">
 		select *
 		from board
 		where code = 2 and b_status = 'Y'
 			and b_content like '%' || #{book} || '%'
+		order by board_no desc
 	</select>
 	<select id="findLike" resultType="_int">
 		select count(*)
@@ -457,5 +593,34 @@
 		from board
 		where b_title=#{bTitle} and b_content =#{bContent} and user_id=#{userId}
 	</select>
+	
+	<select id="selectAdminCommentList" resultMap="commentsResultSet">
+		select *
+		from comments
+		where board_no =#{boardNo} and user_id=#{userId}
+	</select>
+	
+	<select id="selectupInquiryBoard" resultMap="boardResultSet">
+		select *
+		from board
+		where code='1' and b_status='Y' and board_no =#{boardNo}
+	</select>
+	
+	<update id="updateInquiryBoard">
+		update board
+		set B_TITLE=#{bTitle}, B_CONTENT=#{bContent}, UPDATE_DAY=sysdate
+		where BOARD_NO=#{boardNo}
+	</update>
+	
+	<delete id="deleteFile">
+		DELETE FROM attachment
+		WHERE BOARD_NO = #{b_no}
+    </delete>
+    
+    <update id="deleteInquiryBoard">
+		update board
+		set B_STATUS='N'
+		where BOARD_NO=#{boardNo}
+	</update>
 
 </mapper>

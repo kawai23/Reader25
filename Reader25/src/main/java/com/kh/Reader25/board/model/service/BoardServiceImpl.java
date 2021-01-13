@@ -303,11 +303,7 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.insertIn(sqlSession, b);
 	}
 
-	@Override
-	public int insetFile(ArrayList<Attachment> atList) {
-		// TODO Auto-generated method stub
-		return bDAO.insetFile(sqlSession, atList);
-	}
+	
 
 	@Override
 	public int seachBoardNo(Board b) {
@@ -316,6 +312,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+
 	public int getMyPayListCount(SearchCondition sc) {
 		return bDAO.getMyPayListCount(sqlSession, sc);
 	}
@@ -324,6 +321,87 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Pay> SeachMyPayList(SearchCondition sc, PageInfo pi) {
 		return bDAO.SeachMyPayList(sqlSession,sc, pi);
 	}
+
+	public ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi) {
+		return bDAO.searchReviewList(sqlSession,sr, pi);
+	}
+
+	@Override
+	public int getSortListCount(String sortValue) {
+		return bDAO.getSortListCount(sqlSession, sortValue);
+	}
+
+	@Override
+	public ArrayList<Board> selectSortList(String sortValue, PageInfo pi) {
+		return bDAO.selectSortList(sqlSession, sortValue, pi);
+	}
+
+	@Override
+	public int getSearchAndSortCount(HashMap<String, String> map) {
+		return bDAO.getSearchAndSortCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi) {
+		return bDAO.selectSearchSortList(sqlSession, map, pi);
+	}
+	
+	@Override
+	public int insetFile(Attachment at) {
+		// TODO Auto-generated method stub
+		return bDAO.insetFile(sqlSession, at);
+	}
+
+	@Override
+	public ArrayList<Comments> selectAdminCommentList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.selectAdminCommentList(sqlSession, map);
+	}
+
+	@Override
+	public Board selectupInquiryBoard(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.selectupInquiryBoard(sqlSession, boardNo);
+	}
+
+	@Override
+	public int updateInquiryBoard(Board b) {
+		// TODO Auto-generated method stub
+		return bDAO.updateInquiryBoard(sqlSession, b);
+	}
+
+	@Override
+	public int deleteFile(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteFile(sqlSession, boardNo);
+	}
+
+	@Override
+	public int deleteInquiryBoard(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteInquiryBoard(sqlSession, boardNo);
+	}
+	
+
+	@Transactional
+	@Override
+	public int myPayDelete(String[] lists) {
+		int result = 0;
+		
+		for(String s: lists) {			
+			
+			result += bDAO.myPayDelete(sqlSession, s);
+
+		}
+		if(result != lists.length) {
+			
+			throw new BoardException("구매 리스트 삭제 실패");
+		}		
+		return result;
+	}
+
+
+
 
 	
 }

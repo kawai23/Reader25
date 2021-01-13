@@ -216,16 +216,29 @@ select::-ms-expand {
 <body>
 	<%@include file="../common/menubar.jsp" %>
 	<section>
+	<%
+      int cate = (int)request.getAttribute("searchCate");
+      String[] select = new String[5];   
+      for(int i = 0; i < select.length; i++){
+         switch(cate){
+         case 1: select[0] = "selected"; break;
+         case 2: select[1] = "selected"; break;
+         case 3: select[2] = "selected"; break;
+         case 4: select[3] = "selected"; break;
+         case 5: select[4] = "selected"; break;
+         }
+      }
+   %>
 		<div class="top-div">
 			<div class="search-div">
 				<select class="search-option" name="searchConditon" id="searchConditon">
-					<option selected="selected" value="title">title</option>
-					<option value="author">author</option>
-					<option value="book">book</option>
-					<option value="writer">writer</option>
-					<option value="content">content</option>
+					<option <%=select[0] %> value="title">title</option>
+					<option <%=select[1] %> value="author">author</option>
+					<option <%=select[2] %> value="book">book</option>
+					<option <%=select[3] %> value="writer">writer</option>
+					<option <%=select[4] %> value="content">content</option>
 				</select>
-				<input type="text" id="search-input">
+				<input type="text" id="search-input" value="${ searchValue }">
 				<span class="img-span">
 					<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
 				</span>
@@ -247,36 +260,40 @@ select::-ms-expand {
 				}
 			</script>
 			<div class="sort-div">
-			<% String sortValue = (String)request.getAttribute("sortValue"); %>
-			<% if(sortValue != null){ %>
-				<% if(sortValue.equals("lated")){ %>
-					<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;" >최신순</h4>
+				<% String sortValue = (String)request.getAttribute("sortValue"); %>
+				<% if(sortValue != null){ %>
+					<% if(sortValue.equals("lated")){ %>
+						<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;" >최신순</h4>
+					<%}else{ %>
+						<h4 class="sort-h4" id="lated-sort">최신순</h4>
+					<%} %>
+					<% if(sortValue.equals("like")){ %>
+						<h4 class="sort-h4" id="like-sort" style="font-weight: bolder;">좋아요</h4>
+					<%}else{ %>			
+						<h4 class="sort-h4" id="like-sort">좋아요</h4>
+					<%} %>
+					<% if(sortValue.equals("count")){ %>
+						<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
+					<%}else{ %>
+						<h4 class="sort-h4" id="count-sort">조회순</h4>
+					<%} %>
 				<%}else{ %>
 					<h4 class="sort-h4" id="lated-sort">최신순</h4>
-				<%} %>
-				<% if(sortValue.equals("like")){ %>
-					<h4 class="sort-h4" id="like-sort" style="font-weight: bolder;">좋아요</h4>
-				<%}else{ %>			
 					<h4 class="sort-h4" id="like-sort">좋아요</h4>
-				<%} %>
-				<% if(sortValue.equals("count")){ %>
-					<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
-				<%}else{ %>
 					<h4 class="sort-h4" id="count-sort">조회순</h4>
 				<%} %>
-			<%}else{ %>
-				<h4 class="sort-h4" id="lated-sort">최신순</h4>
-				<h4 class="sort-h4" id="like-sort">좋아요</h4>
-				<h4 class="sort-h4" id="count-sort">조회순</h4>
-			<%} %>
 			</div>
 		</div>
+		
 		<script>
 			$('#lated-sort').click(function(){sort('lated');});
 			$('#like-sort').click(function(){sort('like');});
 			$('#count-sort').click(function(){sort('count');});
 			function sort(value){
-				location.href="sort.re?sortValue=" + value;
+				var searchConditon = $('#searchConditon').val();
+				var searchValue = $('#search-input').val();
+				
+				location.href="searchsort.re?sortValue=" + value +"&searchConditon=" + searchConditon +"&searchValue=" + searchValue;;
 			}
 		</script>
 		

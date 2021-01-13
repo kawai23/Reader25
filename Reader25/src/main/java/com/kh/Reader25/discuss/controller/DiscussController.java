@@ -7,21 +7,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.discuss.model.exception.DiscussException;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.discuss.model.vo.Reply;
 import com.kh.Reader25.member.model.vo.Member;
 
 @Controller
@@ -146,6 +152,32 @@ public class DiscussController {
 		}
 	}
 	
+	// 댓글 작성
+	@RequestMapping("addReply.di")
+	@ResponseBody
+	public String addReply(@ModelAttribute Reply r) {
+		int result = dService.insertReply(r);
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new DiscussException("댓글 작성에 실패하였습니다.");
+		}
+	}
+	
+	// 댓글 리스트 불러오기
+	@RequestMapping("rList.di")
+	public void selectRList(@RequestParam("dNo") int dNo, @RequestParam("cho") int cho, HttpServletResponse response) {
+		ArrayList<Reply> rList = dService.selectRList(dNo, cho); 
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		try {
+			gson.toJson(rList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	// 파일 저장
 	public Attachment saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");

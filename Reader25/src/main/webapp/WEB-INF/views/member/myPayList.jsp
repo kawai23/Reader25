@@ -60,7 +60,7 @@
 						
 						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
 						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
-						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
+						<a href="myPayList.me" class="list-group-item active"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
 						<a href="#" class="list-group-item">좋아요/북마크</a>
 						
@@ -154,7 +154,7 @@
 
 							<div class="input-group-btn" >
 								<button type="button" class="btn btn-default dropdown-toggle"
-									id="Search1" data-toggle="dropdown" aria-expanded="false">Title
+									id="Search1" data-toggle="dropdown" aria-expanded="false">번호
 									<span class="caret" style="margin-left: 10px"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu" id="search1" style="overflow: visible;">
@@ -475,6 +475,18 @@
 						
 						
 						
+						<c:if test="${ !empty searchValue}">
+					
+							<c:set var="check" value="true"></c:set>
+					
+					   </c:if>
+					   
+					   <c:if test="${ empty searchValue}">
+					
+							<c:set var="check" value="false"></c:set>
+					
+					   </c:if>
+						
 
 	<script>
 	
@@ -497,11 +509,11 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
+					        	
 								
 					        	
 					        	
-					        	var check = ${ !empty searchValue } ; 
+					        	var check = ${ check } ; 
 					        	
 					        	var searchCondition = null;
 					        	
@@ -537,25 +549,12 @@
 							    
 							    
 							    
-							    console.log(select_obj);
-							    
-							    
-							    
-				 			    if(select_obj == '' || select_obj.length == 0){
+							  
 							    	
-				 			    	
-				 			    	//console.log(select_obj);
-							    	 location.href='myPayList.me?inFo='+Id + "&code=" + code+'&page='+ ${pi.currentPage}+path;
+				 			   
+							 location.href='myPayDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
 							    	
-				 			    }else{
-							    	
-				 			    	//console.log("데이터 : "+select_obj);
-				 			    	
-				 			    	
-								    
-								    location.href='myPayList.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
-							    	
-				 			    }
+				 			   
 							    
 
 						});
