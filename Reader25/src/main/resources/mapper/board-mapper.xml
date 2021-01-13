@@ -549,5 +549,17 @@
 		set B_STATUS='N'
 		where BOARD_NO=#{boardNo}
 	</update>
+	
+	<select id="getuserCommentsListCount" resultType="_int">
+		select count(*)
+		from comments
+		where board_no = #{boardNo} and user_id=#{userId}
+	</select>
+	
+	<select id="selectuserComments" resultMap="commentsResultSet">
+		select *
+		from comments
+		where board_no =#{boardNo} and user_id=#{userId}
+	</select>
 
 </mapper>

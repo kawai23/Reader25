@@ -331,6 +331,23 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
 	}
 
+	public int getuserCommentsListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> umap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.getuserCommentsListCount", umap);
+	}
+
+	public ArrayList<Comments> selectuserComments(SqlSessionTemplate sqlSession, int boardNo, PageInfo pi0,
+			String userId) {
+		int offset = (pi0.getCurrentPage() - 1)* pi0.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi0.getBoardLimit());
+		
+		HashMap<String, Object> smap = new HashMap<String, Object>();
+		smap.put("boardNo", boardNo);
+		smap.put("userId", userId);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
+	}
+
 
 
 

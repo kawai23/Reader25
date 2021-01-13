@@ -126,6 +126,10 @@ public interface BoardService {
 
 	int deleteInquiryBoard(int boardNo);
 
+	int getuserCommentsListCount(HashMap<String, Object> umap);
+
+	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
+
 //	ArrayList<Comments> selectAdminCommentList(int boardNo, String user_id);
 
 

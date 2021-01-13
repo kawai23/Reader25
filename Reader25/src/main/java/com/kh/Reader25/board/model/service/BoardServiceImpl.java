@@ -371,6 +371,17 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.deleteInquiryBoard(sqlSession, boardNo);
 	}
 
+	@Override
+	public int getuserCommentsListCount(HashMap<String, Object> umap) {
+		// TODO Auto-generated method stub
+		return bDAO.getuserCommentsListCount(sqlSession, umap);
+	}
+
+	@Override
+	public ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId) {
+		// TODO Auto-generated method stub
+		return bDAO.selectuserComments(sqlSession, boardNo, pi0, userId);
+	}
 
 
 	

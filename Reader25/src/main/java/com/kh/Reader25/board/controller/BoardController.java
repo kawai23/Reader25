@@ -267,16 +267,16 @@ public class BoardController {
 	//문의사항 관리자 댓글 불러오기
 	@RequestMapping("aCList.in")
 	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
-		System.out.println("boardNo입니다"+boardNo);
-		System.out.println("user_id입니다"+userId);
+		//System.out.println("boardNo입니다"+boardNo);
+		//System.out.println("user_id입니다"+userId);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("boardNo", boardNo);
 		map.put("userId", userId);
-		System.out.println("map입니다"+map);
+		//System.out.println("map입니다"+map);
 		
 		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
-		System.out.println("aCList입니다"+aCList);
+		//System.out.println("aCList입니다"+aCList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -287,6 +287,45 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//문의사항 회원만 댓글 가져오기
+	@RequestMapping("userComments.in")
+	public void getuserComments(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
+			@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId,
+			HttpServletResponse response) {
+		//System.out.println("userId나올까"+userId);	
+		response.setContentType("application/json; charset=UTF-8");
+		int currentPage1 = 1;
+
+		if (page0 != null) {
+			currentPage1 = page0;
+		}
+		
+		HashMap<String, Object> umap = new HashMap<String, Object>();
+		umap.put("boardNo", boardNo);
+		umap.put("userId", userId);
+
+		int listCount = bService.getuserCommentsListCount(umap);
+		PageInfo pi0 = Pagination.getPageInfo5_1(currentPage1, listCount);
+		
+		ArrayList<Comments> cList = bService.selectuserComments(boardNo, pi0, userId);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cList", cList);
+		map.put("pi0", pi0);
+			
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	//문의사항 글 수정 컨트롤러
 	@RequestMapping("inquiryUpView.in")
@@ -310,7 +349,7 @@ public class BoardController {
 							@ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							ModelAndView mv) {
-		System.out.println("board입니다"+b);
+		//System.out.println("board입니다"+b);
 		
 		b.setBoardNo(boardNo);
 		
@@ -869,7 +908,7 @@ public class BoardController {
 		map.put("boardNo", boardNo);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
-		System.out.println("heart"+heart);
+		//System.out.println("heart"+heart);
 		
 //		int currentPage = 1;
 //		if(cpage != null) {
@@ -920,7 +959,7 @@ public class BoardController {
         Like.setB_no(b_no);
         Like.setM_no(m_no);
  
-        System.out.println(heart);
+        //System.out.println(heart);
 
         if(heart >= 1) {
             bService.deleteLike(Like);
@@ -997,7 +1036,7 @@ public class BoardController {
 		map.put("pi1", pi1);
 		//System.out.println("map"+map);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 		try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException e) {
@@ -1112,8 +1151,8 @@ public class BoardController {
 									@RequestParam("cate") String cate, @RequestParam("userId") String userId,
 									HttpServletRequest request, HttpServletResponse response, 
 									ModelAndView mv) {
-		System.out.println("cate"+cate);
-		System.out.println("userId"+userId);
+		//System.out.println("cate"+cate);
+		//System.out.println("userId"+userId);
 		
 		//currentPage 설정
 		int currentPage = 1; //기본
