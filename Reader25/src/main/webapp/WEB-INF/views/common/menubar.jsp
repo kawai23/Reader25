@@ -27,6 +27,8 @@
 </head>
 <body>
 
+
+
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 
 	<div class="menubar">
@@ -97,5 +99,8 @@
 			location.href = "discuss.di";
 		}
 	</script>
+	
+	
+	
 </body>
 </html>

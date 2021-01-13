@@ -12,17 +12,32 @@ public class SearchCondition {
 	
 	private String content;
 	
+	private String no;
+	
 	private int code;
+	
+	
+	
 	
 	
 	public SearchCondition() {}
 
 
-	@Override
-	public String toString() {
-		return "SearchCondition [mId=" + mId + ", title=" + title + ", writer=" + writer + ", content=" + content
-				+ ", code=" + code + "]";
+
+
+
+	public SearchCondition(String mId, String title, String writer, String content, String no, int code) {
+		super();
+		this.mId = mId;
+		this.title = title;
+		this.writer = writer;
+		this.content = content;
+		this.no = no;
+		this.code = code;
 	}
+
+
+
 
 
 	public String getmId() {
@@ -30,9 +45,15 @@ public class SearchCondition {
 	}
 
 
+
+
+
 	public void setmId(String mId) {
 		this.mId = mId;
 	}
+
+
+
 
 
 	public String getTitle() {
@@ -40,9 +61,15 @@ public class SearchCondition {
 	}
 
 
+
+
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
+
 
 
 	public String getWriter() {
@@ -50,9 +77,15 @@ public class SearchCondition {
 	}
 
 
+
+
+
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+
+
+
 
 
 	public String getContent() {
@@ -60,9 +93,31 @@ public class SearchCondition {
 	}
 
 
+
+
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+
+
+
+
+	public String getNo() {
+		return no;
+	}
+
+
+
+
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+
+
 
 
 	public int getCode() {
@@ -70,19 +125,25 @@ public class SearchCondition {
 	}
 
 
+
+
+
 	public void setCode(int code) {
 		this.code = code;
 	}
 
 
-	public SearchCondition(String mId, String title, String writer, String content, int code) {
-		super();
-		this.mId = mId;
-		this.title = title;
-		this.writer = writer;
-		this.content = content;
-		this.code = code;
+
+
+
+	@Override
+	public String toString() {
+		return "SearchCondition [mId=" + mId + ", title=" + title + ", writer=" + writer + ", content=" + content
+				+ ", no=" + no + ", code=" + code + "]";
 	}
+
+
+	
 
 
 	

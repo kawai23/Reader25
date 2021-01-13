@@ -16,6 +16,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -311,6 +312,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+
+	public int getMyPayListCount(SearchCondition sc) {
+		return bDAO.getMyPayListCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<Pay> SeachMyPayList(SearchCondition sc, PageInfo pi) {
+		return bDAO.SeachMyPayList(sqlSession,sc, pi);
+	}
+
 	public ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi) {
 		return bDAO.searchReviewList(sqlSession,sr, pi);
 	}
@@ -370,7 +381,43 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.deleteInquiryBoard(sqlSession, boardNo);
 	}
+	
 
+	@Transactional
+	@Override
+	public int myPayDelete(String[] lists) {
+		int result = 0;
+		
+		for(String s: lists) {			
+			
+			result += bDAO.myPayDelete(sqlSession, s);
+
+		}
+		if(result != lists.length) {
+			
+			throw new BoardException("구매 리스트 삭제 실패");
+		}		
+		return result;
+	}
+
+
+	@Override
+	public int getuserCommentsListCount(HashMap<String, Object> umap) {
+		// TODO Auto-generated method stub
+		return bDAO.getuserCommentsListCount(sqlSession, umap);
+	}
+
+	@Override
+	public ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId) {
+		// TODO Auto-generated method stub
+		return bDAO.selectuserComments(sqlSession, boardNo, pi0, userId);
+	}
+
+	@Override
+	public ArrayList<Board> select() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 	

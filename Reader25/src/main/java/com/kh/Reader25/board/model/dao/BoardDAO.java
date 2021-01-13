@@ -2,7 +2,6 @@ package com.kh.Reader25.board.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +12,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -275,6 +275,22 @@ public class BoardDAO {
 
 	}
 
+
+	public int getMyPayListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		return sqlSession.selectOne("boardMapper.MyPayListCount", sc);
+	}
+
+	public ArrayList<Pay> SeachMyPayList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.SeachMyPayList",sc , rowBounds);
+	}
+
 	public ArrayList<Board> searchReviewList(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
@@ -330,6 +346,31 @@ public class BoardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
 	}
+
+
+	
+	public int myPayDelete(SqlSessionTemplate sqlSession, String s) {
+		return sqlSession.update("boardMapper.myPayDelete",s);
+	}
+
+
+	public int getuserCommentsListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> umap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.getuserCommentsListCount", umap);
+	}
+
+	public ArrayList<Comments> selectuserComments(SqlSessionTemplate sqlSession, int boardNo, PageInfo pi0,
+			String userId) {
+		int offset = (pi0.getCurrentPage() - 1)* pi0.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi0.getBoardLimit());
+		
+		HashMap<String, Object> smap = new HashMap<String, Object>();
+		smap.put("boardNo", boardNo);
+		smap.put("userId", userId);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
+	}
+
 
 
 

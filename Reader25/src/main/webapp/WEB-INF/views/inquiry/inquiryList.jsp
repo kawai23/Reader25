@@ -67,20 +67,26 @@
 	.write-btn:hover {
 		cursor: pointer;
 	}
-	.paging-div {
+		.paging-div{
 		width: 250px;
 		margin: auto;
 		margin-top: 30px;
+		text-align: center;
 	}
-	.paging-div>a, .paging-div>p{
+	.paging-div>a, .paging-div>p {
+		padding:0;
+		margin: 0;
+		display: inline-block;
 		width: 30px;
 		height: 30px;
 		color: rgba(85, 83, 83, 1);
-		font-size: 15px;
+		font-size: 17px;
 		background: rgba(229, 229, 229, 1);
 		border: none;
+		text-decoration: none;
+		text-align: center;
+		vertical-align: middle;
 	}	
-
 	.paging-div>a:hover {
 		font-weight: bold;
 		background: rgba(220, 220, 220, 1);
@@ -90,6 +96,7 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}	
+		
 </style>
 </head>
 <body>

@@ -32,6 +32,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -121,6 +122,8 @@ public class BoardController {
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
 							ModelAndView mv) {
+		ArrayList<Board> bb = bService.select();
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -267,16 +270,16 @@ public class BoardController {
 	//문의사항 관리자 댓글 불러오기
 	@RequestMapping("aCList.in")
 	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
-		System.out.println("boardNo입니다"+boardNo);
-		System.out.println("user_id입니다"+userId);
+		//System.out.println("boardNo입니다"+boardNo);
+		//System.out.println("user_id입니다"+userId);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("boardNo", boardNo);
 		map.put("userId", userId);
-		System.out.println("map입니다"+map);
+		//System.out.println("map입니다"+map);
 		
 		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
-		System.out.println("aCList입니다"+aCList);
+		//System.out.println("aCList입니다"+aCList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -287,6 +290,45 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//문의사항 회원만 댓글 가져오기
+	@RequestMapping("userComments.in")
+	public void getuserComments(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
+			@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId,
+			HttpServletResponse response) {
+		//System.out.println("userId나올까"+userId);	
+		response.setContentType("application/json; charset=UTF-8");
+		int currentPage1 = 1;
+
+		if (page0 != null) {
+			currentPage1 = page0;
+		}
+		
+		HashMap<String, Object> umap = new HashMap<String, Object>();
+		umap.put("boardNo", boardNo);
+		umap.put("userId", userId);
+
+		int listCount = bService.getuserCommentsListCount(umap);
+		PageInfo pi0 = Pagination.getPageInfo5_1(currentPage1, listCount);
+		
+		ArrayList<Comments> cList = bService.selectuserComments(boardNo, pi0, userId);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cList", cList);
+		map.put("pi0", pi0);
+			
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	//문의사항 글 수정 컨트롤러
 	@RequestMapping("inquiryUpView.in")
@@ -310,7 +352,7 @@ public class BoardController {
 							@ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							ModelAndView mv) {
-		System.out.println("board입니다"+b);
+		//System.out.println("board입니다"+b);
 		
 		b.setBoardNo(boardNo);
 		
@@ -878,7 +920,7 @@ public class BoardController {
 		map.put("boardNo", boardNo);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
-		System.out.println("heart"+heart);
+		//System.out.println("heart"+heart);
 		
 //		int currentPage = 1;
 //		if(cpage != null) {
@@ -929,7 +971,7 @@ public class BoardController {
         Like.setB_no(b_no);
         Like.setM_no(m_no);
  
-        System.out.println(heart);
+        //System.out.println(heart);
 
         if(heart >= 1) {
             bService.deleteLike(Like);
@@ -1006,7 +1048,7 @@ public class BoardController {
 		map.put("pi1", pi1);
 		//System.out.println("map"+map);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 		try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException e) {
@@ -1121,8 +1163,8 @@ public class BoardController {
 									@RequestParam("cate") String cate, @RequestParam("userId") String userId,
 									HttpServletRequest request, HttpServletResponse response, 
 									ModelAndView mv) {
-		System.out.println("cate"+cate);
-		System.out.println("userId"+userId);
+		//System.out.println("cate"+cate);
+		//System.out.println("userId"+userId);
 		
 		//currentPage 설정
 		int currentPage = 1; //기본
@@ -1250,6 +1292,170 @@ public class BoardController {
 
 	
 	
+	@RequestMapping("myPayList.me")
+	public ModelAndView myPayListForm(@RequestParam(value = "searchCondition", required = false) String searchCondition, @RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv  , @RequestParam(value = "page", required = false) Integer page, HttpSession session) {
+		
+		
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+	
+		
+		
+
+		
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			
+			if (condition.equals("번호")) {
+				
+				sc.setNo(value);
+				
+			}else if (condition.equals("책이름")) {
+				
+				sc.setTitle(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = bService.getMyPayListCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<Pay> list = bService.SeachMyPayList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+			
+			
+			
+			
+			mv.setViewName("myPayList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BoardException("구매 리스트 삭제 실패");
+			
+		}
+		
+		
+		
+		
+		
+		return mv; 
+	}
+	
+	@RequestMapping("myPayDelete.me")
+	public ModelAndView myPayDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		int result = bService.myPayDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myPayList.me");
+		} else {
+
+			throw new BoardException("구매 리스트 삭제 실패");
+		}
+
+		return mv;
+
+	}
+	
 	@RequestMapping("mBlistDelete.me")
 	public ModelAndView boardList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 	
@@ -1361,7 +1567,7 @@ public class BoardController {
 			
 			if (condition.equals("Title")) {
 				
-				sc.setTitle(value);;
+				sc.setTitle(value);
 			}else if (condition.equals("내용")) {
 				
 				sc.setContent(value);

@@ -10,6 +10,24 @@
 	<c:import url="common/mainPage.jsp"></c:import>
 	
 	
+
+	<script>
 	
+		$(function () {
+			
+			var msg = "${msg}";
+			
+			if(msg != ""){
+				
+				alert(msg);
+			}
+		});
+	
+	
+	
+	</script>
+
+	
+
 </body>
 </html>
