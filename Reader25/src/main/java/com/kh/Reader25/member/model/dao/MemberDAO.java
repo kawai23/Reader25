@@ -55,4 +55,20 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.updatePwd", map);
 	}
 
+	public int UpdateMember(SqlSessionTemplate sqlSession, Member m) {
+	
+		
+		
+		
+		return sqlSession.update("memberMapper.UpdateMember", m);
+	}
+
+	public int memberDelete(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.memberDelete", m);
+	}
+	
+	
+
+
+
 }

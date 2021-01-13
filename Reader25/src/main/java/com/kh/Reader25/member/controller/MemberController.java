@@ -301,23 +301,115 @@ public class MemberController {
 
 	}
 	
-	@RequestMapping("myUpdate.me")
-	public String myUpdate(@ModelAttribute Member m, @RequestParam("joinPostal") String post,
-			@RequestParam("joinAddress1") String address1,
-			@RequestParam("joinAddress2") String address2) {
+	
+	
+	
+	@RequestMapping("myDeleteForm.me")
+	public String myDeleteForm() {
 	
 
 		
-		System.out.println(m);
+		
+		return "deleteForm";
+		
+
+	}
+	
+	 @RequestMapping("mdelete.me")
+		public ModelAndView memberDelete(@ModelAttribute Member m , SessionStatus status, ModelAndView mv) {
+			
+			
+		 
+		 System.out.println(m);
+		 
+		 int result = mService.memberDelete(m);
+			
+			
+			
+			if( result > 0) {
+				
+				status.setComplete();
+				
+				
+				mv.addObject("msg", "회원 탈퇴 완료");
+				mv.setViewName("../home");
+				
+				return mv ;
+			}else {
+				
+				throw new MemberException("회원 탈퇴  실패");
+			}
+		 
+		 
+		 
+			
+		}
+	
+	@RequestMapping("myUpdate.me")
+	public String myUpdate(@ModelAttribute Member m,@RequestParam("pwd") String pwd ,@RequestParam("newPwd2") String newPwd2 , @RequestParam("joinPostal") String post,
+			@RequestParam("joinAddress1") String address1,
+			@RequestParam("joinAddress2") String address2, HttpSession session , Model model) {
+	
+
+		
+				System.out.println(m);
 				System.out.println(post);
 				System.out.println(address1);
 				System.out.println(address2);
-		
-		
-		
-		
-		return "";
-		
+				
+				//Member member = mService.memberLogin((Member) session.getAttribute("loginUser"));
+				
+				Member member = (Member) session.getAttribute("loginUser");
+				
+				
+				
+				if(bcrypt.matches(pwd, member.getPwd())) {
+				
+					
+					m.setAddress(post+"/" + address1+"/" +address2 );
+					
+					m.setPwd(bcrypt.encode(newPwd2));
+					
+					m.setId(member.getId());
+				
+				
+					
+					System.out.println("비밀번호 일치 == " + m);
+					
+					int result = mService.UpdateMember(m);
+					
+					System.out.println( m);
+					System.out.println( result);
+					
+					if( result > 0) {
+						
+						
+						member = mService.memberLogin(m);
+						
+						model.addAttribute("loginUser", m);
+						
+						
+						
+						return "redirect:myUpdateForm.me";
+					}else {
+						
+						throw new MemberException("회원 정보 수정  실패");
+					}
+					
+				
+				
+				
+			}else {
+				
+				throw new MemberException("기존의 비밀번호가 틀림");
+			}
+			
+					
+				
+				
+				
+				
+
 
 	}
 	

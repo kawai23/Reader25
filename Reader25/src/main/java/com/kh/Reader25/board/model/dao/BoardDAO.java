@@ -2,7 +2,6 @@ package com.kh.Reader25.board.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +12,7 @@ import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -275,6 +275,22 @@ public class BoardDAO {
 
 	}
 
+
+	public int getMyPayListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		return sqlSession.selectOne("boardMapper.MyPayListCount", sc);
+	}
+
+	public ArrayList<Pay> SeachMyPayList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.SeachMyPayList",sc , rowBounds);
+	}
+
 	public ArrayList<Board> searchReviewList(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
@@ -331,6 +347,13 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
 	}
 
+
+	
+	public int myPayDelete(SqlSessionTemplate sqlSession, String s) {
+		return sqlSession.update("boardMapper.myPayDelete",s);
+	}
+
+
 	public int getuserCommentsListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> umap) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("boardMapper.getuserCommentsListCount", umap);
@@ -347,6 +370,7 @@ public class BoardDAO {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
+
 
 
 

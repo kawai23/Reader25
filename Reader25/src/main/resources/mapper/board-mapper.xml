@@ -132,6 +132,76 @@
 	
 	</select>
 	
+	<select id="MyPayListCount"  resultType="_int">
+	
+		select count(*)
+		from pay  LEFT OUTER join book using(BOOK_NO) 
+		where  pay.STATUS='Y' 
+		
+		
+		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and PAY_NO = #{no} 
+ 		
+ 		</if> 
+		
+		
+	
+	
+	</select>
+	
+	<select id="SeachMyPayList" parameterType="SearchCondition" resultType="Pay">
+ 	
+ 	
+ 		select *
+		from pay  LEFT OUTER join book using(BOOK_NO) 
+		where  pay.STATUS='Y' 
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and PAY_NO = #{no} 
+ 		
+ 		</if> 
+ 	
+ 		order by PAY_NO desc
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	<update id="myPayDelete">
+ 	
+ 		UPDATE pay SET STATUS = 'N' WHERE PAY_NO=#{s}
+ 	
+ 	
+ 	</update>
+	
 	
 	<select id="SeachMyList" parameterType="SearchCondition" resultMap="boardResultSet">
  	
@@ -170,6 +240,9 @@
  	
  	
  	</update>
+ 	
+ 	
+
 	
 	
 

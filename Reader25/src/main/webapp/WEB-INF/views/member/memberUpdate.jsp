@@ -67,9 +67,9 @@ td{ margin: 5px; padding: 5px }
  	  <div class="col-sm-2"></div>
 	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
 	  
-	  <img alt=" " src="">
+<!-- 	  <img alt=" " src=""> -->
 	  
-	  <a  style="margin-left: 50px; color: white;">${loginUser.name }</a> <br><br>
+	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
 	  
 	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
 	  
@@ -81,12 +81,12 @@ td{ margin: 5px; padding: 5px }
 
 				
 						<a href="myUpdateForm.me" class="list-group-item active" >내 정보 수정</a> 
-						<a href="#" class="list-group-item">회원 탈퇴 </a> 
+						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a> 
 						<hr>
 						
 						<a href="myList.me?code=2" class="list-group-item">내가 쓴 리뷰</a>
 						<a href="myList.me?code=4" class="list-group-item">책방 리스트</a>
-						<a href="#" class="list-group-item"  >주문 리스트</a>
+						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item">내가 쓴 책</a>
 						<a href="#" class="list-group-item">좋아요/북마크</a>
 						
@@ -111,7 +111,7 @@ td{ margin: 5px; padding: 5px }
 
 		
 		
-		<form action="myUpdate.me" method="post" id="joinForm" name="joinForm" onsubmit="return send(this);">
+		<form action="myUpdate.me" method="post" id="joinForm" name="joinForm" >
 			<br>
 			<h2 class="txt_signup">내 정보 수정</h2>
 			<hr><br>
@@ -122,35 +122,66 @@ td{ margin: 5px; padding: 5px }
 					<td><input type="text" name="name" readonly="readonly" value="${loginUser.name }"></td>
 					<td></td>
 				</tr>
+				
 				<tr>
-					<td class="txt_signup_tb">비밀번호</td>
-					<td><input type="password" class="joinPassword" id="joinPassword1" name="pwd" required></td>
+					<td class="txt_signup_tb">현재 비밀번호</td>
+					<td><input type="password"  name="pwd" required></td>
+					
+				</tr>
+				
+				
+				<tr>
+					<td class="txt_signup_tb">새 비밀번호</td>
+					<td><input type="password" class="joinPassword" id="joinPassword1" name="newPwd" required></td>
 					<td rowspan="2"><label id="pwResult"></label></td>
 				</tr>
 				<tr>
-					<td class="txt_signup_tb">비밀번호 확인</td>
-					<td><input type="password" class="joinPassword" id="joinPassword2" name="pwd2" required></td>
+					<td class="txt_signup_tb">새 비밀번호 확인</td>
+					<td><input type="password" class="joinPassword" id="joinPassword2" name="newPwd2" required></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">연락처</td>
 					<td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" value="${loginUser.phone }"></td>
 					<td></td>
 				</tr>
+				
+				
+				
+				<c:forTokens var="addr" items="${ loginUser.address }" delims="/" varStatus="status">
+					<c:if test="${ status.index eq 0 && addr >= '0' && addr <= '99999' }">
+						<c:set var="post" value="${ addr }"/>
+					</c:if>
+					<c:if test="${ status.index eq 0 && !(addr >= '0' && addr <= '99999') }">
+						<c:set var="address1" value="${ addr }"/>
+					</c:if>
+					<c:if test="${ status.index eq 1 }">
+						<c:set var="address1" value="${ addr }"/>
+					</c:if>
+					<c:if test="${ status.index eq 2 }">
+						<c:set var="address2" value="${ addr }"/>
+					</c:if>
+				</c:forTokens>
+				
+				
+				
 				<tr>
 					<td class="txt_signup_tb">우편번호</td>
-					<td><input type="text" id="joinPostal" name="joinPostal" readonly></td>
-					<td style="text-align: left;"><input type="button"  class="btn_sign_input" id="findPostal" onclick="ifindPostal();" value="검색"></td>
+					<td><input type="text" id="joinPostal" name="joinPostal" readonly value="${ post }"></td>
+					<td style="text-align: left;"><input type="button"  class="btn_sign_input"  id="findPostal" onclick="ifindPostal();" value="검색"></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">주소</td>
-					<td><input type="text" id="joinAddress1" name="joinAddress1" readonly></td>
+					<td><input type="text" id="joinAddress1" name="joinAddress1" value="${ address1 }" readonly></td>
 					<td><span id="guide" style="color:#999;display:none"></span></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">상세주소</td>
-					<td><input type="text" id="joinAddress2" name="joinAddress2"></td>
+					<td><input type="text" id="joinAddress2" name="joinAddress2" value="${ address2 }"></td>
 					<td></td>
 				</tr>
+				
+				
+				
 				<tr>
 					<td class="txt_signup_tb">이메일</td>
 					<td><input type="email" id="joinEmail" name="email" value="${loginUser.email }"></td>
@@ -185,7 +216,7 @@ td{ margin: 5px; padding: 5px }
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">MBTI</td>
-					<td><input type="text" name="mbti"></td>
+					<td><input type="text" name="mbti" value="${ loginUser.mbti }"></td>
 					<td></td>
 				</tr>
 			</table>

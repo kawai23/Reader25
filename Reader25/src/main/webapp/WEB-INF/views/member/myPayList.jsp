@@ -60,7 +60,7 @@
 						
 						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
 						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
-						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
+						<a href="myPayList.me" class="list-group-item active"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
 						<a href="#" class="list-group-item">좋아요/북마크</a>
 						
@@ -87,9 +87,12 @@
 
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
-							<th>번호</th>
-							<th>제목</th>
-							<th>조회수</th>
+							<th>구매번호</th>
+							<th>책이름</th>
+							<th>수량</th>
+							<th>가격</th>
+							<th>결제일</th>
+							<th>결제상태</th>
 							
 							
 						 </tr>
@@ -109,14 +112,19 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
 								
 								
-								<td >${ b.boardNo }</td>
-								<td >${ b.bTitle }</td>
+								<td >${ b.pay_no }</td>
+								<td >${ b.book_name }</td>
 								
 								
-								<td >${ b.bCount }</td>
+								<td >${ b.book_v }</td>
+								<td >${ b.price }</td>
+								<td >${ b.PAY_DATE }</td>
+								<td >${ b.pay_status }</td>
+								
+								
 								<td>
 								
 							</tr>
@@ -146,13 +154,13 @@
 
 							<div class="input-group-btn" >
 								<button type="button" class="btn btn-default dropdown-toggle"
-									id="Search1" data-toggle="dropdown" aria-expanded="false">Title
+									id="Search1" data-toggle="dropdown" aria-expanded="false">번호
 									<span class="caret" style="margin-left: 10px"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu" id="search1" style="overflow: visible;">
 									
-									<li value="Title"><a href="#">Title</a></li>
-									<li value="내용"><a href="#">내용</a></li>
+									<li value="Title"><a href="#">번호</a></li>
+									<li value="내용"><a href="#">책이름</a></li>
 								</ul>
 							</div>
 							<!-- /btn-group -->
@@ -192,49 +200,9 @@
 				
 				
 				
-				$(function(){
-					
-					var code = ${code};
-					
-					
-					switch (code) {
-					
-					case 1:
-						
-						
-						$('#c1').addClass('active');
-						break;
-						
-					case 2:
-						$('#c2').addClass('active');
-						break;
-						
-					case 4:
-						$('#c4').addClass('active');
-						break;
-						
-					case 5:
-						$('#c5').addClass('active');
-						break;
-
-					
-					}
-					
-					
-				});
 				
-				$('#search1 li > a').on('click', function() {
-			    	
-			    	
-					   
-				    $('#Search1').text($(this).text());
-				    
-				    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
-				    // 선택된 항목 값(value) 얻기
-				    
-				    
-				    
-				});
+				
+			
 				
 				 $('#searchList').click(function() {
 			    	
@@ -242,7 +210,7 @@
 			    	
 			    	var data = '';
 			    	
-			    	var code = ${code};
+			    	
 			    		
 			    		
 			    	var searchCondition = $('#Search1').text();
@@ -252,7 +220,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
+ 		    	location.href='myPayList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -288,7 +256,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myList.me"></c:set>
+						<c:set var="loc" value="myPayList.me"></c:set>
 						
  
 				    
@@ -503,19 +471,49 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
+						
+						
+						
+						
+						<c:if test="${ !empty searchValue}">
+					
+							<c:set var="check" value="true"></c:set>
+					
+					   </c:if>
+					   
+					   <c:if test="${ empty searchValue}">
+					
+							<c:set var="check" value="false"></c:set>
+					
+					   </c:if>
+						
 
 	<script>
+	
+	
+	$('#search1 li > a').on('click', function() {
+    	
+    	
+		   
+	    $('#Search1').text($(this).text());
+	    
+	    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
+	    // 선택된 항목 값(value) 얻기
+	    
+	    
+	    
+	});
 						
 						
 						
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
-								
-					        	var code = ${code};
 					        	
-					        	var check = ${ !empty searchValue } ; 
+								
+					        	
+					        	
+					        	var check = ${ check } ; 
 					        	
 					        	var searchCondition = null;
 					        	
@@ -551,25 +549,12 @@
 							    
 							    
 							    
-							    console.log(select_obj);
-							    
-							    
-							    
-				 			    if(select_obj == '' || select_obj.length == 0){
+							  
 							    	
-				 			    	
-				 			    	//console.log(select_obj);
-							    	 location.href='mBlistDelete.me?inFo='+Id + "&code=" + code+'&page='+ ${pi.currentPage}+path;
+				 			   
+							 location.href='myPayDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
 							    	
-				 			    }else{
-							    	
-				 			    	//console.log("데이터 : "+select_obj);
-				 			    	
-				 			    	
-								    
-								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
-							    	
-				 			    }
+				 			   
 							    
 
 						});
