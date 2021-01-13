@@ -375,9 +375,13 @@ public class BoardController {
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
 		
 		if(bList != null) {
+			String[] booktitleArr = new String[bList.size()];
+			String[] authorArr = new String[bList.size()];
 			String[] wiseArr = new String[bList.size()];
 			String[] contentArr = new String[bList.size()];
 			for(int i = 0; i < bList.size(); i++) {
+				booktitleArr[i] = bList.get(i).getbContent().substring(0, bList.get(i).getbContent().indexOf("#책제목"));
+				authorArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#책제목") + 4, bList.get(i).getbContent().indexOf("#작가"));
 				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
 				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
 			}
@@ -385,6 +389,8 @@ public class BoardController {
 				.addObject("pi", pi)
 				.addObject("atList", atList)
 				.addObject("contentArr", contentArr)
+				.addObject("authorArr", authorArr)
+				.addObject("booktitleArr", booktitleArr)
 				.addObject("wiseArr", wiseArr)
 				.setViewName("BookReview");
 		}else {
@@ -449,10 +455,10 @@ public class BoardController {
 		if(page1 != null) {
 			currentPage1 = page1;
 		}
-		
-		int listCount = bService.getReListCount(book);
+		String booktitle = book + "#책제목";
+		int listCount = bService.getReListCount(booktitle);
 		PageInfo pi1 = Pagination.getPageInfo3(currentPage1, listCount);
-		ArrayList<Board> reList = bService.selectAnotherReview(book, pi1);
+		ArrayList<Board> reList = bService.selectAnotherReview(booktitle, pi1);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		
@@ -612,7 +618,7 @@ public class BoardController {
 	@RequestMapping("search.re")
 	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
 								HttpServletResponse response, ModelAndView mv) {
-		String condition = request.getParameter("searchConditon");
+		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
 		
 		int searchCate = 0;
@@ -628,9 +634,12 @@ public class BoardController {
 		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
 			searchCate = 4;
-		}else {
-			sr.setContent(value);
+		}else if(condition.equals("content")) {
+			sr.setWriter(value);
 			searchCate = 5;
+		}else {
+			sr.setCate(value);
+			searchCate = 6;
 		}
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
@@ -706,7 +715,7 @@ public class BoardController {
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		String condition = request.getParameter("searchConditon");
+		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
 		int searchCate = 0;
 		if(condition.equals("title")) {
