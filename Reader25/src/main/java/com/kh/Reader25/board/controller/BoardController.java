@@ -192,6 +192,7 @@ public class BoardController {
 			folder.mkdir();
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		
 		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
@@ -1210,8 +1211,10 @@ public class BoardController {
 			folder.mkdir();
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		int ranNum = (int)(Math.random()*100000);
+
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis()))  + ranNum
 								+ "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
 		String renamePath = folder + "\\" + renameFileName;
 		Attachment at = new Attachment();

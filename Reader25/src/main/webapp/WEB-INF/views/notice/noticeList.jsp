@@ -67,6 +67,10 @@
 	.write-btn:hover {
 		cursor: pointer;
 	}
+	.contentTR a{
+		text-decoration: none;
+		color:black;
+	}
 	.paging-div{
 		width: 250px;
 		margin: auto;

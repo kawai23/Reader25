@@ -452,7 +452,7 @@
 		</div>
 		<script>
 		 $(function(){
-			 getComments();
+			 getComments(1);
 			 $('#comment-input').keyup(function(){
 				 var content = $(this).val();
 				 $('#counter').html(content.length +'/500');

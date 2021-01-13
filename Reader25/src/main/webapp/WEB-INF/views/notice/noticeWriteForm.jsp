@@ -61,7 +61,7 @@ section {
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-
+*{border: 1px solid pink;}
 .file-upload>img {
 	max-height: 300px;
 	max-width: 500px;
@@ -222,27 +222,27 @@ section {
 			</div>
 			<script>
 				function loadImg(value){
-					if (value.files[0]){
-						
-						if(window.FileReader){ // modern browser 
-							var filename = value.files[0].name; 
-						} else { // old IE 
-							var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
-						}
-						$('.upload-name').val(filename);
-
-						// 확장자
-						var extension = filename.substring(filename.lastIndexOf(".") + 1);
-						console.log(extension);
-						
-						var reader = new FileReader();
-						if(extension == "png" || extension == "jpg" || extension == "jpeg"){
-							reader.onload = function(e) {
-	 							$('#load-img').attr('src', e.target.result);
+					if (value.files){
+						for(var i = 0; i < value.files.length; i++){
+							if(window.FileReader){ // modern browser 
+								var filename = value.files[0].name; 
+							} else { // old IE 
+								var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
 							}
-							reader.readAsDataURL(value.files[0]);
-						}else{
-							$('#load-img').attr('src',null);
+							$('.upload-name').val(filename);
+	
+							// 확장자
+							var extension = filename.substring(filename.lastIndexOf(".") + 1);
+							
+							var reader = new FileReader();
+							if(extension == "png" || extension == "jpg" || extension == "jpeg"){
+								reader.onload = function(e) {
+		 							$('#load-img').attr('src', e.target.result);
+								}
+								reader.readAsDataURL(value.files[0]);
+							}else{
+								$('#load-img').attr('src',null);
+							}
 						}
 					}
 				}
