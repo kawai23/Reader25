@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -268,16 +267,16 @@ public class BoardController {
 	//문의사항 관리자 댓글 불러오기
 	@RequestMapping("aCList.in")
 	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
-		System.out.println("boardNo입니다"+boardNo);
-		System.out.println("user_id입니다"+userId);
+		//System.out.println("boardNo입니다"+boardNo);
+		//System.out.println("user_id입니다"+userId);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("boardNo", boardNo);
 		map.put("userId", userId);
-		System.out.println("map입니다"+map);
+		//System.out.println("map입니다"+map);
 		
 		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
-		System.out.println("aCList입니다"+aCList);
+		//System.out.println("aCList입니다"+aCList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -288,6 +287,45 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//문의사항 회원만 댓글 가져오기
+	@RequestMapping("userComments.in")
+	public void getuserComments(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
+			@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId,
+			HttpServletResponse response) {
+		//System.out.println("userId나올까"+userId);	
+		response.setContentType("application/json; charset=UTF-8");
+		int currentPage1 = 1;
+
+		if (page0 != null) {
+			currentPage1 = page0;
+		}
+		
+		HashMap<String, Object> umap = new HashMap<String, Object>();
+		umap.put("boardNo", boardNo);
+		umap.put("userId", userId);
+
+		int listCount = bService.getuserCommentsListCount(umap);
+		PageInfo pi0 = Pagination.getPageInfo5_1(currentPage1, listCount);
+		
+		ArrayList<Comments> cList = bService.selectuserComments(boardNo, pi0, userId);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cList", cList);
+		map.put("pi0", pi0);
+			
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	//문의사항 글 수정 컨트롤러
 	@RequestMapping("inquiryUpView.in")
@@ -311,7 +349,7 @@ public class BoardController {
 							@ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							ModelAndView mv) {
-		System.out.println("board입니다"+b);
+		//System.out.println("board입니다"+b);
 		
 		b.setBoardNo(boardNo);
 		
@@ -377,9 +415,13 @@ public class BoardController {
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
 		
 		if(bList != null) {
+			String[] booktitleArr = new String[bList.size()];
+			String[] authorArr = new String[bList.size()];
 			String[] wiseArr = new String[bList.size()];
 			String[] contentArr = new String[bList.size()];
 			for(int i = 0; i < bList.size(); i++) {
+				booktitleArr[i] = bList.get(i).getbContent().substring(0, bList.get(i).getbContent().indexOf("#책제목"));
+				authorArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#책제목") + 4, bList.get(i).getbContent().indexOf("#작가"));
 				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
 				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
 			}
@@ -387,6 +429,8 @@ public class BoardController {
 				.addObject("pi", pi)
 				.addObject("atList", atList)
 				.addObject("contentArr", contentArr)
+				.addObject("authorArr", authorArr)
+				.addObject("booktitleArr", booktitleArr)
 				.addObject("wiseArr", wiseArr)
 				.setViewName("BookReview");
 		}else {
@@ -451,10 +495,10 @@ public class BoardController {
 		if(page1 != null) {
 			currentPage1 = page1;
 		}
-		
-		int listCount = bService.getReListCount(book);
+		String booktitle = book + "#책제목";
+		int listCount = bService.getReListCount(booktitle);
 		PageInfo pi1 = Pagination.getPageInfo3(currentPage1, listCount);
-		ArrayList<Board> reList = bService.selectAnotherReview(book, pi1);
+		ArrayList<Board> reList = bService.selectAnotherReview(booktitle, pi1);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		
@@ -614,7 +658,7 @@ public class BoardController {
 	@RequestMapping("search.re")
 	public ModelAndView searchReview(@ModelAttribute SearchReview sr, HttpServletRequest request,
 								HttpServletResponse response, ModelAndView mv) {
-		String condition = request.getParameter("searchConditon");
+		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
 		
 		int searchCate = 0;
@@ -630,9 +674,12 @@ public class BoardController {
 		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
 			searchCate = 4;
-		}else {
-			sr.setContent(value);
+		}else if(condition.equals("content")) {
+			sr.setWriter(value);
 			searchCate = 5;
+		}else {
+			sr.setCate(value);
+			searchCate = 6;
 		}
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
@@ -708,7 +755,7 @@ public class BoardController {
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		String condition = request.getParameter("searchConditon");
+		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
 		int searchCate = 0;
 		if(condition.equals("title")) {
@@ -870,7 +917,7 @@ public class BoardController {
 		map.put("boardNo", boardNo);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
-		System.out.println("heart"+heart);
+		//System.out.println("heart"+heart);
 		
 //		int currentPage = 1;
 //		if(cpage != null) {
@@ -921,7 +968,7 @@ public class BoardController {
         Like.setB_no(b_no);
         Like.setM_no(m_no);
  
-        System.out.println(heart);
+        //System.out.println(heart);
 
         if(heart >= 1) {
             bService.deleteLike(Like);
@@ -998,7 +1045,7 @@ public class BoardController {
 		map.put("pi1", pi1);
 		//System.out.println("map"+map);
 		
-		Gson gson = new GsonBuilder().setDateFormat("yy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 		try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException e) {
@@ -1113,8 +1160,8 @@ public class BoardController {
 									@RequestParam("cate") String cate, @RequestParam("userId") String userId,
 									HttpServletRequest request, HttpServletResponse response, 
 									ModelAndView mv) {
-		System.out.println("cate"+cate);
-		System.out.println("userId"+userId);
+		//System.out.println("cate"+cate);
+		//System.out.println("userId"+userId);
 		
 		//currentPage 설정
 		int currentPage = 1; //기본

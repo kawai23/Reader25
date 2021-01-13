@@ -69,9 +69,9 @@ public interface BoardService {
 
 	Attachment selectAttachment(int boardNo);
 
-	int getReListCount(String book);
+	int getReListCount(String booktitle);
 
-	ArrayList<Board> selectAnotherReview(String book, PageInfo pi);
+	ArrayList<Board> selectAnotherReview(String booktitle, PageInfo pi);
 
 	int updateLike(Liketo like);
 
@@ -132,7 +132,14 @@ public interface BoardService {
 
 	int deleteInquiryBoard(int boardNo);
 
+
 	int myPayDelete(String[] lists);
+
+
+
+	int getuserCommentsListCount(HashMap<String, Object> umap);
+
+	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
 
 

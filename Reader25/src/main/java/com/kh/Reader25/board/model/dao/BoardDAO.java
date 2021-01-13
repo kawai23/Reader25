@@ -188,14 +188,14 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectAttachment", boardNo);
 	}
 
-	public ArrayList<Board> selectAnotherReview(SqlSessionTemplate sqlSession, String book, PageInfo pi) {
+	public ArrayList<Board> selectAnotherReview(SqlSessionTemplate sqlSession, String booktitle, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("boardMapper.selectAnotherReview", book, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAnotherReview", booktitle, rowBounds);
 	}
 
-	public int getReListCount(SqlSessionTemplate sqlSession, String book) {
-		return sqlSession.selectOne("boardMapper.getReListCount", book);
+	public int getReListCount(SqlSessionTemplate sqlSession, String booktitle) {
+		return sqlSession.selectOne("boardMapper.getReListCount", booktitle);
 	}
 	public int updateLike(SqlSessionTemplate sqlSession, int b_no) {
 		// TODO Auto-generated method stub
@@ -347,9 +347,28 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteInquiryBoard", boardNo);
 	}
 
+
 	
 	public int myPayDelete(SqlSessionTemplate sqlSession, String s) {
 		return sqlSession.update("boardMapper.myPayDelete",s);
+	}
+
+
+	public int getuserCommentsListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> umap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.getuserCommentsListCount", umap);
+	}
+
+	public ArrayList<Comments> selectuserComments(SqlSessionTemplate sqlSession, int boardNo, PageInfo pi0,
+			String userId) {
+		int offset = (pi0.getCurrentPage() - 1)* pi0.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi0.getBoardLimit());
+		
+		HashMap<String, Object> smap = new HashMap<String, Object>();
+		smap.put("boardNo", boardNo);
+		smap.put("userId", userId);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
 

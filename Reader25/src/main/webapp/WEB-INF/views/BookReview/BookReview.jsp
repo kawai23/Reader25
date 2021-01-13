@@ -218,12 +218,13 @@ select::-ms-expand {
 	<section>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option" name="searchConditon" id="searchConditon">
+				<select class="search-option" name="searchCondition" id="searchCondition">
 					<option selected="selected" value="title">title</option>
 					<option value="author">author</option>
 					<option value="book">book</option>
 					<option value="writer">writer</option>
 					<option value="content">content</option>
+					<option value="category">분류</option>
 				</select>
 				<input type="text" id="search-input">
 				<span class="img-span">
@@ -240,10 +241,10 @@ select::-ms-expand {
 					}
 				});	
 				function search(){
-					var searchConditon = $('#searchConditon').val();
+					var searchCondition = $('#searchCondition').val();
 					var searchValue = $('#search-input').val();
 					
-					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
+					location.href="<%=request.getContextPath()%>/search.re?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
 				}
 			</script>
 			<div class="sort-div">
@@ -287,6 +288,8 @@ select::-ms-expand {
 				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
 				String[] wiseArr = (String[])request.getAttribute("wiseArr");
 				String[] contentArr = (String[])request.getAttribute("contentArr");
+				String[] booktitleArr = (String[])request.getAttribute("booktitleArr");
+				String[] authorArr = (String[])request.getAttribute("authorArr");
 			%>
 			<% for(int i = 0; i < bList.size();i++){ %>
 				<div class="list-div">
@@ -304,16 +307,23 @@ select::-ms-expand {
 						<ul class="content-ul">
 							<li class="title-li"><%=bList.get(i).getbTitle()%></li>
 							<li class="tag-li">
-								#<%=bList.get(i).getUserId() %> 
-								<% if(!bList.get(i).getCate().equals("null")){ %>
-								#<%=bList.get(i).getCate() %>
+								<% if(!booktitleArr[i].equals("")){ %>
+									#<%=booktitleArr[i] %> 
 								<%} %>
+								<% if(!bList.get(i).getCate().equals("null")){ %>
+									#<%=bList.get(i).getCate() %>
+								<%} %>
+								<% if(!authorArr[i].equals("")){ %>
+									#<%=authorArr[i] %> 
+								<%} %>
+								 &nbsp;
 							</li>
 							<li class="writer-li"><%=bList.get(i).getUserId() %></li>
 							<li class="wise-li">
-								<%=wiseArr[i] %>
 								<%if(wiseArr[i].equals("")){ %>
 									<%=contentArr[i] %>
+								<%}else{ %>
+									<%=wiseArr[i] %>
 								<%} %>
 							</li>
 						</ul>
