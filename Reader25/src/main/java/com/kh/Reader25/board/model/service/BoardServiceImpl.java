@@ -171,13 +171,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> selectAnotherReview(String book, PageInfo pi) {
-		return bDAO.selectAnotherReview(sqlSession, book, pi);
+	public ArrayList<Board> selectAnotherReview(String booktitle, PageInfo pi) {
+		return bDAO.selectAnotherReview(sqlSession, booktitle, pi);
 	}
 
 	@Override
-	public int getReListCount(String book) {
-		return bDAO.getReListCount(sqlSession, book);
+	public int getReListCount(String booktitle) {
+		return bDAO.getReListCount(sqlSession, booktitle);
 	}
 	@Override
 	public int updateLike(Liketo like) {

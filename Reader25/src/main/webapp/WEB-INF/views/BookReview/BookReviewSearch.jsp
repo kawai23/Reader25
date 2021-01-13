@@ -218,7 +218,7 @@ select::-ms-expand {
 	<section>
 	<%
       int cate = (int)request.getAttribute("searchCate");
-      String[] select = new String[5];   
+      String[] select = new String[6];   
       for(int i = 0; i < select.length; i++){
          switch(cate){
          case 1: select[0] = "selected"; break;
@@ -226,17 +226,19 @@ select::-ms-expand {
          case 3: select[2] = "selected"; break;
          case 4: select[3] = "selected"; break;
          case 5: select[4] = "selected"; break;
+         case 6: select[5] = "selected"; break;
          }
       }
    %>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option" name="searchConditon" id="searchConditon">
+				<select class="search-option" name="searchCondition" id="searchCondition">
 					<option <%=select[0] %> value="title">title</option>
 					<option <%=select[1] %> value="author">author</option>
 					<option <%=select[2] %> value="book">book</option>
 					<option <%=select[3] %> value="writer">writer</option>
 					<option <%=select[4] %> value="content">content</option>
+					<option <%=select[5] %> value="category">분류</option>
 				</select>
 				<input type="text" id="search-input" value="${ searchValue }">
 				<span class="img-span">
@@ -253,10 +255,10 @@ select::-ms-expand {
 					}
 				});	
 				function search(){
-					var searchConditon = $('#searchConditon').val();
+					var searchCondition = $('#searchCondition').val();
 					var searchValue = $('#search-input').val();
 					
-					location.href="<%=request.getContextPath()%>/search.re?searchConditon=" + searchConditon +"&searchValue=" + searchValue;
+					location.href="<%=request.getContextPath()%>/search.re?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
 				}
 			</script>
 			<div class="sort-div">

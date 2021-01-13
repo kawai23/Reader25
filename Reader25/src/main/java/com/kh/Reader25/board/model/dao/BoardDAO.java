@@ -188,14 +188,14 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectAttachment", boardNo);
 	}
 
-	public ArrayList<Board> selectAnotherReview(SqlSessionTemplate sqlSession, String book, PageInfo pi) {
+	public ArrayList<Board> selectAnotherReview(SqlSessionTemplate sqlSession, String booktitle, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("boardMapper.selectAnotherReview", book, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAnotherReview", booktitle, rowBounds);
 	}
 
-	public int getReListCount(SqlSessionTemplate sqlSession, String book) {
-		return sqlSession.selectOne("boardMapper.getReListCount", book);
+	public int getReListCount(SqlSessionTemplate sqlSession, String booktitle) {
+		return sqlSession.selectOne("boardMapper.getReListCount", booktitle);
 	}
 	public int updateLike(SqlSessionTemplate sqlSession, int b_no) {
 		// TODO Auto-generated method stub

@@ -81,6 +81,11 @@
 		color: gray;
 		font-size: 13px;
 	}
+	#booktitle:hover{color: rgba(245, 113, 92, 1); cursor:pointer;text-decoration: underline;}
+	#author:hover{color: rgba(245, 113, 92, 1); cursor:pointer;text-decoration: underline;}
+	#cate:hover{color: rgba(245, 113, 92, 1); cursor:pointer;text-decoration: underline;}
+	#writer:hover{color: rgba(245, 113, 92, 1); cursor:pointer;text-decoration: underline;}
+	
 	.wise-saying{
 		height: 100px;
 		width: 100%;
@@ -168,6 +173,8 @@
 		color:gray;
 	}
 	.list-table td[class=td-left]{text-align: left;}
+	#none-reList:hover{background:white; cursor:default;}
+	#none-wiseList:hover{background:white; cursor:default;}
 	.list-table td[class=td-right]{text-align: right; color:rgb(180, 180, 180);}
 	.paging-btn{
 		width: 200px;
@@ -254,6 +261,7 @@
 		display:inline-block;
 		left: 40%;
 	}
+	#modal-ok{background:rgba(85, 83, 83, 1);}
 	.modal-accept{
 		background-color: rgba(85, 83, 83, 1);
 	}
@@ -297,7 +305,7 @@
 				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
 				<p>댓글이 작성되었습니다.</p>
 				<br>
-				<button class="modal-close" value="Close">확인</button>
+				<button class="modal-close" value="Close" id="modal-ok">확인</button>
 			</div>
 		</div>
 	</div>
@@ -381,17 +389,21 @@
 				</div>
 				<div class="info-content">
 					<h3 class="title">${ board.bTitle }</h3>
-					<p class="tag">#제목</p>
-					<span class="info" id="author">${booktitle }</span>
-					<p class="tag">#작가</p>
-					<span class="info" id="sort">${author }</span>
-					<c:if test="${board.cate ne null}">
+					<c:if test="${booktitle ne ''}">
+						<p class="tag">#책제목</p>
+						<span class="info-span" id="booktitle">${booktitle }</span>
+					</c:if>
+					<c:if test="${author ne ''}">
+						<p class="tag">#작가</p>
+						<span class="info-span" id="author">${author }</span>
+					</c:if>
+					<c:if test="${board.cate ne 'null'}">
 						<p class="tag">#분야</p>
-						<span class="info" id="cate">${board.cate }</span>
+						<span class="info-span" id="cate">${board.cate }</span>
 					</c:if>
 					<br>
 					<p class="tag">#글쓴이</p>
-					<span class="info" id="sort">${board.userId }</span>
+					<span class="info-span" id="writer">${board.userId }</span>
 					<div class="wise-saying">
 						<div>
 							<img class="quote-img" id="quote1" src="resources/images/bookreview/quote5.png"/>
@@ -401,6 +413,19 @@
 					</div>
 				</div>
 			</div>
+			
+			<script>
+				/* 태그 연결 */
+				$('.info-span').click(function(){
+					var searchCondition = $(this).attr('id');
+					var searchValue = $(this).text();
+					if(searchCondition == 'booktitle'){
+						searchCondition = 'book';
+					}
+ 					location.href="search.re?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
+				});
+			</script>
+			
 			<div class="contents">
 				${board.bContent}
 			</div>
@@ -593,7 +618,7 @@
 						$reTable.html('');
 						if(reList.length <= 1){
 							$tr = $('<tr>');
-							$td = $('<td class="td-left" colspan=6>').text('다른 리뷰가 없습니다.');
+							$td = $('<td class="td-left" colspan=6 id="none-reList">').text('다른 리뷰가 없습니다.');
 							$tr.append($td);
 							$reTable.append($tr);
 						}else{
@@ -683,7 +708,7 @@
 						$wiseTable.html('');
 						if(wiseList.length <= 1){
 							$tr = $('<tr>');
-							$td = $('<td class="td-left" colspan=7>').text('다른 리뷰가 없습니다.');
+							$td = $('<td class="td-left" colspan=7 id="none-wiseList">').text('다른 리뷰가 없습니다.');
 							$tr.append($td);
 							$wiseTable.append($tr);
 						}else{

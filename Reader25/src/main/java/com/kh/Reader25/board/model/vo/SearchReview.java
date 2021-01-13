@@ -6,16 +6,18 @@ public class SearchReview {
 	private String content;
 	private String author;
 	private String book;
+	private String cate;
 	
 	public SearchReview() {}
 
-	public SearchReview(String title, String writer, String content, String author, String book) {
+	public SearchReview(String title, String writer, String content, String author, String book, String cate) {
 		super();
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
 		this.author = author;
 		this.book = book;
+		this.cate = cate;
 	}
 
 	public String getTitle() {
@@ -57,11 +59,16 @@ public class SearchReview {
 	public void setBook(String book) {
 		this.book = book;
 	}
-
+	public String getCate() {
+		return cate;
+	}
+	public void setCate(String cate) {
+		this.cate = cate;
+	}
 	@Override
 	public String toString() {
 		return "SearchReview [title=" + title + ", writer=" + writer + ", content=" + content + ", author=" + author
-				+ ", book=" + book + "]";
+				+ ", book=" + book + ", cate=" + cate  + "]";
 	}
 	
 }

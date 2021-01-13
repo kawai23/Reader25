@@ -244,6 +244,9 @@
 		<if test="title != null">
 			and b_title like '%' || #{title} || '%'
 		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
+		</if>
 	</select>
 	
 	<select id="searchReviewList" parameterType="SearchReview" resultMap="boardResultSet">
@@ -264,6 +267,9 @@
 		</if>
 		<if test="title != null">
 			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
 		</if>
 		order by board_no desc
 	</select>
@@ -286,6 +292,9 @@
 		</if>
 		<if test="title != null">
 			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
 			order by board_no desc
@@ -316,6 +325,9 @@
 		</if>
 		<if test="title != null">
 			and b_title like '%' || #{title} || '%'
+		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
 			order by board_no desc
@@ -362,14 +374,14 @@
 		select count(*)
 		from board
 		where code = 2 and b_status = 'Y' 
-			and b_content like '%' || #{book} || '%'
+			and b_content like '%' || #{booktitle} || '%'
 	</select>
 	
 	<select id="selectAnotherReview" resultMap="boardResultSet">
 		select *
 		from board
 		where code = 2 and b_status = 'Y'
-			and b_content like '%' || #{book} || '%'
+			and b_content like '%' || #{booktitle} || '%'
 		order by board_no desc
 	</select>
 	<select id="findLike" resultType="_int">
