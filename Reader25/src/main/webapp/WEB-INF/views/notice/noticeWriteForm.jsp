@@ -61,12 +61,11 @@ section {
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-*{border: 1px solid pink;}
 .file-upload>img {
 	max-height: 300px;
 	max-width: 500px;
 }
-
+.fileList{ list-style: none; font-size: 13px;}
 .upload-name {
 	display: inline-block;
 	padding: .5em .75em; /* label의 패딩값과 일치 */
@@ -217,15 +216,18 @@ section {
 				<label for="file-input">파일 업로드</label>
 				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
 			</div>
+			<div class="fileList" id="fileList"></div>
 			<div class="file-upload">
 				<img src="" id="load-img">
 			</div>
 			<script>
 				function loadImg(value){
 					if (value.files){
+						$('#fileList').html('');
+						$('#load-img').attr('src', '');
 						for(var i = 0; i < value.files.length; i++){
 							if(window.FileReader){ // modern browser 
-								var filename = value.files[0].name; 
+								var filename = value.files[i].name; 
 							} else { // old IE 
 								var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
 							}
@@ -239,9 +241,10 @@ section {
 								reader.onload = function(e) {
 		 							$('#load-img').attr('src', e.target.result);
 								}
-								reader.readAsDataURL(value.files[0]);
+								reader.readAsDataURL(value.files[i]);
 							}else{
-								$('#load-img').attr('src',null);
+								$li = $('<li>').text(filename);
+								$('#fileList').append($li);
 							}
 						}
 					}

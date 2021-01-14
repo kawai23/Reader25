@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -254,15 +255,29 @@
 				</script>
 				
 				<!-- 이미지 파일 넣기 -->
-				<c:if test="${atList ne null }">
-					<div class="images-div">
-						<c:forEach items="${atList }" var="at">
-							<div class="image">
-								<img src="<%=request.getContextPath()%>/resources/buploadFiles/${at.atcName}">
-							</div>
-						</c:forEach>
+				<% 
+					ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+				%>
+				<%if(atList != null){ %>
+					<div class="file-list">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(!ext.equals("jpg") && !ext.equals("jepg") && !ext.equals("png")) { %>
+								<a href="resources/buploadFiles/<%=at.getAtcName()%>" download="<%=at.getAtcOrigin()%>"><%=at.getAtcOrigin()%></a>
+							<%} %>
+						<%} %>
 					</div>
-				</c:if>
+					<div class="images-div">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(ext.equals("jpg") || ext.equals("jepg") || ext.equals("png")) { %>
+								<div class="image">
+									<img src="<%=request.getContextPath()%>/resources/buploadFiles/<%=at.getAtcName()%>">
+								</div>
+							<%} %>
+						<%} %>
+					</div>
+				<%} %>
 				<!-- ---------- -->
 				
 				<div class="contents">

@@ -76,7 +76,7 @@ public class BoardController {
 	// (3) 글작성
 	@RequestMapping("ninsert.no")
 	public String insertNotice(@ModelAttribute Board b,
-							@RequestParam("uploadFile") MultipartFile[] uploadFile,
+							@RequestParam(value="uploadFile", required=false) MultipartFile[] uploadFile,
 							HttpServletRequest request) {
 		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
 		if(uploadFile.length != 0) {
