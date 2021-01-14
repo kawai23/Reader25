@@ -371,6 +371,12 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
+	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, String bTitle) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", bTitle);
+	}
+
+
 
 
 

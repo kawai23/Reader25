@@ -536,7 +536,7 @@
 		</if>
 	</select>
 	
-	<select id="selectSearchTIWResultList" resultMap="boardResultSet">
+	<select id="selectSerchTIWResultList" resultMap="boardResultSet">
 		select *
 		from board b
 			join member m on(b.user_id = m.user_id)
@@ -645,6 +645,14 @@
 		select *
 		from comments
 		where board_no =#{boardNo} and user_id=#{userId}
+	</select>
+	
+	<select id="selectSearchTTitleList" resultType="string">
+		select b_title, board_no
+		from board
+		where code ='5' and b_status='Y' 
+				and (b_title like concat('%',concat(UPPER(#{bTitle}),'%'))
+				or b_title like concat('%',concat(LOWER(#{bTitle}),'%')))
 	</select>
 
 </mapper>

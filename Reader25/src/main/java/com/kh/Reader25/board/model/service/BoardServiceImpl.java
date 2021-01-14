@@ -414,10 +414,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> select() {
+	public ArrayList<Board> selectSearchTTitleList(String bTitle) {
 		// TODO Auto-generated method stub
-		return null;
+		return bDAO.selectSearchTTitleList(sqlSession, bTitle);
 	}
+
+	
+
+
 
 
 	

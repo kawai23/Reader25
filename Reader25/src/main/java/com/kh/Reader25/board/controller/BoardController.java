@@ -121,8 +121,7 @@ public class BoardController {
 	// 문의사항 = 1----------------------------------------------------
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
-							ModelAndView mv) {
-		ArrayList<Board> bb = bService.select();
+							ModelAndView mv) {		
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -853,18 +852,18 @@ public class BoardController {
 	// 오늘은 나도 작가 = 5 리스트 폼 이동 컨트롤러
 	@RequestMapping("goTIWList.to")
 	public ModelAndView goTIWList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
-		
+			
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-		
+			
 		int listCount = bService.getTIWListCount();
-		
+			
 		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
-		
+			
 		ArrayList<Board> list = bService.selectTIWList(pi);
-		
+			
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
@@ -872,7 +871,7 @@ public class BoardController {
 		} else {
 			throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");
 		}
-		
+			
 		return mv;
 	}
 	
@@ -1117,8 +1116,8 @@ public class BoardController {
 									ModelAndView mv) {
 		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
-		//System.out.println("condition"+condition);
-		//System.out.println("value"+value);
+		System.out.println("condition"+condition);
+		System.out.println("value"+value);
 		
 		if(condition.equals("writer")) {
 			serchC.setWriter(value);
@@ -1191,6 +1190,32 @@ public class BoardController {
 			return mv;
 			
 		}	
+	
+	//오늘은 나도 작가 검색 자동완성 컨트롤러
+	@RequestMapping("searchTTitle.to")
+	public void searchTTitle(@RequestParam("tTitle") String bTitle,
+							HttpServletRequest request, HttpServletResponse response
+							, ModelAndView mv) {
+		response.setContentType("application/json; charset=UTF-8");	
+		
+		System.out.println(bTitle+"검색단어");
+		ArrayList<Board> tlist = bService.selectSearchTTitleList(bTitle);
+		
+		System.out.println("tlist입니다"+tlist);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		
+		try {
+			gson.toJson(tlist, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+			
+	}
+	
 	
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////
 
