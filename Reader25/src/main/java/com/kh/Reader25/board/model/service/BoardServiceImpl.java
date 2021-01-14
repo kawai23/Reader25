@@ -443,6 +443,23 @@ public class BoardServiceImpl implements BoardService{
 //		return bDAO.selectSearchTTitleList(sqlSession, serchC);
 //	}
 
+
+	public int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList) {
+		int result = bDAO.updateBoard(sqlSession, b);
+		if(result > 0) {
+			result = bDAO.deleteAttachmentList(sqlSession, b.getBoardNo());
+			if(result > 0) {
+				result = bDAO.insertAttachmentList2(sqlSession, uploadAtList);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int updateBoard(Board b) {
+		return bDAO.updateBoard(sqlSession, b);
+	}
+
 	
 
 

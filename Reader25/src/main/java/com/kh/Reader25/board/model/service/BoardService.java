@@ -156,6 +156,10 @@ public interface BoardService {
 
 
 
+	int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList);
+
+	int updateBoard(Board b);
+
 
 
 

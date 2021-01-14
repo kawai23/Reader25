@@ -76,14 +76,14 @@ public class BoardController {
 	// (3) 글작성
 	@RequestMapping("ninsert.no")
 	public String insertNotice(@ModelAttribute Board b,
-							@RequestParam("uploadFile") MultipartFile[] uploadFile,
+							@RequestParam(value="uploadFile", required=false) MultipartFile[] uploadFile,
 							HttpServletRequest request) {
 		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
 		if(uploadFile.length != 0) {
 			b.setCode(0); //공지사항 코드
 			for(int i = 0; i < uploadFile.length; i++ ){
 				Attachment at = saveFile(uploadFile[i], request, 0);
-				if(i == uploadFile.length) {
+				if(i == uploadFile.length -1) {
 					at.setAtcLevel(0);
 				}else {
 					at.setAtcLevel(1);
@@ -116,6 +116,56 @@ public class BoardController {
 			throw new BoardException("공지사항 상세보기가 실패하였습니다.");
 		}
 		return mv;
+	}
+	// (5) 수정하기 페이지
+	@RequestMapping("modify.no")
+	public ModelAndView modifyNoticeView(@RequestParam("boardNo") int boardNo, 
+									@RequestParam("page") int page , ModelAndView mv) {
+		Board board = bService.selectBoard(boardNo);
+		ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+		if(board != null) {
+			mv.addObject("board", board)
+			  .addObject("atList", atList)
+			  .addObject("page", page)
+			  .setViewName("noticeModify");
+		}else {
+			throw new BoardException("공지사항 수정하기 게시판 로드에 실패하였습니다.");
+		}
+		return mv;
+	}
+	//(6) 수정하기
+	@RequestMapping("update.no")
+	public String updateNotice(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile[] uploadFile,
+							@RequestParam("page") int page, @RequestParam("nameArr") String[] nameArr,
+							@RequestParam("originArr") String[] originArr,
+							HttpServletRequest request) {
+		ArrayList<Attachment> uploadAtList =  new ArrayList<Attachment>();
+		int result = 0;
+		System.out.println(b);
+		if(uploadFile.length != 0) {
+			for(String str : nameArr) {
+				deleteFile(str, request);
+			}
+			for(int i = 0; i < uploadFile.length; i++) {
+				Attachment at = saveFile(uploadFile[i], request, 0);
+				at.setBoardNo(b.getBoardNo()); // Attachment가져오기 않기 때문
+				if(i == uploadFile.length - 1) {
+					at.setAtcLevel(0);
+				}else {
+					at.setAtcLevel(1);
+				}
+				uploadAtList.add(at);
+				System.out.println(i + ": " + at);
+			}
+			result = bService.updateBoardAnFiles(b, uploadAtList);
+		}else {
+			result = bService.updateBoard(b);
+		}
+		if(result >0) {
+			Board board = bService.selectBoard(b.getBoardNo());
+			ArrayList<Attachment> updateAtList = bService.selectAttachmentList(b.getBoardNo());
+		}
+		return "redirect:ndetail.no";
 	}
 	
 	// 문의사항 = 1----------------------------------------------------

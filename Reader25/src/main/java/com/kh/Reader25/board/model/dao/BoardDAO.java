@@ -399,6 +399,20 @@ public class BoardDAO {
 
 
 
+	public int insertAttachmentList2(SqlSessionTemplate sqlSession, ArrayList<Attachment> uploadAtList) {
+		int result = 0;
+		for(int i = 0; i < uploadAtList.size(); i++) {
+			result += sqlSession.insert("boardMapper.insertAttachment2", uploadAtList.get(i));
+		}
+		return result;
+	}
+
+	public int deleteAttachmentList(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
+	}
+
+
+
 
 
 
