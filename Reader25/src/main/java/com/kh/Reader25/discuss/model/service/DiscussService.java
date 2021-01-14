@@ -1,6 +1,7 @@
 package com.kh.Reader25.discuss.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -10,9 +11,9 @@ import com.kh.Reader25.discuss.model.vo.Reply;
 public interface DiscussService {
 	
 	// 토론방 있는지 체크
-	int getListCount();
+	int getListCount(Map<String, Object> s);
 	// 토론방 전체 리스트 검색
-	ArrayList<Discuss> selectList(PageInfo pi);
+	ArrayList<Discuss> selectList(PageInfo pi, Map<String, Object> s);
 	// 토론방 작성
 	int insertDiscuss(Discuss d, Attachment at);
 	// 상세페이지 게시판 검색
@@ -30,6 +31,7 @@ public interface DiscussService {
 	// 댓글 추가
 	int insertReply(Reply r);
 	// 댓글 리스트 가져오기
-	ArrayList<Reply> selectRList(int dNo, int cho);
-
+	ArrayList<Reply> selectRList(Map<String, Integer> d);
+	// 댓글 삭제
+	int rDelete(Reply r);
 }

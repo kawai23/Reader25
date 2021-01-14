@@ -6,6 +6,19 @@
 		SELECT COUNT(*)
 		FROM DISCUSS
 		WHERE D_STATUS = 'Y'
+		<if test="type != null">
+			<choose>
+				<when test="type==1">
+					AND D_TITLE like '%' || #{text} || '%'
+				</when>
+				<when test="type==2">
+					AND D_CONTENT like '%' || #{text} || '%'
+				</when>
+				<when test="type==3">
+					AND D_WRITER like '%' || #{text} || '%'
+				</when>
+			</choose>
+		</if>
 	</select>
 	
 	<!-- 토론방 리스트 가져오기 -->
@@ -13,6 +26,19 @@
 		SELECT *
 		FROM DISCUSS
 		WHERE D_STATUS = 'Y'
+		<if test="type != null">
+			<choose>
+				<when test="type==1">
+					AND D_TITLE like '%' || #{text} || '%'
+				</when>
+				<when test="type==2">
+					AND D_CONTENT like '%' || #{text} || '%'
+				</when>
+				<when test="type==3">
+					AND D_WRITER like '%' || #{text} || '%'
+				</when>
+			</choose>
+		</if>
 		ORDER BY D_NO DESC
 	</select>
 	
@@ -138,6 +164,27 @@
 		</if>
 	</select>
 	
+	<!-- 댓글 삭제 -->
+	<update id="rDelete">
+		UPDATE RELPY SET STATUS = 'N' WHERE R_NO = #{rNo}
+	</update>
+	
+	<!-- 댓글 삭제후 토론방 카운트 변경 -->
+	<update id="changeCount">
+		UPDATE DISCUSS SET D_COUNT = D_COUNT - 1,
+		<choose>
+			<when test='rWhether == "찬성"'>
+				D_PROS = D_PROS - 1
+			</when>
+			<when test='rWhether == "반대"'>
+				D_CONS = D_CONS - 1
+			</when>
+			<otherwise>
+				D_NEUTRALITY = D_NEUTRALITY - 1
+			</otherwise>
+		</choose>
+		 WHERE D_NO = ${dNo}
+	</update>
 	<!-- 댓글 리절트 셋 -->
 	<resultMap type="Reply" id="ReplyResultSet">
 		<id property="rNo" column="R_NO"/>

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,17 +40,20 @@ public class DiscussController {
 
 	
 	
-	// 토론방 전체 페이지
+	// 토론방 전체 페이지(+검색포함)
 	@RequestMapping("discuss.di")
-	public ModelAndView discussList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+	public ModelAndView discussList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv,@RequestParam(value="text", required=false) String text, @RequestParam(value="type", required=false) Integer type) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-
-		int listCount = dService.getListCount();
+		Map<String, Object> s = new HashMap<String, Object>();
+		s.put("text", text);
+		s.put("type", type);
+		
+		int listCount = dService.getListCount(s);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		ArrayList<Discuss> dList = dService.selectList(pi);
+		ArrayList<Discuss> dList = dService.selectList(pi,s);
 		ArrayList<Attachment> atList = dService.selectatList();
 		if(dList != null) {
 			mv.addObject("dList", dList)
@@ -167,7 +172,10 @@ public class DiscussController {
 	// 댓글 리스트 불러오기
 	@RequestMapping("rList.di")
 	public void selectRList(@RequestParam("dNo") int dNo, @RequestParam("cho") int cho, HttpServletResponse response) {
-		ArrayList<Reply> rList = dService.selectRList(dNo, cho); 
+		Map<String, Integer> d = new HashMap<String, Integer>();
+		d.put("dNo", dNo);
+		d.put("cho", cho);
+		ArrayList<Reply> rList = dService.selectRList(d); 
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
 		try {
@@ -178,6 +186,20 @@ public class DiscussController {
 			e.printStackTrace();
 		}
 	}
+	
+	// 댓글 삭제
+	@RequestMapping("rDelete.di")
+	@ResponseBody
+	public String rDelete(@ModelAttribute Reply r) {
+		System.out.println(r);
+		int result = dService.rDelete(r);
+		if(result > 0) {
+			return "success";
+		} else {
+			throw new DiscussException("댓글 삭제에 실패햐였습니다.");
+		}
+	}
+	
 	// 파일 저장
 	public Attachment saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
