@@ -1238,22 +1238,30 @@ public class BoardController {
 		}	
 	
 	//오늘은 나도 작가 검색 자동완성 컨트롤러
-	@RequestMapping("searchTTitle.to")
-	public void searchTTitle(@RequestParam("tTitle") String bTitle,
-							@ModelAttribute SearchCondition serchC,
-							HttpServletRequest request, HttpServletResponse response
-							, ModelAndView mv) {
-		response.setContentType("application/json; charset=UTF-8");	
-		String condition = request.getParameter("searchCondition");
-		String value = request.getParameter("searchValue");
-		//System.out.println(bTitle+"검색단어");
-		
-		ArrayList<Board> tlist;
-		
-		if(condition.equals("writer")) {
-			tlist = bService.selectSearchTTitleListWriter(bTitle);
+		@RequestMapping("searchTIWsub.to")
+		public void searchTTitle(@RequestParam("tTitle") String bTitle,@RequestParam("searchCondition") String condition,
+								@ModelAttribute SearchCondition serchC,
+								HttpServletRequest request, HttpServletResponse response
+								, ModelAndView mv) {
+			response.setContentType("application/json; charset=UTF-8");	
+			System.out.println(bTitle+"검색단어");
+			System.out.println(condition+"condition");
+			ArrayList<Board> tlist = null;
 			
-			System.out.println("tlist입니다"+tlist);
+			if(condition.equals("writer")) {
+				String userId = bTitle;
+				tlist = bService.selectSearchTTitleListWriter(userId);
+				System.out.println("작가");
+			} else if(condition.equals("title")) {
+				tlist = bService.selectSearchTTitleListTitle(bTitle);
+				System.out.println("제목");
+			} else if(condition.contentEquals("content")) {
+				String bContent = bTitle;
+				tlist = bService.selectSearchTTitleListContent(bContent);
+				System.out.println("내용");
+			}
+			System.out.println(tlist+"tlist검색단어");
+			//ArrayList<Board> tlist = bService.selectSearchTTitleList(serchC);
 			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 			
 			try {
@@ -1263,40 +1271,11 @@ public class BoardController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else if(condition.equals("title")) {
-			tlist = bService.selectSearchTTitleListTitle(bTitle);
-			
-			System.out.println("tlist입니다"+tlist);
-			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
-			
-			try {
-				gson.toJson(tlist, response.getWriter());
-			} catch (JsonIOException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else if(condition.contentEquals("content")) {
-			tlist = bService.selectSearchTTitleListContent(bTitle);
-			
-			System.out.println("tlist입니다"+tlist);
-			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
-			
-			try {
-				gson.toJson(tlist, response.getWriter());
-			} catch (JsonIOException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		//ArrayList<Board> tlist = bService.selectSearchTTitleList(serchC);
-		
-		
 
 			
-	}
+
+				
+		}
 	
 	
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////

@@ -147,27 +147,29 @@
 				location.href="searchTIW.to?searchCondition="+searchCondition+"&searchValue="+searchValue;
 			}
 			
-			$('#autocomplete').keyup(function serchTT(){
+			$('#autocomplete').keyup(function(){
 				var searchCondition = $("#searchCondition").val();
 				var tTitle = $.trim($(this).val());
 				var currencies;
 				
 				if(tTitle.length>0){
+					
 					$.ajax({
 						type: 'POST',
-						url: "searchTTitle.to",
+						url: "searchTIWsub.to",
 						data: {tTitle:tTitle,searchCondition:searchCondition},
 						dataType: 'json',
 						success:function(data){		
 							console.log(data);
-							
+								
 							currencies  = data;
-							
+								
 							$("#autocomplete").autocomplete({
 								lookup: currencies
 							});
 						}
 					});
+					
 				}
 				
 			});

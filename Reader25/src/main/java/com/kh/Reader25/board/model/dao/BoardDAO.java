@@ -371,9 +371,9 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
-	public ArrayList<Board> selectSearchTTitleListWriter(SqlSessionTemplate sqlSession, String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListWriter(SqlSessionTemplate sqlSession, String userId) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListWriter", bTitle);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListWriter", userId);
 	}
 
 	public ArrayList<Board> selectSearchTTitleListTitle(SqlSessionTemplate sqlSession, String bTitle) {
@@ -381,9 +381,9 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListTitle", bTitle);
 	}
 
-	public ArrayList<Board> selectSearchTTitleListContent(SqlSessionTemplate sqlSession, String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListContent(SqlSessionTemplate sqlSession, String bContent) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListContent", bTitle);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListContent", bContent);
 	}
 
 //	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, String bTitle) {

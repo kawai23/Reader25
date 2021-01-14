@@ -652,7 +652,7 @@
 	</select>
 	
 	<select id="selectSearchTTitleListTitle" resultType="string">
-		select b_title
+		select DISTINCT b_title
 		from board
 		where code ='5' and b_status='Y' 
 				and (b_title like concat('%',concat(UPPER(#{bTitle}),'%'))
@@ -660,19 +660,19 @@
 	</select>
 	
 	<select id="selectSearchTTitleListWriter" resultType="string">
-		select user_id
+		select DISTINCT user_id
 		from board
 		where code ='5' and b_status='Y' 
-				and (b_title like concat('%',concat(UPPER(#{bTitle}),'%'))
-				or b_title like concat('%',concat(LOWER(#{bTitle}),'%')))
+				and (user_id like concat('%',concat(UPPER(#{userId}),'%'))
+				or user_id like concat('%',concat(LOWER(#{userId}),'%')))
 	</select>
 	
 	<select id="selectSearchTTitleListContent" resultType="string">
-		select b_content
+		select DISTINCT b_content
 		from board
 		where code ='5' and b_status='Y' 
-				and (b_title like concat('%',concat(UPPER(#{bTitle}),'%'))
-				or b_title like concat('%',concat(LOWER(#{bTitle}),'%')))
+				and (b_content like concat('%',concat(UPPER(#{bContent}),'%'))
+				or b_content like concat('%',concat(LOWER(#{bContent}),'%')))
 	</select>
 
 </mapper>

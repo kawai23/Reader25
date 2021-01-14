@@ -141,11 +141,11 @@ public interface BoardService {
 
 	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
-	ArrayList<Board> selectSearchTTitleListWriter(String bTitle);
+	ArrayList<Board> selectSearchTTitleListWriter(String userId);
 
 	ArrayList<Board> selectSearchTTitleListTitle(String bTitle);
 
-	ArrayList<Board> selectSearchTTitleListContent(String bTitle);
+	ArrayList<Board> selectSearchTTitleListContent(String bContent);
 
 	//ArrayList<Board> selectSearchTTitleList(String bTitle);
 

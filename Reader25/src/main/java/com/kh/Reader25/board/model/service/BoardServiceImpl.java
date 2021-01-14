@@ -414,9 +414,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> selectSearchTTitleListWriter(String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListWriter(String userId) {
 		// TODO Auto-generated method stub
-		return bDAO.selectSearchTTitleListWriter(sqlSession, bTitle);
+		return bDAO.selectSearchTTitleListWriter(sqlSession, userId);
 	}
 
 	@Override
@@ -426,9 +426,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> selectSearchTTitleListContent(String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListContent(String bContent) {
 		// TODO Auto-generated method stub
-		return bDAO.selectSearchTTitleListContent(sqlSession, bTitle);
+		return bDAO.selectSearchTTitleListContent(sqlSession, bContent);
 	}
 
 //	@Override
