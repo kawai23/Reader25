@@ -371,10 +371,30 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
-	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListWriter(SqlSessionTemplate sqlSession, String bTitle) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", bTitle);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListWriter", bTitle);
 	}
+
+	public ArrayList<Board> selectSearchTTitleListTitle(SqlSessionTemplate sqlSession, String bTitle) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListTitle", bTitle);
+	}
+
+	public ArrayList<Board> selectSearchTTitleListContent(SqlSessionTemplate sqlSession, String bTitle) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListContent", bTitle);
+	}
+
+//	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, String bTitle) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", bTitle);
+//	}
+
+//	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, SearchCondition serchC) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", serchC);
+//	}
 
 
 

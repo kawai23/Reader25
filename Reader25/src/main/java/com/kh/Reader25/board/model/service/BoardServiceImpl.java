@@ -414,10 +414,34 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> selectSearchTTitleList(String bTitle) {
+	public ArrayList<Board> selectSearchTTitleListWriter(String bTitle) {
 		// TODO Auto-generated method stub
-		return bDAO.selectSearchTTitleList(sqlSession, bTitle);
+		return bDAO.selectSearchTTitleListWriter(sqlSession, bTitle);
 	}
+
+	@Override
+	public ArrayList<Board> selectSearchTTitleListTitle(String bTitle) {
+		// TODO Auto-generated method stub
+		return bDAO.selectSearchTTitleListTitle(sqlSession, bTitle);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchTTitleListContent(String bTitle) {
+		// TODO Auto-generated method stub
+		return bDAO.selectSearchTTitleListContent(sqlSession, bTitle);
+	}
+
+//	@Override
+//	public ArrayList<Board> selectSearchTTitleList(String bTitle) {
+//		// TODO Auto-generated method stub
+//		return bDAO.selectSearchTTitleList(sqlSession, bTitle);
+//	}
+
+//	@Override
+//	public ArrayList<Board> selectSearchTTitleList(SearchCondition serchC) {
+//		// TODO Auto-generated method stub
+//		return bDAO.selectSearchTTitleList(sqlSession, serchC);
+//	}
 
 	
 

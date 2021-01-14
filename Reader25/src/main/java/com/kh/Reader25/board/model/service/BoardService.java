@@ -141,7 +141,15 @@ public interface BoardService {
 
 	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
-	ArrayList<Board> selectSearchTTitleList(String bTitle);
+	ArrayList<Board> selectSearchTTitleListWriter(String bTitle);
+
+	ArrayList<Board> selectSearchTTitleListTitle(String bTitle);
+
+	ArrayList<Board> selectSearchTTitleListContent(String bTitle);
+
+	//ArrayList<Board> selectSearchTTitleList(String bTitle);
+
+	//ArrayList<Board> selectSearchTTitleList(SearchCondition serchC);
 
 	
 

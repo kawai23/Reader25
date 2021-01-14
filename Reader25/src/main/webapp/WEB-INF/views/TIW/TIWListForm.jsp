@@ -148,6 +148,7 @@
 			}
 			
 			$('#autocomplete').keyup(function serchTT(){
+				var searchCondition = $("#searchCondition").val();
 				var tTitle = $.trim($(this).val());
 				var currencies;
 				
@@ -155,7 +156,7 @@
 					$.ajax({
 						type: 'POST',
 						url: "searchTTitle.to",
-						data: {tTitle:tTitle},
+						data: {tTitle:tTitle,searchCondition:searchCondition},
 						dataType: 'json',
 						success:function(data){		
 							console.log(data);
