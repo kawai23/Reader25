@@ -141,8 +141,12 @@ public interface BoardService {
 
 	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
+	ArrayList<Board> selectSearchTTitleList(String bTitle);
 
-	ArrayList<Board> select();
+	
+
+
+
 
 	int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList);
 
