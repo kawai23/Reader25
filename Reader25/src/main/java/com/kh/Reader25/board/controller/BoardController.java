@@ -141,7 +141,6 @@ public class BoardController {
 							HttpServletRequest request) {
 		ArrayList<Attachment> uploadAtList =  new ArrayList<Attachment>();
 		int result = 0;
-		System.out.println(b);
 		if(uploadFile.length != 0) {
 			for(String str : nameArr) {
 				deleteFile(str, request);
@@ -155,17 +154,14 @@ public class BoardController {
 					at.setAtcLevel(1);
 				}
 				uploadAtList.add(at);
-				System.out.println(i + ": " + at);
 			}
 			result = bService.updateBoardAnFiles(b, uploadAtList);
 		}else {
 			result = bService.updateBoard(b);
 		}
 		if(result >0) {
-			Board board = bService.selectBoard(b.getBoardNo());
-			ArrayList<Attachment> updateAtList = bService.selectAttachmentList(b.getBoardNo());
 		}
-		return "redirect:ndetail.no";
+		return "redirect:ndetail.no?boardNo=" + b.getBoardNo() + "&page=" + page; 
 	}
 	
 	// 문의사항 = 1----------------------------------------------------
