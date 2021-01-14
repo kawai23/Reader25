@@ -264,7 +264,7 @@ select::-ms-expand {
 							<li class="title-li"><%=b.getbTitle()%></li>
 							<li class="tag-li">#작가 #분야</li>
 							<li class="writer-li"><%=b.getUserId() %></li>
-							<li class="wise-li">명언</li>
+							<!-- <li class="wise-li">명언</li> -->
 						</ul>
 					</div>
 				</div>
@@ -273,7 +273,7 @@ select::-ms-expand {
       <script>
   			$('.list-div').on('click',function(){
 				var boardNo = $(this).children('#boardNo').val();
-				location.href = "redetail.re?boardNo="+boardNo+"&page="+${pi.currentPage};
+				location.href = "redetail.bo?boardNo="+boardNo+"&page="+${pi.currentPage};
 			}).mouseenter(function(){
 				$(this).css({'cursor':'pointer','box-shadow':'2px 2px 2px 2px lightgray', });
 			}).mouseout(function(){
@@ -322,7 +322,7 @@ select::-ms-expand {
 			</div>
 			<script>
 				$('.write-btn').click(function(){
-					location.href="<%=request.getContextPath()%>/write.re";
+					location.href="<%=request.getContextPath()%>/write.bo";
 				});
 			</script>
 		</c:if>
