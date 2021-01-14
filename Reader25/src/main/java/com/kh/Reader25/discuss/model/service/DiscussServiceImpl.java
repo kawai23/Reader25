@@ -1,6 +1,7 @@
 package com.kh.Reader25.discuss.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ public class DiscussServiceImpl  implements DiscussService{
 	
 	// 토론방 있는지 체크
 	@Override
-	public int getListCount() {
-		return dDAO.getListCount(sqlSession);
+	public int getListCount(Map<String, Object> s) {
+		return dDAO.getListCount(sqlSession, s);
 	}
 	// 토론방 전체 리스트 검색
 	@Override
-	public ArrayList<Discuss> selectList(PageInfo pi) {
-		return dDAO.selectList(sqlSession, pi);
+	public ArrayList<Discuss> selectList(PageInfo pi, Map<String, Object> s) {
+		return dDAO.selectList(sqlSession, pi, s);
 	}
 	// 토론방 작성
 	@Override
@@ -91,8 +92,19 @@ public class DiscussServiceImpl  implements DiscussService{
 	}
 	// 댓글 리스트불러오기
 	@Override
-	public ArrayList<Reply> selectRList(int dNo, int cho) {
-		return dDAO.selectRList(sqlSession, dNo, cho);
+	public ArrayList<Reply> selectRList(Map<String, Integer> d) {
+		return dDAO.selectRList(sqlSession,d);
+	}
+	
+	// 댓글 삭제
+	@Override
+	public int rDelete(Reply r) {
+		int result = dDAO.rDelete(sqlSession, r.getrNo());
+		
+		if(result > 0) {
+			result = dDAO.changeCount(sqlSession, r);
+		}
+		return result;
 	}
 
 }
