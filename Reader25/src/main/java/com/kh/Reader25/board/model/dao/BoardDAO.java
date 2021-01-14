@@ -371,6 +371,24 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
+	public int MyLikeCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		
+		return sqlSession.selectOne("boardMapper.MyLikeCount", sc);
+	}
+
+	public ArrayList<Board> MyLikeList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.MyLikeList",sc , rowBounds);
+	}
+
 
 
 

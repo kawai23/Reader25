@@ -23,7 +23,7 @@
 
 
 
-<%-- <link rel="stylesheet" href="${contextPath}/resources/css/member/signup.css" type="text/css"> --%>
+
 
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -88,7 +88,7 @@ td{ margin: 5px; padding: 5px }
 						<a href="myList.me?code=4" class="list-group-item">책방 리스트</a>
 						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item">내가 쓴 책</a>
-						<a href="#" class="list-group-item">좋아요/북마크</a>
+						<a href="myLikeForm.me" class="list-group-item">좋아요/북마크</a>
 						
 						<a href="myList.me?code=1" class="list-group-item">문의사항</a>
 

@@ -62,7 +62,7 @@
 						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
 						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
-						<a href="myLikeList.me" class="list-group-item">좋아요/북마크</a>
+						<a href="myLikeList.me" class="list-group-item active">좋아요/북마크</a>
 						
 						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a>
 
@@ -89,6 +89,8 @@
 							<th><input type="checkbox" id="checkall" /></th>
 							<th>번호</th>
 							<th>제목</th>
+							<th>글쓴이</th>
+							<th>좋아요</th>
 							<th>조회수</th>
 							
 							
@@ -115,7 +117,9 @@
 								<td >${ b.boardNo }</td>
 								<td >${ b.bTitle }</td>
 								
+								<td >${ b.userId }</td>
 								
+								<td >${ b.bLike }</td>
 								<td >${ b.bCount }</td>
 								<td>
 								
@@ -191,37 +195,7 @@
 				
 				
 				
-				
-				$(function(){
-					
-					var code = ${code};
-					
-					
-					switch (code) {
-					
-					case 1:
-						
-						
-						$('#c1').addClass('active');
-						break;
-						
-					case 2:
-						$('#c2').addClass('active');
-						break;
-						
-					case 4:
-						$('#c4').addClass('active');
-						break;
-						
-					case 5:
-						$('#c5').addClass('active');
-						break;
-
-					
-					}
-					
-					
-				});
+			
 				
 				$('#search1 li > a').on('click', function() {
 			    	
@@ -242,7 +216,7 @@
 			    	
 			    	var data = '';
 			    	
-			    	var code = ${code};
+			    	
 			    		
 			    		
 			    	var searchCondition = $('#Search1').text();
@@ -252,7 +226,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
+ 		    	location.href='myLikeList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -511,11 +485,11 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
-								
-					        	var code = ${code};
 					        	
-					        	var check = ${ !empty searchValue } ; 
+								
+					        	
+					        	
+					        	var check = ${ !empty searchValue  } ; 
 					        	
 					        	var searchCondition = null;
 					        	
@@ -551,15 +525,13 @@
 							    
 							    
 							    
-							    console.log(select_obj);
-							    
-							    
-							    
-				 			 
+					
+				 			    	
+				 			    	
 								    
 								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
 							    	
-				 			 
+				 			    
 							    
 
 						});

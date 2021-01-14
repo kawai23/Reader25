@@ -419,6 +419,17 @@ public class BoardServiceImpl implements BoardService{
 		return null;
 	}
 
+	@Override
+	public int MyLikeCount(SearchCondition sc) {
+		return bDAO.MyLikeCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<Board> MyLikeList(SearchCondition sc, PageInfo pi) {
+		
+		return bDAO.MyLikeList(sqlSession,sc, pi);
+	}
+
 
 	
 }

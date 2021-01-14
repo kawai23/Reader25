@@ -207,7 +207,7 @@
  	
  	
  		select *
- 		from board join member using( user_id)
+ 		from board
  		where b_status = 'Y' and code=#{code}
  
  		
@@ -241,6 +241,67 @@
  	
  	</update>
  	
+ 	
+ 	
+ 	
+ 	<select id="MyLikeCount"   resultType="_int">
+ 	
+ 	
+ 		select count(*)
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y' 		
+		
+		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and B_CONTENT = #{no} 
+ 		
+ 		</if> 
+ 	
+ 	</select>
+ 	
+ 	
+ 	<select id="MyLikeList" parameterType="SearchCondition" resultMap="boardResultSet">
+ 	
+ 	
+ 		select *
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y' 		
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		
+ 		</if>
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		order by BOARD_NO desc
+ 	
+ 	</select>
  	
 
 	

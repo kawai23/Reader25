@@ -144,6 +144,10 @@ public interface BoardService {
 
 	ArrayList<Board> select();
 
+	int MyLikeCount(SearchCondition sc);
+
+	ArrayList<Board> MyLikeList(SearchCondition sc, PageInfo pi);
+
 
 
 

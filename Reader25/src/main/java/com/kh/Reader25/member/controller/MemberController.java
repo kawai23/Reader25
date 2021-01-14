@@ -315,6 +315,17 @@ public class MemberController {
 
 	}
 	
+	@RequestMapping("myLikeForm.me")
+	public String myLikeForm() {
+	
+
+		
+		
+		return "myLikeList";
+		
+
+	}
+	
 	 @RequestMapping("mdelete.me")
 		public ModelAndView memberDelete(@ModelAttribute Member m , SessionStatus status, ModelAndView mv) {
 			
