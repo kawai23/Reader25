@@ -99,7 +99,6 @@
 		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
 				#{atcPath}, sysdate, default, seq_bid.currval)
 	</insert>
-	
 
 	
 	<select id="SearchMyListCount" parameterType="SearchCondition" resultType="_int">
@@ -286,6 +285,11 @@
 		set atc_status = 'N'
 		where board_no = #{boardNo}
 	</update>
+	<insert id="insertAttachment2" parameterType="Attachment">
+		insert into attachment
+		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
+				#{atcPath}, sysdate, default, #{boardNo})
+	</insert>
 	<resultMap type="Attachment" id="attachmentResultSet">
 		<id property="atcNo" column="ATC_NO"/>
 		<result property="atcLevel" column="ATC_LEVEL"/>

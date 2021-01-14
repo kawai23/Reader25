@@ -407,6 +407,9 @@
 			$('#to-list').click(function(){
 				location.href = "notice.no?page=" + ${page}; // 이전으로 가기historyback
 			});
+			$('#modify-btn').click(function(){
+				location.href="modify.no?boardNo=" + ${board.boardNo} +"&page=" + ${page};
+			});
 		</script>
 	</section>
 </body>

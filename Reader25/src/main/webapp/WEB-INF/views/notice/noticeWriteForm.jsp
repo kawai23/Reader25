@@ -61,11 +61,29 @@ section {
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-.file-upload>img {
-	max-height: 300px;
-	max-width: 500px;
+
+.image-box {
+	border: 3px solid rgba(246, 246, 246, 1);
+	display: inline-block;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	line-height: 200px;
+	background: rgba(235, 235, 235, 1);
 }
-.fileList{ list-style: none; font-size: 13px;}
+
+.image-box img {
+	max-height: 200px;
+	max-width: 200px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.fileList {
+	list-style: none;
+	font-size: 13px;
+}
+
 .upload-name {
 	display: inline-block;
 	padding: .5em .75em; /* label의 패딩값과 일치 */
@@ -150,47 +168,54 @@ section {
 .jquery-modal blocker current {
 	visibility: none;
 }
+
 .modal {
-	margin: 40% auto; 
+	margin: 40% auto;
 	padding: 20px;
 	text-align: center;
 }
+
 .modal-back {
-	display: none; 
-	position: fixed; 
+	display: none;
+	position: fixed;
 	z-index: 1;
 	left: 0;
 	top: 0;
-	width: 100%; 
+	width: 100%;
 	height: 100%;
-	overflow: auto; 
-	background: rgba(0, 0, 0, 0.4); 
-}
-.modal-close{
-	background-color: rgba(137, 18, 18, 1);
-	color:white;
-	width: 100px;
-	height: 30px;
-	border:none;
-	display:block;
-	position: relative;
-	left: 40%;
-}
-.modal p{
-	display:inline-block;
-}
-.modal img{
-	position:relative;
-	top: 10px;
+	overflow: auto;
+	background: rgba(0, 0, 0, 0.4);
 }
 
+.modal-close, .modal-accept {
+	background-color: rgba(137, 18, 18, 1);
+	color: white;
+	width: 80px;
+	height: 30px;
+	border: none;
+	display: inline-block;
+	left: 40%;
+}
+
+.modal-accept {
+	background-color: rgba(85, 83, 83, 1);
+}
+
+.modal p {
+	display: inline-block;
+}
+
+.modal img {
+	position: relative;
+	top: 10px;
+}
 </style>
 </head>
 <body>
 <%@include file="../common/menubar.jsp" %>
 	
 	<!-- 에러 모달창 -->
-	<div class="modal-back">
+	<div class="modal-back" id="t-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
@@ -199,11 +224,26 @@ section {
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>
+					작성한 내용이 사라집니다. 작성 취소하시겠습니까? 
+				</p>
+				<button class="modal-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
 				$('.modal').hide();
 				$('.modal-back').hide();
+			});
+			$('.modal-accept').click(function(){
+				location.href = "notice.no";
 			});
 		});
 	</script>
@@ -214,17 +254,17 @@ section {
 			<div class="file-div">
 				<input class="upload-name" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
-				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
+				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple" accept="image/*,application/vnd.ms-excel,audio/*,video/*,text/plain,text/html,.pdf">
 			</div>
 			<div class="fileList" id="fileList"></div>
 			<div class="file-upload">
-				<img src="" id="load-img">
 			</div>
 			<script>
 				function loadImg(value){
 					if (value.files){
 						$('#fileList').html('');
-						$('#load-img').attr('src', '');
+						$uploadImage = $('.file-upload')
+						$uploadImage.html('')
 						for(var i = 0; i < value.files.length; i++){
 							if(window.FileReader){ // modern browser 
 								var filename = value.files[i].name; 
@@ -239,7 +279,10 @@ section {
 							var reader = new FileReader();
 							if(extension == "png" || extension == "jpg" || extension == "jpeg"){
 								reader.onload = function(e) {
-		 							$('#load-img').attr('src', e.target.result);
+									$imgBox = $('<div class="image-box">');
+									$img = $('<img>').attr('src', e.target.result);
+									$imgBox.append($img);
+									$uploadImage.append($imgBox);
 								}
 								reader.readAsDataURL(value.files[i]);
 							}else{
@@ -265,10 +308,17 @@ section {
 			</div>
 			<div class="btn-div">
 				<button id="submit-btn" class="btn">작성완료</button>
-				<input type="reset" class="btn" value="작성취소">
+				<button class="btn" id="reset-btn">작성취소</button>
 			</div>
 		</form>
 		<script>
+			$(function(){
+				$('#reset-btn').click(function(){
+					event.preventDefault();
+					$('#c-modal').show();
+					$('#c-modal .modal').show();
+				});
+			});
 			var oEditors = [];
 			//스마트 에디터 생성 함수
 			 nhn.husky.EZCreator.createInIFrame({
@@ -285,8 +335,8 @@ section {
 				 if(title == ""){
 					 event.preventDefault();
 					 this.blur();
-					 $('.modal-back').show();
-					 $('.modal').show();
+					 $('#t-modal').show();
+					 $('#t-modal .modal').show();
 					return false;
 				}else{
 					$('#notice-form').submit();
