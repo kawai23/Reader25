@@ -1306,6 +1306,7 @@ public class BoardController {
 		if(list != null) {
 			mv.addObject("list", list)
 				.addObject("pi", pi)
+				.addObject("page", page)
 				.setViewName("notice");
 		}else {
 			throw new BoardException("공지사항 게시글 전체 조회에 실패하였습니다.");

@@ -37,4 +37,17 @@ public class BookController {
 		}
 		return mv;
 	}
+	
+	//관리자창 : 결제 내역 조회
+	@RequestMapping("paylist.ad")
+	public ModelAndView adminPayList(@RequestParam(value="page", required=false) Integer page,
+									ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+//		int listCount = b_Service.getListCount
+		return mv;
+	}
 }
+
