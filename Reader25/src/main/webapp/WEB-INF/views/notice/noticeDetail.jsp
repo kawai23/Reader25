@@ -220,6 +220,17 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="del-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>정말로 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-accept" value="accept">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -405,10 +416,17 @@
 		</div>
 		<script>
 			$('#to-list').click(function(){
-				location.href = "notice.no?page=" + ${page}; // 이전으로 가기historyback
+				window.history.back();
 			});
 			$('#modify-btn').click(function(){
 				location.href="modify.no?boardNo=" + ${board.boardNo} +"&page=" + ${page};
+			});
+			$('#delete-btn').click(function(){
+				$('#del-modal').show();
+				$('#del-modal .modal').show();
+				$('#del-modal .modal-accept').click(function(){
+					location.href="delete.no?boardNo=" + ${board.boardNo};
+				});
 			});
 		</script>
 	</section>

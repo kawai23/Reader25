@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <title>관리자 페이지</title>
-<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 	header{
 		background: rgba(245, 113, 92, 1);
 		height: 50px;
 		width:100%;
+		min-width: 700px;
 	}
 	header>h3, header>img{
 		display:inline-block;
@@ -56,8 +57,8 @@
 <body>
 	<nav>
 		<ul class="nav-ul">
-			<li><a href="admin.ad" class="nav-a">회원 정보 조회</a></li>
-			<li><a href="paylist.ad" class="nav-a">결제 리스트</a></li>
+			<li><a href="admin.ad" class="nav-a">회원 관리</a></li>
+			<li><a href="paylist.ad" class="nav-a">결제 내역 조회</a></li>
 			<li><a href="inquiry.ad" class="nav-a">문의 사항</a></li>
 			<li><a href="notice.ad" class="nav-a">공지 사항</a></li>
 			<li><a href="statistic.ad" class="nav-a">통계자료</a></li>

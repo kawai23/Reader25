@@ -1,10 +1,13 @@
 package com.kh.Reader25.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.member.model.vo.Member;
 
 @Repository("mDAO")
@@ -65,6 +68,52 @@ public class MemberDAO {
 
 	public int memberDelete(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.memberDelete", m);
+	}
+
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", null, rowBounds);
+	}
+
+	public int getMemListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.getMemListCount");
+	}
+
+	public int getMemDeleteListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.getMemDeleteListCount");
+	}
+
+	public ArrayList<Member> selectdeleteMemberList(SqlSessionTemplate sqlSession, PageInfo pi2) {
+		int offset = (pi2.getCurrentPage()- 1)* pi2.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi2.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectdeleteMemberList", null, rowBounds);
+	}
+
+	public int deleteMemberList(SqlSessionTemplate sqlSession, String[] idArr) {
+		int result = 0;
+		for(String id: idArr) {
+			result += sqlSession.update("memberMapper.deleteMemberList", id);
+		}
+		if(result == idArr.length) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
+	}
+
+	public int reMemberList(SqlSessionTemplate sqlSession, String[] idArr) {
+		int result = 0;
+		for(String id: idArr) {
+			result += sqlSession.update("memberMapper.recoveryMemberList", id);
+		}
+		if(result == idArr.length) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
 	}
 	
 	

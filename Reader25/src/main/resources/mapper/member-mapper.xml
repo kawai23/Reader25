@@ -80,6 +80,36 @@
  		
  	</update>
 	
+	<select id="getMemListCount" resultType="_int">
+		select count(*)
+		from member
+		where status = 'Y'
+	</select>
 	
+	<select id="getMemDeleteListCount" resultType="_int">
+		select count(*)
+		from member
+		where status = 'N'
+	</select>
 	
+	<select id="selectMemberList" resultMap="memberResultSet">
+		select *
+		from member
+		where status = 'Y'
+	</select>
+	<select id="selectdeleteMemberList" resultMap="memberResultSet">
+		select *
+		from member
+		where status = 'N'
+	</select>
+	<update id="deleteMemberList">
+		update member
+		set status = 'N'
+		where user_id = #{id}
+	</update>
+	<update id="recoveryMemberList">
+		update member
+		set status = 'Y'
+		where user_id = #{id}
+	</update>
 </mapper>

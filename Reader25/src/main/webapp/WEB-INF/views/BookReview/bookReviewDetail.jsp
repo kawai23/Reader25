@@ -519,7 +519,7 @@
 						}
 						$copaging.append($pNo);
 					}
-					if(pi0.currentPage >= pi0.endPage){
+					if(pi0.currentPage >= pi0.maxPage){
 						$next = $('<p>').text(">");
 					}else{
 						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
@@ -603,7 +603,7 @@
 							$repaging.append($pNo);
 						}
 						
-						if(pi1.currentPage >= pi1.endPage){
+						if(pi1.currentPage >= pi1.maxPage){
 							$next = $('<p>').text(">");
 						}else{
 							$next = $('<a>').on("click", function(){getReList(pi1.currentPage + 1)}).text('>');
@@ -693,7 +693,7 @@
 							}
 							$wisepaging.append($pNo);
 						}
-						if(pi2.currentPage >= pi2.endPage){
+						if(pi2.currentPage >= pi2.maxPage){
 							$next = $('<p>').text(">");
 						}else{
 							$next = $('<a>').on('click',function(){getWiseList(pi2.currentPage + 1)}).text('>');
