@@ -1,8 +1,8 @@
 package com.kh.Reader25.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,10 +22,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.dao.NaverLoginBO;
 import com.kh.Reader25.member.model.exception.MemberException;
 import com.kh.Reader25.member.model.service.MemberService;
-import com.kh.Reader25.member.model.service.MemberServiceImpl;
 import com.kh.Reader25.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -284,9 +285,34 @@ public class MemberController {
 	
 	// 관리자 : 회원정보 관리
 	@RequestMapping("admin.ad")
-	public String adminMemberListView() {
+	public ModelAndView adminMemberListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page,
+											@RequestParam(value="page2", required=false) Integer page2) {
+		// 페이징
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int currentPage2 = 1;
+		if(page2 != null) {
+			currentPage2 = page;
+		}
 		
-		return "memberList";
+		int listCount = mService.getMemListCount();
+		int listCount2 = mService.getMemDeleteListCount();
+		PageInfo pi = Pagination.getPageInfo3(currentPage, listCount);
+		PageInfo pi2 = Pagination.getPageInfo3(currentPage2, listCount2);
+		ArrayList<Member> memList = mService.selectMemberList(pi);
+		ArrayList<Member> delList = mService.selectdeletMemberList(pi2);
+		if(memList != null) {
+			mv.addObject("memList", memList)
+			  .addObject("pi", pi)
+			  .addObject("pi2", pi2)
+			  .addObject("delList", delList);
+			mv.setViewName("memberList");
+			return mv;
+		}else {
+			throw new MemberException("관리자창에서 회원리스트를 조회하는데 실패하였습니다.");
+		}
 	}
 	
 	

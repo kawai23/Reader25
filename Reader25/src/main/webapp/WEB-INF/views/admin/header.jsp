@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <title>관리자 페이지</title>
-<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 	header{
 		background: rgba(245, 113, 92, 1);

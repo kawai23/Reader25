@@ -185,10 +185,10 @@
 			</c:forEach>
 			
 			<!------ 다음 --------->
-			<c:if test="${ pi.currentPage >= pi.endPage }">
+			<c:if test="${ pi.currentPage >= pi.maxPage }">
 				<p>&gt;</p>
 			</c:if>
-			<c:if test="${ pi.currentPage < pi.endPage }">
+			<c:if test="${ pi.currentPage < pi.maxPage }">
 				<c:url var="Next" value="${ loc }">
 					<c:param name="page" value="${ pi.currentPage + 1 }"/>
 				</c:url>
