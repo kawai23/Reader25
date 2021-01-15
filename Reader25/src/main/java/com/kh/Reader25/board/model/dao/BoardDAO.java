@@ -411,9 +411,9 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
 	}
 
-	public int todayListCount(SqlSessionTemplate sqlSession) {
+	public int todayListCount(SqlSessionTemplate sqlSession, String enrollDay) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("boardMapper.todayListCount");
+		return sqlSession.selectOne("boardMapper.todayListCount", enrollDay);
 	}
 
 

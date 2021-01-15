@@ -678,7 +678,7 @@
 	<select id="todayListCount" resultType="_int">
 		select count(*)
 		from board
-		where code ='5' and b_status='Y' and ENROLL_DAY=sysdate
+		where code ='5' and b_status='Y' and ENROLL_DAY>= #{enrollDay}
 	</select>
 
 </mapper>

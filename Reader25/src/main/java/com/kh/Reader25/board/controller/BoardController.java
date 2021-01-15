@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -914,9 +915,14 @@ public class BoardController {
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		SimpleDateFormat format1 = new SimpleDateFormat( "yy/MM/dd");
+		Calendar calendar = Calendar.getInstance();
+		String enrollDay = format1.format(calendar.getTime());
+        //System.out.println("enrollDay"+enrollDay);
 			
 		int listCount = bService.getTIWListCount();
-		int todayListCount = bService.todayListCount();
+		int todayListCount = bService.todayListCount(enrollDay);
 			
 		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
 			

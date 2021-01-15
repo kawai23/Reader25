@@ -458,9 +458,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int todayListCount() {
+	public int todayListCount(String enrollDay) {
 		// TODO Auto-generated method stub
-		return bDAO.todayListCount(sqlSession);
+		return bDAO.todayListCount(sqlSession, enrollDay);
 	}
 
 	

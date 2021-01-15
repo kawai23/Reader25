@@ -13,7 +13,7 @@
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
 		margin-bottom: 5%; min-width: 1000px;
 		padding-top: 15px;
-		background-color:  #F6F6F6; display: inline-block;
+		background-color:  #F6F6F6; 
 		font-family: 카페24 아네모네에어;
 	}
 /*테이블*/
@@ -43,6 +43,7 @@ input, select{
 	font-family: 카페24 아네모네;
 	text-align: center;
 }
+#up{color:red;}
 /*버튼*/
 .btn1 {
 	width:150px;
@@ -78,7 +79,7 @@ input, select{
 	
 	<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
 	
-	<h3 align="center">총 게시글 갯수 : ${todayListCount} / ${ pi.listCount }</h3>
+	<h3 align="center">총 게시글 갯수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
 	
 		<table id="TIWTable" align="center">
 			<tr>
