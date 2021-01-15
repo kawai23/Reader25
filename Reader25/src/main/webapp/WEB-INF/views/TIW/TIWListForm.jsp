@@ -7,17 +7,65 @@
 <meta charset="UTF-8">
 <title>Reader들을 위한 Reader 25</title>
 
-<link rel="stylesheet" href="${contextPath}/resources/css/TIW/TIWListForm.css" type="text/css">
-
 <style>
+/*화면*/
 .outer{
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
-		margin-top:100px; margin-bottom: 5%; min-width: 1000px;
-		background-color:  #F6F6F6;
+		margin-bottom: 5%; min-width: 1000px;
+		padding-top: 15px;
+		background-color:  #F6F6F6; display: inline-block;
+		font-family: 카페24 아네모네에어;
 	}
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+/*테이블*/
+#TIWTable{
+	font-size:18px;
+	font-family: 카페24 아네모네에어;
+	text-align: center;
+	margin: auto; 
+	width: 850px;
+}
+#TIWTable th{
+	background: #F7B45E;
+}
+/*검색*/
+input, select{
+	width: 130px;
+	height: 30px;
+	background: #EAEAEA;
+	text-align: center; 
+	border: none;
+	font-size:17px; 
+	font-family: 카페24 아네모네에어;
+}
+/*글자*/
+.txt_TIW{
+	font-size:40px;
+	font-family: 카페24 아네모네;
+	text-align: center;
+}
+/*버튼*/
+.btn1 {
+	width:150px;
+    height: 40px;
+    margin-right: 50px;
+	font-size: 17px; font-weight: bold;
+	border: 1px solid  #FFC398;
+    background-color:  #FFC398;
+    font-family: 카페24 아네모네에어;
+}
+.btn2{
+	width:100px;
+    height: 30px;
+    margin-right: 50px;
+	font-size: 15px; font-weight: bold; color:#000000;
+	border: 1px solid  #C4C4C4;
+    background-color:  #C4C4C4;
+    font-family: 카페24 아네모네에어;
+}
+/*자동완성 관련*/
+.autocomplete-suggestions { border: 1px solid #999; background: #EAEAEA; overflow: auto; font-size:17px; font-family: 카페24 아네모네에어;}
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; cursor: pointer; }
-.autocomplete-selected { background: blue; color: white; }
+.autocomplete-selected { background: #FFC6C6; color: white; }
 .autocomplete-suggestions strong { font-weight: bold; color: orange; }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
@@ -30,13 +78,13 @@
 	
 	<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
 	
-	<h3 align="center">총 게시글 갯수 : ${ pi.listCount }</h3>
+	<h3 align="center">총 게시글 갯수 : ${todayListCount} / ${ pi.listCount }</h3>
 	
 		<table id="TIWTable" align="center">
 			<tr>
 				<th>글 번호</th>
 				<th>원작</th>
-				<th>제목</th>
+				<th width="350px">제목</th>
 				<th>작가</th>
 				<th>작성일</th>
 				<th>조회수</th>
@@ -134,9 +182,12 @@
 			
 			
 			<input id=autocomplete type="text">
-			<button onclick="searchBoard();">검색!</button>
+			<button class="btn2" onclick="searchBoard();">검색!</button>
 			
 		</div>
+		
+		<br><br><br><br>
+		
 		<script src="//code.jquery.com/jquery.min.js"></script>
 		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.26/jquery.autocomplete.min.js'></script>
 		<script type="text/javascript">

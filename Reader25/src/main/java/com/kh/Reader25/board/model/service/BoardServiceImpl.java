@@ -460,6 +460,12 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.updateBoard(sqlSession, b);
 	}
 
+	@Override
+	public int todayListCount() {
+		// TODO Auto-generated method stub
+		return bDAO.todayListCount(sqlSession);
+	}
+
 	
 
 

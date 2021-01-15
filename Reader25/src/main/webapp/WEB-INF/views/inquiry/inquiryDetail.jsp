@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,9 @@
 		min-width: 1000px;
 		margin:auto;
 		padding-top: 20px;
+		font-family: 카페24 아네모네에어;
 	}
+	#myimg{max-width: 250px;}
 	.inquiry-div{
 		min-height: 100px; 
 		background: white;
@@ -264,9 +269,29 @@
 				</div>
 				
 				<!-- 이미지 파일 넣기 -->
-				<div class="image-div">
-					<img src="<%=request.getContextPath()%>/buploadFiles/${ Attachment.atcName }">
-				</div>
+				<% 
+					ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+				%>
+				<%if(atList != null){ %>
+					<div class="file-list">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(!ext.equals("jpg") && !ext.equals("jepg") && !ext.equals("png")) { %>
+								<a href="resources/buploadFiles/<%=at.getAtcName()%>" download="<%=at.getAtcOrigin()%>"><%=at.getAtcOrigin()%></a>
+							<%} %>
+						<%} %>
+					</div>
+					<div class="images-div">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(ext.equals("jpg") || ext.equals("jepg") || ext.equals("png")) { %>
+								<div class="image">
+									<img id="myimg" src="<%=request.getContextPath()%>/resources/buploadFiles/<%=at.getAtcName()%>">
+								</div>
+							<%} %>
+						<%} %>
+					</div>
+				<%} %>
 				<!-- ---------- -->
 				
 				<div class="contents">

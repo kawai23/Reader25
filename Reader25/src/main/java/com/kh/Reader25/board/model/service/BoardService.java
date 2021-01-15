@@ -160,6 +160,8 @@ public interface BoardService {
 
 	int updateBoard(Board b);
 
+	int todayListCount();
+
 
 
 

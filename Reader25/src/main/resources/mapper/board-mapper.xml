@@ -674,5 +674,11 @@
 				and (b_content like concat('%',concat(UPPER(#{bContent}),'%'))
 				or b_content like concat('%',concat(LOWER(#{bContent}),'%')))
 	</select>
+	
+	<select id="todayListCount" resultType="_int">
+		select count(*)
+		from board
+		where code ='5' and b_status='Y' and ENROLL_DAY=sysdate
+	</select>
 
 </mapper>

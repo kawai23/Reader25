@@ -104,9 +104,7 @@ public class MemberController {
 		Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
 			
-		System.out.println("session"+session);
-			
-			
+		//System.out.println("m받아온거"+m);
 			
 		if(bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 			model.addAttribute("loginUser", loginUser);

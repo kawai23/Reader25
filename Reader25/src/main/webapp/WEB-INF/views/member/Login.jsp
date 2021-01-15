@@ -10,13 +10,80 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<link rel="stylesheet" href="${contextPath}/resources/css/member/login.css" type="text/css">
-
 <style>
+/*화면*/
 .outer{
 		width: 900px; min-height: 400px; margin-left: auto; margin-right: auto; 
 		margin-top:20px; margin-bottom: 5%;
 	}
+/*글자*/
+.txt_login{
+	display: inline-block;
+	font-size:70px;
+	font-family: 카페24 아네모네;
+	text-align: center;
+}
+.txt_login_div{
+	display: inline-block;
+	font-size:40px;
+	font-family: 카페24 아네모네에어;
+	text-align: center;
+}
+.login_search {
+	display: inline-block;
+    left: 600px;
+    padding-top: 10px;
+    text-indent: 240px;
+    font-family: 카페24 아네모네에어;
+}
+/*입력단*/
+.input_id input{
+	width: 430px;
+	height: 50px;
+	background: #EAEAEA;
+	text-align: center; 
+	border: none;
+	font-size:25px; color:#400040;
+	font-family: 카페24 아네모네에어;
+}
+.input_pw input{
+	width: 430px;
+	height: 50px;
+	background: #EAEAEA;
+	text-align: center; 
+	border: none;
+	font-size:25px; color:#400040;
+	font-family: 카페24 아네모네에어;
+}
+/*테이블*/
+.login_put{ 
+	display: inline-block;
+}
+/*버튼*/
+#btn1 {
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#fff;
+	border: 1px solid  #FFC398;
+    background-color:  #FFC398;
+    font-family: 카페24 아네모네에어;
+}
+#btn2{
+	width:400px;
+    height: 60px;
+	font-size: 20px; color:#000000;
+	border: 1px solid  #C95F12;
+    background-color:  #C95F12;
+    font-family: 카페24 아네모네에어;
+}
+#btn3{
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#000000;
+	border: 1px solid  #C4C4C4;
+    background-color:  #C4C4C4;
+    font-family: 카페24 아네모네에어;
+}
 </style>
 </head>
 <body>
@@ -25,7 +92,7 @@
 	<div class="outer">
 		<form action="login.me" method="post" id="login">
 		
-			<h2 class="txt_login" align="center">로그인</h2>
+			<h2 class="txt_login" align="center">로그인 . . .</h2>
 			<br>
 			<table class="login_put">
 				<tr>
@@ -61,15 +128,18 @@
 						</div>
 					</td>
 				</tr>
+			</table>
+			
+			<br><br>
+			
+			<table class="login_put">
 				<tr>
+					<td width="200px">
+					</td>
 					<td colspan="2" align="center">
 						<button style="cursor:pointer" id="btn2" type="submit" class="btn2"><span class="txt_type">로그인</span></button>
 					</td>
 				</tr>
-			</table>
-
-		</form>
-			<table class="login_put">
 				<tr>
 					<td width="200px">
 					</td>
@@ -86,12 +156,16 @@
 						<!-- 네이버 로그인 화면에서 ID, PW를 올바르게 입력하면 callback 메소드 실행 요청 -->
 						<div id="naver_id_login" style="text-align:center">
 							<a href="${url}">
-								<img width="350" src="resources/images/login/naverB.jpg"/>
+								<img width="400" src="resources/images/login/naverB.jpg"/>
 							</a>
 						</div>
 					</td>
 				</tr>
 			</table>
+
+		</form>
+		
+			
 			
 			
 			<br>

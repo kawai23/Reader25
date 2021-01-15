@@ -905,6 +905,7 @@ public class BoardController {
 		}
 			
 		int listCount = bService.getTIWListCount();
+		int todayListCount = bService.todayListCount();
 			
 		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
 			
@@ -913,6 +914,7 @@ public class BoardController {
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+			mv.addObject("todayListCount", todayListCount);
 			mv.setViewName("TIWListForm");
 		} else {
 			throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");

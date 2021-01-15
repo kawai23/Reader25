@@ -411,6 +411,11 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
 	}
 
+	public int todayListCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.todayListCount");
+	}
+
 
 
 
