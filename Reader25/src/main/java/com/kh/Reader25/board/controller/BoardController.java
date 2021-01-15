@@ -160,10 +160,21 @@ public class BoardController {
 			result = bService.updateBoard(b);
 		}
 		if(result >0) {
+			return "redirect:ndetail.no?boardNo=" + b.getBoardNo() + "&page=" + page; 
+		}else {
+			throw new BoardException("공지사항 게시물 수정하기에 실패하였습니다.");
 		}
-		return "redirect:ndetail.no?boardNo=" + b.getBoardNo() + "&page=" + page; 
 	}
-	
+	//(7)삭제하기
+	@RequestMapping("delete.no")
+	public String deleteNotice(@RequestParam("boardNo") int boardNo) {
+		int result = bService.deleteBoardAndFile(boardNo);
+		if(result > 0) {
+			return "redirect:notice.no";
+		}else {
+			throw new BoardException("공지사항 게시물 삭제에 실패하였습니다.");
+		}
+	}
 	// 문의사항 = 1----------------------------------------------------
 	@RequestMapping("inquiry.in")
 	public ModelAndView inquiryList(@RequestParam(value="page", required=false) Integer page,
