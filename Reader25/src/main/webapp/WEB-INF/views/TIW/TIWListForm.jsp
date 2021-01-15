@@ -63,6 +63,35 @@ input, select{
     background-color:  #C4C4C4;
     font-family: 카페24 아네모네에어;
 }
+/*페이징*/
+.paging-div{
+		width: 250px;
+		margin: auto;
+		margin-top: 30px;
+		text-align: center;
+}
+.paging-div>a, .paging-div>p {
+		padding:0;
+		margin: 0;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		color: rgba(85, 83, 83, 1);
+		font-size: 17px;
+		background: rgba(229, 229, 229, 1);
+		border: none;
+		text-decoration: none;
+		text-align: center;
+		vertical-align: middle;
+}	
+.paging-div>a:hover {
+		font-weight: bold;
+		background: rgba(220, 220, 220, 1);
+}
+.paging-div>p {
+		background: rgba(39, 50, 56, 1);
+		color: white;
+}
 /*자동완성 관련*/
 .autocomplete-suggestions { border: 1px solid #999; background: #EAEAEA; overflow: auto; font-size:17px; font-family: 카페24 아네모네에어;}
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; cursor: pointer; }
@@ -122,49 +151,42 @@ input, select{
 		</table>
 		
 		<!-- 오늘은 나도 작가 리스트 페이징 부분 -->
-			<div class="pagingArea" align="center">
-				<!-- 이전으로 -->
-				<c:if test="${ pi.currentPage <= 1 }">
-					<
-				</c:if>
-				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="blistBack" value="${ loc }">
-						<c:param name="currentPage" value="${ pi.currentPage -1 }"/>
+		<!-- 페이징 버튼 -->
+		<div class="paging-div">
+			<!------ 이전 --------->
+			<c:if test="${ pi.currentPage <= 1 }">
+				<p>&lt;</p>
+			</c:if>
+			<c:if test="${ pi.currentPage > 1 }">
+				<c:url var="before" value="goTIWList.to">
+					<c:param name="page" value="${ pi.currentPage -1 }"/>
+				</c:url>
+				<a href="${ before }">&lt;</a>
+			</c:if>
+			<!------ 버튼 --------->
+			<c:forEach  var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<c:if test="${pi.currentPage ne p }">
+					<c:url var="pNo" value="goTIWList.to">
+						<c:param name="page" value="${ p }"/>
 					</c:url>
-					<a href="${ blistBack }"><</a>
+					<a href="${ pNo }">${ p }</a>
 				</c:if>
-				
-				<!-- [번호] -->
-				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-					<c:if test="${ p eq pi.currentPage }">
-						<font color="red" size="4"><b>${ p }</b></font>
-					</c:if>
-					<c:if test="${ p ne pi.currentPage}">
-						<c:url var="blistCheck" value="${ loc }">
-							<c:if test="${ searchValue ne null }">
-								<c:param name="searchCondition" value="${ searchCondition }"/>
-								<c:param name="searchValue" value="${ searchValue }"/>
-							</c:if>
-							<c:param name="currentPage" value="${ p }"></c:param>
-						</c:url>
-						<a href="${ blistCheck }">${ p }</a>
-					</c:if>
-				</c:forEach>
-				<!-- 다음으로 -->
-				<c:if test="${ pi.currentPage >= pi.maxPage }">
-					>
+				<c:if test="${ pi.currentPage eq p }">
+					<p>${ p }</p>
 				</c:if>
-				<c:if test="${ pi.currentPage < pi.maxPage }">
-					<c:url var="blistNext" value="${ loc }">
-						<c:if test="${ searchValue ne null }">
-							<c:param name="searchCondition" value="${ searchCondition }"/>
-							<c:param name="searchValue" value="${ searchValue }"/>
-						</c:if>
-						<c:param name="currentPage" value="${ pi.currentPage + 1 }"/>
-					</c:url>
-					<a href="${ blistNext }">></a>
-				</c:if>
-			</div>
+			</c:forEach>
+			
+			<!------ 다음 --------->
+			<c:if test="${ pi.currentPage >= pi.maxPage }">
+				<p>&gt;</p>
+			</c:if>
+			<c:if test="${ pi.currentPage < pi.maxPage }">
+				<c:url var="Next" value="${ loc }">
+					<c:param name="page" value="${ pi.currentPage + 1 }"/>
+				</c:url>
+				<a href="${ Next }">&gt;</a>
+			</c:if>
+		</div>
 		<div class="insertbuttonArea" align="right">			
 			<c:if test="${ loginUser ne null }">
 				<input type="button" onclick="location.href='writeTIW.to';" id="writeTIWBtn" class="btn1" value="글쓰기">
