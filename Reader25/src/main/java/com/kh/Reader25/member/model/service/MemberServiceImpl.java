@@ -100,6 +100,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectdeleteMemberList(sqlSession, pi2);
 	}
 
+	@Override
+	public int deleteMemberList(String[] idArr) {
+		return mDAO.deleteMemberList(sqlSession, idArr);
+	}
+
+	@Override
+	public int reMemberList(String[] idArr) {
+		return mDAO.reMemberList(sqlSession, idArr);
+	}
+
 
 	
 

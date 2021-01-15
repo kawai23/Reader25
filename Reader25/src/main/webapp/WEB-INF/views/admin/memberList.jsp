@@ -6,10 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- jqyery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
 	body{
 		background:rgba(246, 246, 246, 1);
 	}
+	#logo-img:hover{cursor:pointer;}
 	section{
 		display:inline-block;
 		min-height: 700px;
@@ -36,7 +41,12 @@
 		padding-bottom: 10px;
 		border-bottom: 2px solid gray;
 	}
+	.title span{
+		float:right;
+	}
+	#deleteMem, #backMem{background:rgba(85, 83, 83, 1); color:white; border-color: rgba(85, 83, 83, 1);}
 	.mem-list-table{
+		clear:both;
 		text-align: center;
 		padding: 5px;
 		width: 95%;
@@ -83,18 +93,91 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
+		.jquery-modal blocker current {
+		visibility: none;
+	}
+	.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+	}
+	.modal-back {
+		display: none; 
+		position: fixed; 
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto; 
+		background: rgba(0, 0, 0, 0.4); 
+	}
+	.modal-close ,.modal-accept{
+		background-color: rgba(137, 18, 18, 1);
+		color:white;
+		width: 80px;
+		height: 30px;
+		border:none;
+		display:inline-block;
+		left: 40%;
+	}
+	.modal-accept{
+		background-color: rgba(85, 83, 83, 1);
+	}
+	.modal p{
+		display:inline-block;
+	}
+	.modal img{
+		position:relative;
+		top: 10px;
+	}
 </style>
 </head>
 <body>
 	<header>
-		<img src="#logo"/>
-		<h3 id="header-h2">회원 정보 조회</h3>
+		<img src="#logo" id="logo-img" onclick="goHome();"/>
+		<h3 id="header-h2">회원 관리</h3>
 	</header>
+	<script>
+		function goHome(){
+			location.href="home.do";
+		}
+	</script>
 	<%@ include file="header.jsp" %>
+	<div class="modal-back" id="del-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>회원 계정을 중지시키겠습니까?</p>
+				<br>
+				<button class="modal-accept" id="modal-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
+		<div class="modal-back" id="re-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>회원 계정을 복구시키겠습니까?</p>
+				<br>
+				<button class="modal-accept" id="re-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+		});
+	</script>
 	<section id="member-section">
 		<div class="member-li-div">
 			<div class="content">
-				<div class="title">회원 정보</div>
+				<div class="title">회원 관리<span><button id="deleteMem">계정 중지</button></span></div>
 				<table class="mem-list-table">
 					<tr class="tr-header">
 						<th><input type="checkbox" id="del-mem-all"></th>
@@ -114,11 +197,11 @@
 					<c:if test="${!empty memList}">
 						<c:forEach items="${memList}" var="mem">
 							<tr>
-								<td><input type="checkbox" class="delete-mem"></td>
+								<td><input type="checkbox" name="delete-mem" class="delete-mem"></td>
 								<td>${mem.id }</td>
 								<td>${mem.name }</td>
 								<td>${mem.gender }</td>
-								<td>${mem.address }</td>
+								<td>${mem.email }</td>
 								<td>${mem.phone }</td>
 								<td>${mem.grantId}</td>
 								<td>${mem.mStatus}</td>
@@ -128,6 +211,28 @@
 				</table>
 			</div>
 		</div>
+		<script>
+			$(function(){
+			
+				$('#deleteMem').click(function(){
+					
+					$('#del-modal').show();
+					$('#del-modal .modal').show();
+					$('#modal-accept').click(function(){
+						var idValue = [];
+						$('input[name=delete-mem]:checked').each(function(){
+							var tr = $(this).parent('td').parent('tr');
+							var id = $(this).parents('td').siblings().eq(0).text();
+							idValue.push(id);
+							tr.remove();
+						});
+						location.href="deleteAll.me?idArr=" + idValue;
+						$('#del-modal').hide();
+						$('#del-modal .modal').hide();
+					});
+				});
+			});
+		</script>
 		<!-- 페이징 버튼 -->
 		<div class="paging">
 			<div class="paging-div">
@@ -168,7 +273,7 @@
 		</div>
 		<div class="member-li-div">
 			<div class="content">
-				<div class="title">탈퇴한 회원 관리 </div>
+				<div class="title">탈퇴한 회원 관리 <span><button id="backMem">계정 복구</button></span></div>
 				<table class="mem-list-table">
 					<tr class="tr-header">
 						<th><input type="checkbox" id="del-all"></th>
@@ -186,19 +291,40 @@
 					<c:if test="${!empty delList}">
 						<c:forEach var="dlist" items="${delList }">
 							<tr>
-								<td><input type="checkbox" class="delete-del"></td>
+								<td><input type="checkbox" name="recovery-mem" class="delete-del"></td>
 								<td>${dlist.id }</td>
 								<td>${dlist.name}</td>
 								<td>${dlist.grantId }</td>
 								<td>${dlist.email }</td>
-								<td>${dlist.status }</td>
+								<td>${dlist.mStatus }</td>
 							</tr>
 						</c:forEach>
 					</c:if>
 				</table>
 			</div>
-
 		</div>
+		<script>
+			$(function(){
+			
+				$('#backMem').click(function(){
+					
+					$('#re-modal').show();
+					$('#re-modal .modal').show();
+					$('#re-accept').click(function(){
+						var idValue = [];
+						$('input[name=recovery-mem]:checked').each(function(){
+							var tr = $(this).parent('td').parent('tr');
+							var id = $(this).parents('td').siblings().eq(0).text();
+							idValue.push(id);
+							tr.remove();
+						});
+						location.href="recoveryAll.me?idArr=" + idValue;
+						$('#re-modal').hide();
+						$('#re-modal .modal').hide();
+					});
+				});
+			});
+		</script>
 		<!-- 페이징 버튼 -->
 		<div class="paging">
 			<div class="paging-div">

@@ -89,6 +89,32 @@ public class MemberDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi2.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("memberMapper.selectdeleteMemberList", null, rowBounds);
 	}
+
+	public int deleteMemberList(SqlSessionTemplate sqlSession, String[] idArr) {
+		int result = 0;
+		for(String id: idArr) {
+			result += sqlSession.update("memberMapper.deleteMemberList", id);
+		}
+		if(result == idArr.length) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
+	}
+
+	public int reMemberList(SqlSessionTemplate sqlSession, String[] idArr) {
+		int result = 0;
+		for(String id: idArr) {
+			result += sqlSession.update("memberMapper.recoveryMemberList", id);
+		}
+		if(result == idArr.length) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
+	}
 	
 	
 

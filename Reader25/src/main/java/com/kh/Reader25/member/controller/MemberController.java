@@ -314,7 +314,26 @@ public class MemberController {
 			throw new MemberException("관리자창에서 회원리스트를 조회하는데 실패하였습니다.");
 		}
 	}
-	
+	//관리자 :회원 삭제
+	@RequestMapping("deleteAll.me")
+	public String deleteMemberList(@RequestParam("idArr") String[] idArr) {
+		int result = mService.deleteMemberList(idArr);
+		if(result > 0) {
+			return "redirect:admin.ad";
+		}else {
+			throw new MemberException("관리자에서 회원 삭제에 실패하였습니다.");
+		}
+	}
+	//관리자 : 회원복구
+	@RequestMapping("recoveryAll.me")
+	public String recoveryMemberList(@RequestParam("idArr") String[] idArr) {
+		int result = mService.reMemberList(idArr);
+		if(result > 0) {
+			return "redirect:admin.ad";
+		}else {
+			throw new MemberException("관리자창에서 계정 복구에 실패하였습니다.");
+		}
+	}
 	
 	@RequestMapping("myUpdateForm.me")
 	public String myUpdateForm() {

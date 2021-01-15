@@ -50,6 +50,7 @@
 					<li class="li"><a href="notice.no">공지사항</a></li>
 					<li><a href="inquiry.in">문의사항</a></li>
 				</c:if>
+			</ul>
 		</div>
 		<div class="top_logo">
 			<img

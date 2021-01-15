@@ -102,4 +102,14 @@
 		from member
 		where status = 'N'
 	</select>
+	<update id="deleteMemberList">
+		update member
+		set status = 'N'
+		where user_id = #{id}
+	</update>
+	<update id="recoveryMemberList">
+		update member
+		set status = 'Y'
+		where user_id = #{id}
+	</update>
 </mapper>

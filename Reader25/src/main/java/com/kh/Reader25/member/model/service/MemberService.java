@@ -36,6 +36,10 @@ public interface MemberService {
 
 	ArrayList<Member> selectdeletMemberList(PageInfo pi2);
 
+	int deleteMemberList(String[] idArr);
+
+	int reMemberList(String[] idArr);
+
 
 
 }
