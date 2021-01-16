@@ -283,23 +283,11 @@ background: #C95F12;
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">주간</button>
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div class = "ellipsis"style = "width : 100%">${dList.dTitle }</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
-		<div class = "ellipsis"style = "width : 100%">안녕하세요 감사해요 잘있어요 다시만나요</div>
+		<div class = "ellipsis"style = "width : 100%">
+			<c:forEach var = "b" items="${ test2 }">
+				<a>${b.dTitle }</a>
+			</c:forEach>
+		</div>
 		</div>
 	</div> <!-- 이달의 책 추천 List -->
 	<div class = "bestreview">

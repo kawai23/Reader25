@@ -416,7 +416,10 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.todayListCount", enrollDay);
 	}
 
+	public ArrayList<Board> review_d(SqlSessionTemplate sqlSession) {
 
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+	}
 
 
 

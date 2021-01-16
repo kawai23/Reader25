@@ -462,7 +462,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.todayListCount(sqlSession, enrollDay);
 	}
-
+	@Override
+	public ArrayList<Board> review_d() {
+		return bDAO.review_d(sqlSession);
+	}
 	
 
 

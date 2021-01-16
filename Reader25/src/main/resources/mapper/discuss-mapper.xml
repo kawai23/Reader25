@@ -195,4 +195,12 @@
 		<result property="rWriter" column="R_WRITER"/>
 		<result property="dNo" column="D_NO"/>
 	</resultMap>
+	<select id="discussD" resultMap="discussResultSet">
+		<![CDATA[
+		SELECT dTitle
+		FROM discuss
+		where(enroll_date between trunc(sysdate) - 1 and trunc(sysdate +1)) and rownum <= 17
+		order by dCount desc;
+		]]>
+	</select>
 </mapper>

@@ -12,6 +12,7 @@ import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.discuss.model.vo.Discuss;
 
 public interface BoardService {
 
@@ -161,6 +162,10 @@ public interface BoardService {
 	int updateBoard(Board b);
 
 	int todayListCount(String enrollDay);
+
+	ArrayList<Board> review_d();
+
+
 
 
 

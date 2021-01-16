@@ -680,5 +680,12 @@
 		from board
 		where code ='5' and b_status='Y' and ENROLL_DAY>= #{enrollDay}
 	</select>
-
+		<select id = "selectTitleRD" resultMap="boardResultSet">
+	<![CDATA[
+		select b_title
+		from board
+		where code = '2' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		order by b_count desc
+	]]>
+	</select>
 </mapper>

@@ -34,4 +34,5 @@ public interface DiscussService {
 	ArrayList<Reply> selectRList(Map<String, Integer> d);
 	// 댓글 삭제
 	int rDelete(Reply r);
+	ArrayList<Discuss> test2();
 }
