@@ -110,6 +110,18 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.reMemberList(sqlSession, idArr);
 	}
 
+	@Override
+	public int insertKMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insertKMember(sqlSession, m);
+	}
+
+	@Override
+	public Member memberKLogin(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.memberKLogin(sqlSession, m);
+	}
+
 
 	
 

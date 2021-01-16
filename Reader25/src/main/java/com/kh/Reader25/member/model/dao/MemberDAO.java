@@ -115,6 +115,16 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+	public int insertKMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertKMember", m);
+	}
+
+	public Member memberKLogin(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.memberKLogin", m);
+	}
 	
 	
 

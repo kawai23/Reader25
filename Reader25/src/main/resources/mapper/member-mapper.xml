@@ -112,4 +112,11 @@
 		set status = 'Y'
 		where user_id = #{id}
 	</update>
+	
+	<insert id="insertKMember">
+		insert into member
+		values(#{id}, #{pwd}, #{name}, #{gender}, sysdate, #{email}, #{phone}, null, null,
+				default, sysdate, default, default, default)
+	</insert>
+	
 </mapper>

@@ -1,7 +1,10 @@
 package com.kh.Reader25.member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +27,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.dao.KakaoController;
 import com.kh.Reader25.member.model.dao.NaverLoginBO;
 import com.kh.Reader25.member.model.exception.MemberException;
 import com.kh.Reader25.member.model.service.MemberService;
@@ -49,6 +57,12 @@ public class MemberController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
 		this.naverLoginBO = naverLoginBO;
 	}
+	
+	//////
+	
+	
+	
+	///////
 
 	
 	//로그인 클릭시 로그인 페이지로 이동 컨트롤러
@@ -57,6 +71,7 @@ public class MemberController {
 		
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
 		
 		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
 		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
@@ -64,6 +79,8 @@ public class MemberController {
 		
 		//네이버 
 		model.addAttribute("url", naverAuthUrl);
+		// 카카오 로그인 
+		model.addAttribute("kakao_url", kakaoUrl);
 
 		/* 생성한 인증 URL을 View로 전달 */
 		return "Login";
@@ -94,7 +111,91 @@ public class MemberController {
 		return "redirect:home.do";
 	}
 	
-	
+	@RequestMapping(value = "/kakaologin.do", produces = "application/json", 
+			method = { RequestMethod.GET, RequestMethod.POST }) 
+	public ModelAndView kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
+			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session) throws Exception { 
+		ModelAndView mav = new ModelAndView(); 
+		// 결과값을 node에 담아줌 
+		JsonNode node = KakaoController.getAccessToken(code); 
+		// accessToken에 사용자의 로그인한 모든 정보가 들어있음 
+		JsonNode accessToken = node.get("access_token"); 
+		// 사용자의 정보 
+		JsonNode userInfo = KakaoController.getKakaoUserInfo(accessToken); 
+		String email = null; 
+		String name = null; 
+		String kgender = null; 
+		String kbirthDay = null; 
+		String kage = null; 
+		String kimage = null; 
+		String id = null; 
+		String pwd="123";
+		String phone="010-0000-0000";
+		String gender="F";
+		// 유저정보 카카오에서 가져오기 Get properties 
+		JsonNode properties = userInfo.path("properties"); 
+		JsonNode kakao_account = userInfo.path("kakao_account"); 
+		id = userInfo.path("id").asText();
+		email = kakao_account.path("email").asText(); 
+		name = properties.path("nickname").asText(); 
+		kimage = properties.path("profile_image").asText(); 
+		kgender = kakao_account.path("gender").asText(); 
+		kbirthDay = kakao_account.path("birthday").asText(); 
+		kage = kakao_account.path("age_range").asText(); 
+		
+//		session.setAttribute("email", email); 
+//		session.setAttribute("name", name); 
+//		session.setAttribute("kimage", kimage); 
+//		session.setAttribute("kgender", kgender); 
+//		session.setAttribute("kbirthDay", kbirthDay); 
+//		session.setAttribute("kage", kage); 
+		
+		//System.out.println();
+		m.setEmail(email);
+		m.setName(name);
+		m.setId(id);
+		m.setPwd(pwd);
+		m.setPhone(phone);
+		m.setGender(gender);
+		
+		//System.out.println(m);
+		
+		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
+		
+		if(isUsable==0) {
+			
+			String encPwd = bcrypt.encode(m.getPwd());
+			m.setPwd(encPwd);
+			
+			int result = mService.insertKMember(m);
+			
+			//System.out.println("result"+result);
+			
+			if(result != 0) {
+				Member loginUser = mService.memberLogin(m);
+				//아이디만 일치했을때에 대한 멤버 정보가 있음
+								
+				model.addAttribute("loginUser", loginUser);
+				mav.setViewName("home");
+			} else {
+				mav.setViewName("Login"); 
+			}
+		} else {
+			Member loginUser = mService.memberLogin(m);
+			//아이디만 일치했을때에 대한 멤버 정보가 있음
+							
+			model.addAttribute("loginUser", loginUser);
+			mav.setViewName("home");
+		}
+		
+		System.out.println("session"+session);
+		
+		mav.setViewName("home"); 
+		
+		return mav;
+	}
+
 
 		
 	//회원가입 후 로그인 컨트롤러

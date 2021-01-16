@@ -40,6 +40,10 @@ public interface MemberService {
 
 	int reMemberList(String[] idArr);
 
+	int insertKMember(Member m);
+
+	Member memberKLogin(Member m);
+
 
 
 }
