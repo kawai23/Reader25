@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,29 +40,35 @@
 	.left-td{
 		text-align: left;
 	}
-		.paging-div {
-		width: 250px;
-		margin: auto;
-		margin-top: 30px;
+	.paging{width: 150px; margin:auto;text-align: center; margin-top:12px;}
+	.paging-div {
+		display:inline-block;
+		max-width: 250px;
+		margin-top: 10px;
 	}
-	.paging-div>button {
+	.paging-div>a, .paging-div>p {
+		padding: 0;
+		margin: 0;
+		display: inline-block;
 		width: 30px;
 		height: 30px;
 		color: rgba(85, 83, 83, 1);
-		font-size: 15px;
+		font-size: 17px;
 		background: rgba(229, 229, 229, 1);
 		border: none;
-	}	
-
-	.paging-div>button:hover {
+		text-decoration: none;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.paging-div>a:hover {
 		font-weight: bold;
 		background: rgba(220, 220, 220, 1);
 	}
-
-	.paging-div>button:active {
+	
+	.paging-div>p {
 		background: rgba(39, 50, 56, 1);
 		color: white;
-	}	
+	}
 </style>
 </head>
 <body>
@@ -81,27 +88,61 @@
 					<th>판매한 회원</th>
 					<th>거래날짜</th>
 				</tr>
-				<%for(int i = 0; i < 10; i++){ %>
-				<tr>
-					<td><%=i %></td>
-					<td class="left-td">천개의 태양</td>
-					<td>10000</td>
-					<td>user01</td>
-					<td>user02</td>
-					<td>2020.12.12</td>
-				</tr>
-				<%} %>
+				<c:if test="${empty payList }">
+					<tr>
+						<td colspan="6">결제 내역이 존재하지 않습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${!empty payList }">
+					<c:forEach var="p" items="${payList }">
+						<tr>
+							<td>${p. pay_no}</td>
+							<td>${p. book_name}</td>
+							<td>${p. pay_no}</td>
+							<td>${p. pay_no}</td>
+							<td>${p. pay_no}</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</table>
 		</div>
-			<!-- 페이징 버튼 -->
+		<!-- 페이징 버튼 -->
+				<div class="paging">
 		<div class="paging-div">
-			<button>&lt;</button>
-			<button>1</button>
-			<button>2</button>
-			<button>3</button>
-			<button>4</button>
-			<button>5</button>
-			<button>&gt;</button>
+			<!------ 이전 --------->
+			<c:if test="${ pi.currentPage <= 1 }">
+				<p>&lt;</p>
+			</c:if>
+			<c:if test="${ pi.currentPage > 1 }">
+				<c:url var="before" value="notice.no">
+					<c:param name="page" value="${ pi.currentPage -1 }"/>
+				</c:url>
+				<a href="${ before }">&lt;</a>
+			</c:if>
+			<!------ 버튼 --------->
+			<c:forEach  var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<c:if test="${pi.currentPage ne p }">
+					<c:url var="pNo" value="notice.no">
+						<c:param name="page" value="${ p }"/>
+					</c:url>
+					<a href="${ pNo }">${ p }</a>
+				</c:if>
+				<c:if test="${ pi.currentPage eq p }">
+					<p>${ p }</p>
+				</c:if>
+			</c:forEach>
+			
+			<!------ 다음 --------->
+			<c:if test="${ pi.currentPage >= pi.maxPage }">
+				<p>&gt;</p>
+			</c:if>
+			<c:if test="${ pi.currentPage < pi.maxPage }">
+				<c:url var="Next" value="${ loc }">
+					<c:param name="page" value="${ pi.currentPage + 1 }"/>
+				</c:url>
+				<a href="${ Next }">&gt;</a>
+			</c:if>
+		</div>
 		</div>
 	</section>
 </body>
