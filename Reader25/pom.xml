@@ -242,6 +242,42 @@
 			<version>2.8.1</version>
 		</dependency>
 		
+		<!-- Gson 추가, 문자열로 바꿔주는 기능 -->
+		<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.8.5</version>
+		</dependency>
+		
+		<!-- httpcore(카카오) -->
+		<dependency> 
+			<groupId>org.apache.httpcomponents</groupId> 
+			<artifactId>httpcore</artifactId>
+		<version>4.4.6</version>
+		</dependency>
+		
+		<!-- httpclient(카카오) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId> 
+			<artifactId>httpclient</artifactId>
+		<version>4.5.2</version>
+		</dependency>
+		
+		<!-- jackson : json을 Object로 바꿔줌 -->
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+		
+	
+		
 		       
 	</dependencies>
     <build>
