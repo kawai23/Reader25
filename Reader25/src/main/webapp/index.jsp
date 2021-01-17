@@ -6,8 +6,8 @@
 	<title>Home</title>
 </head>
 <body>
-	<c:import url="common/menubar.jsp"></c:import>
-	<c:import url="common/mainPage.jsp"></c:import>
+	<c:import url="/WEB-INF/views/common/menubar.jsp"></c:import>
+	<c:import url="/WEB-INF/views/common/mainPage.jsp"></c:import>
 
 	
 
