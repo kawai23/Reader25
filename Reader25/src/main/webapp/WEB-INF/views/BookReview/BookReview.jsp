@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>BookReview</title>
+<meta charset="utf-8"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
 section {
 	background: rgba(246, 246, 246, 1);
@@ -232,6 +234,9 @@ select::-ms-expand {
 					<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
 				</span>
 			</div>
+			<!-- 자동완성 -->
+			<script src="//code.jquery.com/jquery.min.js"></script>
+			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 			<script>
 				$('#search-icon').click(function(){
 					search();
@@ -244,9 +249,23 @@ select::-ms-expand {
 				function search(){
 					var searchCondition = $('#searchCondition').val();
 					var searchValue = $('#search-input').val();
-					
 					location.href="<%=request.getContextPath()%>/search.re?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
 				}
+				$(function(){
+					var sc = '';
+					$('#searchCondition').change(function(){
+						sc = $(this).val();
+					});
+					var category = ['총류','기술과학','역사','문학','자연과학','철학','종교','사회과학','예술','언어'];
+					$('#search-input').keyup(function(){
+						if(sc == 'category'){
+							$('#search-input').autocomplete({
+								source : category
+							});
+						}
+					});
+					
+				});
 			</script>
 			<div class="sort-div">
 			<% String sortValue = (String)request.getAttribute("sortValue"); %>

@@ -14,6 +14,7 @@
 		margin-left: 10px;
 		width: 80%;
 	}
+	#logo-img:hover{cursor:pointer;}
 	.paylist-div{
 		min-height: 100px; 
 		background: white;
@@ -73,9 +74,14 @@
 </head>
 <body>
 	<header>
-		<img src="#logo"/>
+		<img src="#logo" id="logo-img" onclick="goHome();"/>
 		<h3 id="header-h2">결제 내역 조회</h3>
 	</header>
+	<script>
+		function goHome(){
+			location.href="home.do";
+		}
+	</script>
 	<%@ include file="header.jsp" %>
 	<section>
 		<div class="paylist-div">
