@@ -6,7 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,10 +19,12 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +42,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.dao.KakaoController;
+import com.kh.Reader25.member.model.dao.MemberDAO;
 import com.kh.Reader25.member.model.dao.NaverLoginBO;
 import com.kh.Reader25.member.model.exception.MemberException;
 import com.kh.Reader25.member.model.service.MemberService;
@@ -51,22 +59,25 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
+	//메일 발송 관련
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	@Autowired
+	private MemberDAO mDAO;
+	
 	//네이버 로그인
 	/* NaverLoginBO */
 	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
 	/* NaverLoginBO */
+	
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
 		this.naverLoginBO = naverLoginBO;
 	}
 	
-	//////
-	
-	
-	
-	///////
-
 	
 	//로그인 클릭시 로그인 페이지로 이동 컨트롤러
 	@RequestMapping("loginView.me")
@@ -151,16 +162,15 @@ public class MemberController {
 				model.addAttribute("loginUser", loginUser);
 				mav.setViewName("home");
 			}
-		System.out.println("session"+session);
+		//System.out.println("session"+session);
 			
 		mav.setViewName("home"); 
 			
 		return mav;
 	}
 
-	
-	@RequestMapping(value = "/kakaologin.do", produces = "application/json", 
-			method = { RequestMethod.GET, RequestMethod.POST }) 
+	//카카오 로그인 성공시 컨트롤러
+	@RequestMapping(value = "/kakaologin.do", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST }) 
 	public ModelAndView kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session) throws Exception { 
@@ -191,14 +201,7 @@ public class MemberController {
 		kgender = kakao_account.path("gender").asText(); 
 		kbirthDay = kakao_account.path("birthday").asText(); 
 		kage = kakao_account.path("age_range").asText(); 
-		
-//		session.setAttribute("email", email); 
-//		session.setAttribute("name", name); 
-//		session.setAttribute("kimage", kimage); 
-//		session.setAttribute("kgender", kgender); 
-//		session.setAttribute("kbirthDay", kbirthDay); 
-//		session.setAttribute("kage", kage); 
-		
+				
 		//System.out.println();
 		m.setEmail(email);
 		m.setName(name);
@@ -351,46 +354,79 @@ public class MemberController {
 		return result;
 	}
 	
+	//메일 발송 관련 컨트롤러
+	// 이메일 난수 만드는 메서드
+	private String init() {
+		Random ran = new Random();
+		StringBuffer sb = new StringBuffer();
+		int num = 0;
+
+		do {
+			num = ran.nextInt(75) + 48;
+			if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
+				sb.append((char) num);
+			} else {
+				continue;
+			}
+
+		} while (sb.length() < size);
+		if (lowerCheck) {
+			return sb.toString().toLowerCase();
+		}
+		return sb.toString();
+	}
+
+	// 난수를 이용한 키 생성
+	private boolean lowerCheck;
+	private int size;
+
+	public String getKey(boolean lowerCheck, int size) {
+		this.lowerCheck = lowerCheck;
+		this.size = size;
+		return init();
+	}
+	
 	// 비밀번호 찾기
 	@RequestMapping(value = "pwSearch.me", method = RequestMethod.POST)
 	@ResponseBody
 	public String passwordSearch(@RequestParam("inputId_2")String user_id,
 			@RequestParam("inputEmail_2")String user_email, HttpServletRequest request) {
 
-		String key = "reader25";
+		String key = getKey(false, 6);
 		String encNewPwd = bcrypt.encode(key);
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("user_id", user_id);
 		map.put("key", encNewPwd);
-		System.out.println(map);
+		//System.out.println(map);
 		
+		MimeMessage mail = mailSender.createMimeMessage();
+		String htmlStr = "<h2>안녕하세요 '"+ user_id +"' 님</h2><br><br>" 
+				+ "<p>비밀번호 찾기를 신청해주셔서 임시 비밀번호를 발급해드립니다.</p>"
+				+ "<p>임시로 발급 드린 비밀번호는 <h2 style='color : blue'>'" + key +"'</h2>이며 로그인 후 마이페이지에서 비밀번호를 변경해주시면 됩니다.</p><br>"
+				+ "<h3><a href='http://localhost:8105/Reader25'>Reader25 홈페이지 접속 (클릭!) </a></h3><br><br>"
+				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
+		try {
+			mail.setSubject("[Reader25] 임시 비밀번호가 발급되었습니다", "utf-8");
+			mail.setText(htmlStr, "utf-8", "html");
+			mail.addRecipient(RecipientType.TO, new InternetAddress(user_email));
+			mailSender.send(mail);
+		} catch (MessagingException e) { 
+			e.printStackTrace();
+		}
 		int result = mService.changePw(map);
-		
 		if(result > 0) {
 			return key;
 		} else {
 			return null;
 		}
 	}
-	
-//	//마이페이지로 이동하는 뷰
-//	@RequestMapping("mypage.me")
-//	public String mypageFormView() {	
-//		return "mypage";
-//	}
-	
+
 	//마이페이지로 이동하는 뷰2
-		@RequestMapping("mypage.me")
-		public String mypageFormView() {	
-			
-			
-			return "myPageList";
-		}
-		
-		
-		
-	
+	@RequestMapping("mypage.me")
+	public String mypageFormView() {	
+		return "myPageList";
+	}
 
 	//비밀번호 변경 컨트롤러
 	@RequestMapping(value = "mChangePw.me", method = RequestMethod.POST)
