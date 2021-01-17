@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,29 +63,14 @@ section {
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-
-.image-box {
-	border: 3px solid rgba(246, 246, 246, 1);
-	display: inline-block;
-	text-align: center;
-	width: 200px;
-	height: 200px;
-	line-height: 200px;
-	background: rgba(235, 235, 235, 1);
-}
-
+.image-box{border: 3px solid rgba(246, 246, 246, 1);display:inline-block; text-align: center;width: 200px; height: 200px;line-height:200px;background:rgba(235, 235, 235, 1);}
 .image-box img {
-	max-height: 200px;
+	max-height:200px;
 	max-width: 200px;
 	vertical-align: middle;
 	text-align: center;
 }
-
-.fileList {
-	list-style: none;
-	font-size: 13px;
-}
-
+.fileList{ list-style: none; font-size: 13px;}
 .upload-name {
 	display: inline-block;
 	padding: .5em .75em; /* label의 패딩값과 일치 */
@@ -165,50 +152,44 @@ section {
 	cursor: pointer;
 }
 
-.jquery-modal blocker current {
-	visibility: none;
-}
-
-.modal {
-	margin: 40% auto;
-	padding: 20px;
-	text-align: center;
-}
-
-.modal-back {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background: rgba(0, 0, 0, 0.4);
-}
-
-.modal-close, .modal-accept {
-	background-color: rgba(137, 18, 18, 1);
-	color: white;
-	width: 80px;
-	height: 30px;
-	border: none;
-	display: inline-block;
-	left: 40%;
-}
-
-.modal-accept {
-	background-color: rgba(85, 83, 83, 1);
-}
-
-.modal p {
-	display: inline-block;
-}
-
-.modal img {
-	position: relative;
-	top: 10px;
-}
+	.jquery-modal blocker current {
+		visibility: none;
+	}
+	.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+	}
+	.modal-back {
+		display: none; 
+		position: fixed; 
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto; 
+		background: rgba(0, 0, 0, 0.4); 
+	}
+	.modal-close ,.modal-accept{
+		background-color: rgba(137, 18, 18, 1);
+		color:white;
+		width: 80px;
+		height: 30px;
+		border:none;
+		display:inline-block;
+		left: 40%;
+	}
+	.modal-accept{
+		background-color: rgba(85, 83, 83, 1);
+	}
+	.modal p{
+		display:inline-block;
+	}
+	.modal img{
+		position:relative;
+		top: 10px;
+	}
 </style>
 </head>
 <body>
@@ -224,7 +205,7 @@ section {
 			</div>
 		</div>
 	</div>
-	<div class="modal-back" id="c-modal">
+		<div class="modal-back" id="c-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
@@ -248,17 +229,56 @@ section {
 		});
 	</script>
 	<section>
-	<form id="notice-form" method="post" enctype="multipart/form-data" action="ninsert.no">	
+	<form id="notice-form" method="post" enctype="multipart/form-data" action="update.no">	
+		<input type="hidden" name="page" value="${page}">
+		<input type="hidden" name="boardNo" value="${board.boardNo}">
 		<div class="header-div">
 			<h2>공지사항 작성</h2>
 			<div class="file-div">
 				<input class="upload-name" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
-				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple" accept="image/*,application/vnd.ms-excel,audio/*,video/*,text/plain,text/html,.pdf">
+				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
 			</div>
-			<div class="fileList" id="fileList"></div>
+			<!-- 파일업로드- -->
+			<% 
+				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+			%>
+			<div  class="fileList" id="fileList">
+				<%if(atList != null){ %>
+					<%
+					for(Attachment at: atList){
+						String filename = at.getAtcOrigin();
+						String ext = filename.substring(filename.lastIndexOf(".") + 1);
+					%>
+						<%if(!ext.equals("png") && !ext.equals("jpeg") && !ext.equals("jpg")){ %>
+							<li><%=at.getAtcName() %></li>
+						<%} %>
+					<%} %>
+				<%} %>
+			</div>
+			<%
+				String[] originArr = new String[atList.size()];
+				String[] nameArr = new String[atList.size()];
+			%>
 			<div class="file-upload">
+				<%if(atList != null){ %>
+					<%
+					for(int i = 0; i < atList.size(); i++){ 
+						String filename = atList.get(i).getAtcOrigin();
+						String ext = filename.substring(filename.lastIndexOf(".")+1);
+						originArr[i] = atList.get(i).getAtcOrigin();
+						nameArr[i] = atList.get(i).getAtcName();
+					%>
+						<%if(ext.equals("png") || ext.equals("jpeg") || ext.equals("jpg")){ %>
+							<img src="resources/buploadFiles/<%=atList.get(i).getAtcName()%>"/>
+						<%} %>
+					<%} %>
+				<%} %>
 			</div>
+			
+			<input type="hidden" name="originArr" value="<%=originArr %>"/>
+			<input type="hidden" name="nameArr" value="<%=nameArr%>"/>
+			<!-- - -->
 			<script>
 				function loadImg(value){
 					if (value.files){
@@ -275,7 +295,7 @@ section {
 	
 							// 확장자
 							var extension = filename.substring(filename.lastIndexOf(".") + 1);
-							
+							console.log(extension);
 							var reader = new FileReader();
 							if(extension == "png" || extension == "jpg" || extension == "jpeg"){
 								reader.onload = function(e) {
@@ -300,15 +320,15 @@ section {
 		
 			<div class="title-div">
 				<div class="title">title</div>
-				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
+				<input type="text" name="bTitle" id="bTitle" value="${ board.bTitle}">
 				<input type="hidden" name="userId" value="${ loginUser.id }">
 			</div>
 			<div class="contents">
-					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
+					<textarea name="bContent" id="smart_edit" style="width:100%;">${board.bContent }</textarea>
 			</div>
 			<div class="btn-div">
-				<button id="submit-btn" class="btn">작성완료</button>
-				<button class="btn" id="reset-btn">작성취소</button>
+				<button id="submit-btn" class="btn">수정완료</button>
+				<button class="btn" id="reset-btn">수정취소</button>
 			</div>
 		</form>
 		<script>

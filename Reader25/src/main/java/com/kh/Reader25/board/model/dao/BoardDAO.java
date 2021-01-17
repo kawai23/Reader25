@@ -371,6 +371,7 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
+
 	public int MyLikeCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		
 		
@@ -387,6 +388,53 @@ public class BoardDAO {
 		
 		
 		return  (ArrayList)sqlSession.selectList("boardMapper.MyLikeList",sc , rowBounds);
+	}
+	public ArrayList<Board> selectSearchTTitleListWriter(SqlSessionTemplate sqlSession, String userId) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListWriter", userId);
+	}
+
+	public ArrayList<Board> selectSearchTTitleListTitle(SqlSessionTemplate sqlSession, String bTitle) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListTitle", bTitle);
+	}
+
+	public ArrayList<Board> selectSearchTTitleListContent(SqlSessionTemplate sqlSession, String bContent) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListContent", bContent);
+	}
+
+//	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, String bTitle) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", bTitle);
+//	}
+
+//	public ArrayList<Board> selectSearchTTitleList(SqlSessionTemplate sqlSession, SearchCondition serchC) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleList", serchC);
+//	}
+
+
+
+
+	public int insertAttachmentList2(SqlSessionTemplate sqlSession, ArrayList<Attachment> uploadAtList) {
+		int result = 0;
+		for(int i = 0; i < uploadAtList.size(); i++) {
+			result += sqlSession.insert("boardMapper.insertAttachment2", uploadAtList.get(i));
+		}
+		return result;
+	}
+
+	public int deleteAttachmentList(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
+
+	}
+
+	public int myLikeDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		
+		
+		return sqlSession.delete("boardMapper.myLikeDelete",s);
 	}
 
 

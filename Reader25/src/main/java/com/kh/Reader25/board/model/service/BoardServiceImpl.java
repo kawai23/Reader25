@@ -414,12 +414,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Board> select() {
+	public ArrayList<Board> selectSearchTTitleListWriter(String userId) {
 		// TODO Auto-generated method stub
-		return null;
+		return bDAO.selectSearchTTitleListWriter(sqlSession, userId);
 	}
 
 	@Override
+
 	public int MyLikeCount(SearchCondition sc) {
 		return bDAO.MyLikeCount(sqlSession, sc);
 	}
@@ -429,6 +430,70 @@ public class BoardServiceImpl implements BoardService{
 		
 		return bDAO.MyLikeList(sqlSession,sc, pi);
 	}
+
+	public ArrayList<Board> selectSearchTTitleListTitle(String bTitle) {
+		// TODO Auto-generated method stub
+		return bDAO.selectSearchTTitleListTitle(sqlSession, bTitle);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchTTitleListContent(String bContent) {
+		// TODO Auto-generated method stub
+		return bDAO.selectSearchTTitleListContent(sqlSession, bContent);
+	}
+
+//	@Override
+//	public ArrayList<Board> selectSearchTTitleList(String bTitle) {
+//		// TODO Auto-generated method stub
+//		return bDAO.selectSearchTTitleList(sqlSession, bTitle);
+//	}
+
+//	@Override
+//	public ArrayList<Board> selectSearchTTitleList(SearchCondition serchC) {
+//		// TODO Auto-generated method stub
+//		return bDAO.selectSearchTTitleList(sqlSession, serchC);
+//	}
+
+
+	public int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList) {
+		int result = bDAO.updateBoard(sqlSession, b);
+		if(result > 0) {
+			result = bDAO.deleteAttachmentList(sqlSession, b.getBoardNo());
+			if(result > 0) {
+				result = bDAO.insertAttachmentList2(sqlSession, uploadAtList);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int updateBoard(Board b) {
+		return bDAO.updateBoard(sqlSession, b);
+	}
+
+	
+	@Transactional
+	@Override
+	public int myLikeDelete(String[] lists) {
+		
+		int result = 0;
+		
+		for(String s: lists) {			
+			
+			result += bDAO.myLikeDelete(sqlSession, s);
+
+		}
+		if(result != lists.length) {
+			
+			throw new BoardException("좋아요  삭제 실패");
+		}		
+		return result;
+	}
+
+	
+
+
+
 
 
 	

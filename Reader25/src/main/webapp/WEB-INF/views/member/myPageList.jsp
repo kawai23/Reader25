@@ -24,6 +24,8 @@
 
 <style>
 
+	th{width: 25%}
+
 
 </style>
 </head>
@@ -81,7 +83,7 @@
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
-	   <table id="mytable" class="table table-bordred table-striped" >
+	   <table id="mytable"  class="table table-bordred table-striped" >
 
 					<thead>
 
@@ -108,7 +110,7 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr>
+							<tr class="contentTR">
 								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
 								
 								
@@ -196,6 +198,8 @@
 					
 					var code = ${code};
 					
+					var path = "";
+					
 					
 					switch (code) {
 					
@@ -203,25 +207,66 @@
 						
 						
 						$('#c1').addClass('active');
+						path="idetail.in";
 						break;
 						
 					case 2:
 						$('#c2').addClass('active');
+						path="redetail.re";
 						break;
 						
 					case 4:
 						$('#c4').addClass('active');
+						path="redetail.bo";
 						break;
 						
 					case 5:
 						$('#c5').addClass('active');
+						path="TIWdetail.to";
 						break;
 
 					
 					}
 					
 					
+					$('.contentTR').mouseenter(function(){
+						
+						$(this).css({'color':'yellowgreen' , 'font-weight' : 'bold' , 'cursor' : 'pointer'});
+						
+						$(this).find("a").css({'color':'yellowgreen' , 'font-weight' : 'bold' , 'cursor' : 'pointer'});
+						console.log(boardNo);
+					}).mouseout(function(){
+						
+						$(this).css({'color':'black' , 'font-weight' : 'normal'});
+						$(this).find("a").css({'color':'black' , 'font-weight' : 'normal'});
+						
+					}).click(function(){
+						
+						var boardNo = $(this).children('td').eq(1).text();
+						
+						
+						
+						location.href= path +'?boardNo='+boardNo+'&page=1';
+						
+					});
+					
+					
 				});
+				
+				
+				
+				
+					
+					
+					
+				
+					
+					
+			
+			
+			
+			
+			
 				
 				$('#search1 li > a').on('click', function() {
 			    	

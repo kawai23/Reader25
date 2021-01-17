@@ -141,12 +141,30 @@ public interface BoardService {
 
 	ArrayList<Comments> selectuserComments(int boardNo, PageInfo pi0, String userId);
 
+	ArrayList<Board> selectSearchTTitleListWriter(String userId);
 
-	ArrayList<Board> select();
+	ArrayList<Board> selectSearchTTitleListTitle(String bTitle);
+
+	ArrayList<Board> selectSearchTTitleListContent(String bContent);
+
+	//ArrayList<Board> selectSearchTTitleList(String bTitle);
+
+	//ArrayList<Board> selectSearchTTitleList(SearchCondition serchC);
+
+	
+
+
+
+
+	int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList);
+
+	int updateBoard(Board b);
 
 	int MyLikeCount(SearchCondition sc);
 
 	ArrayList<Board> MyLikeList(SearchCondition sc, PageInfo pi);
+
+	int myLikeDelete(String[] lists);
 
 
 

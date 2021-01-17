@@ -111,7 +111,7 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.likeNo }" ></td>
 								
 								
 								<td >${ b.boardNo }</td>
@@ -485,10 +485,7 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	
-								
-					        	
-					        	
+					      
 					        	var check = ${ !empty searchValue  } ; 
 					        	
 					        	var searchCondition = null;
@@ -529,7 +526,7 @@
 				 			    	
 				 			    	
 								    
-								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
+								    location.href='myLikeDelete.me?inFo='+select_obj+'&page='+ ${pi.currentPage}+path;
 							    	
 				 			    
 							    

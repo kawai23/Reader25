@@ -17,14 +17,14 @@ import com.kh.Reader25.discuss.model.vo.Reply;
 public class DiscussDAO {
 
 	// 토론방 있는지 체크
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("DiscussMapper.ListCount");
+	public int getListCount(SqlSessionTemplate sqlSession, Map<String, Object> s) {
+		return sqlSession.selectOne("DiscussMapper.ListCount", s);
 	}
 	// 토론방 전체 리스트 검색
-	public ArrayList<Discuss> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Discuss> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Map<String, Object> s) {
 		int offset = pi.getBoardLimit() * (pi.getCurrentPage() -1);
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("DiscussMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.selectList", s, rowBounds);
 	}
 	// 토론방 파일 저장
 	public int insertDAttachment(SqlSessionTemplate sqlSession, Attachment at) {
@@ -63,14 +63,19 @@ public class DiscussDAO {
 		return sqlSession.insert("DiscussMapper.insertReply", r);
 	}
 	// 댓글 리스트 가져오기
-	public ArrayList<Reply> selectRList(SqlSessionTemplate sqlSession, int dNo, int cho) {
-		Map<String, Integer> d = new HashMap<String, Integer>();
-		d.put("dNo", dNo);
-		d.put("cho", cho);
+	public ArrayList<Reply> selectRList(SqlSessionTemplate sqlSession, Map<String, Integer> d) {
 		return (ArrayList)sqlSession.selectList("DiscussMapper.selectRList", d);
 	}
 	// 댓글수 업데이트
 	public int updateCount(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("DiscussMapper.updateCount", r);
+	}
+	// 댓글 삭제
+	public int rDelete(SqlSessionTemplate sqlSession, int rNo) {
+		return sqlSession.update("DiscussMapper.rDelete", rNo);
+	}
+	// 댓글 삭제후 토론방 댓글 수, 찬반수 줄임
+	public int changeCount(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("DiscussMapper.changeCount", r);
 	}
 }

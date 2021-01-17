@@ -49,6 +49,8 @@
   	#text{background: white; border: 1px solid black; width:85%;}
   	#people-img{wdith:50px; height:50px;}
   	.wid{width:100%; margin: 3px;}
+  	.rBtn1{float: right; margin: 3px;background: #FFC398;}
+  	.rBtn2{float: right; margin: 3px;background: #67492C;}
 </style>
 </head>
 <body>
@@ -108,105 +110,168 @@
 			<ol id="rol"><!-- 댓글달릴부분 -->
 			</ol>
 		</div>
-			<select class="wid" id="dis">
-				<option selected value="P">찬성</option>
-				<option value="N">중립</option>
-				<option value="C">반대</option>
-			</select><br>
-			<c:if test="${ !empty loginUser }">
-				<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
-			</c:if>
-			<c:if test="${ empty loginUser }">
-				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
-			</c:if>
-			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
-			<button class="btn" id="btn3">작성하기</button>
-			<script>
-				$(function(){
-					getRList();
+		<select class="wid" id="dis">
+			<option selected value="P">찬성</option>
+			<option value="N">중립</option>
+			<option value="C">반대</option>
+		</select><br>
+		<c:if test="${ !empty loginUser }">
+			<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+		</c:if>
+		<c:if test="${ empty loginUser }">
+			<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+		</c:if>
+		<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
+		<button class="btn" id="btn3">작성하기</button>
+		
+		<script>	
+			// 라디오버튼으로 댓글작성시 찬성,중립,반대 자동으로 체크
+			$("input:radio[name=discuss]").click(function(){
+				var discuss = $("input[name=discuss]:checked").val();
+				if(discuss == '찬성'){
+					$('#dis').val("P").prop("selected", true);
+				} else if(discuss== '반대'){
+					$('#dis').val("C").prop("selected", true);
+				} else{
+					$('#dis').val("N").prop("selected", true);
+				}
+			});
+			//페이지 로드 후 바로 댓글리스트 가져온다.
+			$(function(){
+				getRList();
+			});
+			// 최신, 오래된 선택시
+			$('#stime').on('change', function(){
+				getRList();
+			});
+			// 댓글 작성하기
+			$('#btn3').click(function(){
+				var id = $('#id').val();
+				var content = $('#area1').val();
+				var dNo = ${d.dNo};
+				var dis = $('#dis option:selected').val();
+				$.ajax({
+					url: 'addReply.di',
+					data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
+					success: function(data){
+						$('#area1').val('');
+						getRList();
+					}
 				});
-				$('#stime').on('change', function(){
-					getRList();
-				});
-				$('#btn3').click(function(){
-					var id = $('#id').val();
-					var content = $('#area1').val();
-					var dNo = ${d.dNo};
-					var dis = $('#dis option:selected').val();
-					$.ajax({
-						url: 'addReply.di',
-						data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
-						success: function(data){
-							$('#area1').val('');
-							getRList();
-						}
-					});
-				});
-				
-				function getRList(){
-					var dNo = ${d.dNo};
-					var cho = $('#stime').val();
-					$.ajax({
-						url:"rList.di",
-						data: {dNo:dNo, cho:cho},
-						success: function(data){
-							console.log(data);
-							$olBody = $('#rol');
-							$olBody.html('');
-							var $li;
-							var $div1;
-							var $div2;
-							var $img;
-							var $id;
-							var $rContent;
-							var $div3;
+			});
+			// 댓글 리스트 불러오기
+			function getRList(){
+				var dNo = ${d.dNo};
+				var cho = $('#stime').val();
+				$.ajax({
+					url:"rList.di",
+					data: {dNo:dNo, cho:cho},
+					success: function(data){
+						console.log(data);
+						$olBody = $('#rol');
+						$olBody.html('');
+						var $li;
+						var $div1;
+						var $div2;
+						var $img;
+						var $id;
+						var $rContent;
+						var $div3;
 
-							if(data.length > 0){
-								for(var i in data){
-									$li = $('<li>');
-									$div1 = $('<div class="Atext">');
-									$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
-									$rContent = data[i].rContent;
-									$div2 = $('<div class="Atext"id="text">');
-									$div3 = $('<div style="clear:both;"><br>');
-									if(data[i].rWhether == 'C'){
-									$id = $('<h3>').text(data[i].rWriter + "님의 반대 의견");
-										$div1.append($img);
-										$div2.append($id);
-										$div2.append($rContent);
-										$li.append($div2);
-										$li.append($div1);
-										$li.append($div3);
-										$olBody.append($li);
-									} else {
-										if(data[i].rWhether == 'P'){
-											$id = $('<h3>').text(data[i].rWriter + "님의 찬성 의견");
-										}else{
-											$id = $('<h3>').text(data[i].rWriter + "님의 중립 의견");
-										}
-										$div1.append($img);
-										$div2.append($id);
-										$div2.append($rContent);
-										$li.append($div1);
-										$li.append($div2);
-										$li.append($div3);
-										$olBody.append($li);
+						var $btn1;
+						var $btn2;
+						if(data.length > 0){
+							for(var i in data){
+								$li = $('<li id="commont-'+data[i].rNo+'">');
+								$div1 = $('<div class="Atext">');
+								$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
+								$rContent = $('<p>').text(data[i].rContent);
+								$div2 = $('<div class="Atext"id="text">');
+								$div3 = $('<div style="clear:both;"><br>');
+								
+								$btn1 = $('<button class="rBtn1" value="'+data[i].dNo+'" onclick="rUpdate('+ data[i].rNo+');">').text("수정하기");
+								$btn2 = $('<button class="rBtn2" onclick="rDelete('+ data[i].rNo+');">').text("삭제하기");
+							
+								if(data[i].rWhether == 'C'){
+									$id = $('<h3>').html(data[i].rWriter + "님의 <span>반대</span> 의견");
+									$div1.append($img);
+									$div2.append($id);
+									$div2.append($rContent);
+
+									if('${loginUser.id}' == data[i].rWriter){
+										$div2.append($btn1);
+										$div2.append($btn2);
 									}
-									
+									$li.append($div2);
+									$li.append($div1);
+									$li.append($div3);
+									$olBody.append($li);
+								} else {
+									if(data[i].rWhether == 'P'){
+										$id = $('<h3>').html(data[i].rWriter + "님의 <span>찬성</span> 의견");
+									}else{
+										$id = $('<h3>').html(data[i].rWriter + "님의 <span>중립</span> 의견");
+									}
+									$div1.append($img);
+									$div2.append($id);
+									$div2.append($rContent);
+									if('${loginUser.id}' == data[i].rWriter){
+										$div2.append($btn1);
+										$div2.append($btn2);
+									}
+									$li.append($div1);
+									$li.append($div2);
+									$li.append($div3);
+									$olBody.append($li);
 								}
-							} else{
-								$li = $('<li>');
-								$div1 = $('<div class="Atext">').text('등록된 댓글이 없습니다.');
-								$li.append($div1);
-								$olBody.append($li);
+							}
+						} else{
+							$li = $('<li>');
+							$div1 = $('<div class="Atext">').text('등록된 댓글이 없습니다.');
+							$li.append($div1);
+							$olBody.append($li);
+						}
+					}
+				});
+			}
+			//버튼 클릭 css
+			$('.btn').mouseenter(function(){
+				$(this).css({'cursor':'pointer'});
+			});
+			
+			$('.rBtn1').mouseenter(function(){
+				$(this).css({'cursor':'pointer'});
+			});
+			// 댓글 수정
+			function rUpdate(rNo){
+				console.log("수정 들어옴");
+				console.log(rNo);
+			}
+			
+			// 댓글 삭제
+			function rDelete(rNo){
+				var check = confirm("정말로 댓글을 끝내갰습니까?");
+				var PCN = $('#commont-'+rNo).children().children().children().eq(0).text();
+				var dNo = $('#commont-'+rNo).children().children().eq(3).val();
+				if(PCN == '반대'){
+					dNo = $('#commont-'+rNo).children().children().eq(2).val();
+				}
+				
+				
+				if(check){
+					$.ajax({
+						url: 'rDelete.di',
+						data:{rNo:rNo, rWhether: PCN, dNo: dNo},
+						success: function(data){
+							if(data == "success"){
+								getRList();
 							}
 						}
 					});
 				}
-				$('.btn').mouseenter(function(){
-					$(this).css({'cursor':'pointer'});
-				});
-			</script>
+			}
+			
+		</script>
 	</section>
 </body>
 </html>

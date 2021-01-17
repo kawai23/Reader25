@@ -99,7 +99,6 @@
 		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
 				#{atcPath}, sysdate, default, seq_bid.currval)
 	</insert>
-	
 
 	
 	<select id="SearchMyListCount" parameterType="SearchCondition" resultType="_int">
@@ -272,7 +271,7 @@
  	</select>
  	
  	
- 	<select id="MyLikeList" parameterType="SearchCondition" resultMap="boardResultSet">
+ 	<select id="MyLikeList" parameterType="SearchCondition" resultMap="boardResultSet2">
  	
  	
  		select *
@@ -302,6 +301,32 @@
  		order by BOARD_NO desc
  	
  	</select>
+ 	
+ 	
+ 	
+ 	<delete id="myLikeDelete">
+		DELETE FROM liketo
+		WHERE LIKENO=#{s} 
+    </delete>
+    
+    
+    <resultMap type="Board" id="boardResultSet2">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="likeNo" column="LIKENO"/>
+		<result property="bTitle" column="B_TITLE"/>
+		<result property="bContent" column="B_CONTENT"/>
+		<result property="bCount" column="B_COUNT"/>
+		<result property="bLike" column="B_LIKE"/>
+		<result property="comCount" column="COM_COUNT"/>
+		<result property="bStatus" column="B_STATUS"/>
+		<result property="enrollDay" column="ENROLL_DAY"/>
+		<result property="updateDay" column="UPDATE_DAY"/>
+		<result property="cate" column="CATE"/>
+		<result property="code" column="CODE"/>
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+    
+    
  	
 
 	
@@ -347,6 +372,11 @@
 		set atc_status = 'N'
 		where board_no = #{boardNo}
 	</update>
+	<insert id="insertAttachment2" parameterType="Attachment">
+		insert into attachment
+		values(seq_atc.nextval, #{atcLevel}, #{atcCode}, #{atcOrigin}, #{atcName},
+				#{atcPath}, sysdate, default, #{boardNo})
+	</insert>
 	<resultMap type="Attachment" id="attachmentResultSet">
 		<id property="atcNo" column="ATC_NO"/>
 		<result property="atcLevel" column="ATC_LEVEL"/>
@@ -597,7 +627,7 @@
 		</if>
 	</select>
 	
-	<select id="selectSearchTIWResultList" resultMap="boardResultSet">
+	<select id="selectSerchTIWResultList" resultMap="boardResultSet">
 		select *
 		from board b
 			join member m on(b.user_id = m.user_id)
@@ -706,6 +736,30 @@
 		select *
 		from comments
 		where board_no =#{boardNo} and user_id=#{userId}
+	</select>
+	
+	<select id="selectSearchTTitleListTitle" resultType="string">
+		select DISTINCT b_title
+		from board
+		where code ='5' and b_status='Y' 
+				and (b_title like concat('%',concat(UPPER(#{bTitle}),'%'))
+				or b_title like concat('%',concat(LOWER(#{bTitle}),'%')))
+	</select>
+	
+	<select id="selectSearchTTitleListWriter" resultType="string">
+		select DISTINCT user_id
+		from board
+		where code ='5' and b_status='Y' 
+				and (user_id like concat('%',concat(UPPER(#{userId}),'%'))
+				or user_id like concat('%',concat(LOWER(#{userId}),'%')))
+	</select>
+	
+	<select id="selectSearchTTitleListContent" resultType="string">
+		select DISTINCT b_content
+		from board
+		where code ='5' and b_status='Y' 
+				and (b_content like concat('%',concat(UPPER(#{bContent}),'%'))
+				or b_content like concat('%',concat(LOWER(#{bContent}),'%')))
 	</select>
 
 </mapper>

@@ -15,6 +15,12 @@
 		margin-top:100px; margin-bottom: 5%; min-width: 1000px;
 		background-color:  #F6F6F6;
 	}
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; cursor: pointer; }
+.autocomplete-selected { background: blue; color: white; }
+.autocomplete-suggestions strong { font-weight: bold; color: orange; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 </style>
 </head>
 <body>
@@ -120,22 +126,54 @@
 		<div id="searchArea" align="center">
 			<label>찾아보기</label>
 			<select id="searchCondition" name="searchCondition">
-				<option>-------</option>
+				<option>선택하세요</option>
 				<option value="writer">작가</option>
 				<option value="title">글 제목</option>
 				<option value="content">내용</option>
 			</select>
 			
-			<input id="searchValue" type="search">
+			
+			<input id=autocomplete type="text">
 			<button onclick="searchBoard();">검색!</button>
+			
 		</div>
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.26/jquery.autocomplete.min.js'></script>
 		<script type="text/javascript">
 			function searchBoard(){
 				var searchCondition = $("#searchCondition").val();
-				var searchValue = $("#searchValue").val();
+				var searchValue = $("#autocomplete").val();
 				
 				location.href="searchTIW.to?searchCondition="+searchCondition+"&searchValue="+searchValue;
 			}
+			
+			$('#autocomplete').keyup(function(){
+				var searchCondition = $("#searchCondition").val();
+				var tTitle = $.trim($(this).val());
+				var currencies;
+				
+				if(tTitle.length>0){
+					
+					$.ajax({
+						type: 'POST',
+						url: "searchTIWsub.to",
+						data: {tTitle:tTitle,searchCondition:searchCondition},
+						dataType: 'json',
+						success:function(data){		
+							console.log(data);
+								
+							currencies  = data;
+								
+							$("#autocomplete").autocomplete({
+								lookup: currencies
+							});
+						}
+					});
+					
+				}
+				
+			});
+		
 		</script>
 	</div>
 	

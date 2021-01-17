@@ -70,12 +70,14 @@
 	}
 	#head{float:none;}
 	#body{float:none;}
-	#search-icon{width: 20px; height: 20px;}
+	#search-icon{width: 20px; height: 18px;}
 	.img-span{width: 30px; height: 30px;}
-	#btn{width: 140px;height: 30px; background:#C95F12;}
-	#search-input{width: 110px;height: 30px;}
+	#btn{width: 100px;height: 30px; background:#C95F12;}
+	#search-input{width: 110px;height: 26px;}
+	#search-type{height: 30px;}
 	#bimg{width: 100px;height: 100px;}
 	p{font-size: 26px;}
+	#dC{text-overflow: :ellipsis; white-space: nowrap; max-width: 100px;}
 </style>
 </head>
 <body>
@@ -126,10 +128,13 @@
 				<c:if test="${ !empty loginUser }">
 					<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
 				</c:if>
-					<input type="text" id="search-input"><!-- ajax로 검색하자 -->
-					<button class="img-span">
-						<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
-					</button>
+					<select id="search-type">
+						<option value="1">제목</option>
+						<option value="2">내용</option>
+						<option value="3">작성자</option>
+					</select>
+					<input type="text" id="search-input">
+					<button class="img-span" id="search"><img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/></button>
 				</div>
 			</div>
 			<div id="body">
@@ -144,7 +149,7 @@
 						<c:if test="${ d.atcNo == 0 }">
 							<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
 						</c:if>
-						<td><p>${ d.dContent }</p></td>
+						<td id="dC">${ d.dContent }</td>
 					</tr>
 					<tr class="dtr">
 						<td><input type="hidden" value="${ d.dNo }">찬반여론</td>
@@ -227,6 +232,13 @@
 							console.log(dNo);
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
 						});
+					});
+
+					$('#search').click(function(){
+						var text = $('#search-input').val();
+						var type = $('#search-type').val();
+					
+						location.href="discuss.di?text="+text+"&type="+type;
 					});
 				</script>
 			</div>
