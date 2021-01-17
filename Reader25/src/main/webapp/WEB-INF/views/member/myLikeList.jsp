@@ -262,7 +262,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myList.me"></c:set>
+						<c:set var="loc" value="myLikeList.me"></c:set>
 						
  
 				    
@@ -281,7 +281,7 @@
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -314,7 +314,7 @@
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -349,7 +349,7 @@
 						<c:url var="pagination" value="${ loc }">
 						
 							<c:param name="page" value="${ p }"/>
-							<c:param name="code" value="${code }"></c:param>
+							
 					
 						
 						
@@ -380,7 +380,7 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage + 1 }"/>
-								<c:param name="code" value="${code }"></c:param>
+								
 								
 								<c:if test="${searchValue ne null }">
 						
@@ -410,7 +410,6 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.maxPage }"/>
-								<c:param name="code" value="${code }"></c:param>
 								
 								<c:if test="${searchValue ne null }">
 						

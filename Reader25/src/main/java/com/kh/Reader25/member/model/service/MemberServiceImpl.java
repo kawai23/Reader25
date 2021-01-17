@@ -1,11 +1,13 @@
 package com.kh.Reader25.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.member.model.dao.MemberDAO;
 import com.kh.Reader25.member.model.vo.Member;
 
@@ -76,6 +78,54 @@ public class MemberServiceImpl implements MemberService {
 	public int memberDelete(Member m) {
 		// TODO Auto-generated method stub
 		return mDAO.memberDelete(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi) {
+		return mDAO.selectMemberList(sqlSession, pi);
+	}
+
+	@Override
+	public int getMemListCount() {
+		return mDAO.getMemListCount(sqlSession);
+	}
+
+	@Override
+	public int getMemDeleteListCount() {
+		return mDAO.getMemDeleteListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectdeletMemberList(PageInfo pi2) {
+		return mDAO.selectdeleteMemberList(sqlSession, pi2);
+	}
+
+	@Override
+	public int deleteMemberList(String[] idArr) {
+		return mDAO.deleteMemberList(sqlSession, idArr);
+	}
+
+	@Override
+	public int reMemberList(String[] idArr) {
+		return mDAO.reMemberList(sqlSession, idArr);
+	}
+
+	@Override
+	public int insertKMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insertKMember(sqlSession, m);
+	}
+
+	@Override
+	public Member memberKLogin(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.memberKLogin(sqlSession, m);
+	}
+
+	@Override
+	public int insertNMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insertNMember(sqlSession, m);
 	}
 
 

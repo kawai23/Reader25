@@ -8,24 +8,6 @@
 <body>
 	<c:import url="common/menubar.jsp"></c:import>
 	<c:import url="common/mainPage.jsp"></c:import>
-	
-	
-
-	<script>
-	
-		$(function () {
-			
-			var msg = "${msg}";
-			
-			if(msg != ""){
-				
-				alert(msg);
-			}
-		});
-	
-	
-	
-	</script>
 
 	
 

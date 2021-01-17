@@ -280,10 +280,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		int result = bDAO.deleteBoard(sqlSession, boardNo);
 		if(result > 0) {
-			Attachment at = bDAO.selectAttachment(sqlSession, boardNo);
-			if(at != null) {
-				result = bDAO.deleteAttachment(sqlSession, boardNo);
-			}
+			result = bDAO.deleteAttachment(sqlSession, boardNo);
 		}
 		return result;
 	}
@@ -471,7 +468,17 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.updateBoard(sqlSession, b);
 	}
 
+	@Override
+	public int todayListCount(String enrollDay) {
+		// TODO Auto-generated method stub
+		return bDAO.todayListCount(sqlSession, enrollDay);
+	}
+	@Override
+	public ArrayList<Board> review_d() {
+		return bDAO.review_d(sqlSession);
+	}
 	
+
 	@Transactional
 	@Override
 	public int myLikeDelete(String[] lists) {
@@ -492,6 +499,16 @@ public class BoardServiceImpl implements BoardService{
 
 	
 
+
+
+	@Override
+	public ArrayList<Board> tiw_d() {
+		return bDAO.tiw_d(sqlSession);
+	}
+	@Override
+	public ArrayList<Board> views_d() {
+		return bDAO.views_d(sqlSession);
+	}
 
 
 

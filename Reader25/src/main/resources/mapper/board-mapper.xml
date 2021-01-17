@@ -761,5 +761,34 @@
 				and (b_content like concat('%',concat(UPPER(#{bContent}),'%'))
 				or b_content like concat('%',concat(LOWER(#{bContent}),'%')))
 	</select>
-
+	
+	<select id="todayListCount" resultType="_int">
+		select count(*)
+		from board
+		where code ='5' and b_status='Y' and ENROLL_DAY>= #{enrollDay}
+	</select>
+		<select id = "selectTitleRD" resultMap="boardResultSet">
+	<![CDATA[
+		select b_title
+		from board
+		where code = '2' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		order by b_count desc
+	]]>
+	</select>
+		<select id = "selectTitleTD" resultMap="boardResultSet">
+	<![CDATA[
+		select b_title
+		from board
+		where code = '5' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		order by b_count desc
+	]]>
+	</select>
+			<select id = "selectTitleVD" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 30 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
 </mapper>

@@ -106,5 +106,9 @@ public class DiscussServiceImpl  implements DiscussService{
 		}
 		return result;
 	}
+	@Override
+	public ArrayList<Discuss> discuss_d() {
+		return dDAO.discuss_d(sqlSession);
+	}
 
 }

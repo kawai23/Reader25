@@ -78,4 +78,8 @@ public class DiscussDAO {
 	public int changeCount(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("DiscussMapper.changeCount", r);
 	}
+	
+	public ArrayList<Discuss> discuss_d(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussD", null);
+	}
 }

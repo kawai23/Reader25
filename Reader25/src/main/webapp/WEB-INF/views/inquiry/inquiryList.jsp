@@ -14,6 +14,7 @@
 		min-width:1000px;
 		margin:auto;
 		padding-top: 20px;
+		font-family: 카페24 아네모네에어;
 	}
 	.inquiry-div{
 		min-height: 100px; 
@@ -28,9 +29,10 @@
 	}
 	.inquiry-header{
 		text-align: center;
-		font-size: 25px;
+		font-size: 38px;
 		margin-bottom: 10px;
 		font-weight: bolder;
+		font-family: 카페24 아네모네;
 	}
 	#inquiry-table{
 		width: 100%;
@@ -67,7 +69,7 @@
 	.write-btn:hover {
 		cursor: pointer;
 	}
-		.paging-div{
+	.paging-div{
 		width: 250px;
 		margin: auto;
 		margin-top: 30px;
@@ -86,15 +88,18 @@
 		text-decoration: none;
 		text-align: center;
 		vertical-align: middle;
+		font-family: 카페24 아네모네에어;
 	}	
 	.paging-div>a:hover {
 		font-weight: bold;
 		background: rgba(220, 220, 220, 1);
+		font-family: 카페24 아네모네에어;
 	}
 
 	.paging-div>p {
 		background: rgba(39, 50, 56, 1);
 		color: white;
+		font-family: 카페24 아네모네에어;
 	}	
 		
 </style>

@@ -437,7 +437,24 @@ public class BoardDAO {
 		return sqlSession.delete("boardMapper.myLikeDelete",s);
 	}
 
+	public int todayListCount(SqlSessionTemplate sqlSession, String enrollDay) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.todayListCount", enrollDay);
+	}
 
+	public ArrayList<Board> review_d(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+	}
+
+	public ArrayList<Board> tiw_d(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
+	}
+
+	public ArrayList<Board> views_d(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+	}
 
 
 

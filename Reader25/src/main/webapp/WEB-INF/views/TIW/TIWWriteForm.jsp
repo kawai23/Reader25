@@ -10,11 +10,39 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/TIW.css" type="text/css">
 <script src="<%=request.getContextPath()%>/smartedit/js/service/HuskyEZCreator.js"></script>
 <style>
+/*화면*/
 .outer{
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
-		margin-top:100px; margin-bottom: 5%; min-width: 1000px;
-		background-color:  #F6F6F6;
+		margin-bottom: 5%; min-width: 1000px;
+		padding-top: 15px;
+		background-color:  #F6F6F6; display: inline-block;
+		font-family: 카페24 아네모네에어; font-size:17px;
 	}
+/*글자*/
+input{font-family: 카페24 아네모네에어; font-size:17px;}
+select{font-family: 카페24 아네모네에어; font-size:17px;}
+.txt_TIW{
+	font-size:40px;
+	font-family: 카페24 아네모네;
+	text-align: center;
+}
+/*버튼*/
+#submit-btn {
+	width:100px;
+    height: 40px;
+	font-size: 18px; color:#fff;
+	border: 1px solid  #FFC398;
+    background-color:  #FFC398;
+    font-family: 카페24 아네모네에어;
+}
+#btn2{
+	width:100px;
+    height: 40px;
+	font-size: 18px; color:#000000;
+	border: 1px solid  #C4C4C4;
+    background-color:  #C4C4C4;
+    font-family: 카페24 아네모네에어;
+}
 .title-div {
 	clear: both;
 	width: 80%;
@@ -130,8 +158,8 @@
 				</div>
 			<br><br>
 			<div class="btn-div" align="center">
-				<button type="submit" id="submit-btn" class="btn1">작성완료</button>
-				<input type="reset" class="btn2" value="작성취소">
+				<button type="submit" id="submit-btn">작성완료</button>
+				<input type="reset" id="btn2" onclick="location.href='javascript:history.go(-1);'" value="작성취소">
 			</div>
 			<br><br>
 		

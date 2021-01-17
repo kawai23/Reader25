@@ -3,17 +3,20 @@ package com.kh.Reader25.book.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.common.Pagination;
 
-
+@Controller
 public class BookController {
 	@Autowired
 	private BookService b_Service;
@@ -37,4 +40,26 @@ public class BookController {
 		}
 		return mv;
 	}
+	
+	//관리자창 : 결제 내역 조회
+	@RequestMapping("paylist.ad")
+	public ModelAndView adminPayList(@RequestParam(value="page", required=false) Integer page,
+									ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = b_Service.getPayListCount();
+		PageInfo  pi = Pagination.getPageInfo2(currentPage, listCount);
+		ArrayList<Pay> payList = b_Service.selectPayList(pi);
+		if(payList != null) {
+			mv.addObject("payList", payList)
+			  .addObject("pi", pi)
+			  .setViewName("payment");
+			return mv;
+		}else {
+			throw new BookException("관리자 창에서 결제 내역 조회에 실패하였습니다.");
+		}
+	}
 }
+

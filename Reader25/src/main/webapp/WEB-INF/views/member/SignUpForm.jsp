@@ -7,22 +7,85 @@
 <meta charset="UTF-8">
 <title>Reader들을 위한 Reader 25</title>
 
-<link rel="stylesheet" href="${contextPath}/resources/css/signup.css" type="text/css">
-
 <style>
+/*화면*/
 .outer{
 		width: 900px; height: 900px; font-size: 13px;
-		margin-left: auto; margin-right: auto; margin-top: 5%; 
+		margin-left: auto; margin-right: auto; margin-top: 2%; 
 		margin-bottom: 50px;
+		font-size:18px;
+		font-family: 카페24 아네모네에어;
 		}
 		
-span.guide{display: none; font-size: 12px; top: 12px; right: 10px;}
+span.guide{display: none; top: 12px; right: 10px;}
 span.ok{color: green;}
 span.error{color: red;}
 
-span.email{display: none; font-size: 12px; top: 12px; right: 10px;}
+span.email{display: none; top: 12px; right: 10px;}
 span.check{color: green;}
 span.no{color: red;}
+
+td{
+	height: 45px;
+}
+/*글자*/
+textarea{font-size:15px;
+		font-family: 카페24 아네모네에어;
+		}
+input{font-size:18px;
+		font-family: 카페24 아네모네에어;
+		}
+span.guide{font-size:18px;
+		font-family: 카페24 아네모네에어;
+		}
+span.email{font-size:18px;
+		font-family: 카페24 아네모네에어;
+		}
+.txt_signup{
+	display: inline-block;
+	font-size:55px;
+	font-family: 카페24 아네모네;
+}
+.txt_signup_tb{
+	height: 35px;
+	display: inline-block;
+	font-size:25px;
+	font-family: 카페24 아네모네에어;
+	text-align: center;
+	width: 200px;
+}
+.txt_signup_input{
+	height: 35px;
+	display: inline-block;
+	font-size:15px;
+	font-family: 카페24 아네모네에어;
+	text-align: center;
+}
+/*버튼*/
+.btn_sign_input{
+	width:150px;
+    height: 35px;
+	font-size: 17px; color:#555353;
+	border: 1px solid  #FFFFFF;
+    background-color:  #FFC398;
+    font-family: 카페24 아네모네에어;
+}
+.btn1 {
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#FFFFFF;
+	border: 1px solid  #C95F12;
+    background-color:  #C95F12;
+    font-family: 카페24 아네모네에어;
+}
+#btn3{
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#000000;
+	border: 1px solid  #C4C4C4;
+    background-color:  #C4C4C4;
+    font-family: 카페24 아네모네에어;
+}
 </style>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -52,17 +115,22 @@ span.no{color: red;}
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">비밀번호</td>
-					<td><input type="password" class="joinPassword" id="joinPassword1" name="pwd" required></td>
+					<td><input type="text" class="joinPassword" id="joinPassword1" name="pwd" required></td>
 					<td rowspan="2"><label id="pwResult"></label></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">비밀번호 확인</td>
-					<td><input type="password" class="joinPassword" id="joinPassword2" name="pwd2" required></td>
+					<td><input type="text" class="joinPassword" id="joinPassword2" name="pwd2" required></td>
 				</tr>
+			</table>
+			
+			<br><br><br>
+			
+			<table align="center">
 				<tr>
 					<td class="txt_signup_tb">연락처</td>
-					<td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" required></td>
-					<td></td>
+					<td width="200px"><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" required></td>
+					<td width="300px"></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">우편번호</td>
@@ -79,9 +147,14 @@ span.no{color: red;}
 					<td><input type="text" id="joinAddress2" name="joinAddress2" required></td>
 					<td></td>
 				</tr>
+			</table>
+			
+			<br><br><br>
+			
+			<table align="center">
 				<tr>
 					<td class="txt_signup_tb">이메일</td>
-					<td><input type="email" id="joinEmail" name="email" required></td>
+					<td width="200px"><input type="email" id="joinEmail" name="email" required></td>
 					<td width="150px"><span class="email check">이 이메일은 사용 가능합니다.</span>
 						<span class="email no">이 이메일은 사용 불가능합니다.</span>
 						<input type="hidden" name="emailDuplicateCheck" id="emailDuplicateCheck" value="0" required>
@@ -90,7 +163,7 @@ span.no{color: red;}
 				<tr>
 					<td class="txt_signup_tb">성별</td>
 					<td><input type="radio" id="male" name="gender" value="M">남자<input type="radio" id="female" name="gender" value="F">여자</td>
-					<td></td>
+					<td width="300px"></td>
 				</tr>
 				<tr>
 					<td class="txt_signup_tb">생년월일</td>
@@ -105,6 +178,58 @@ span.no{color: red;}
 			</table>
 			
 			<br><hr><br>
+			
+			<br><br>
+			
+			<table align="center">
+				<tr>
+					<td align="center" colspan="3">
+						<input type="checkbox" class=" terms" id="terms" name="terms" value="약관동의" onclick="allCheck();">필수 약관 동의 (필수)
+					</td>
+				</tr>
+				<tr height="30px">
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2">
+						<input type="checkbox" class=" terms" id="all" name="receiveInform" value="전체선택" onclick="allReciveCheck();">할인 쿠폰, 혜택 정보 수신 동의 (선택)
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2">
+						<input type="checkbox" class=" terms" id="sms" name="receiveInform" value="sms" onclick="check();">SMS
+						<input type="checkbox" class=" terms" id="email" name="receiveInform" value="email" onclick="check();">E-MAIL
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2">
+						<input type="checkbox" id="adult" name="adult" value="adult">본인은 만 14세 이상 입니다.(필수)	
+					</td>
+				</tr>
+				<tr>
+					<td class="txt_signup_tb">이용약관 동의</td>
+					<td width="500px" colspan="2">
+						<textarea name="message" rows="10" cols="50" readonly>Reader25는 Reader들의 활동을 응원합니다.
+						Reader25의 서비스 및 제품(이하 '서비스')을 이용하실 수 있으시며 서비스의 발전의 위한 제안도 가능합니다.
+						본 약관은 다양한 Reader25 서비스의 이용과 관련하여 Reader25 서비스를 제공하는 Reader25와 이를 이용하는 Reader25 서비스 회원(이하 '회원') 또는 비회원과의 관계를 설명하며, 아울러 여러분의 Reader25 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+						</textarea>
+					</td>
+				</tr>
+			</table>
+			
+			
+			<table align="center">
+				<tr>
+					<td align="center">
+						<a id="blabla">선택 항목에 동의하지 않은 경우는 <br>
+						회원가입 및 일반적인 서비스를 이용할 수 없습니다.</a>
+					</td>
+				</tr>
+			</table>
+			
+			<br><br><br><br>	
 			
 			
 			<br clear="all">
@@ -388,7 +513,43 @@ span.no{color: red;}
 		}
 	});
 		
-		
+	//전체 체크
+	function allCheck(){
+		var terms = $(".terms");
+		var checkItem="";
+		for(var i=0; i<terms.length; i++){
+			if(terms[0].checked == true){
+				terms[i].checked = true;
+			} else {
+				terms[i].checked = false;
+			}
+		}
+	}
+	//전체 체크
+	function allReciveCheck(){
+		var receiveInform = document.getElementsByName("receiveInform");
+		var checkItem="";
+		for(var i=0; i<receiveInform.length; i++){
+			if(receiveInform[0].checked == true){
+				receiveInform[i].checked = true;
+			} else {
+				receiveInform[i].checked = false;
+			}
+		}
+	}
+	//홍보 수단 체크 기능
+	function check(){
+		var receiveInform = document.getElementsByName("receiveInform");
+		var checkItem=""
+		for(var i = 0; i<receiveInform.length; i++){
+			if(receiveInform[i].checked == false){
+				checkItem = false;
+			}
+		}
+		receiveInform[0].checked = checkItem;
+	}	
+	
+	
 
 </script>
 	

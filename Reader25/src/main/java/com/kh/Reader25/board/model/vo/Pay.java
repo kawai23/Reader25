@@ -19,6 +19,9 @@ public class Pay {
 	private String userId;
 	
 	private int book_no;
+	
+	private String status; //삭제 여부
+	
 
 	public Pay() {
 		
@@ -35,6 +38,22 @@ public class Pay {
 		PAY_DATE = pAY_DATE;
 		this.userId = userId;
 		this.book_no = book_no;
+	}
+	
+	
+	
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pAY_DATE, String userId,
+			int book_no, String status) {
+		super();
+		this.pay_no = pay_no;
+		this.book_name = book_name;
+		this.book_v = book_v;
+		this.price = price;
+		this.pay_status = pay_status;
+		PAY_DATE = pAY_DATE;
+		this.userId = userId;
+		this.book_no = book_no;
+		this.status = status;
 	}
 
 	public int getPay_no() {
@@ -101,19 +120,21 @@ public class Pay {
 		this.book_no = book_no;
 	}
 
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Pay [pay_no=" + pay_no + ", book_name=" + book_name + ", book_v=" + book_v + ", price=" + price
 				+ ", pay_status=" + pay_status + ", PAY_DATE=" + PAY_DATE + ", userId=" + userId + ", book_no="
-				+ book_no + "]";
+				+ book_no + ", status=" + status + "]";
 	}
-	
-	
-	
-
-	
-	
-	
 	
 
 }

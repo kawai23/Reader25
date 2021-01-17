@@ -1,7 +1,9 @@
 package com.kh.Reader25.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.member.model.vo.Member;
 
 public interface MemberService {
@@ -25,6 +27,24 @@ public interface MemberService {
 	int UpdateMember(Member m);
 
 	int memberDelete(Member m);
+
+	ArrayList<Member> selectMemberList(PageInfo pi);
+
+	int getMemListCount();
+
+	int getMemDeleteListCount();
+
+	ArrayList<Member> selectdeletMemberList(PageInfo pi2);
+
+	int deleteMemberList(String[] idArr);
+
+	int reMemberList(String[] idArr);
+
+	int insertKMember(Member m);
+
+	Member memberKLogin(Member m);
+
+	int insertNMember(Member m);
 
 
 

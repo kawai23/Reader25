@@ -7,24 +7,139 @@
 <meta charset="UTF-8">
 <title>Reader들을 위한 Reader 25</title>
 
-<link rel="stylesheet" href="${contextPath}/resources/css/member/searchUserForm.css" type="text/css">
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <style>
-.outer { display:block; position:fixed; 
-           text-align:center; 
-           padding-top:80px; 
-           width: 900px; min-height: 400px; margin-left: auto; margin-right: auto; 
-			margin-top:8%; margin-bottom: 10%;
-           font-family: 카페24 아네모네에어; font-size:25px;}
-input{font-family: 카페24 아네모네에어;}
+/*화면*/
+.outer { 
+			display:block;
+			text-align:center; 
+			padding-top:30px; 
+			width: 900px; min-height: 400px; margin-left: auto; margin-right: auto; 
+			margin-top: 1%; margin-bottom: 10%;
+			font-family: 카페24 아네모네에어; font-size:25px;
+}
+/*글자*/
+.outer>h3 {display: inline-block;
+			font-size:50px;
+			font-family: 카페24 아네모네;
+			text-align: center;}
 .text h3 { font-size:20px; font-family: 카페24 아네모네에어;}
 .text p { font-size:14px; font-family: 카페24 아네모네에어;}
+.text { display:inline-block; 
+          padding:20px; }
+/*버튼*/
+.button { font-size:24px; cursor:pointer;}
+#searchBtn2, #searchBtn {
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#fff;
+	border: 1px solid  #C95F12;
+    background-color:  #C95F12;
+    font-family: 카페24 아네모네에어;
+}
+#btn3{
+	width:200px;
+    height: 60px;
+	font-size: 20px; color:#000000;
+	border: 1px solid  #C4C4C4;
+    background-color:  #C4C4C4;
+    font-family: 카페24 아네모네에어;
+}
+/*입력단*/
+.form-control{
+	width: 230px; height: 30px;
+	background: #EAEAEA;
+	text-align: center; border: none;
+	font-size:20px; color:#400040;
+	font-family: 카페24 아네모네에어;
+}
+/*모달*/
+.jquery-modal blocker current {
+	visibility: none;
+}
+.modal {
+	margin: 40% auto; padding: 20px;
+	text-align: center;
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-back {
+	display: none; position: fixed; 
+	z-index: 1; left: 0;
+	top: 0; width: 100%; 
+	height: 100%;
+	overflow: auto; background: rgba(0, 0, 0, 0.4); 
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-close{
+	background-color: #C4C4C4;
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-accept{
+	background-color: rgba(255,127,14,1);
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:15px;
+}
+#modal-ok{
+	background:rgba(85, 83, 83, 1);
+	font-family: 카페24 아네모네에어; font-size:15px;
+}
+.modal-accept{
+	background-color: #C95F12;
+	font-family: 카페24 아네모네에어; font-size:15px;
+}
+.modal p{
+	display:inline-block;
+}
+.modal img{
+	position:relative;
+	top: 10px;
+}
 </style>
 </head>
 <body>
-<c:import url="../common/menubar.jsp"/>
+	<c:import url="../common/menubar.jsp"/>
 
+	<!-- 모달창 -->
+	<!-- 아이디 찾기 모달창 -->
+	<div class="modal-back" id="login-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>찾으시는 아이디는</p>
+				<p id="id_value"></p>
+				<p>입니다 ^-^</p>
+				<br>
+				<button class="modal-accept" value="accept">로그인하기</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<!-- 비밀번호 찾기 모달창 -->
+	<div class="modal-back" id="check-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>임시 비밀번호는</p>
+				<p id="pw_value">댓글이 작성되었습니다.</p>
+				<p>입니다 ^-^</p>
+				<p>로그인 후 비밀번호 변경을 해주세요</p>
+				<br>
+				<button class="modal-accept" value="accept">로그인하기</button>
+				<button class="modal-close" value="Close" id="modal-ok">확인</button>
+			</div>
+		</div>
+	</div>
+	
   <div class="outer">
   	<h3>아이디/비밀번호 찾기</h3>
 				<div style="margin-bottom: 10px;" class="radio_div">
@@ -36,6 +151,7 @@ input{font-family: 카페24 아네모네에어;}
 					<label for="search_2">비밀번호 찾기</label>
 				</div>
 				<br>
+				<!-- 아이디 찾기 단  -->
 				<div id="searchI">
 					<div class="form-group">
 						<label class="font-weight-bold text-white" for="inputName_1">이름</label>
@@ -56,6 +172,7 @@ input{font-family: 카페24 아네모네에어;}
 						<button  style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='loginView.me'"><span class="txt_type">취소</span></button>
 					</div>
 				</div>
+				<!-- 비밀번호 찾기 단  -->
 				<div id="searchP" style="display: none;">
 					<div class="form-group">
 						<label class="font-weight-bold text-white" for="inputId">아이디</label>
@@ -78,41 +195,23 @@ input{font-family: 카페24 아네모네에어;}
          
   				</div>
   	</div>
-
-<!-- 아이디 찾기 모달창 -->
-  <input type="checkbox" id="modal" class="hidden">
-  <div class="box_modal">
-      <label for="modal" class="closer">x</label>
-      <div class="text">
-		
-           <h4><b>찾으시는 아이디는</b></h4>
-           
-           <h2 id="id_value"></h2>
-           
-           <h4><b>입니다 ^-^</b></h4>
-
-       </div>
-  </div>
-  
-<!-- 비밀번호 찾기 모달창 -->
-  <input type="checkbox" id="modal2" class="hidden">
-  <div class="box_modal2">
-      <label for="modal2" class="closer">x</label>
-      <div class="text">
-		
-           <h4><b>임시 비밀번호는</b></h4>
-          
-           <h2 id="pw_value"></h2>
-          
-           <h4><b>입니다 ^-^</b></h4>
-         
-           <h4><b>로그인 후 비밀번호 변경을 해주세요</b></h4>
-
-       </div>
-  </div>
-  
+  <br><br><br><br><br><br><br><br><br>
 </body>
 <script>
+	//모달 기능
+	$(function(){
+		$('.modal-close').click(function(){
+			$('.modal').hide();
+			$('.modal-back').hide();
+		});
+		$('#login-modal .modal-accept').click(function(){
+			location.href="loginView.me";
+		});
+		$('#check-modal .modal-accept').click(function(){
+			location.href="loginView.me";
+		});
+	});
+
 	//체크 버튼에 따라 아이디/비밀번호 기능이 달라진다
 	function search_check(num) {
 		if (num == '1') {
@@ -131,6 +230,9 @@ input{font-family: 카페24 아네모네에어;}
 		
 		var inputName_1 = $('#inputName_1').val();
 		var inputPhone_1 = $('#inputPhone_1').val();
+		
+		$('#login-modal').show();
+		$('#login-modal .modal').show();
 		
 		$.ajax({
 			type:"POST",
@@ -153,6 +255,9 @@ input{font-family: 카페24 아네모네에어;}
 		
 		var inputId_2 = $('#inputId_2').val();
 		var inputEmail_2 = $('#inputEmail_2').val();
+		
+		$('#check-modal').show();
+		$('#check-modal .modal').show();
 		
 		$.ajax({
 			type:"POST",

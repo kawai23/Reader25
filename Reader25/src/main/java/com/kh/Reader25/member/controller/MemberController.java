@@ -1,14 +1,23 @@
 package com.kh.Reader25.member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +30,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.dao.KakaoController;
 import com.kh.Reader25.member.model.dao.NaverLoginBO;
 import com.kh.Reader25.member.model.exception.MemberException;
 import com.kh.Reader25.member.model.service.MemberService;
-import com.kh.Reader25.member.model.service.MemberServiceImpl;
 import com.kh.Reader25.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -48,6 +60,12 @@ public class MemberController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
 		this.naverLoginBO = naverLoginBO;
 	}
+	
+	//////
+	
+	
+	
+	///////
 
 	
 	//로그인 클릭시 로그인 페이지로 이동 컨트롤러
@@ -56,44 +74,176 @@ public class MemberController {
 		
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		String kakaoUrl = KakaoController.getAuthorizationUrl(session);
 		
 		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
 		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
 		
 		//네이버 
-		model.addAttribute("url", naverAuthUrl);
+		model.addAttribute("naver_url", naverAuthUrl);
+		// 카카오 로그인 
+		model.addAttribute("kakao_url", kakaoUrl);
 
 		/* 생성한 인증 URL을 View로 전달 */
 		return "Login";
 	}
 	
 	//네이버 로그인 성공시 callback호출 메소드
-	@RequestMapping(value = "/callback.me", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
-		System.out.println("여기는 callback");
+	@RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
+			@RequestParam String state, HttpSession session) throws IOException, ParseException {
+		//System.out.println("여기는 callback");
+		
+		ModelAndView mav = new ModelAndView(); 
+		
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		      //로그인 사용자 정보를 읽어온다.
-
-		apiResult = naverLoginBO.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
-		session.setAttribute("result", apiResult);
 		
-		//Member loginUser = new Member();
+		apiResult = naverLoginBO.getUserProfile(oauthToken); //String형식의 json데이터
 		
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
 		
-		System.out.println("apiResult"+apiResult);
-		System.out.println("model"+model);
+		JSONObject response_obj = (JSONObject)jsonObj.get("response");
+		
+		String id = (String)response_obj.get("id");
+		String gender = (String)response_obj.get("gender");
+		String email = (String)response_obj.get("email");
+		String phone = (String)response_obj.get("mobile");
+		String name = (String)response_obj.get("name");
+		String pwd="123";
+		
+		m.setEmail(email);
+		m.setName(name);
+		m.setId(id);
+		m.setPwd(pwd);
+		m.setPhone(phone);
+		m.setGender(gender);
+		
+		//System.out.println("id"+id+"gender"+gender+"email"+email);
+		
+		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
+			
+			if(isUsable==0) {
+				
+				String encPwd = bcrypt.encode(m.getPwd());
+				m.setPwd(encPwd);
+				
+				int result = mService.insertNMember(m);
+				
+				//System.out.println("result"+result);
+				
+				if(result != 0) {
+					Member loginUser = mService.memberLogin(m);
+					//아이디만 일치했을때에 대한 멤버 정보가 있음
+									
+					model.addAttribute("loginUser", loginUser);
+					mav.setViewName("home");
+				} else {
+					mav.setViewName("Login"); 
+				}
+			} else {
+				Member loginUser = mService.memberLogin(m);
+				//아이디만 일치했을때에 대한 멤버 정보가 있음
+								
+				model.addAttribute("loginUser", loginUser);
+				mav.setViewName("home");
+			}
 		System.out.println("session"+session);
-		//System.out.println("loginUser"+loginUser);
-
-		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "redirect:home.do";
+			
+		mav.setViewName("home"); 
+			
+		return mav;
 	}
+
 	
-	
+	@RequestMapping(value = "/kakaologin.do", produces = "application/json", 
+			method = { RequestMethod.GET, RequestMethod.POST }) 
+	public ModelAndView kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
+			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session) throws Exception { 
+		ModelAndView mav = new ModelAndView(); 
+		// 결과값을 node에 담아줌 
+		JsonNode node = KakaoController.getAccessToken(code); 
+		// accessToken에 사용자의 로그인한 모든 정보가 들어있음 
+		JsonNode accessToken = node.get("access_token"); 
+		// 사용자의 정보 
+		JsonNode userInfo = KakaoController.getKakaoUserInfo(accessToken); 
+		String email = null; 
+		String name = null; 
+		String kgender = null; 
+		String kbirthDay = null; 
+		String kage = null; 
+		String kimage = null; 
+		String id = null; 
+		String pwd="123";
+		String phone="010-0000-0000";
+		String gender="F";
+		// 유저정보 카카오에서 가져오기 Get properties 
+		JsonNode properties = userInfo.path("properties"); 
+		JsonNode kakao_account = userInfo.path("kakao_account"); 
+		id = userInfo.path("id").asText();
+		email = kakao_account.path("email").asText(); 
+		name = properties.path("nickname").asText(); 
+		kimage = properties.path("profile_image").asText(); 
+		kgender = kakao_account.path("gender").asText(); 
+		kbirthDay = kakao_account.path("birthday").asText(); 
+		kage = kakao_account.path("age_range").asText(); 
+		
+//		session.setAttribute("email", email); 
+//		session.setAttribute("name", name); 
+//		session.setAttribute("kimage", kimage); 
+//		session.setAttribute("kgender", kgender); 
+//		session.setAttribute("kbirthDay", kbirthDay); 
+//		session.setAttribute("kage", kage); 
+		
+		//System.out.println();
+		m.setEmail(email);
+		m.setName(name);
+		m.setId(id);
+		m.setPwd(pwd);
+		m.setPhone(phone);
+		m.setGender(gender);
+		
+		//System.out.println(m);
+		
+		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
+		
+		if(isUsable==0) {
+			
+			String encPwd = bcrypt.encode(m.getPwd());
+			m.setPwd(encPwd);
+			
+			int result = mService.insertKMember(m);
+			
+			//System.out.println("result"+result);
+			
+			if(result != 0) {
+				Member loginUser = mService.memberLogin(m);
+				//아이디만 일치했을때에 대한 멤버 정보가 있음
+								
+				model.addAttribute("loginUser", loginUser);
+				mav.setViewName("home");
+			} else {
+				mav.setViewName("Login"); 
+			}
+		} else {
+			Member loginUser = mService.memberLogin(m);
+			//아이디만 일치했을때에 대한 멤버 정보가 있음
+							
+			model.addAttribute("loginUser", loginUser);
+			mav.setViewName("home");
+		}
+		
+		System.out.println("session"+session);
+		
+		mav.setViewName("home"); 
+		
+		return mav;
+	}
+
 
 		
 	//회원가입 후 로그인 컨트롤러
@@ -104,9 +254,7 @@ public class MemberController {
 		Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
 			
-		System.out.println("session"+session);
-			
-			
+		//System.out.println("m받아온거"+m);
 			
 		if(bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 			model.addAttribute("loginUser", loginUser);
@@ -284,11 +432,55 @@ public class MemberController {
 	
 	// 관리자 : 회원정보 관리
 	@RequestMapping("admin.ad")
-	public String adminMemberListView() {
+	public ModelAndView adminMemberListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page,
+											@RequestParam(value="page2", required=false) Integer page2) {
+		// 페이징
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int currentPage2 = 1;
+		if(page2 != null) {
+			currentPage2 = page;
+		}
 		
-		return "memberList";
+		int listCount = mService.getMemListCount();
+		int listCount2 = mService.getMemDeleteListCount();
+		PageInfo pi = Pagination.getPageInfo3(currentPage, listCount);
+		PageInfo pi2 = Pagination.getPageInfo3(currentPage2, listCount2);
+		ArrayList<Member> memList = mService.selectMemberList(pi);
+		ArrayList<Member> delList = mService.selectdeletMemberList(pi2);
+		if(memList != null) {
+			mv.addObject("memList", memList)
+			  .addObject("pi", pi)
+			  .addObject("pi2", pi2)
+			  .addObject("delList", delList);
+			mv.setViewName("memberList");
+			return mv;
+		}else {
+			throw new MemberException("관리자창에서 회원리스트를 조회하는데 실패하였습니다.");
+		}
 	}
-	
+	//관리자 :회원 삭제
+	@RequestMapping("deleteAll.me")
+	public String deleteMemberList(@RequestParam("idArr") String[] idArr) {
+		int result = mService.deleteMemberList(idArr);
+		if(result > 0) {
+			return "redirect:admin.ad";
+		}else {
+			throw new MemberException("관리자에서 회원 삭제에 실패하였습니다.");
+		}
+	}
+	//관리자 : 회원복구
+	@RequestMapping("recoveryAll.me")
+	public String recoveryMemberList(@RequestParam("idArr") String[] idArr) {
+		int result = mService.reMemberList(idArr);
+		if(result > 0) {
+			return "redirect:admin.ad";
+		}else {
+			throw new MemberException("관리자창에서 계정 복구에 실패하였습니다.");
+		}
+	}
 	
 	@RequestMapping("myUpdateForm.me")
 	public String myUpdateForm() {

@@ -19,4 +19,28 @@
 		<result property="author" column="AUTHOR"/>
 		<result property="b_Stauts" column="STATUS"/>
 	</resultMap>
+	
+	<select id="getPayList" resultType="_int">
+		select count(*)
+		from pay
+		where status = 'N' <!-- 삭제 여부 -->
+	</select>
+	<select id="selectPayList" resultMap="payResultSet">
+		select p.*, book_name
+		from pay p
+			join book b on(p.book_no = b.book_no)
+		where p.status = 'N'
+		order by pay_no desc
+	</select>
+	<resultMap type="Pay" id="payResultSet">
+		<id property="pay_no" column="PAY_NO"/>
+		<result property="book_name" column="BOOK_NAME"/>
+		<result property="book_v" column="BOOK_V"/>
+		<result property="price" column="PRICE"/>
+		<result property="pay_status" column="PAY_STATUS"/>
+		<result property="status" column="STATUS"/>
+		<result property="pay_date" column="PAY_DATE"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="book_no" column="BOOK_NO"/>
+	</resultMap>
 </mapper>

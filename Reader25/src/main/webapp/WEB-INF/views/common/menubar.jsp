@@ -12,9 +12,9 @@
 	.small-menu{font-size: 10px; height: 20px; padding:0;width:80%; margin:auto;}
 	.small-menu ul{margin:0;float: right;}
 	.small-menu li{list-style:none; display:inline-block;}
-	.small-menu .b-li{border-left: 1px solid black;padding-left: 5px;}
 	.small-menu li:hover{font-weight:bolder;}
 	.small-menu a{text-decoration: none; color:black;}
+	.small-menu .li-left{border-left: 1px solid black;padding-left: 5px;}
 	.top_logo{clear:both;}
 	.li{border-left: 1px solid black; border-right:1px solid black; padding-right: 5px;padding-left: 5px;}
 	.menu{
@@ -34,32 +34,23 @@
 	<div class="menubar">
 		<div class="small-menu">
 			<ul>
-				<c:if test="${ empty sessionScope.loginUser  && empty sessionScope.result }">
+				<c:if test="${ empty sessionScope.loginUser }">
 					<li><a href="loginView.me">로그인</a></li>
 					<li class="li"><a href="notice.no">공지사항</a></li>
 					<li><a href="inquiry.in">문의사항</a></li>
 				</c:if>
-				<c:if test="${ sessionScope.loginUser eq 'admin'}">
-					<li><a href="admin.ad">관리자창</a></li>
-				</c:if>
-				<c:if test="${ !empty sessionScope.loginUser || !empty sessionScope.result }">
+				<c:if test="${ !empty sessionScope.loginUser }">
 					<li><a href="logout.me">로그아웃</a></li>
-
-					<li><a href="myList.me?code=2">마이페이지</a></li>
+				<c:if test="${ sessionScope.loginUser.id eq 'admin'}">
+					<li class="li-left"><a href="admin.ad">관리자창</a></li>
+				</c:if>
+				<c:if test="${ sessionScope.loginUser.id ne 'admin'}">
+					<li class="li-left"><a href="myList.me?code=2">마이페이지</a></li>
+				</c:if>
 					<li class="li"><a href="notice.no">공지사항</a></li>
 					<li><a href="inquiry.in">문의사항</a></li>
 				</c:if>
-				<c:if test="${ !empty result }}">
-					<li><a href="logout.me">로그아웃</a></li>
-					<c:if test="${ sessionScope.loginUser.id eq 'admin'}">
-						<li class="b-li"><a href="admin.ad">관리자창</a></li>
-					</c:if>
-					<c:if test="${ sessionScope.loginUser.id ne 'admin'}">
-						<li class="b-li"><a href="myList.me?code=2">마이페이지</a></li>
-					</c:if>
-					<li class="li"><a href="notice.no">공지사항</a></li>
-					<li><a href="inquiry.in">문의사항</a></li>
-				</c:if>
+			</ul>
 		</div>
 		<div class="top_logo">
 			<img
@@ -78,6 +69,17 @@
 				<div class="menu" onclick="gobookr()">책방</div>
 			</nav>
 		</div>
+		
+		
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+			<c:choose>
+				<c:when test="${ userId != null }">
+					${ userId }님 <a href="logout">로그아웃</a>하세요
+				</c:when>
+			</c:choose>
+		
+				
+		
 	</div>
 	<script>
 		function goBookReview(){

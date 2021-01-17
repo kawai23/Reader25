@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,9 @@
 		min-width: 1000px;
 		margin:auto;
 		padding-top: 20px;
+		font-family: 카페24 아네모네에어;
 	}
+	#myimg{max-width: 250px;}
 	.inquiry-div{
 		min-height: 100px; 
 		background: white;
@@ -76,7 +81,7 @@
 		min-height: 200px;
 		padding: 10px;
 	}
-	.comment-box{
+	.comment-box, .adminComments{
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
@@ -85,12 +90,12 @@
 		padding-bottom: 40px;
 	}
 	.comment-date{color:rgb(180, 180, 180);display:inline-block; margin-left: 10px; font-size: 12px;}
-	.comment-write{
+	.comment-write, .adminCommentsTable{
 		border: 1px solid rgb(200, 200, 200);
 		background: white;
 		height: 100px;
 	}
-	.comment-box button{
+	.comment-box button, .adminComments button{
 		font-size: 13px;
 		height: 25px;
 		float: right;
@@ -102,8 +107,8 @@
 	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
 	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
 	.user-div{width: 97%;margin:auto;}
-	.text-count{float:right; color:rgb(200, 200, 200);}
-	.comment-box textarea{
+	.text-count, .text-count-c{float:right; color:rgb(200, 200, 200);}
+	.comment-box textarea, .adminComments textarea{
 		clear:both;
 		margin: 8px;
 		width: 97%;
@@ -264,9 +269,29 @@
 				</div>
 				
 				<!-- 이미지 파일 넣기 -->
-				<div class="image-div">
-					<img src="<%=request.getContextPath()%>/buploadFiles/${ Attachment.atcName }">
-				</div>
+				<% 
+					ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+				%>
+				<%if(atList != null){ %>
+					<div class="file-list">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(!ext.equals("jpg") && !ext.equals("jepg") && !ext.equals("png")) { %>
+								<a href="resources/buploadFiles/<%=at.getAtcName()%>" download="<%=at.getAtcOrigin()%>"><%=at.getAtcOrigin()%></a>
+							<%} %>
+						<%} %>
+					</div>
+					<div class="images-div">
+						<%for(Attachment at: atList){ %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+							<%if(ext.equals("jpg") || ext.equals("jepg") || ext.equals("png")) { %>
+								<div class="image">
+									<img id="myimg" src="<%=request.getContextPath()%>/resources/buploadFiles/<%=at.getAtcName()%>">
+								</div>
+							<%} %>
+						<%} %>
+					</div>
+				<%} %>
 				<!-- ---------- -->
 				
 				<div class="contents">
@@ -282,19 +307,25 @@
 				
 				<div class="adminComments">
 					<c:if test="${ loginUser.id eq 'admin' }">
-						<table class="adminCommentsTable"  align="center">
-							<tr>
-								<td rowspan="2"><textarea rows="3" cols="55" id="comment" placeholder="댓글을 입력해 주세요"></textarea></td>
-								<td><input type="text" name="userId" id="writer" readonly value="${ loginUser.id }"></td>
-							</tr>
-							<tr>
-								<td><button id="cSubmit">등록하기</button></td>
-							</tr>
-						</table>
+						<div class="adminCommentsTable">
+							<div class="user-div" name="userId" id="writer">
+								<c:if test="${loginUser ne null }">
+									${loginUser.id}
+								</c:if>
+								<span class="text-count-c" id="counter-c">0/500</span>
+							</div>
+							<textarea id="comment" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+						</div>
+						<button id="cSubmit">댓글 등록</button>
 					</c:if>
 				</div>
 				
 				<script>
+				
+				$('#comment').keyup(function(){
+					 var content = $(this).val();
+					 $('#counter-c').html(content.length +'/500');
+				 });
 				
 				//관리자 댓글 등록
 				$('#cSubmit').on('click', function(){
