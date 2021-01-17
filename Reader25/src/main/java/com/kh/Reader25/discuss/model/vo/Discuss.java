@@ -14,11 +14,14 @@ public class Discuss {
 	private int dCount;
 	private String dStatus;
 	private int atcNo;
+	private Date enrollDate;
 	
 	public Discuss() {}
 
+
+
 	public Discuss(int dNo, String dTitle, String dWriter, String dContent, Date dCreate, int dPros, int dCons,
-			int dNeutrality, int dCount, String dStatus, int atcNo) {
+			int dNeutrality, int dCount, String dStatus, int atcNo, Date enrollDate) {
 		super();
 		this.dNo = dNo;
 		this.dTitle = dTitle;
@@ -31,6 +34,7 @@ public class Discuss {
 		this.dCount = dCount;
 		this.dStatus = dStatus;
 		this.atcNo = atcNo;
+		this.enrollDate = enrollDate;
 	}
 
 	public int getdNo() {
@@ -120,11 +124,23 @@ public class Discuss {
 	public void setAtcNo(int atcNo) {
 		this.atcNo = atcNo;
 	}
+	public Date getEnrollDate() {
+		return enrollDate;
+	}
+
+	public void setEnrollDate(Date enrollDate) {
+		this.enrollDate = enrollDate;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Discuss [dNo=" + dNo + ", dTitle=" + dTitle + ", dWriter=" + dWriter + ", dContent=" + dContent
 				+ ", dCreate=" + dCreate + ", dPros=" + dPros + ", dCons=" + dCons + ", dNeutrality=" + dNeutrality
-				+ ", dCount=" + dCount + ", dStatus=" + dStatus + ", atcNo=" + atcNo + "]";
+				+ ", dCount=" + dCount + ", dStatus=" + dStatus + ", atcNo=" + atcNo + ", enrollDate=" + enrollDate
+				+ "]";
 	}
+
+	
 }
