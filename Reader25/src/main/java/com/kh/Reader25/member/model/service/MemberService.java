@@ -44,6 +44,8 @@ public interface MemberService {
 
 	Member memberKLogin(Member m);
 
+	int insertNMember(Member m);
+
 
 
 }

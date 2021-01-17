@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -78,7 +81,7 @@ public class MemberController {
 		System.out.println("네이버:" + naverAuthUrl);
 		
 		//네이버 
-		model.addAttribute("url", naverAuthUrl);
+		model.addAttribute("naver_url", naverAuthUrl);
 		// 카카오 로그인 
 		model.addAttribute("kakao_url", kakaoUrl);
 
@@ -87,29 +90,74 @@ public class MemberController {
 	}
 	
 	//네이버 로그인 성공시 callback호출 메소드
-	@RequestMapping(value = "/callback.me", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
-		System.out.println("여기는 callback");
+	@RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
+			@RequestParam String state, HttpSession session) throws IOException, ParseException {
+		//System.out.println("여기는 callback");
+		
+		ModelAndView mav = new ModelAndView(); 
+		
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		      //로그인 사용자 정보를 읽어온다.
-
-		apiResult = naverLoginBO.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
-		session.setAttribute("result", apiResult);
 		
-		//Member loginUser = new Member();
+		apiResult = naverLoginBO.getUserProfile(oauthToken); //String형식의 json데이터
 		
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
 		
-		System.out.println("apiResult"+apiResult);
-		System.out.println("model"+model);
+		JSONObject response_obj = (JSONObject)jsonObj.get("response");
+		
+		String id = (String)response_obj.get("id");
+		String gender = (String)response_obj.get("gender");
+		String email = (String)response_obj.get("email");
+		String phone = (String)response_obj.get("mobile");
+		String name = (String)response_obj.get("name");
+		String pwd="123";
+		
+		m.setEmail(email);
+		m.setName(name);
+		m.setId(id);
+		m.setPwd(pwd);
+		m.setPhone(phone);
+		m.setGender(gender);
+		
+		//System.out.println("id"+id+"gender"+gender+"email"+email);
+		
+		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
+			
+			if(isUsable==0) {
+				
+				String encPwd = bcrypt.encode(m.getPwd());
+				m.setPwd(encPwd);
+				
+				int result = mService.insertNMember(m);
+				
+				//System.out.println("result"+result);
+				
+				if(result != 0) {
+					Member loginUser = mService.memberLogin(m);
+					//아이디만 일치했을때에 대한 멤버 정보가 있음
+									
+					model.addAttribute("loginUser", loginUser);
+					mav.setViewName("home");
+				} else {
+					mav.setViewName("Login"); 
+				}
+			} else {
+				Member loginUser = mService.memberLogin(m);
+				//아이디만 일치했을때에 대한 멤버 정보가 있음
+								
+				model.addAttribute("loginUser", loginUser);
+				mav.setViewName("home");
+			}
 		System.out.println("session"+session);
-		//System.out.println("loginUser"+loginUser);
-
-		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "redirect:home.do";
+			
+		mav.setViewName("home"); 
+			
+		return mav;
 	}
+
 	
 	@RequestMapping(value = "/kakaologin.do", produces = "application/json", 
 			method = { RequestMethod.GET, RequestMethod.POST }) 

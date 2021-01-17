@@ -34,12 +34,12 @@
 	<div class="menubar">
 		<div class="small-menu">
 			<ul>
-				<c:if test="${ empty sessionScope.loginUser  && empty sessionScope.result}">
+				<c:if test="${ empty sessionScope.loginUser }">
 					<li><a href="loginView.me">로그인</a></li>
 					<li class="li"><a href="notice.no">공지사항</a></li>
 					<li><a href="inquiry.in">문의사항</a></li>
 				</c:if>
-				<c:if test="${ !empty sessionScope.loginUser || !empty sessionScope.result}">
+				<c:if test="${ !empty sessionScope.loginUser }">
 					<li><a href="logout.me">로그아웃</a></li>
 				<c:if test="${ sessionScope.loginUser.id eq 'admin'}">
 					<li class="li-left"><a href="admin.ad">관리자창</a></li>
