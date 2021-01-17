@@ -467,7 +467,14 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.review_d(sqlSession);
 	}
 	
-
+	@Override
+	public ArrayList<Board> tiw_d() {
+		return bDAO.tiw_d(sqlSession);
+	}
+	@Override
+	public ArrayList<Board> views_d() {
+		return bDAO.views_d(sqlSession);
+	}
 
 
 

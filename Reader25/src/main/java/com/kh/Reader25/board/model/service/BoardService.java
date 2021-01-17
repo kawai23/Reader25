@@ -165,6 +165,10 @@ public interface BoardService {
 
 	ArrayList<Board> review_d();
 
+	ArrayList<Board> tiw_d();
+
+	ArrayList<Board> views_d();
+
 
 
 

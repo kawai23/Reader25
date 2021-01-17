@@ -35,10 +35,14 @@ public class HomeController {
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
 		
-		ArrayList<Board> test = bService.review_d();
-		ArrayList<Discuss> test2 = dService.test2();
-		model.addAttribute("test", test);
-		model.addAttribute("test2", test2);
+		ArrayList<Board> review_d = bService.review_d();
+		ArrayList<Discuss> discuss_d = dService.discuss_d();
+		ArrayList<Board> tiw_d = bService.tiw_d();
+		ArrayList<Board> views_d = bService.views_d();
+		model.addAttribute("review_d", review_d);
+		model.addAttribute("discuss_d", discuss_d);
+		model.addAttribute("tiw", tiw_d);
+		model.addAttribute("views_d", views_d);
 		return "home";
 	}
 	
