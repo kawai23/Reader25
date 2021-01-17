@@ -125,6 +125,11 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.memberKLogin", m);
 	}
+
+	public int insertNMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertNMember", m);
+	}
 	
 	
 

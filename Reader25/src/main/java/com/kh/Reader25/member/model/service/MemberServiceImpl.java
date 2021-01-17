@@ -122,6 +122,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.memberKLogin(sqlSession, m);
 	}
 
+	@Override
+	public int insertNMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insertNMember(sqlSession, m);
+	}
+
 
 	
 

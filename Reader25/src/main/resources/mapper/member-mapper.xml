@@ -119,4 +119,10 @@
 				default, sysdate, default, default, default)
 	</insert>
 	
+	<insert id="insertNMember">
+		insert into member
+		values(#{id}, #{pwd}, #{name}, #{gender}, sysdate, #{email}, #{phone}, null, null,
+				default, sysdate, default, default, default)
+	</insert>
+	
 </mapper>

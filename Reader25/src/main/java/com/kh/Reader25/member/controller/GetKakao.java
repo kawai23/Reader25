@@ -12,7 +12,7 @@ public class GetKakao {
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 		try {
 			String sendMessage = "grant_type=authorization_code" + "&client_id=642091e1487c374b7f7d193d97f7e693"
-					+ "&redirect_uri=http://localhost:8090/root/success" + "&code=" + code;
+					+ "&redirect_uri=http://localhost:8105/Reader25/success" + "&code=" + code;
 			URL url = new URL(reqURL);// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
