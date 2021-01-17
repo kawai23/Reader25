@@ -38,6 +38,7 @@ public class HomeController {
 		ArrayList<Board> test = bService.review_d();
 		ArrayList<Discuss> test2 = dService.test2();
 		model.addAttribute("test", test);
+		model.addAttribute("test2", test2);
 		return "home";
 	}
 	

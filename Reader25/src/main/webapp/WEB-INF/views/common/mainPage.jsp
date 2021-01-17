@@ -215,6 +215,7 @@ background: #C95F12;
  overflow: hidden;
  text-overflow: ellipsis;
  white-space: nowrap;
+ text-align :left;
  }
  
 </style>
@@ -283,9 +284,10 @@ background: #C95F12;
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">주간</button>
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div class = "ellipsis"style = "width : 100%">
-			<c:forEach var = "b" items="${ test2 }">
-				<a>${b.dTitle }</a>
+		<div style = "width : 100%">
+		<br>
+			<c:forEach var = "b" items="${ test2 }" begin = "0" end = "13">
+				<p class = "ellipsis"><c:out value = "${ b.dTitle }"/></p>
 			</c:forEach>
 		</div>
 		</div>
@@ -295,21 +297,42 @@ background: #C95F12;
 		<button class = "best_re" id = "button_brown" onclick = "clickbutton2()">일간</button>
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton2()">주간</button>
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton2()">월간</button>
-		<div style = "width : 98%; height : 100%;border: 1px solid #000000;"></div>
+		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
+		<div style = "width : 100%">
+		<br>
+			<c:forEach var = "b" items="${ test }" begin = "0" end = "13">
+				<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
+			</c:forEach>
+		</div>
+		</div>
 	</div>
 	<div class = "rt_debate">
 		<h2>실시간 토론 현황</h2> 
 		<button class = "debate" id = "button_brown" onclick = "clickbutton3()">일간</button>
 		<button class = "debate" id = "button_pink" onclick = "clickbutton3()">주간</button>
 		<button class = "debate" id = "button_pink" onclick = "clickbutton3()">월간</button>
-		<div style = "width : 98%; height : 100%;border: 1px solid #000000;"></div>
+		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
+		<div style = "width : 100%">
+		<br>
+			<c:forEach var = "b" items="${ test2 }" begin = "0" end = "13">
+				<p class = "ellipsis"><c:out value = "${ b.dTitle }"/></p>
+			</c:forEach>
+		</div>
+		</div>
 	</div>
 	<div class = "tiw_t">
 		<h2>오나작 인기글</h2>
 		<button class = "TIW" id = "button_brown" onclick = "clickbutton4()">일간</button>
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton4()">주간</button>
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton4()">월간</button>
-		<div style = "width : 98%; height : 100%;border: 1px solid #000000;"></div>
+		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
+		<div style = "width : 100%">
+		<br>
+			<c:forEach var = "b" items="${ test }" begin = "0" end = "13">
+				<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
+			</c:forEach>
+		</div>
+		</div>
 	</div>
 	</div>
 	<script>
