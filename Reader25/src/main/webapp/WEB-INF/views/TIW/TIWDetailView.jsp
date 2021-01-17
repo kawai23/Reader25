@@ -262,7 +262,7 @@ textarea{
 						<td width="55px">
 							<div class="cate1">cate</div>
 						</td>
-						<td colspan="2">${ board.cate }</td>
+						<td colspan="2">${ categori }</td>
 						<td width="55px">
 							<div class="date">date</div>
 						</td>
@@ -272,7 +272,7 @@ textarea{
 						<td width="55px">
 							<div class="cate2">원작</div>
 						</td>
-						<td colspan="5">${ board.cate }</td>
+						<td colspan="5">${ bookname }</td>
 					</tr>
 					<tr>
 						<td id="w_td" width="55px">

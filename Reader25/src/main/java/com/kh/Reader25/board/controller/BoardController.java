@@ -986,24 +986,17 @@ public class BoardController {
 		int heart = bService.findLike(map) == 1? 1:0;
 		//System.out.println("heart"+heart);
 		
-//		int currentPage = 1;
-//		if(cpage != null) {
-//			currentPage = cpage;
-//		}
-//		
-//		int listCount = bService.getCommentListCount(boardNo);
-//		
-//		PageInfo pi = Pagination.getPageInfo5_1(currentPage, listCount);
-//		
-//		HashMap<String, Object> hpage = new HashMap<String, Object>();
-//		hpage.put("pi", pi);
-//		hpage.put("boardNo", boardNo);
-//		
-//		ArrayList<Comments> list = bService.selectCommentsList(hpage);
-//		
+		String cate = board.getCate();
+		
+		String[] cates = cate.split("/");
+		String categori = cates[0];
+		String bookname = cates[1];
+	
 		if(board != null) {
 			mv.addObject("board", board)
 				.addObject("page", page)
+				.addObject("categori", categori)
+				.addObject("bookname", bookname)
 				.setViewName("TIWDetailView");
 			
 			if(heart > 0) {

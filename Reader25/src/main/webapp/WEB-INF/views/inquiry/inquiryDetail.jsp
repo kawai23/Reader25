@@ -81,7 +81,7 @@
 		min-height: 200px;
 		padding: 10px;
 	}
-	.comment-box{
+	.comment-box, .adminComments{
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
@@ -90,12 +90,12 @@
 		padding-bottom: 40px;
 	}
 	.comment-date{color:rgb(180, 180, 180);display:inline-block; margin-left: 10px; font-size: 12px;}
-	.comment-write{
+	.comment-write, .adminCommentsTable{
 		border: 1px solid rgb(200, 200, 200);
 		background: white;
 		height: 100px;
 	}
-	.comment-box button{
+	.comment-box button, .adminComments button{
 		font-size: 13px;
 		height: 25px;
 		float: right;
@@ -107,8 +107,8 @@
 	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
 	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
 	.user-div{width: 97%;margin:auto;}
-	.text-count{float:right; color:rgb(200, 200, 200);}
-	.comment-box textarea{
+	.text-count, .text-count-c{float:right; color:rgb(200, 200, 200);}
+	.comment-box textarea, .adminComments textarea{
 		clear:both;
 		margin: 8px;
 		width: 97%;
@@ -307,19 +307,25 @@
 				
 				<div class="adminComments">
 					<c:if test="${ loginUser.id eq 'admin' }">
-						<table class="adminCommentsTable"  align="center">
-							<tr>
-								<td rowspan="2"><textarea rows="3" cols="55" id="comment" placeholder="댓글을 입력해 주세요"></textarea></td>
-								<td><input type="text" name="userId" id="writer" readonly value="${ loginUser.id }"></td>
-							</tr>
-							<tr>
-								<td><button id="cSubmit">등록하기</button></td>
-							</tr>
-						</table>
+						<div class="adminCommentsTable">
+							<div class="user-div" name="userId" id="writer">
+								<c:if test="${loginUser ne null }">
+									${loginUser.id}
+								</c:if>
+								<span class="text-count-c" id="counter-c">0/500</span>
+							</div>
+							<textarea id="comment" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+						</div>
+						<button id="cSubmit">댓글 등록</button>
 					</c:if>
 				</div>
 				
 				<script>
+				
+				$('#comment').keyup(function(){
+					 var content = $(this).val();
+					 $('#counter-c').html(content.length +'/500');
+				 });
 				
 				//관리자 댓글 등록
 				$('#cSubmit').on('click', function(){
