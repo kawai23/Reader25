@@ -27,6 +27,13 @@
 #TIWTable th{
 	background: #F7B45E;
 }
+#TIWTable td{
+	background: #FFFFFF;
+}
+#TIWTable td:hover{
+	background: rgba(234, 234, 234, 1);
+	cursor: pointer;
+}
 /*검색*/
 input, select{
 	width: 130px;
