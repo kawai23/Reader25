@@ -202,7 +202,7 @@
 		width: 80%;
 		max-width: 1000px;
 	}
-	.btns-div button{float: right; margin-left: 10px;}
+	.btns-div button{float: right; margin-left: 10px; margin-top: 20px;}
 	.write-btn{
 		background:rgba(255, 195, 152, 1);
 		width: 80px;

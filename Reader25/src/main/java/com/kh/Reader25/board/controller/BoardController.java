@@ -518,7 +518,6 @@ public class BoardController {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("loginUser", id);
 			map.put("boardNo", boardNo);
-			map.put("code", board.getCode());
 			
 			heart = bService.findLike(map) == 1? 1:0;
 		}

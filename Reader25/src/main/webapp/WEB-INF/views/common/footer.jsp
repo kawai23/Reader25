@@ -23,7 +23,7 @@
 			<div class="company-info">
 				<p>대표 : 이유준</p>
 				<span>|</span>
-				<p>EMAIL : dldbwns28@gmail.com</p>
+				<p>EMAIL : reader256g@gmail.com</p>
 				<span>|</span>
 				<p>주소 : kh정보교육원</p>
 			</div>
