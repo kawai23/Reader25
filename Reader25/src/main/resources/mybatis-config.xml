@@ -34,5 +34,6 @@
 		<mapper resource="mapper/board-mapper.xml"/>
 		<mapper resource="mapper/book-mapper.xml"/>
 		<mapper resource="mapper/discuss-mapper.xml"/>
+		<mapper resource="mapper/visitor-mapper.xml"/>
 	</mappers>
 </configuration>

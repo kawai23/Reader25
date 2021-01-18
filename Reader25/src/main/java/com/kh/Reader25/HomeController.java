@@ -63,5 +63,12 @@ public class HomeController {
 			throw new BoardException("메인페이지 리스트 조회에 실패하였습니다");
 		}
 	}
-	
+	@RequestMapping("about.ab")
+	public String aboutViewPage() {
+		return "about";
+	}
+	@RequestMapping("statistic.ad")
+	public String statisticPage() {
+		return "statistic";
+	}
 }
