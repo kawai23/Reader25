@@ -464,12 +464,13 @@
 	<select id="findLike" resultType="_int">
 		select count(*)
 		from liketo
-		where boardno = #{boardNo} and mno = #{loginUser} and like_check = '1'
+		where boardno = #{boardNo} and mno = #{loginUser} and CODE = #{code} and like_check = '1'
 	</select>
 	
 	<resultMap type="Liketo" id="LiketoResultSet">
 		<id property="l_no" column="LIKENO"/>
 		<result property="b_no" column="BOARDNO"/>
+		<result property="code" column="CODE"/>
 		<result property="m_no" column="MNO"/>
 		<result property="l_check" column="LIKE_CHECK"/>
 	</resultMap>
@@ -477,12 +478,12 @@
 	
 	<delete id="deleteLike">
 		DELETE FROM liketo
-		WHERE boardno = #{b_no} AND mno = #{m_no}
+		WHERE boardno = #{b_no} AND mno = #{m_no} and CODE = #{code}
     </delete>
     
 	<insert id="insertLike">
 		insert into liketo
-		values(SEQ_LID.nextval, #{b_no}, #{m_no}, 1)
+		values(SEQ_LID.nextval, #{b_no}, #{code}, #{m_no}, 1)
 	</insert>
 	
 	<select id="updateLike">
@@ -490,8 +491,8 @@
 		SET
 		B_LIKE = (SELECT COUNT(*)
 						FROM liketo
-						WHERE boardno = #{b_no})
-		WHERE board_no = #{boardNo}
+						WHERE boardno = #{b_no} and CODE = #{code})
+		WHERE board_no = #{b_no}
 	</select>
 	
 	<insert id="insertComments">

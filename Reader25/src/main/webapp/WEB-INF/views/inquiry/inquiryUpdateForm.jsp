@@ -21,6 +21,7 @@ section {
 	width: 80%;
 	min-width: 1000px;
 	margin: auto;
+	font-family: 카페24 아네모네에어;
 }
 
 .header-div {
@@ -266,7 +267,7 @@ section {
 			</div>
 			<div class="btn-div">
 				<button id="submit-btn" class="btn">수정완료</button>
-				<input type="reset" class="btn" value="작성취소">
+				<input type="reset" class="btn" onclick="location.href='javascript:history.go(-1);'" value="작성취소">
 			</div>
 		</form>
 			<script>
