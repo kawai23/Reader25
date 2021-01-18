@@ -256,8 +256,8 @@ background: #C95F12;
 		<button class = "loginbtn" onclick="location.href='loginView.me'">로그인하기</button>
 		<button class = "enrollbtn"onclick="location.href='enrollView.me'">회원가입</button>
 		<div style = "margin-top : 12%; text-align : center; width : 100%;">
-		<span id = "find_id"><a>아이디 찾기</a> </span>|
-		<span id = "find_pwd" ><a>비밀번호 찾기</a></span>
+		<span id = "find_id" onclick="location.href='searchUserForm.me'"><a>아이디 찾기</a> </span>|
+		<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>비밀번호 찾기</a></span>
 		</div>
 	</c:if>
 	<c:if test="${ !empty sessionScope.loginUser  }">
