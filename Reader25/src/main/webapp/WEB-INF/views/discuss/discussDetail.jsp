@@ -45,10 +45,10 @@
   	}
   	#stime{float:right;}
    	ol{list-style: none;}
-  	.Atext{float:left; margin-right: 10px;}
+  	.Atext{float:left; margin-right: 20px;}
   	#text{background: white; border: 1px solid black; width:85%;}
-  	#people-img{wdith:50px; height:50px;}
-  	.wid{width:100%; margin: 3px;}
+  	#user-icon{wdith:50px; height:50px; border-radius:50%;}
+  	.wid{width:99%; margin: 3px;}
   	.rBtn1{float: right; margin: 3px;background: #FFC398;}
   	.rBtn2{float: right; margin: 3px;background: #67492C;}
 </style>
@@ -70,10 +70,10 @@
 		</div><br>
 		<div class="head">
 			<c:if test="${ d.atcNo == at.atcNo }">
-				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/></td>
+				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/>
 			</c:if>
 			<c:if test="${ d.atcNo != at.atcNo }">
-				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/></td>
+				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/>
 			</c:if>
 		</div><br><br>
 		<h2>토론주제</h2>
@@ -185,7 +185,7 @@
 							for(var i in data){
 								$li = $('<li id="comment-'+ data[i].rNo +'">');
 								$div1 = $('<div class="Atext">');
-								$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
+								$img = $('<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">');
 								$rContent = $('<p>').text(data[i].rContent);
 								$div2 = $('<div class="Atext" id="text">');
 								$div2_1 = $('<div id="div-'+ data[i].rNo +'">');
@@ -256,12 +256,12 @@
 				var PCN = $('#div-'+rNo).children().children().children().text();
 				$div = $('#div-'+rNo);
 				
-				var $rid = $('<input type="text" readonly>').val('${loginUser.id}');
-				var $tarea = $('<textarea id="area-'+rNo+'" class="wid" rows="10" cols="55"><br>').val($div.children().children().eq(1).text());
+				var $rid = $('<input type="text" class="wid" readonly>').val('${loginUser.id}');
+				var $tarea = $('<textarea id="area-'+rNo+'" class="wid"- rows="10" cols="55"><br>').val($div.children().children().eq(1).text());
 				var $dselect = $('<select class="wid" id="select-'+rNo+'">');
-				var $option1 = $('<option value="P">').text("찬성");;
-				var $option2 = $('<option value="N">').text("중립");;
-				var $option3 = $('<option value="C">').text("반대");;
+				var $option1 = $('<option value="P">').text("찬성");
+				var $option2 = $('<option value="N">').text("중립");
+				var $option3 = $('<option value="C">').text("반대");
 				var $closeBtn = $('<button class="rBtn2" onclick="Reclose();">').text("취소");
 				var PCN2 = 1;
 				var $div1 = $div.children().eq(0);
