@@ -301,7 +301,7 @@
 					reader.onload = function(e) {
  						$('#load-img').attr('src', e.target.result);
 					}
-					reader.readAsDataURL(value.files[0]);
+					reader.readAsDataURL(value.files[0]);j
 				}
 			}
 		</script>

@@ -81,6 +81,8 @@
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
+	   
+	   
 	   <table id="mytable" class="table table-bordred table-striped" >
 
 					<thead>
@@ -110,20 +112,27 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr>
+							<tr class="contentTR">
 								<td><input type="checkbox"  name="mInfo" value="${ b.likeNo }" ></td>
 								
 								
 								<td >${ b.boardNo }</td>
+								<td style="display: none;">${ b.code }</td>
 								<td >${ b.bTitle }</td>
 								
 								<td >${ b.userId }</td>
 								
 								<td >${ b.bLike }</td>
 								<td >${ b.bCount }</td>
-								<td>
+					
+								
+
+									
+									
 								
 							</tr>
+							
+							
 							
 							
 							</c:forEach>
@@ -135,6 +144,10 @@
 					</tbody>
 
 				</table>
+				
+				
+				
+				
 				
 				<div style="text-align: left ; ">
 				
@@ -185,9 +198,35 @@
 				
 				
 				
-				
 				<script >
 				
+				$('.contentTR').mouseenter(function(){
+					
+					$(this).css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+					
+					
+					console.log($(this).children('td').eq(2).text());
+				}).mouseout(function(){
+					
+					$(this).css({'color':'black' , 'font-weight' : 'normal'});
+					
+					
+				}).click(function(){
+					
+					var boardNo = $(this).children('td').eq(1).text();
+					var code = $(this).children('td').eq(2).text();
+					var path = "";
+					
+					if(code == 5){
+						path = "TIWdetail.to?code="+code+"&"
+					}else if(code == 2){
+						path = "redetail.re?"
+					}
+					
+					
+					location.href= path +'boardNo='+boardNo+'&page=1';
+					
+				});
 				
 
 
