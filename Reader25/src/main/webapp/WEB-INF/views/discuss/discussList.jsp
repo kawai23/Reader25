@@ -77,7 +77,8 @@
 	#search-type{height: 30px;}
 	#bimg{width: 100px;height: 100px;}
 	p{font-size: 26px;}
-	#dC{text-overflow: :ellipsis; white-space: nowrap; max-width: 100px;}
+	#orderTable{table-layout:fixed;}
+	#dC{overflow:hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px;}
 </style>
 </head>
 <body>
