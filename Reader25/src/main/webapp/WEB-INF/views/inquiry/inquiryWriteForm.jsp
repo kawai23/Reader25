@@ -21,12 +21,14 @@ section {
 	width: 80%;
 	min-width: 1000px;
 	margin: auto;
+	font-family: 카페24 아네모네에어;
 }
 
 .header-div {
 	width: 80%;
 	margin: auto;
 	max-width: 1100px;
+	font-family: 카페24 아네모네; font-size: 30px;
 }
 
 .header-div>h2 {
@@ -80,6 +82,7 @@ section {
 	-webkit-appearance: none; /* 네이티브 외형 감추기 */
 	-moz-appearance: none;
 	appearance: none;
+	font-family: 카페24 아네모네에어;
 }
 
 .title-div {
@@ -108,6 +111,7 @@ section {
 	margin-left: -7px;
 	width: 91%;
 	border: 1px solid rgba(235, 235, 235, 1);
+	font-family: 카페24 아네모네에어;
 }
 
 .contents {
@@ -136,16 +140,19 @@ section {
 	margin-right: 10px;
 	background: rgba(255, 195, 152, 1);
 	border: none;
+	font-family: 카페24 아네모네에어;
 }
 
 #submit-btn {
 	background: rgba(201, 95, 18, 1);
+	font-family: 카페24 아네모네에어;
 }
 
 .btn:hover {
 	font-weight: bolder;
 	color: white;
 	cursor: pointer;
+	font-family: 카페24 아네모네에어;
 }
 
 .jquery-modal blocker current {
@@ -156,6 +163,7 @@ section {
 	margin: 40% auto; 
 	padding: 20px;
 	text-align: center;
+	font-family: 카페24 아네모네에어;
 }
 .modal-back {
 	display: none; 
@@ -180,6 +188,7 @@ section {
 }
 .modal p{
 	display:inline-block;
+	font-family: 카페24 아네모네에어;
 }
 .modal img{
 	position:relative;
@@ -264,7 +273,7 @@ section {
 			</div>
 			<div class="btn-div">
 				<button id="submit-btn" class="btn">작성완료</button>
-				<input type="reset" class="btn" value="작성취소">
+				<input type="reset" class="btn" onclick="location.href='javascript:history.go(-1);'" value="작성취소">
 			</div>
 		</form>
 			<script>

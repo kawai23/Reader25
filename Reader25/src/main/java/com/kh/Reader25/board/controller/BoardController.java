@@ -969,7 +969,7 @@ public class BoardController {
 	
 	// 오늘은 나도 작가 = 5 디테일 뷰 컨트롤러
 	@RequestMapping("TIWdetail.to")
-	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo,
+	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo, @RequestParam("code") int code,
 									@RequestParam("page") int page, @RequestParam(value="cpage", required=false) Integer cpage, 
 									ModelAndView mv, HttpSession session) {
 		
@@ -982,6 +982,7 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("loginUser", loginUser);
 		map.put("boardNo", boardNo);
+		map.put("code", code);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
 		//System.out.println("heart"+heart);
@@ -1001,7 +1002,6 @@ public class BoardController {
 			
 			if(heart > 0) {
 				mv.addObject("heart", heart);
-				//System.out.println("heart00"+heart);
 			} else {
 				mv.addObject("heart", heart);
 				//System.out.println("heart000"+heart);
@@ -1020,16 +1020,16 @@ public class BoardController {
 
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int b_no = Integer.parseInt(httpRequest.getParameter("boardNo"));
-        //System.out.println("b_no"+b_no);
+        int code = Integer.parseInt(httpRequest.getParameter("code"));
         String m_no = ((Member) httpRequest.getSession().getAttribute("loginUser")).getId();
-        //System.out.println("userid"+m_no);
         Liketo Like = new Liketo();
 
         Like.setB_no(b_no);
+        Like.setCode(code);
         Like.setM_no(m_no);
- 
+        //System.out.println(Like);
         //System.out.println(heart);
-
+        
         if(heart >= 1) {
             bService.deleteLike(Like);
             bService.updateLike(Like);

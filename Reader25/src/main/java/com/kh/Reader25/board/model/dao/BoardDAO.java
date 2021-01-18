@@ -197,9 +197,10 @@ public class BoardDAO {
 	public int getReListCount(SqlSessionTemplate sqlSession, String booktitle) {
 		return sqlSession.selectOne("boardMapper.getReListCount", booktitle);
 	}
-	public int updateLike(SqlSessionTemplate sqlSession, int b_no) {
+	
+	public int updateLike(SqlSessionTemplate sqlSession, Liketo like) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("boardMapper.updateLike", b_no);
+		return sqlSession.update("boardMapper.updateLike", like);
 	}
 
 	public int getCommentListCount(SqlSessionTemplate sqlSession, int boardNo) {
