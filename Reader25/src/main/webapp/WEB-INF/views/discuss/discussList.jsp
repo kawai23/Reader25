@@ -8,24 +8,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	/*세션*/
 	section{
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
   	}
+	/* 회원, 메뉴바 관련*/
+	#infomenu{float:left; margin-left:50px;margin-right:100px;}
+  	/* 회원 정보 메뉴*/
   	#subBlue{
 	    width: 300px; 
 	    height: 110px;
 	    padding:5px; 
 		border: 1px solid black;
 	}
-	#infomenu{float:left; margin-left:50px;margin-right:100px;}
 	.sub{display:inline-block;}
 	#info{margin-top: 20px;}
-	#user-icon{width: 100px;height: 100px;}
+	#user-icon{width: 100px;height: 100px; border-radius:50%;}
+	/*아이디 찾기*/
 	#find_id{ margin-top : 397px; }
+	#find_id:hover{cursor: pointer;}
 	#find_pwd{ margin-top : 397px; }
+	#find_pwd:hover{cursor: pointer;}
 	.login_font{
 		font-family: Roboto;
 		font-style: normal;
@@ -33,6 +39,7 @@
 		font-size: 20px;
 		line-height: 29px;
 		color: #FFFFFF;
+		background:#C95F12;
 	}
 	.Sign_Up_font{
 		font-family: Roboto;
@@ -41,7 +48,9 @@
 		font-size: 20px;
 		line-height: 29px;
 		color: #000000;
+		background:#FFC398;
 	}
+	/*메뉴바 관련*/
 	#subMenuDiv{
 		width: 310px; 
 	    height: 455px;
@@ -55,6 +64,7 @@
 		font-size: 15px;
 		font-weight: bold;
 	}
+	/*토론방 리스트 관련*/
   	.outer{
   		float:left;
 		width: 920px;
@@ -72,13 +82,27 @@
 	#body{float:none;}
 	#search-icon{width: 20px; height: 18px;}
 	.img-span{width: 30px; height: 30px;}
+	.img-span:hover{cursor: pointer;}
 	#btn{width: 100px;height: 30px; background:#C95F12;}
+	#btn:hover{cursor: pointer;}
+	/*검색관련*/
 	#search-input{width: 110px;height: 26px;}
 	#search-type{height: 30px;}
 	#bimg{width: 100px;height: 100px;}
-	p{font-size: 26px;}
 	#orderTable{table-layout:fixed;}
-	#dC{overflow:hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px;}
+	#dC{ /*글자수 제한(...) 포시*/
+		overflow:hidden;
+		text-overflow: ellipsis;
+		max-width: 800px;
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+    	word-wrap:break-word;
+     	font-size: 20px; 
+	}
+	#dc-span{/*글제목*/
+		font-size: 26px;
+	}
 </style>
 </head>
 <body>
@@ -86,26 +110,26 @@
 	<br><br>
 	<section>
 		<div id="infomenu">
-		<c:if test="${ !empty loginUser }">
-			<div id="subBlue">
+		<div id="subBlue">
+			<c:if test="${ !empty loginUser }">
 				<div class="sub">
-					<img src="" id="user-icon">
+					<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
 				</div>
 				<div class="sub" id="info">
 						${loginUser.getName() }님<br>
 						반갑습니다.<br>
 						보유포인트 = ${loginUser.getPoint() }PT<br>
 				</div>
-			</div>
-		</c:if>
-		<c:if test="${ empty loginUser }">
-			<button class = "login_font" id =  "login_button" onclick="location.href='loginView.me'">로그인하기</button>
-			<button class = "Sign_Up_font" id = "Sign_Up" onclick="location.href='enrollView.me'">회원가입</button>
-			<br>
-			<br>
-			<span id = "find_id"><a>아이디 찾기</a> </span>
-			<span id = "find_pwd"><a>비밀번호 찾기</a></span>
-		</c:if>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<button class = "login_font" onclick="location.href='loginView.me'">로그인하기</button>
+				<button class = "Sign_Up_font" onclick="location.href='enrollView.me'">회원가입</button>
+				<br>
+				<br>
+				<span id = "find_id" onclick="location.href='searchUserForm.me'"><a>아이디 찾기</a> </span> | 
+				<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>비밀번호 찾기</a></span>
+			</c:if>
+		</div>
 			<br><br>
 			<div id="subMenuDiv">
 				<h2>메뉴바</h2>
@@ -126,9 +150,9 @@
 			<div id="head">
 				<div class="outerText">토론방</div>
 				<div class="outerBg">
-				<c:if test="${ !empty loginUser }">
-					<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
-				</c:if>
+					<c:if test="${ !empty loginUser }">
+						<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
+					</c:if>
 					<select id="search-type">
 						<option value="1">제목</option>
 						<option value="2">내용</option>
@@ -150,11 +174,11 @@
 						<c:if test="${ d.atcNo == 0 }">
 							<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
 						</c:if>
-						<td id="dC">${ d.dContent }</td>
+						<td id="dC"><span id="dc-span">${d.dTitle}</span><br>${ d.dContent }</td>
 					</tr>
 					<tr class="dtr">
-						<td><input type="hidden" value="${ d.dNo }">찬반여론</td>
-						<td>
+						<td><input type="hidden" value="${ d.dNo }"></td>
+						<td>찬반여론 
 						<c:if test="${ d.dCount > 0}">
 						<c:set var="P" value="${d.dPros/(d.dPros+d.dNeutrality + d.dCons)}"/>
 						<c:set var="N" value="${d.dNeutrality/(d.dPros+d.dNeutrality + d.dCons)}"/>
@@ -174,7 +198,6 @@
 						댓글참여 : ${ d.dCount }개</td>
 					</tr>					
 				</c:forEach>
-				
 					<!-- 페이징 처리 -->
 					<tr align="center" height="20" id="buttonTab">
 						<td colspan="6">
