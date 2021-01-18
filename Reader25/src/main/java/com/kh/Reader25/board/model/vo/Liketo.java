@@ -3,7 +3,6 @@ package com.kh.Reader25.board.model.vo;
 public class Liketo {
 	private int l_no;
 	private int b_no;
-	private int code;
 	private String m_no;
 	private int l_check;
 	
@@ -11,11 +10,10 @@ public class Liketo {
 		
 	}
 
-	public Liketo(int l_no, int b_no, int code, String m_no, int l_check) {
+	public Liketo(int l_no, int b_no, String m_no, int l_check) {
 		super();
 		this.l_no = l_no;
 		this.b_no = b_no;
-		this.code = code;
 		this.m_no = m_no;
 		this.l_check = l_check;
 	}
@@ -36,14 +34,6 @@ public class Liketo {
 		this.b_no = b_no;
 	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
 	public String getM_no() {
 		return m_no;
 	}
@@ -62,11 +52,9 @@ public class Liketo {
 
 	@Override
 	public String toString() {
-		return "Liketo [l_no=" + l_no + ", b_no=" + b_no + ", code=" + code + ", m_no=" + m_no + ", l_check=" + l_check
-				+ "]";
+		return "Liketo [l_no=" + l_no + ", b_no=" + b_no + ", m_no=" + m_no + ", l_check=" + l_check + "]";
 	}
 
-	
 	
 	
 }

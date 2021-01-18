@@ -463,17 +463,21 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.todayListCount(sqlSession, enrollDay);
 	}
 	@Override
-	public ArrayList<Board> review_d() {
-		return bDAO.review_d(sqlSession);
+	public ArrayList<Board> review() {
+		return bDAO.review(sqlSession);
 	}
 	
 	@Override
-	public ArrayList<Board> tiw_d() {
-		return bDAO.tiw_d(sqlSession);
+	public ArrayList<Board> tiw() {
+		return bDAO.tiw(sqlSession);
 	}
 	@Override
-	public ArrayList<Board> views_d() {
-		return bDAO.views_d(sqlSession);
+	public ArrayList<Board> views() {
+		return bDAO.views(sqlSession);
+	}
+	@Override
+	public ArrayList<Board> recd(int value) {
+		return bDAO.recd( value, sqlSession);
 	}
 
 

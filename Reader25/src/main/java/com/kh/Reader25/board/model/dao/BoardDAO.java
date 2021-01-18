@@ -417,20 +417,24 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.todayListCount", enrollDay);
 	}
 
-	public ArrayList<Board> review_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> review(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
 	}
 
-	public ArrayList<Board> tiw_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> tiw(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
 	}
 
-	public ArrayList<Board> views_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
 	}
-
+	
+	public ArrayList<Board> recd(int value, SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+	}
 
 
 
