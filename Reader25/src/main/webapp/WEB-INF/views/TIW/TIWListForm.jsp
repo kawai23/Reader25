@@ -135,6 +135,7 @@ input, select{
 							<c:param name="boardNo" value="${ b.boardNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
+							<c:param name="code" value="${ b.code }"/>
 						</c:url>
 						<a href="${ TIWdetail }">${ b.bTitle }(${ b.comCount })	</a>
 					</c:if>

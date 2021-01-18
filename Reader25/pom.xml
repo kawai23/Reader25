@@ -42,18 +42,10 @@
 		
 		
 		<!-- aop 처리를 위한 aspectjweaver 추가 -->
-		
 		<dependency>
-		
 			<groupId>org.aspectj</groupId>
-			
 			<artifactId>aspectjweaver</artifactId>
-			
 			<version>${org.aspectj-version}</version>
-			
-			
-		
-		
 		</dependency>
 		
 		<!-- Logging -->
@@ -276,22 +268,20 @@
             <version>2.9.7</version>
         </dependency>
 		
-		<!-- google api -->
+		<!-- 이메일 발송 -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-analyticsreporting</artifactId>
-			<version>v4-rev153-1.25.0</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
+
 		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client-gson</artifactId>
-			<version>1.30.9</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
-		<dependency>
-   			<groupId>com.google.apis</groupId>
-  			<artifactId>google-api-services-analytics</artifactId>
-  		 	<version>v3-rev20190807-1.30.10</version>
-		</dependency>
+		
 		       
 	</dependencies>
     <build>

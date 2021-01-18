@@ -194,12 +194,15 @@
 	}
 	.btns-div{
 		font-size: 18px;
+		margin:auto;
 		margin-top: 10px;
+		margin-bottom: 50px;
 		height: 25px;
-		float: right;
-		margin-right: 10%;
 		top: -30px;
+		width: 80%;
+		max-width: 1000px;
 	}
+	.btns-div button{float: right; margin-left: 10px;}
 	.write-btn{
 		background:rgba(255, 195, 152, 1);
 		width: 80px;
@@ -276,6 +279,7 @@
 </head>
 <body>
 	<%@include file="../common/menubar.jsp" %>
+	
 	<!-- 에러 모달창 -->
 	<div class="modal-back" id="del-modal">
 		<div class="modal">
@@ -357,7 +361,8 @@
 						var heartC = $('.heart');
 						$.ajax({
 							url: 'heart.to',
-							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
+							type :'POST',
+							data:{boardNo:'${board.boardNo}', heart:'${heart}','code':'${ board.code }'},
 							success:function(data){
 								heartC.prop('name', data);
 								console.log(data);
@@ -762,5 +767,6 @@
 			}
 		</script>
 	</section>
+	<%@include file="../common/footer.jsp" %>
 </body>
 </html>

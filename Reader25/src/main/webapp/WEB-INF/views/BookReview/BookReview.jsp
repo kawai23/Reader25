@@ -15,8 +15,8 @@ section {
 	width: 80%;
 	margin: auto;
 	min-width: 1000px;
+	border: 1px solid rgba(246, 246, 246, 1);
 }
-
 .top-div {
 	width: 500px;
 	height: 50px;
@@ -166,11 +166,11 @@ select::-ms-expand {
 	height: 15px;
 	width: 190px;
 }
-.paging{width: 150px; margin:auto;text-align: center;}
+.paging{width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
 .paging-div {
 	display:inline-block;
 	max-width: 250px;
-	margin-top: 10px;
+	margin-top: 50px;
 }
 .paging-div>a, .paging-div>p {
 	padding: 0;
@@ -411,5 +411,6 @@ select::-ms-expand {
 			</script>
 		</c:if>
 	</section>
+	<%@include file="../common/footer.jsp" %>
 </body>
 </html>
