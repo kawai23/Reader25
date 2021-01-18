@@ -61,7 +61,7 @@
 						<hr>
 						
 						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
-						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
+						<a href="myList.me?code=3" class="list-group-item"  id="c4">책방 리스트</a>
 						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
 						<a href="myLikeList.me" class="list-group-item">좋아요/북마크</a>
