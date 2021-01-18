@@ -983,7 +983,7 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("loginUser", loginUser);
 		map.put("boardNo", boardNo);
-		map.put("code", code);
+		//map.put("code", code);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
 		//System.out.println("heart"+heart);
@@ -1021,12 +1021,10 @@ public class BoardController {
 
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int b_no = Integer.parseInt(httpRequest.getParameter("boardNo"));
-        int code = Integer.parseInt(httpRequest.getParameter("code"));
         String m_no = ((Member) httpRequest.getSession().getAttribute("loginUser")).getId();
         Liketo Like = new Liketo();
 
         Like.setB_no(b_no);
-        Like.setCode(code);
         Like.setM_no(m_no);
         //System.out.println(Like);
         //System.out.println(heart);

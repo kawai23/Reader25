@@ -209,6 +209,7 @@ section {
 			</div>
 		</div>
 	</div>
+	
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -223,7 +224,7 @@ section {
 		<div class="header-div">
 			<h2>문의사항 작성</h2>
 			<div class="file-div">
-				<input class="upload-name" value="파일선택" disabled="disabled">
+				<input class="upload-name" id="file" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
 				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
 			</div>
@@ -297,9 +298,10 @@ section {
 					 $('.modal').show();
 					return false;
 				}else{
-					$('#notice-form').submit();
+					$('#inquiry-form').submit();
 				}
 			});
+			
 		</script>
 	</section>
 	
