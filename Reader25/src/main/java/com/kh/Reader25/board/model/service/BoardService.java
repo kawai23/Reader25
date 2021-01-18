@@ -163,12 +163,13 @@ public interface BoardService {
 
 	int todayListCount(String enrollDay);
 
-	ArrayList<Board> review_d();
+	ArrayList<Board> review();
 
-	ArrayList<Board> tiw_d();
+	ArrayList<Board> tiw();
 
-	ArrayList<Board> views_d();
-
+	ArrayList<Board> views();
+	
+	ArrayList<Board> recd(int value);
 
 
 
