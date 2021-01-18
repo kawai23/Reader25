@@ -35,7 +35,7 @@ public interface DiscussService {
 	// 댓글 삭제
 	int rDelete(Reply r);
 	// 메인페이지(토론방) 리스트 불러오기기
-	ArrayList<Discuss> discuss_d();
+	ArrayList<Discuss> discuss();
 	// 댓글 수정시 찬성,반대,중립 변경이 있을시
 	void changePCN(Map<String, Object> d);
 	// 댓글 수정
