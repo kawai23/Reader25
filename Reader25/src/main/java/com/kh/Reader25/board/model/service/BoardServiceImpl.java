@@ -183,7 +183,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateLike(Liketo like) {
 		// TODO Auto-generated method stub
-		return bDAO.updateLike(sqlSession, like.getB_no());
+		return bDAO.updateLike(sqlSession, like);
 	}
 
 	@Override

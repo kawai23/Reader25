@@ -520,7 +520,7 @@ textarea{
 	        $.ajax({
 	            url :'heart.to',
 	            type :'POST',
-	            data : {'boardNo' : '${ board.boardNo }','user':'${ loginUser.id }','heart':'${heart}'},
+	            data : {'boardNo' : '${ board.boardNo }','user':'${ loginUser.id }','heart':'${heart}', 'code':'${ board.code }'},
 	            success : function(data){
 	                that.prop('name',data);
 	                if(data==1) {
