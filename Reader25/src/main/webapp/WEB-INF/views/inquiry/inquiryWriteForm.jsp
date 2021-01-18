@@ -200,7 +200,7 @@ section {
 	<%@ include file="../common/menubar.jsp" %>
 	
 	<!-- 에러 모달창 -->
-	<div class="modal-back">
+	<div class="modal-back" id="t-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
@@ -209,12 +209,35 @@ section {
 			</div>
 		</div>
 	</div>
-	
+	<div class="modal-back" id="f-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>파일을 첨부 해 주세요</p>
+				<button class="modal-close" value="Close">Close</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>
+					작성한 내용이 사라집니다. 작성 취소하시겠습니까? 
+				</p>
+				<button class="modal-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
 				$('.modal').hide();
 				$('.modal-back').hide();
+			});
+			$('.modal-accept').click(function(){
+				location.href = "javascript:history.go(-1)";
 			});
 		});
 	</script>
@@ -224,7 +247,7 @@ section {
 		<div class="header-div">
 			<h2>문의사항 작성</h2>
 			<div class="file-div">
-				<input class="upload-name" id="file" value="파일선택" disabled="disabled">
+				<input class="upload-name" name="file" id="file" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
 				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple">
 			</div>
@@ -266,7 +289,7 @@ section {
 		
 			<div class="title-div">
 				<div class="title">title</div>
-				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
+				<input type="text" name="bTitle" id="title" placeholder="제목을 작성하세요">
 				<input type="hidden" name="userId" value="${ loginUser.id }">
 			</div>
 			<div class="contents">
@@ -286,22 +309,31 @@ section {
 			      sSkinURI : "<%=request.getContextPath()%>/smartedit/SmartEditor2Skin.html",
 			      fCreator: "createSEditor2"
 			});
-			$('#submit-btn').click(function(){
-				oEditors.getById["smart_edit"].exec("UPDATE_CONTENTS_FIELD",[]);
-
-				// validate 검증하기
-				 var title = $('#bTitle').val()
-				 if(title == ""){
-					 event.preventDefault();
-					 this.blur();
-					 $('.modal-back').show();
-					 $('.modal').show();
-					return false;
-				}else{
-					$('#inquiry-form').submit();
-				}
-			});
 			
+			 $('#submit-btn').click(function(){
+					oEditors.getById["smart_edit"].exec("UPDATE_CONTENTS_FIELD",[]);
+
+					// validate 검증하기
+					 var title = $('#title').val()
+					 
+					 if(title == ""){
+						 event.preventDefault();
+						 this.blur();
+						 $('#t-modal').show();
+						 $('#t-modal .modal').show();
+						return false;
+					} else{
+						$('#inquiry-form').submit();
+					}
+				});
+				
+				$(function(){
+					$('#btn2').click(function(){
+						event.preventDefault();
+						$('#c-modal').show();
+						$('#c-modal .modal').show();
+					});
+				});
 		</script>
 	</section>
 	

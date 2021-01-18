@@ -476,6 +476,30 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.views_d(sqlSession);
 	}
 
+	@Override
+	public ArrayList<Comments> selectLComments(int comNo) {
+		// TODO Auto-generated method stub
+		return bDAO.selectLComments(sqlSession, comNo);
+	}
+
+	@Override
+	public int updateComments(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.updateComments(sqlSession, map);
+	}
+
+	@Override
+	public int deleteComments(String comNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteComments(sqlSession, comNo);
+	}
+
+	@Override
+	public int deleteCount(String boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteCount(sqlSession, boardNo);
+	}
+
 
 
 	

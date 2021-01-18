@@ -126,12 +126,20 @@ textarea{
 .comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
 .comment-content{margin: 6px; font-size: 20px;color: rgba(85, 83, 83, 1);}
 .user-div{width: 97%;margin:auto;}
-.text-count{float:right; color:rgb(200, 200, 200);}
+.text-count{float:right; color:rgb(200, 200, 200); font-size:15px;}
 .comment-box textarea{
 		clear:both;
 		margin: 8px;
 		width: 97%;
 		height: 55%;
+		resize: none;
+		border: none;
+}
+ textarea{
+		clear:both;
+		margin: 8px;
+		width: 97%;
+		height: 50%;
 		resize: none;
 		border: none;
 }
@@ -181,7 +189,7 @@ textarea{
 	display:inline-block; left: 40%;
 	font-family: 카페24 아네모네에어; font-size:17px;
 }
-.modal-accept{
+.modal-accept, .modal-yes, .modal-update{
 	background-color: rgba(255,127,14,1);
 	color:white; width: 80px;
 	height: 30px; border:none;
@@ -199,6 +207,8 @@ textarea{
 		position:relative;
 		top: 10px;
 }
+.no1{font-size:0px;}
+.updateBtn, .deleteBtn{display:inline-block; margin-left: 30px; margin-right: 10px; font-size: 12px;}
 </style>
 </head>
 <body>
@@ -228,6 +238,61 @@ textarea{
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="up-che-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 작성이 실패했습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="de-che-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 삭제가 실패했습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="update-c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<div class="comment-write">
+					<div id="comNo" class="no1"></div>
+					<div class="user-div" id="user">
+					</div>
+					<span class="text-count" id="counter">0/500</span>
+					<textarea id="comment-input-up" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+				</div>
+				<br>
+				<button class="modal-update">수정</button>
+				
+				<script type="text/javascript">
+				$(function(){
+					 $('#comment-input-up').keyup(function(){
+						 var content = $(this).val();
+						 $('#counter').html(content.length +'/500');
+					 });
+				 });
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="del-c-modal">
+		<div class="modal">
+			<div class="modal-content"><div id="comNo" class="no1"></div><div id="bNo" class="no1"></div>
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>정말로 이 댓글을 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-yes" value="yes">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
 	
 	<script>
 		$(function(){
@@ -235,9 +300,50 @@ textarea{
 				$('.modal').hide();
 				$('.modal-back').hide();
 			});
-			$('#login-modal .modal-accept').click(function(){
-				location.href="loginView.me";
+			$('.modal-update').click(function(){
+				var comNo=$('#comNo').text();
+				var comment = $('#comment-input-up').val();
+				var userId = $('#user').text();
+				console.log(comNo);
+				 
+				$.ajax({ 
+					type : "POST",
+					url : 'commentUp.to',
+					data:{comment:comment, userId:userId,comNo:comNo},
+					success:function(data){
+						if(data>0){
+							console.log(data);
+							$('.modal').hide();
+							$('.modal-back').hide();
+						} else{
+							$('#up-che-modal').show();
+							 $('#up-che-modal .modal').show();
+						}
+					}
+				});
+				
 			});
+			$('.modal-yes').click(function(){
+				var comNo=$('#comNo').text();
+				var bNo=$('#bNo').text();
+				
+				$.ajax({ 
+					type : "POST",
+					url : 'commentDe.to',
+					data:{comNo:comNo,bNo:bNo},
+					success:function(data){
+						if(data>0){
+							console.log(data);
+							$('.modal').hide();
+							$('.modal-back').hide();
+						} else{
+							$('#de-che-modal').show();
+							 $('#de-che-modal .modal').show();
+						}
+					}
+				});
+			});
+			
 		});
 	</script>
 	
@@ -457,16 +563,47 @@ textarea{
 							$datespan = $('<span class="comment-date">').text(cList[i].comDate);
 							$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
 							
+							$btn1 = $('<button class="updateBtn" id="updateBtn" onclick="rUpdateFrom('+cList[i].comNo+');">').text("수정");
+							$btn2 = $('<button class="deleteBtn" id="deleteBtn" onclick="rDeleteFrom('+cList[i].comNo+');">').text("삭제");
+							
 							$top.append($idspan);
 							$top.append($datespan);
 							
 							$comment.append($top);
 							$comment.append($commentDiv);
 							$comments.append($comment);
+							
+							if('${loginUser.id}' == cList[i].userId){
+								$top.append($btn1);
+								$top.append($btn2);
+							}
 						}
 					 }
 				 });
 			 }
+			 
+			 function rUpdateFrom(comNo){
+				console.log(comNo);
+				var id = ${loginUser.id};
+				var comNo = comNo;
+				$('#update-c-modal').show();
+				$('#update-c-modal .modal').show();
+				$('#comNo').html(comNo);	
+				$('#user').html(id);
+			 }
+			 
+			 function rDeleteFrom(comNo){
+				 var boardNo = ${ board.boardNo };
+				 	console.log(boardNo);
+					console.log(comNo);
+					var comNo = comNo;
+					$('#del-c-modal').show();
+					$('#del-c-modal .modal').show();
+					$('#comNo').html(comNo);
+					$('#bNo').html(boardNo);
+			}
+			 
+			 
 			</script>
 	</div>
 	

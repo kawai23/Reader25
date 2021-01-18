@@ -169,6 +169,14 @@ public interface BoardService {
 
 	ArrayList<Board> views_d();
 
+	ArrayList<Comments> selectLComments(int comNo);
+
+	int updateComments(HashMap<String, Object> map);
+
+	int deleteComments(String comNo);
+
+	int deleteCount(String boardNo);
+
 
 
 

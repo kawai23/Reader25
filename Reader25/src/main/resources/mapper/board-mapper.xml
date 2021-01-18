@@ -704,4 +704,22 @@
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
+	
+	<update id="updateComments">
+		update comments
+		set CONTENT=#{bContent}
+		where COM_NO=#{comNo}
+	</update>
+	
+	<delete id="deleteComments">
+		DELETE FROM comments
+		WHERE COM_NO=#{comNo}
+    </delete>
+    
+    <update id="deleteCount">
+		update board
+		set COM_COUNT = COM_COUNT - 1
+		where board_no = #{boardNo}
+	</update>
+	
 </mapper>
