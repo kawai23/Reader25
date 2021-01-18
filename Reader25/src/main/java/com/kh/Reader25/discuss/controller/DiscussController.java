@@ -82,6 +82,10 @@ public class DiscussController {
 			at = saveFile(uploadFile, request);
 			d.setAtcNo(1);
 		}
+		// <p>태그 삭제하기
+		d.setdContent(d.getdContent().replace("<p>", ""));
+		d.setdContent(d.getdContent().replace("</p>", ""));
+		
 		int result = dService.insertDiscuss(d, at);
 		if(result >0) {
 			return "redirect:discuss.di";
@@ -200,6 +204,19 @@ public class DiscussController {
 		}
 	}
 	
+	// 댓글 수정
+	@RequestMapping("rUpdate.di")
+	public void UpdatsRelpy(@ModelAttribute Reply r, @RequestParam("check") String check, @RequestParam("dNo") int dNo, HttpServletResponse response) {
+		if(!check.equals("패스")) {
+			Map<String, Object> d = new HashMap<String, Object>();
+			d.put("dNo", dNo);
+			d.put("check", check);
+			d.put("PCN", r.getrWhether());
+			dService.changePCN(d);
+		}
+		int result = dService.rUpdate(r);
+		
+	}
 	// 파일 저장
 	public Attachment saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
