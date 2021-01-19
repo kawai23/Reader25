@@ -197,9 +197,10 @@ public class BoardDAO {
 	public int getReListCount(SqlSessionTemplate sqlSession, String booktitle) {
 		return sqlSession.selectOne("boardMapper.getReListCount", booktitle);
 	}
-	public int updateLike(SqlSessionTemplate sqlSession, int b_no) {
+	
+	public int updateLike(SqlSessionTemplate sqlSession, Liketo like) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("boardMapper.updateLike", b_no);
+		return sqlSession.update("boardMapper.updateLike", like);
 	}
 
 	public int getCommentListCount(SqlSessionTemplate sqlSession, int boardNo) {
@@ -416,18 +417,51 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.todayListCount", enrollDay);
 	}
 
-	public ArrayList<Board> review_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> review(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
 	}
 
-	public ArrayList<Board> tiw_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> tiw(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
 	}
 
-	public ArrayList<Board> views_d(SqlSessionTemplate sqlSession) {
+	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+	}
+
+
+	public ArrayList<Comments> selectLComments(SqlSessionTemplate sqlSession, int comNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectLComments", comNo);
+	}
+
+	public int updateComments(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateComments", map);
+	}
+
+	public int deleteComments(SqlSessionTemplate sqlSession, String comNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("boardMapper.deleteComments", comNo);
+	}
+
+	public int deleteCount(SqlSessionTemplate sqlSession, String boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteCount", boardNo);
+	}
+
+
+	
+	public ArrayList<Board> recd(int value, SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+	}
+
+	public int upPoint(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.upPoint", map);
 	}
 
 

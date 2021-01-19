@@ -97,7 +97,7 @@
 				0,
 			</otherwise>
 		</choose>
-		#{dWriter})
+		#{dWriter}, SYSDATE)
 	</insert>
 	
 	<!-- 토론방 상세페이지 -->
@@ -121,7 +121,7 @@
 	
 	<!-- 토론방 수정 -->
 	<update id="updateDiscuss">
-		UPDATE DISCUSS SET D_TITLE=#{dTitle}, D_CONTENT=#{dContent} WHERE D_NO = #{dNo}
+		UPDATE DISCUSS SET D_TITLE=#{dTitle}, D_CONTENT=#{dContent}, ENROLL_DATE = SYSDATE WHERE D_NO = #{dNo}
 	</update>
 	
 	<!-- 토론방 삭제 -->
@@ -184,7 +184,42 @@
 				D_NEUTRALITY = D_NEUTRALITY - 1
 			</otherwise>
 		</choose>
-		 WHERE D_NO = ${dNo}
+		 WHERE D_NO = #{dNo}
+	</update>
+	
+	<!-- 댓글 수정시 성향 변경시 -->
+	<update id="changePCN">
+		UPDATE DISCUSS SET
+		<choose>
+			<when test='check == "찬성"'>
+				D_PROS = D_PROS - 1,
+			</when>
+			<when test='check == "반대"'>
+				D_CONS = D_CONS - 1,
+			</when>
+			<otherwise>
+				D_NEUTRALITY = D_NEUTRALITY - 1,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test='PCN == "P"'>
+				D_PROS = D_PROS + 1
+			</when>
+			<when test='PCN == "N"'>
+				D_NEUTRALITY = D_NEUTRALITY + 1
+			</when>
+			<otherwise>
+				D_CONS = D_CONS + 1
+			</otherwise>
+		</choose>
+		WHERE D_NO = #{dNo}
+	</update>
+	
+	<!-- 댓글 수정 -->
+	<update id="rUpdate">
+		UPDATE RELPY SET
+		R_CONTENT = #{rContent}, R_WHETHER = #{rWhether}
+		WHERE R_NO = #{rNo}
 	</update>
 	<!-- 댓글 리절트 셋 -->
 	<resultMap type="Reply" id="ReplyResultSet">
@@ -196,6 +231,7 @@
 		<result property="rWriter" column="R_WRITER"/>
 		<result property="dNo" column="D_NO"/>
 	</resultMap>
+	<!-- 토론방 리스트 메인페이지로 -->
 	<select id="discussD" resultMap="discussResultSet">
 		<![CDATA[
         SELECT D_TITLE

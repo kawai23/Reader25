@@ -39,8 +39,24 @@
 	
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
 	<bean id="naverLoginBO" class="com.kh.Reader25.member.model.dao.NaverLoginBO"/>
+	
+	<!-- 메일 인증 -->
+	<bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" /><!-- 465 or 25 -->
+		<property name="username" value="reader256g@gmail.com" />
+		<property name="password" value="KHkh252627!" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
    
-  
 	
 	<!--root-context.xml-->
 	<!-- <mybatis-spring:scan base-package="com.kh.Reader25.naver"/> -->

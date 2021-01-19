@@ -13,6 +13,7 @@ section {
 	width: 80%;
 	margin: auto;
 	min-width: 1000px;
+	border: 1px solid rgba(246, 246, 246, 1);
 }
 
 .top-div {
@@ -164,10 +165,11 @@ select::-ms-expand {
 	height: 15px;
 	width: 190px;
 }
+.paging{width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
 .paging-div {
-	width: 250px;
-	margin: auto;
-	margin-top: 10px;
+	display:inline-block;
+	max-width: 250px;
+	margin-top: 50px;
 }
 .paging-div>a, .paging-div>p {
 	padding: 0;
@@ -351,42 +353,43 @@ select::-ms-expand {
 				$(this).css('box-shadow','none');
 			});
 		</script>
-		
-		<div class="paging-div">
-			<!-- 이전 -->
-			<c:if test="${ pi.currentPage <=1 }">
-				<p>&lt;</p>
-			</c:if>
-			<c:if test="${ pi.currentPage > 1 }">
-				<c:url var="before" value="${ loc }">
-					<c:param name="page" value="${ pi.currentPage -1 }"/>
-				</c:url>
-				<a href="${ before }">&lt;</a>
-			</c:if>
-			<!-- 번호 -->
-			<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-				<c:if test="${ pi.currentPage eq p }">
-					<p>${ p }</p>
+		<div class="paging">
+			<div class="paging-div">
+				<!-- 이전 -->
+				<c:if test="${ pi.currentPage <=1 }">
+					<p>&lt;</p>
 				</c:if>
-				<c:if test="${ pi.currentPage ne p }">
-					<c:url var="pNo" value="${ loc }">
-						<c:param name="page" value="${ p }"/>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="${ loc }">
+						<c:param name="page" value="${ pi.currentPage -1 }"/>
 					</c:url>
-					<a href="${ pNo }">${ p }</a>
+					<a href="${ before }">&lt;</a>
 				</c:if>
-			</c:forEach>
-			
-			<!-- 다음 -->
-			<c:if test="${ pi.currentPage < pi.endPage }">
-				<c:url var="next" value="${ loc }">
-					<c:param name="page" value="${ pi.currentPage + 1 }"/>
-				</c:url>
-				<a href="${next}">&gt;</a>
-			</c:if>
-			<c:if test="${pi.currentPage >= pi.endPage }">
-				<p>&gt;</p>
-			</c:if>
-			
+				<!-- 번호 -->
+				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+					<c:if test="${ pi.currentPage eq p }">
+						<p>${ p }</p>
+					</c:if>
+					<c:if test="${ pi.currentPage ne p }">
+						<c:url var="pNo" value="${ loc }">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<a href="${ pNo }">${ p }</a>
+					</c:if>
+				</c:forEach>
+				
+				<!-- 다음 -->
+				<c:if test="${ pi.currentPage < pi.endPage }">
+					<c:url var="next" value="${ loc }">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<a href="${next}">&gt;</a>
+				</c:if>
+				<c:if test="${pi.currentPage >= pi.endPage }">
+					<p>&gt;</p>
+				</c:if>
+				
+			</div>
 		</div>
 		<c:if test="${ !empty loginUser }">
 			<div class="write-btn">
@@ -399,5 +402,6 @@ select::-ms-expand {
 			</script>
 		</c:if>
 	</section>
+	<%@include file="../common/footer.jsp" %>
 </body>
 </html>

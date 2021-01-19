@@ -15,6 +15,7 @@
 		padding-top: 15px;
 		background-color:  #F6F6F6; 
 		font-family: 카페24 아네모네에어;
+		min-height: 750px;
 	}
 /*테이블*/
 #TIWTable{
@@ -26,6 +27,13 @@
 }
 #TIWTable th{
 	background: #F7B45E;
+}
+#TIWTable td{
+	background: #FFFFFF;
+}
+#TIWTable td:hover{
+	background: rgba(234, 234, 234, 1);
+	cursor: pointer;
 }
 /*검색*/
 input, select{
@@ -135,6 +143,7 @@ input, select{
 							<c:param name="boardNo" value="${ b.boardNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
+							<c:param name="code" value="${ b.code }"/>
 						</c:url>
 						<a href="${ TIWdetail }">${ b.bTitle }(${ b.comCount })	</a>
 					</c:if>
@@ -251,6 +260,6 @@ input, select{
 		</script>
 	</div>
 	
-	<%-- <%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

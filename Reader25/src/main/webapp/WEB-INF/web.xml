@@ -160,6 +160,20 @@
 		<url-pattern>*.bo</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 소개페이지 -->
+	<servlet>
+		<servlet-name>aboutServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/about-context.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>aboutServlet</servlet-name>
+		<url-pattern>*.ab</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 공용 에러페이지 등록 -->
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>

@@ -54,6 +54,7 @@ public class Liketo {
 	public String toString() {
 		return "Liketo [l_no=" + l_no + ", b_no=" + b_no + ", m_no=" + m_no + ", l_check=" + l_check + "]";
 	}
+
 	
 	
 }

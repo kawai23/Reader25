@@ -81,7 +81,7 @@
 		min-height: 200px;
 		padding: 10px;
 	}
-	.comment-box{
+	.comment-box, .adminComments{
 		width: 80%;
 		margin:auto;
 		margin-top:10px;
@@ -90,12 +90,12 @@
 		padding-bottom: 40px;
 	}
 	.comment-date{color:rgb(180, 180, 180);display:inline-block; margin-left: 10px; font-size: 12px;}
-	.comment-write{
+	.comment-write, .adminCommentsTable{
 		border: 1px solid rgb(200, 200, 200);
 		background: white;
 		height: 100px;
 	}
-	.comment-box button{
+	.comment-box button, .adminComments button{
 		font-size: 13px;
 		height: 25px;
 		float: right;
@@ -104,11 +104,19 @@
 		margin: 5px;
 		color:white;
 	}
+	 textarea{
+		clear:both;
+		margin: 8px;
+		width: 97%;
+		height: 50%;
+		resize: none;
+		border: none;
+}
 	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
 	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
 	.user-div{width: 97%;margin:auto;}
-	.text-count{float:right; color:rgb(200, 200, 200);}
-	.comment-box textarea{
+	.text-count, .text-count-c{float:right; color:rgb(200, 200, 200);}
+	.comment-box textarea, .adminComments textarea{
 		clear:both;
 		margin: 8px;
 		width: 97%;
@@ -174,18 +182,24 @@
 		overflow: auto; 
 		background: rgba(0, 0, 0, 0.4); 
 	}
-	.modal-close, .modal-accept{
-		background-color: rgba(137, 18, 18, 1);
-		color:white;
-		width: 80px;
-		height: 30px;
-		border:none;
-		display:inline-block;
-		left: 40%;
-	}
-	.modal-accept{
-		background-color: rgba(85, 83, 83, 1);
-	}
+.modal-close{
+	background-color: #C4C4C4;
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-accept, .modal-yes, .modal-update{
+	background-color: rgba(255,127,14,1);
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:15px;
+}
+.modal-accept{
+		background-color: #C95F12;
+		font-family: 카페24 아네모네에어; font-size:15px;
+}
 	.modal p{
 		display:inline-block;
 	}
@@ -193,6 +207,9 @@
 		position:relative;
 		top: 10px;
 	}
+.no1{font-size:0px;}
+.updateBtn, .deleteBtn{display:inline-block; margin-left: 30px; margin-right: 10px; font-size: 12px;}
+
 </style>
 </head>
 <body>
@@ -241,11 +258,110 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="up-che-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 작성이 실패했습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="de-che-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 삭제가 실패했습니다.</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="update-c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<div class="comment-write">
+					<div id="comNo" class="no1"></div>
+					<div class="user-div" id="user">
+					</div>
+					<span class="text-count" id="counter">0/500</span>
+					<textarea id="comment-input-up" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+				</div>
+				<br>
+				<button class="modal-update">수정</button>
+				
+				<script type="text/javascript">
+				$(function(){
+					 $('#comment-input-up').keyup(function(){
+						 var content = $(this).val();
+						 $('#counter').html(content.length +'/500');
+					 });
+				 });
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="del-c-modal">
+		<div class="modal">
+			<div class="modal-content"><div id="comNo" class="no1"></div><div id="bNo" class="no1"></div>
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>정말로 이 댓글을 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-yes" value="yes">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
 				$('.modal').hide();
 				$('.modal-back').hide();
+			});
+			$('.modal-update').click(function(){
+				var comNo=$('#comNo').text();
+				var comment = $('#comment-input-up').val();
+				var userId = $('#user').text();
+				console.log(comNo);
+				 
+				$.ajax({ 
+					type : "POST",
+					url : 'commentUp.to',
+					data:{comment:comment, userId:userId,comNo:comNo},
+					success:function(data){
+						if(data>0){
+							console.log(data);
+							$('.modal').hide();
+							$('.modal-back').hide();
+						} else{
+							$('#up-che-modal').show();
+							 $('#up-che-modal .modal').show();
+						}
+					}
+				});
+				
+			});
+			$('.modal-yes').click(function(){
+				var comNo=$('#comNo').text();
+				var bNo=$('#bNo').text();
+				
+				$.ajax({ 
+					type : "POST",
+					url : 'commentDe.to',
+					data:{comNo:comNo,bNo:bNo},
+					success:function(data){
+						if(data>0){
+							console.log(data);
+							$('.modal').hide();
+							$('.modal-back').hide();
+						} else{
+							$('#de-che-modal').show();
+							 $('#de-che-modal .modal').show();
+						}
+					}
+				});
 			});
 			$('#login-modal .modal-accept').click(function(){
 				location.href="loginView.me";
@@ -307,19 +423,25 @@
 				
 				<div class="adminComments">
 					<c:if test="${ loginUser.id eq 'admin' }">
-						<table class="adminCommentsTable"  align="center">
-							<tr>
-								<td rowspan="2"><textarea rows="3" cols="55" id="comment" placeholder="댓글을 입력해 주세요"></textarea></td>
-								<td><input type="text" name="userId" id="writer" readonly value="${ loginUser.id }"></td>
-							</tr>
-							<tr>
-								<td><button id="cSubmit">등록하기</button></td>
-							</tr>
-						</table>
+						<div class="adminCommentsTable">
+							<div class="user-div" name="userId" id="writer">
+								<c:if test="${loginUser ne null }">
+									${loginUser.id}
+								</c:if>
+								<span class="text-count-c" id="counter-c">0/500</span>
+							</div>
+							<textarea id="comment" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+						</div>
+						<button id="cSubmit">댓글 등록</button>
 					</c:if>
 				</div>
 				
 				<script>
+				
+				$('#comment').keyup(function(){
+					 var content = $(this).val();
+					 $('#counter-c').html(content.length +'/500');
+				 });
 				
 				//관리자 댓글 등록
 				$('#cSubmit').on('click', function(){
@@ -407,104 +529,130 @@
 			
 			
 				<script>
-		 $(function(){
-			 getComments();
-			 $('#comment-input').keyup(function(){
-				 var content = $(this).val();
-				 $('#counter').html(content.length +'/500');
-			 });
-			 $('#comment-add').click(function(){
-				if('${loginUser}' == ''){
-					$('#login-modal').show();
-					$('#login-modal .modal').show();
-				}else{
-					addComments();
-				}
-			 });
-			 setInterval(function(){
-				 var page0 = $('.page0-no').text();
-				getComments(page0);
-			 }, 1000); 
-		 });
-		 function addComments(){
-			 var boardNo = ${board.boardNo};
-			 var comment = $('#comment-input').val();
-			 if(comment != ''){
-				 $.ajax({
-					url:  "addComments.to",
-					data:{boardNo:boardNo,comment:comment},
-					success: function(data){
-						$('#comment-input').val('');
-						if(data == 'success'){
-							$('#check-modal').show();
-							$('#check-modal .modal').show();
-						}
-						getComments(1);
-					}
-				});
-			 }else{
-				 $('#content-modal').show();
-				 $('#content-modal .modal').show();
-			 }
-		 }
-		 function getComments(value){
-			 var boardNo = ${board.boardNo};
-			 var page0 = value;
-			 var userId = '${board.userId}';
-			 $.ajax({
-				 url:'userComments.in',
-				 data:{boardNo:boardNo,page0:page0,userId:userId},
-				 success: function(data){
-					//1) 페이징 버튼 넣기
-					pi0 = data.pi0;
-					$copaging = $('#co-paging');
-					$copaging.html('');
-					if(pi0.currentPage <= 1){
-						$before = $('<p>').text('<');
-					}else{
-						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
-					}
-					$copaging.append($before);
-
-					for(var i = pi0.startPage; i <= pi0.endPage; i++){
-						if(pi0.currentPage == i){
-							$pNo = $('<p class="page0-no">').text(i);
+		 		$(function(){
+			 		getComments();
+			 		$('#comment-input').keyup(function(){
+				 		var content = $(this).val();
+				 		$('#counter').html(content.length +'/500');
+			 		});
+			 		$('#comment-add').click(function(){
+						if('${loginUser}' == ''){
+							$('#login-modal').show();
+							$('#login-modal .modal').show();
 						}else{
-							$pNo = $('<a>').on('click', function(){
-								getComments($(this).text());
-							}).text(i);
+							addComments();
 						}
-						$copaging.append($pNo);
-					}
-					if(pi0.currentPage >= pi0.endPage){
-						$next = $('<p>').text(">");
-					}else{
-						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
-					}
-					$copaging.append($next);
-					//2)값넣기
-					cList = data.cList;
-					$comments = $('.commentList');
-					$comments.html('');
-					
-					for(var i in cList){
-						$comment = $('<div class="comment">');
-						
-						$top = $('<div class="comment-top">')
-						$idspan = $('<span class="comment-user">').text(cList[i].userId);
-						$datespan = $('<span class="comment-date">').text(cList[i].comDate);
-						$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
-						
-						$top.append($idspan);
-						$top.append($datespan);
-						
-						$comment.append($top);
-						$comment.append($commentDiv);
-						$comments.append($comment);
-					}
+			 		});
+			 		setInterval(function(){
+						var page0 = $('.page0-no').text();
+						getComments(page0);
+			 		}, 1000); 
+		 		});
+		 		function addComments(){
+			 		var boardNo = ${board.boardNo};
+			 		var comment = $('#comment-input').val();
+					 if(comment != ''){
+						 $.ajax({
+							url:  "addComments.to",
+							data:{boardNo:boardNo,comment:comment},
+							success: function(data){
+								$('#comment-input').val('');
+								if(data == 'success'){
+									$('#check-modal').show();
+									$('#check-modal .modal').show();
+								}
+								getComments(1);
+							}
+						});
+					 }else{
+						 $('#content-modal').show();
+						 $('#content-modal .modal').show();
+					 }
 				 }
-			 });
-		 }
+				 function getComments(value){
+					 var boardNo = ${board.boardNo};
+					 var page0 = value;
+					 var userId = '${board.userId}';
+					 $.ajax({
+						 url:'userComments.in',
+						 data:{boardNo:boardNo,page0:page0,userId:userId},
+						 success: function(data){
+							//1) 페이징 버튼 넣기
+							pi0 = data.pi0;
+							$copaging = $('#co-paging');
+							$copaging.html('');
+							if(pi0.currentPage <= 1){
+								$before = $('<p>').text('<');
+							}else{
+								$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
+							}
+							$copaging.append($before);
+		
+							for(var i = pi0.startPage; i <= pi0.endPage; i++){
+								if(pi0.currentPage == i){
+									$pNo = $('<p class="page0-no">').text(i);
+								}else{
+									$pNo = $('<a>').on('click', function(){
+										getComments($(this).text());
+									}).text(i);
+								}
+								$copaging.append($pNo);
+							}
+							if(pi0.currentPage >= pi0.endPage){
+								$next = $('<p>').text(">");
+							}else{
+								$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
+							}
+							$copaging.append($next);
+							//2)값넣기
+							cList = data.cList;
+							$comments = $('.commentList');
+							$comments.html('');
+							
+							for(var i in cList){
+								$comment = $('<div class="comment">');
+								
+								$top = $('<div class="comment-top">')
+								$idspan = $('<span class="comment-user">').text(cList[i].userId);
+								$datespan = $('<span class="comment-date">').text(cList[i].comDate);
+								$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
+								
+								$btn1 = $('<button class="updateBtn" id="updateBtn" onclick="rUpdateFrom('+cList[i].comNo+');">').text("수정");
+								$btn2 = $('<button class="deleteBtn" id="deleteBtn" onclick="rDeleteFrom('+cList[i].comNo+');">').text("삭제");
+								
+								$top.append($idspan);
+								$top.append($datespan);
+								
+								$comment.append($top);
+								$comment.append($commentDiv);
+								$comments.append($comment);
+								
+								if('${loginUser.id}' == cList[i].userId){
+									$top.append($btn1);
+									$top.append($btn2);
+								}
+							}
+						 }
+					 });
+				 }
+				 
+				 function rUpdateFrom(comNo){
+						console.log(comNo);
+						var id = ${loginUser.id};
+						var comNo = comNo;
+						$('#update-c-modal').show();
+						$('#update-c-modal .modal').show();
+						$('#comNo').html(comNo);	
+						$('#user').html(id);
+					 }
+					 
+					 function rDeleteFrom(comNo){
+							console.log(comNo);
+							var comNo = comNo;
+							$('#del-c-modal').show();
+							$('#del-c-modal .modal').show();
+							$('#comNo').html(comNo);
+					}
 		</script>
 			
 		</div>

@@ -78,8 +78,16 @@ public class DiscussDAO {
 	public int changeCount(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("DiscussMapper.changeCount", r);
 	}
-	
-	public ArrayList<Discuss> discuss_d(SqlSessionTemplate sqlSession) {
+	// 메인페이지(토론방) 리스트 불러오기기
+	public ArrayList<Discuss> discuss(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("DiscussMapper.discussD", null);
+	}
+	// 댓글 수정시 찬성,반대,중립 변경이 있을시
+	public void changePCN(SqlSessionTemplate sqlSession, Map<String, Object> d) {
+		sqlSession.update("DiscussMapper.changePCN", d);
+	}
+	// 댓글 수정
+	public int rUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("DiscussMapper.rUpdate", r);
 	}
 }

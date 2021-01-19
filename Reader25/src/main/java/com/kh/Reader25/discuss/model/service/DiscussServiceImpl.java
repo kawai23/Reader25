@@ -106,9 +106,21 @@ public class DiscussServiceImpl  implements DiscussService{
 		}
 		return result;
 	}
+	// 메인페이지(토론방) 리스트 불러오기기
 	@Override
-	public ArrayList<Discuss> discuss_d() {
-		return dDAO.discuss_d(sqlSession);
+	public ArrayList<Discuss> discuss() {
+		return dDAO.discuss(sqlSession);
+	}
+	
+	// 댓글 수정시 찬성,반대,중립 변경이 있을시
+	@Override
+	public void changePCN(Map<String, Object> d) {
+		dDAO.changePCN(sqlSession, d);
+	}
+	// 댓글 수정
+	@Override
+	public int rUpdate(Reply r) {
+		return dDAO.rUpdate(sqlSession, r);
 	}
 
 }

@@ -38,6 +38,7 @@ import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -46,6 +47,10 @@ import com.kh.Reader25.member.model.vo.Member;
 public class BoardController {
 	@Autowired
 	private BoardService bService;
+	
+	//포인트 관련
+	@Autowired
+	private MemberService mService;
 	
 	// 1. 공지사항 code = 0  ----------------------------------------------------
 	// (1) 리스트 페이지
@@ -218,7 +223,7 @@ public class BoardController {
 		
 		int boardNo = bService.seachBoardNo(b);
 		b.setBoardNo(boardNo);
-
+		
 		if(uploadFile != null) {//첨부파일이 있다면
 			at = saveFile2(uploadFile, request, 1);
 			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
@@ -518,7 +523,7 @@ public class BoardController {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("loginUser", id);
 			map.put("boardNo", boardNo);
-						
+			
 			heart = bService.findLike(map) == 1? 1:0;
 		}
 		
@@ -606,12 +611,13 @@ public class BoardController {
 		}
 	}
 	
+	//리뷰작성
 	@RequestMapping("insert.re") 
 	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
-									@RequestParam("wise") String wise) {
+									@RequestParam("wise") String wise, HttpSession session) {
 		String contentAddTag =  booktitle + "#책제목"  + author + "#작가" + wise + "#명언" + b.getbContent();
 		b.setbContent(contentAddTag);
 		
@@ -624,7 +630,7 @@ public class BoardController {
 		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
-			// ! 만일 파일이 한 개 일 시
+			
 			at.setAtcLevel(0);
 			result = bService.insertBoardAndFile(b, at);
 		}else {
@@ -632,11 +638,86 @@ public class BoardController {
 		}
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeRe(session);
+
 			return "redirect:book.re";
 		}else {
 			throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 		}
 	}
+	
+	public int pointChangeRe(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 300;
+		String message = "책 리뷰 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			System.out.println("rankChange"+rankChange);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		}
+		
+	}
+	
 	// 수정하기 뷰
 	@RequestMapping("modify.re")
 	public ModelAndView reviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
@@ -903,6 +984,31 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	//댓글 수정하기
+	@RequestMapping("comupdate.re")
+	@ResponseBody
+	public int updateComment(@RequestParam("comNo") String comNo, @RequestParam("comment") String comment,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", comment);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	//댓글 삭제하기
+	@RequestMapping("commentdel.re")
+	@ResponseBody
+	public int deleteComment(@RequestParam("comNo") String comNo, @RequestParam("boardNo") String boardNo) {
+		int result = bService.deleteComments(comNo);
+		if(result > 0) {
+			result = bService.deleteCount(boardNo);
+		}
+		return result;
+	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////
@@ -950,7 +1056,7 @@ public class BoardController {
 	@RequestMapping("TIWinsert.to")
 	public String TIWinsert(@ModelAttribute Board b,
 				@RequestParam("code1") String code1,
-				@RequestParam("code2") String code2) {
+				@RequestParam("code2") String code2, HttpSession session) {
 		//System.out.println(b);
 		//System.out.println(code1);
 		//System.out.println(code2);
@@ -961,15 +1067,87 @@ public class BoardController {
 		int result = bService.insertTIW(b);
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeTIW(session);
+						
 			return "redirect:goTIWList.to";
 		} else {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
 	}
 	
+	public int pointChangeTIW(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 300;
+		String message = "오늘은 나도 작가 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			System.out.println("rankChange"+rankChange);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		}
+	}
+	
 	// 오늘은 나도 작가 = 5 디테일 뷰 컨트롤러
 	@RequestMapping("TIWdetail.to")
-	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo,
+	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo, @RequestParam("code") int code,
 									@RequestParam("page") int page, @RequestParam(value="cpage", required=false) Integer cpage, 
 									ModelAndView mv, HttpSession session) {
 		
@@ -982,33 +1160,26 @@ public class BoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("loginUser", loginUser);
 		map.put("boardNo", boardNo);
+		//map.put("code", code);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
 		//System.out.println("heart"+heart);
 		
-//		int currentPage = 1;
-//		if(cpage != null) {
-//			currentPage = cpage;
-//		}
-//		
-//		int listCount = bService.getCommentListCount(boardNo);
-//		
-//		PageInfo pi = Pagination.getPageInfo5_1(currentPage, listCount);
-//		
-//		HashMap<String, Object> hpage = new HashMap<String, Object>();
-//		hpage.put("pi", pi);
-//		hpage.put("boardNo", boardNo);
-//		
-//		ArrayList<Comments> list = bService.selectCommentsList(hpage);
-//		
+		String cate = board.getCate();
+		
+		String[] cates = cate.split("/");
+		String categori = cates[0];
+		String bookname = cates[1];
+	
 		if(board != null) {
 			mv.addObject("board", board)
 				.addObject("page", page)
+				.addObject("categori", categori)
+				.addObject("bookname", bookname)
 				.setViewName("TIWDetailView");
 			
 			if(heart > 0) {
 				mv.addObject("heart", heart);
-				//System.out.println("heart00"+heart);
 			} else {
 				mv.addObject("heart", heart);
 				//System.out.println("heart000"+heart);
@@ -1027,16 +1198,14 @@ public class BoardController {
 
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int b_no = Integer.parseInt(httpRequest.getParameter("boardNo"));
-        //System.out.println("b_no"+b_no);
         String m_no = ((Member) httpRequest.getSession().getAttribute("loginUser")).getId();
-        //System.out.println("userid"+m_no);
         Liketo Like = new Liketo();
 
         Like.setB_no(b_no);
         Like.setM_no(m_no);
- 
+        //System.out.println(Like);
         //System.out.println(heart);
-
+        
         if(heart >= 1) {
             bService.deleteLike(Like);
             bService.updateLike(Like);
@@ -1121,6 +1290,39 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//댓글수정
+	@RequestMapping("commentUp.to")
+	@ResponseBody
+	public int commentUp(@RequestParam("comment") String bContent,
+							@RequestParam("comNo") String comNo,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", bContent);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	
+	//댓글삭제
+	@RequestMapping("commentDe.to")
+	@ResponseBody
+	public int commentDe(@RequestParam("comNo") String comNo
+						,@RequestParam("bNo") String boardNo) {
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("boardNo", boardNo);
+		
+		int result = bService.deleteComments(comNo);
+		int upCount = bService.deleteCount(boardNo);
+			
+		return result;
+	}
+	
 	
 	// 오늘은 나도 작가 = 5 글 수정 폼 이동 컨트롤러
 	@RequestMapping("TIWUpdateView.to")

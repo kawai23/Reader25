@@ -491,7 +491,7 @@
 		B_LIKE = (SELECT COUNT(*)
 						FROM liketo
 						WHERE boardno = #{b_no})
-		WHERE board_no = #{boardNo}
+		WHERE board_no = #{b_no}
 	</select>
 	
 	<insert id="insertComments">
@@ -704,4 +704,34 @@
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
+	
+	<update id="updateComments">
+		update comments
+		set CONTENT=#{bContent}
+		where COM_NO=#{comNo}
+	</update>
+	
+	<delete id="deleteComments">
+		DELETE FROM comments
+		WHERE COM_NO=#{comNo}
+    </delete>
+    
+    <update id="deleteCount">
+		update board
+		set COM_COUNT = COM_COUNT - 1
+		where board_no = #{boardNo}
+	</update>
+	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pNo" column="POINTNO"/>
+		<result property="pCon" column="P_CONTENT"/>
+		<result property="id" column="MID"/>
+		<result property="point" column="POINT_CHECK"/>
+	</resultMap>
+	
+	<insert id="upPoint" parameterType="Point">
+		insert into point
+		values (SEQ_POID.nextval, #{pCon}, #{id}, #{point})
+	</insert>
+	
 </mapper>

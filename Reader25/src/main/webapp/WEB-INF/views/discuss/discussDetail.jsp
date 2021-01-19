@@ -45,10 +45,10 @@
   	}
   	#stime{float:right;}
    	ol{list-style: none;}
-  	.Atext{float:left; margin-right: 10px;}
+  	.Atext{float:left; margin-right: 20px;}
   	#text{background: white; border: 1px solid black; width:85%;}
-  	#people-img{wdith:50px; height:50px;}
-  	.wid{width:100%; margin: 3px;}
+  	#user-icon{wdith:50px; height:50px; border-radius:50%;}
+  	.wid{width:99%; margin: 3px;}
   	.rBtn1{float: right; margin: 3px;background: #FFC398;}
   	.rBtn2{float: right; margin: 3px;background: #67492C;}
 </style>
@@ -70,10 +70,10 @@
 		</div><br>
 		<div class="head">
 			<c:if test="${ d.atcNo == at.atcNo }">
-				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/></td>
+				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/>
 			</c:if>
 			<c:if test="${ d.atcNo != at.atcNo }">
-				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/></td>
+				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/>
 			</c:if>
 		</div><br><br>
 		<h2>토론주제</h2>
@@ -172,8 +172,9 @@
 						$olBody.html('');
 						var $li;
 						var $div1;
-						var $div2;
 						var $img;
+						var $div2;
+						var $div2_1;
 						var $id;
 						var $rContent;
 						var $div3;
@@ -182,18 +183,19 @@
 						var $btn2;
 						if(data.length > 0){
 							for(var i in data){
-								$li = $('<li id="commont-'+data[i].rNo+'">');
+								$li = $('<li id="comment-'+ data[i].rNo +'">');
 								$div1 = $('<div class="Atext">');
-								$img = $('<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg"id="people-img">');
+								$img = $('<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">');
 								$rContent = $('<p>').text(data[i].rContent);
-								$div2 = $('<div class="Atext"id="text">');
+								$div2 = $('<div class="Atext" id="text">');
+								$div2_1 = $('<div id="div-'+ data[i].rNo +'">');
 								$div3 = $('<div style="clear:both;"><br>');
-								
-								$btn1 = $('<button class="rBtn1" value="'+data[i].dNo+'" onclick="rUpdate('+ data[i].rNo+');">').text("수정하기");
+
+								$btn1 = $('<button class="rBtn1" value="'+data[i].dNo+'" onclick="rUpdateFrom('+ data[i].rNo+');">').text("수정하기");
 								$btn2 = $('<button class="rBtn2" onclick="rDelete('+ data[i].rNo+');">').text("삭제하기");
-							
+								
 								if(data[i].rWhether == 'C'){
-									$id = $('<h3>').html(data[i].rWriter + "님의 <span>반대</span> 의견");
+									$id = $('<h3>').html(data[i].rWriter + " 님의 <span>반대</span> 의견");
 									$div1.append($img);
 									$div2.append($id);
 									$div2.append($rContent);
@@ -202,25 +204,30 @@
 										$div2.append($btn1);
 										$div2.append($btn2);
 									}
-									$li.append($div2);
+									$div2_1.append($div2);
+									
+									$li.append($div2_1);
 									$li.append($div1);
 									$li.append($div3);
 									$olBody.append($li);
 								} else {
 									if(data[i].rWhether == 'P'){
-										$id = $('<h3>').html(data[i].rWriter + "님의 <span>찬성</span> 의견");
+										$id = $('<h3>').html(data[i].rWriter + " 님의 <span>찬성</span> 의견");
 									}else{
-										$id = $('<h3>').html(data[i].rWriter + "님의 <span>중립</span> 의견");
+										$id = $('<h3>').html(data[i].rWriter + " 님의 <span>중립</span> 의견");
 									}
 									$div1.append($img);
 									$div2.append($id);
 									$div2.append($rContent);
+									
 									if('${loginUser.id}' == data[i].rWriter){
 										$div2.append($btn1);
 										$div2.append($btn2);
 									}
+									$div2_1.append($div2);
+									
 									$li.append($div1);
-									$li.append($div2);
+									$li.append($div2_1);
 									$li.append($div3);
 									$olBody.append($li);
 								}
@@ -242,22 +249,96 @@
 			$('.rBtn1').mouseenter(function(){
 				$(this).css({'cursor':'pointer'});
 			});
-			// 댓글 수정
-			function rUpdate(rNo){
-				console.log("수정 들어옴");
+			
+			// 댓글 수정 폼 생성
+			function rUpdateFrom(rNo){
 				console.log(rNo);
+				var PCN = $('#div-'+rNo).children().children().children().text();
+				$div = $('#div-'+rNo);
+				
+				var $rid = $('<input type="text" class="wid" readonly>').val('${loginUser.id}');
+				var $tarea = $('<textarea id="area-'+rNo+'" class="wid"- rows="10" cols="55"><br>').val($div.children().children().eq(1).text());
+				var $dselect = $('<select class="wid" id="select-'+rNo+'">');
+				var $option1 = $('<option value="P">').text("찬성");
+				var $option2 = $('<option value="N">').text("중립");
+				var $option3 = $('<option value="C">').text("반대");
+				var $closeBtn = $('<button class="rBtn2" onclick="Reclose();">').text("취소");
+				var PCN2 = 1;
+				var $div1 = $div.children().eq(0);
+				
+				if(PCN == '반대'){
+					$option3 = $('<option value="C" selected>').text("반대");
+				} else{
+					if(PCN == '찬성'){
+						$option1 = $('<option value="P" selected>').text("찬성");
+						PCN2 = 0;
+					} else{
+						$option2 = $('<option value="N" selected>').text("중립");
+						PCN2 = 2;
+					}
+				}
+				var $commitBtn = $('<button class="rBtn1" onclick="rUpdate('+ rNo +','+PCN2+');">').text("등록하기");
+				$div.children().children().eq(0).remove();
+				$div.children().children().eq(0).remove();
+				$div.children().children().eq(0).remove();
+				$div.children().children().eq(0).remove();
+				
+				$dselect.append($option1);
+				$dselect.append($option2);
+				$dselect.append($option3);
+
+				$div1.append($rid);
+				$div1.append($dselect);
+				$div1.append($tarea);
+				$div1.append($commitBtn);
+				$div1.append($closeBtn);
+				$div.append($div1);
+			}
+			
+			// 댓글 수정
+			function rUpdate(rNo, PCN){
+				var rWriter = '${loginUser.id}';
+				var rContent = $('#area-'+rNo).val();
+				var rWhether = $('#select-'+rNo).val();
+				var check = "패스";
+				var dNo = ${d.dNo};
+				if(PCN == 0){
+					if(!(rWhether == 'P')){
+						check="찬성";
+					}
+				} else if(PCN == 1){
+					if(!(rWhether == 'C')){
+						check="반대";
+					}
+				} else if(PCN == 2){
+					if(!(rWhether == 'N')){
+						check="중립";
+					}
+				}
+				console.log(check);
+				$.ajax({
+					url: "rUpdate.di",
+					data: {rNo:rNo, rWriter:rWriter, rContent:rContent, rWhether:rWhether, check:check, dNo:dNo},
+					success: function(data){
+						getRList();
+					}
+				});
+				
+			}
+			
+			// 댓글 수정 취소
+			function Reclose(){
+				getRList();
 			}
 			
 			// 댓글 삭제
 			function rDelete(rNo){
 				var check = confirm("정말로 댓글을 끝내갰습니까?");
-				var PCN = $('#commont-'+rNo).children().children().children().eq(0).text();
-				var dNo = $('#commont-'+rNo).children().children().eq(3).val();
+				var PCN = $('#comment-'+rNo).children().children().children().eq(0).text();
+				var dNo = $('#comment-'+rNo).children().children().eq(3).val();
 				if(PCN == '반대'){
-					dNo = $('#commont-'+rNo).children().children().eq(2).val();
+					dNo = $('#comment-'+rNo).children().children().eq(2).val();
 				}
-				
-				
 				if(check){
 					$.ajax({
 						url: 'rDelete.di',

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 	* {margin:0;padding:0;}
 	input[id*="slide"] {display:none;}
@@ -206,7 +207,7 @@ background: #C95F12;
  
  #Userpagelogout{
  text-align : center;
- margin-top : 80%;
+ margin-top : 90%;
  width : 100%;
  cursor:pointer
  }
@@ -255,9 +256,8 @@ background: #C95F12;
 		<c:if test="${ empty sessionScope.loginUser }">
 		<button class = "loginbtn" onclick="location.href='loginView.me'">로그인하기</button>
 		<button class = "enrollbtn"onclick="location.href='enrollView.me'">회원가입</button>
-		<div style = "margin-top : 12%; text-align : center; width : 100%;">
-		<span id = "find_id"><a>아이디 찾기</a> </span>|
-		<span id = "find_pwd" ><a>비밀번호 찾기</a></span>
+		<div style = "margin-top : 40%; text-align : center; width : 100%;cursor : pointer">
+		<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>아이디 찾기 | 비밀번호 찾기</a></span>
 		</div>
 	</c:if>
 	<c:if test="${ !empty sessionScope.loginUser  }">
@@ -281,10 +281,10 @@ background: #C95F12;
 	<div class = "bookreco">
 		<h2>이달의 책 추천 List</h2>
 		<button class = "b_reco" id = "button_brown" onclick = "clickbutton1()">일간</button>
-		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">주간</button>
-		<button class = "b_reco" id = "button_pink" onclick = "clickbutton1()">월간</button>
+		<button class = "b_reco" id = "button_pink" onclick = "clickbutton2()">주간</button>
+		<button class = "b_reco" id = "button_pink" onclick = "clickbutton3()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div style = "width : 100%">
+		<div id = "test1"style = "width : 100%">
 		<br>
 			<c:forEach var = "r" items="${ views_d }" begin = "0" end = "13">
 				<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
@@ -294,9 +294,9 @@ background: #C95F12;
 	</div> <!-- 이달의 책 추천 List -->
 	<div class = "bestreview">
 		<h2>이달의BEST리뷰</h2>
-		<button class = "best_re" id = "button_brown" onclick = "clickbutton2()">일간</button>
-		<button class = "best_re" id = "button_pink" onclick = "clickbutton2()">주간</button>
-		<button class = "best_re" id = "button_pink" onclick = "clickbutton2()">월간</button>
+		<button class = "best_re" id = "button_brown" onclick = "clickbutton4()">일간</button>
+		<button class = "best_re" id = "button_pink" onclick = "clickbutton5()">주간</button>
+		<button class = "best_re" id = "button_pink" onclick = "clickbutton6()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
@@ -308,9 +308,9 @@ background: #C95F12;
 	</div>
 	<div class = "rt_debate">
 		<h2>실시간 토론 현황</h2> 
-		<button class = "debate" id = "button_brown" onclick = "clickbutton3()">일간</button>
-		<button class = "debate" id = "button_pink" onclick = "clickbutton3()">주간</button>
-		<button class = "debate" id = "button_pink" onclick = "clickbutton3()">월간</button>
+		<button class = "debate" id = "button_brown" onclick = "clickbutton7()">일간</button>
+		<button class = "debate" id = "button_pink" onclick = "clickbutton8()">주간</button>
+		<button class = "debate" id = "button_pink" onclick = "clickbutton9()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
@@ -322,9 +322,9 @@ background: #C95F12;
 	</div>
 	<div class = "tiw_t">
 		<h2>오나작 인기글</h2>
-		<button class = "TIW" id = "button_brown" onclick = "clickbutton4()">일간</button>
-		<button class = "TIW" id = "button_pink" onclick = "clickbutton4()">주간</button>
-		<button class = "TIW" id = "button_pink" onclick = "clickbutton4()">월간</button>
+		<button class = "TIW" id = "button_brown" onclick = "clickbutton10()">일간</button>
+		<button class = "TIW" id = "button_pink" onclick = "clickbutton11()">주간</button>
+		<button class = "TIW" id = "button_pink" onclick = "clickbutton12()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
@@ -338,7 +338,6 @@ background: #C95F12;
 	<script>
 		function clickbutton1(){
 			var div2 = document.getElementsByClassName('b_reco');
-
 		    for (var i = 0; i < div2.length; i++) {
 		      div2[i].addEventListener('click', function(){
 		        for (var j = 0; j < div2.length; j++) {
@@ -347,9 +346,22 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    var data = 1;
+		    
+		    $.ajax({
+		    	url: "recod.do",
+		    	type : "POST",
+		    	data : {data : data},
+		    	success : function(data){
+		    		console.log(data);
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton2(){
-			var div2 = document.getElementsByClassName('best_re');
+			var div2 = document.getElementsByClassName('b_reco');
 
 		    for (var i = 0; i < div2.length; i++) {
 		      div2[i].addEventListener('click', function(){
@@ -361,7 +373,7 @@ background: #C95F12;
 		    }
 		}
 		function clickbutton3(){
-			var div2 = document.getElementsByClassName('debate');
+			var div2 = document.getElementsByClassName('b_reco');
 
 		    for (var i = 0; i < div2.length; i++) {
 		      div2[i].addEventListener('click', function(){
@@ -373,6 +385,78 @@ background: #C95F12;
 		    }
 		}
 		function clickbutton4(){
+			var div2 = document.getElementsByClassName('best_re');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton5(){
+			var div2 = document.getElementsByClassName('best_re');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton6(){
+			var div2 = document.getElementsByClassName('best_re');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton7(){
+			var div2 = document.getElementsByClassName('debate');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton8(){
+			var div2 = document.getElementsByClassName('debate');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton9(){
+			var div2 = document.getElementsByClassName('debate');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton10(){
 			var div2 = document.getElementsByClassName('TIW');
 
 		    for (var i = 0; i < div2.length; i++) {
@@ -384,9 +468,30 @@ background: #C95F12;
 		      })
 		    }
 		}
-		
-		//
-		
+		function clickbutton11(){
+			var div2 = document.getElementsByClassName('TIW');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
+		function clickbutton12(){
+			var div2 = document.getElementsByClassName('TIW');
+
+		    for (var i = 0; i < div2.length; i++) {
+		      div2[i].addEventListener('click', function(){
+		        for (var j = 0; j < div2.length; j++) {
+		          div2[j].style.background = "#F5715C";
+		        }
+		        this.style.background = "#A84E19";
+		      })
+		    }
+		}
 	
 	</script>
 	

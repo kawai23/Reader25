@@ -183,7 +183,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateLike(Liketo like) {
 		// TODO Auto-generated method stub
-		return bDAO.updateLike(sqlSession, like.getB_no());
+		return bDAO.updateLike(sqlSession, like);
 	}
 
 	@Override
@@ -463,17 +463,57 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.todayListCount(sqlSession, enrollDay);
 	}
 	@Override
-	public ArrayList<Board> review_d() {
-		return bDAO.review_d(sqlSession);
+	public ArrayList<Board> review() {
+		return bDAO.review(sqlSession);
 	}
 	
 	@Override
-	public ArrayList<Board> tiw_d() {
-		return bDAO.tiw_d(sqlSession);
+	public ArrayList<Board> tiw() {
+		return bDAO.tiw(sqlSession);
 	}
 	@Override
+	public ArrayList<Board> views() {
+		return bDAO.views(sqlSession);
+	}
+	@Override
+	public ArrayList<Board> recd(int value) {
+		return bDAO.recd( value, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Comments> selectLComments(int comNo) {
+		// TODO Auto-generated method stub
+		return bDAO.selectLComments(sqlSession, comNo);
+	}
+
+	@Override
+	public int updateComments(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.updateComments(sqlSession, map);
+	}
+
+	@Override
+	public int deleteComments(String comNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteComments(sqlSession, comNo);
+	}
+
+	@Override
+	public int deleteCount(String boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.deleteCount(sqlSession, boardNo);
+	}
+
+	@Override
 	public ArrayList<Board> views_d() {
-		return bDAO.views_d(sqlSession);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int upPoint(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.upPoint(sqlSession, map);
 	}
 
 
