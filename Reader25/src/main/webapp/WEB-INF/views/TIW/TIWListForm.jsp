@@ -15,6 +15,7 @@
 		padding-top: 15px;
 		background-color:  #F6F6F6; 
 		font-family: 카페24 아네모네에어;
+		min-height: 750px;
 	}
 /*테이블*/
 #TIWTable{
@@ -259,6 +260,6 @@ input, select{
 		</script>
 	</div>
 	
-	<%-- <%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

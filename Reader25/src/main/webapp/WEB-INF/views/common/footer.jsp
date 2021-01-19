@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	body{line-height: 1;}
 	footer{background:rgba(245, 113, 92, 1);color:white;margin:0;padding:0;width: 80%;margin:auto; min-width: 1000px; bottom:0;border: 1px solid rgba(245, 113, 92, 1);}
 	.footer-div{width: 100%; text-align: center; height: 130px;font-size: 13px;}
 	.footer-div p{display:inline-block;}

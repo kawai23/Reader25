@@ -22,7 +22,7 @@ public class VisitCounter implements HttpSessionListener{
 	
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		System.out.println("리스너시작");
+		System.out.println("리스너시작!!!!!!!!!!!!!!!!!!!!!!!");
 		HttpSession session = se.getSession();
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		
@@ -49,6 +49,6 @@ public class VisitCounter implements HttpSessionListener{
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		
+		System.out.println("리스너 종료!!!");
 	}
 }
