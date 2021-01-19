@@ -1113,6 +1113,39 @@ public class BoardController {
 		}
 	}
 	
+	//댓글수정
+	@RequestMapping("commentUp.to")
+	@ResponseBody
+	public int commentUp(@RequestParam("comment") String bContent,
+							@RequestParam("comNo") String comNo,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", bContent);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	
+	//댓글삭제
+	@RequestMapping("commentDe.to")
+	@ResponseBody
+	public int commentDe(@RequestParam("comNo") String comNo
+						,@RequestParam("bNo") String boardNo) {
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("boardNo", boardNo);
+		
+		int result = bService.deleteComments(comNo);
+		int upCount = bService.deleteCount(boardNo);
+			
+		return result;
+	}
+	
+	
 	// 오늘은 나도 작가 = 5 글 수정 폼 이동 컨트롤러
 	@RequestMapping("TIWUpdateView.to")
 	public ModelAndView TIWUpdateView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page, ModelAndView mv) {

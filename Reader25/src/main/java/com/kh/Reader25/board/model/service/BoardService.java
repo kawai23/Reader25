@@ -167,9 +167,22 @@ public interface BoardService {
 
 	ArrayList<Board> tiw();
 
+
+	ArrayList<Board> views_d();
+
+	ArrayList<Comments> selectLComments(int comNo);
+
+	int updateComments(HashMap<String, Object> map);
+
+	int deleteComments(String comNo);
+
+	int deleteCount(String boardNo);
+
+
 	ArrayList<Board> views();
 	
 	ArrayList<Board> recd(int value);
+
 
 
 

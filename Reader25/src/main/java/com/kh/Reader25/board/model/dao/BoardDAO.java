@@ -430,11 +430,35 @@ public class BoardDAO {
 	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
 	}
+
+
+	public ArrayList<Comments> selectLComments(SqlSessionTemplate sqlSession, int comNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.selectLComments", comNo);
+	}
+
+	public int updateComments(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateComments", map);
+	}
+
+	public int deleteComments(SqlSessionTemplate sqlSession, String comNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("boardMapper.deleteComments", comNo);
+	}
+
+	public int deleteCount(SqlSessionTemplate sqlSession, String boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteCount", boardNo);
+	}
+
+
 	
 	public ArrayList<Board> recd(int value, SqlSessionTemplate sqlSession) {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
 	}
+
 
 
 
