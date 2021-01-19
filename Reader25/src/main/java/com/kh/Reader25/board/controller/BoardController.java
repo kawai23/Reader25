@@ -38,6 +38,7 @@ import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -46,6 +47,10 @@ import com.kh.Reader25.member.model.vo.Member;
 public class BoardController {
 	@Autowired
 	private BoardService bService;
+	
+	//포인트 관련
+	@Autowired
+	private MemberService mService;
 	
 	// 1. 공지사항 code = 0  ----------------------------------------------------
 	// (1) 리스트 페이지
@@ -218,7 +223,7 @@ public class BoardController {
 		
 		int boardNo = bService.seachBoardNo(b);
 		b.setBoardNo(boardNo);
-
+		
 		if(uploadFile != null) {//첨부파일이 있다면
 			at = saveFile2(uploadFile, request, 1);
 			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
@@ -611,7 +616,7 @@ public class BoardController {
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
-									@RequestParam("wise") String wise) {
+									@RequestParam("wise") String wise, HttpSession session) {
 		String contentAddTag =  booktitle + "#책제목"  + author + "#작가" + wise + "#명언" + b.getbContent();
 		b.setbContent(contentAddTag);
 		
@@ -632,11 +637,86 @@ public class BoardController {
 		}
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeRe(session);
+
 			return "redirect:book.re";
 		}else {
 			throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 		}
 	}
+	
+	public int pointChangeRe(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 300;
+		String message = "책 리뷰 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			System.out.println("rankChange"+rankChange);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		}
+		
+	}
+	
 	// 수정하기 뷰
 	@RequestMapping("modify.re")
 	public ModelAndView reviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
@@ -950,7 +1030,7 @@ public class BoardController {
 	@RequestMapping("TIWinsert.to")
 	public String TIWinsert(@ModelAttribute Board b,
 				@RequestParam("code1") String code1,
-				@RequestParam("code2") String code2) {
+				@RequestParam("code2") String code2, HttpSession session) {
 		//System.out.println(b);
 		//System.out.println(code1);
 		//System.out.println(code2);
@@ -961,9 +1041,81 @@ public class BoardController {
 		int result = bService.insertTIW(b);
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeTIW(session);
+						
 			return "redirect:goTIWList.to";
 		} else {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
+		}
+	}
+	
+	public int pointChangeTIW(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 300;
+		String message = "오늘은 나도 작가 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			System.out.println("rankChange"+rankChange);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
 		}
 	}
 	

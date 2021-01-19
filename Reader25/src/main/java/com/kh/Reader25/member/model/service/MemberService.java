@@ -46,6 +46,14 @@ public interface MemberService {
 
 	int insertNMember(Member m);
 
+	int upPointUser(HashMap<String, Object> map);
+
+	int muchPoint(String id);
+
+	int changeRank(HashMap<String, Object> cap);
+
+
+
 
 
 }
