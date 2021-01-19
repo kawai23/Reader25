@@ -606,6 +606,7 @@ public class BoardController {
 		}
 	}
 	
+	//리뷰작성
 	@RequestMapping("insert.re") 
 	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
@@ -624,7 +625,7 @@ public class BoardController {
 		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
-			// ! 만일 파일이 한 개 일 시
+			
 			at.setAtcLevel(0);
 			result = bService.insertBoardAndFile(b, at);
 		}else {
@@ -902,6 +903,31 @@ public class BoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	//댓글 수정하기
+	@RequestMapping("comupdate.re")
+	@ResponseBody
+	public int updateComment(@RequestParam("comNo") String comNo, @RequestParam("comment") String comment,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", comment);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	//댓글 삭제하기
+	@RequestMapping("commentdel.re")
+	@ResponseBody
+	public int deleteComment(@RequestParam("comNo") String comNo, @RequestParam("boardNo") String boardNo) {
+		int result = bService.deleteComments(comNo);
+		if(result > 0) {
+			result = bService.deleteCount(boardNo);
+		}
+		return result;
 	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
