@@ -722,4 +722,16 @@
 		where board_no = #{boardNo}
 	</update>
 	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pNo" column="POINTNO"/>
+		<result property="pCon" column="P_CONTENT"/>
+		<result property="id" column="MID"/>
+		<result property="point" column="POINT_CHECK"/>
+	</resultMap>
+	
+	<insert id="upPoint" parameterType="Point">
+		insert into point
+		values (SEQ_POID.nextval, #{pCon}, #{id}, #{point})
+	</insert>
+	
 </mapper>

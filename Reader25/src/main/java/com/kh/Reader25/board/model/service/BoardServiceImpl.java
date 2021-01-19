@@ -510,6 +510,12 @@ public class BoardServiceImpl implements BoardService{
 		return null;
 	}
 
+	@Override
+	public int upPoint(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.upPoint(sqlSession, map);
+	}
+
 
 
 	

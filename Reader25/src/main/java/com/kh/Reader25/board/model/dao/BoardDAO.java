@@ -459,6 +459,11 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
 	}
 
+	public int upPoint(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.upPoint", map);
+	}
+
 
 
 

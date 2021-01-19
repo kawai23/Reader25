@@ -131,6 +131,21 @@ public class MemberDAO {
 		return sqlSession.insert("memberMapper.insertNMember", m);
 	}
 	
+	public int upPointUser(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.upPointUser", map);
+	}
+
+	public int muchPoint(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.muchPoint", id);
+	}
+
+	public int changeRank(SqlSessionTemplate sqlSession, HashMap<String, Object> cap) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.changeRank", cap);
+	}
+	
 	
 
 
