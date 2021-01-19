@@ -48,15 +48,17 @@ section {
 .bookreview-div {
 	margin-top: 20px;
 	margin: auto;
+	display: block;
 }
 
 .infos {
 	width: 80%;
 	margin: auto;
 	max-width: 1000px;
+
 }
 
-.img-div {
+.img-div { 
 	display: inline-block;
 	width: 990px;
 	line-height: 600px;
@@ -64,6 +66,7 @@ section {
 	/* background: rgba(229, 229, 229, 1); */
 	text-align: center;
 	margin: auto;
+	
 }
 
 .img-div img {
@@ -73,7 +76,8 @@ section {
 	margin: auto;
 	vertical-align: middle;
 	text-align: center;
-}
+	overflow: hidden;
+} 
 
 <!--
 ---------
@@ -120,8 +124,6 @@ section {
 /* 내용박스*/
  .rectangle-box {
 	margin: auto;
-	/*background: ##F6F6F6;
-	border: 0.1px solid #000000;*/
 	line-height: 600px;
 	width: 1000px;
 	height: 364.58px;
@@ -459,6 +461,79 @@ body {
 	position:relative;
 	top:1px;
 }
+/* .slidelist img{
+	width:500px;
+	height:300px;
+}
+.slidelist{
+	display: inline-block;
+} */
+<%-- input[id*="slide"] {display:none;}
+ 
+	.slide {float : left;height : 400px;width : 45%;margin-left : 18%;border: 1px solid #000000;box-sizing: border-box;border-radius: 50px;}
+	.slide ul  {white-space:nowrap;font-size:0;overflow:hidden;box-sizing: border-box;border-radius: 50px;}
+	.slide ul li {display:inline-block;vertical-align:middle;width:100%;transition:all .5s;}
+	.slidelist > li > a {display:block;position:relative;}
+	.slidelist > li > a img {width:100%; height : 398px; object-fit : fill;}
+	.slidelist label {position:absolute;z-index:10;top:50%;transform:translateY(-50%);padding:50px;cursor:pointer;}
+	.slidelist .left {left:30px;background:url('<%=request.getContextPath() %>/resources/images/img/left.png') center center / 100% no-repeat;}
+	.slidelist .right {right:30px;background:url('<%=request.getContextPath() %>/resources/images/img/right.png') center center / 100% no-repeat;}
+	.slidelist .textbox {position:absolute;z-index:1;top:50%;left:50%;transform:translate(-50%,-50%);line-height:1.6;text-align:center;}
+	
+	.slidelist .textbox h3 {font-size:50px;color:#fff;opacity:0;transform:translateY(30px);transition:all .5s;}
+	.slidelist .textbox p {font-size:24px;color:#fff;opacity:0;transform:translateY(30px);transition:all .5s;}
+	input[id="slide01"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(0%);}
+	input[id="slide02"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-100%);}
+	input[id="slide03"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-200%);}
+
+ --%>
+
+
+<!--============================여기서부터  ============================-->
+		 
+    
+      
+       .slide{	
+        width: 1000px;
+      	border-radius: 600px;
+        height: 200px;
+      	font-size:0;
+        margin: left;
+      }  
+
+      .slide ul{
+      white-space:nowrap;
+       overflow:hidden;
+       width: 5000px;
+       position:relative;  
+        top:0;
+        left:10;
+        font-size: 0;
+        display: inline-block;
+      }
+      .slide ul li{
+        display: inline-block;
+      }
+      #back{
+        position: absolute;
+        top: 500px;
+        left: 0;
+        cursor: pointer;
+        z-index: 1;
+      }
+      #next{
+        position: absolute;
+        top: 500px;
+        right: 0;
+        cursor: pointer;
+        z-index: 1;
+      } 
+	
+
+
+<!--============================여기까지 슬라이드 배너  ============================-->
+
+
 
 
 </style>
@@ -565,28 +640,9 @@ body {
 		</script>
 
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
+	
+
 		<%-- <div class="bookreview-div">
-			<div class="info">
-				<div class="img-div">
-				
-					<c:if test="${atlist ne null}">
-						<c:forEach items="${ atlist }" var="at">
-							<img src="resources/buploadFiles/${at.atcName}" />
-							<!-- ${at.atcName} at에 있는 atcName 이라는 필드명의 값을 담아온다  ${at.atcName}으로 설정이 된 이미지를 가져온다-->
-						</c:forEach>
-					</c:if>
-					
-				</div>
-				<c:if test="${atlist eq null }"/>
-			</div>
-		</div> --%>
-		
-		
-		
-		
-		
-		
-		<div class="bookreview-div">
 			<div class="infos">
 				<div class="img-div">
 					<c:if test="${atlist ne null}">
@@ -596,19 +652,115 @@ body {
 						</c:forEach>
 					</c:if>
 				</div>
+				<c:if test="${atlist eq null }" />
+			</div> --%>
+
+
+
+		<%--  <div class="bookreview-div">
+			<div class="infos">
+				<div class="img-div">
+					<c:if test="${atlist ne null}">
+						<div class="news_login">
+							<!-- 로그인 공지사항 알리미 div -->
+							<input type="radio" name="slide" id="slide01" checked> 
+							<input type="radio" name="slide" id="slide02" > 
+							<input type="radio" name="slide" id="slide03">
+							<input type="radio" name="slide" id="slide04">
+							<input type="radio" name="slide" id="slide05">
+							<input type="radio" name="slide" id="slide06">
+							<input type="radio" name="slide" id="slide07">
+							<input type="radio" name="slide" id="slide08">
+								
+							<div class="slide-wrap">
+								<ul class="slidelist">
+									<c:forEach items="${ atlist }" var="at">
+										<li><a> <label for="slide01" class="left"></label> 
+										<img src="resources/buploadFiles/${at.atcName}" /> <!-- ${at.atcName} at에 있는 atcName 이라는 필드명의 값을 담아온다  ${at.atcName}으로 설정이 된 이미지를 가져온다-->
+												<label for="slide02" class="right"></label>
+										</a></li>
+									</c:forEach>
+								</ul>
+							</div>
+							</div>
+					</c:if>
+				</div>
 				<c:if test="${atlist eq null }"/>
+			</div>  --%>
+
+
+
+
+
+		<div class="bookreview-div">
+			<div class="infos">
+				<div class="img-div">
+					<c:if test="${atlist ne null}">
+						<div class="slide">
+							<img id="back" src="resources/images/bookreview/back.png" alt=""
+								width="100">
+							
+								<ul>
+								<c:forEach items="${ atlist }" var="at">
+									<li><img src="resources/buploadFiles/${at.atcName}" /></li>
+								</c:forEach>
+								</ul>
+							
+							<img id="next" src="resources/images/bookreview/next.png" alt=""
+								width="100" >
+						</div>
+					</c:if>
+				</div>
+				<c:if test="${atlist eq null }" />
 			</div>
-			
-			
-			
-			
-			<br><br>
+
+
 			<div class="purchase-btn">
 				<div class="a">
-					<a href="#" class="pcs-btn">구매하기</a>
-					<a href="#" class="cart-btn">장바구니</a>
+					<a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> <a href="#"
+						class="cart-btn">장바구니</a>
 				</div>
 			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					var imgs;
+					var img_count;
+					var img_position = -1;
+
+					imgs = $(".slide ul");
+					img_count = imgs.children().length;
+
+					//버튼을 클릭했을 때 함수 실행
+					$('#back').click(function() {
+						back();
+					});
+					$('#next').click(function() {
+						next();
+					});
+
+					function back() {
+						if (1 < img_position) {
+							imgs.animate({
+								left : '+=1000px'
+							});
+							img_position--;
+						}
+					}
+					function next() {
+						if (img_count > img_position) {
+							imgs.animate({
+								left : '-=1000px'
+							});
+							img_position++;
+						}
+					}
+
+					//이미지 끝까지 가면 버튼 사라지기
+
+					//첫 이미지로 돌아오기
+
+				});
+			</script>
 			<script>
 				function cart() {
 
@@ -619,7 +771,9 @@ body {
 			</script>
 
 
-			<!---------------------------------- 책제목 ------------------------------------>
+		</div>
+
+		<!---------------------------------- 책제목 ------------------------------------>
 		<div class="info-box">
 		<div class="info-contents">
 			<h3 class="title">책제목: ${ board.bTitle }</h3>
@@ -636,7 +790,7 @@ body {
 			<div class="contents">${board.bContent}</div>
 		</div>
 		
-		</div>
+		
 
 
 
