@@ -684,7 +684,7 @@
 	<![CDATA[
 		select b_title
 		from board
-		where code = '2' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		where code = '2' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
 		order by b_count desc
 	]]>
 	</select>
@@ -692,7 +692,7 @@
 	<![CDATA[
 		select b_title
 		from board
-		where code = '5' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		where code = '5' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
 		order by b_count desc
 	]]>
 	</select>
@@ -700,7 +700,7 @@
 	<![CDATA[
         SELECT B_TITLE
         FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 30 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 1 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
@@ -733,5 +733,12 @@
 		insert into point
 		values (SEQ_POID.nextval, #{pCon}, #{id}, #{point})
 	</insert>
-	
+	<select id="recd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
 </mapper>

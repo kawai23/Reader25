@@ -506,7 +506,12 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.upPoint(sqlSession, map);
 	}
-
+	
+	@Override
+	public ArrayList<Board> recd(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recd(sqlSession, value);
+	}
 
 
 	

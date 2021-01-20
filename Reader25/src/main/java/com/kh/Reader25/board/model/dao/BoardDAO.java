@@ -460,6 +460,11 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.upPoint", map);
 	}
 
+	public ArrayList<Board> recd(SqlSessionTemplate sqlSession, int value) {
+
+		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+	}
+
 
 
 

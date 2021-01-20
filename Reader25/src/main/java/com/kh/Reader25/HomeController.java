@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.member.model.vo.Member;
 
 /**
  * Handles requests for the application home page.
@@ -52,6 +54,14 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping( value = "/recod.do")
+	@ResponseBody
+	public String recd() {
+		int value = 30;
+		ArrayList<Board> result = bService.recd(value);
+		System.out.println(result);
+		return null;
+	}
 	@RequestMapping("about.ab")
 	public String aboutViewPage() {
 		return "about";

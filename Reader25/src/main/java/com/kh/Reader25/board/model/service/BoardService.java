@@ -183,6 +183,8 @@ public interface BoardService {
 
 	int upPoint(HashMap<String, Object> map);
 
+	ArrayList<Board> recd(int value);
+
 
 
 
