@@ -179,62 +179,9 @@ footer{
 	  
 	  
 	<br><br><br><br><br><br><br><br>
-	<footer>
-	<div class="footer">
-			<div class="frame botton_area">
-				<div id="bottom_logo">
-				<img src="${ pageContext.servletContext.contextPath }
-				/images/Logo2.png"style="float: left;  margin: 0 auto;"  
-				width="210" height="45" ></div>
-				<br>
-				<div id="notice">
-					레시피팩토리에 게시된 모든 컨텐츠들은 저작권법에 의거 보호받고 있습니다. <br> 저작권자 또는
-					(주)레시피팩토리의 승인없이 컨텐츠의 일부 또는 전부를 복제,전송,배포 및 기타의 방법으로 저작물을 이용할 경우에는<br>
-					저작권법에 의해 법적 조치에 처해질 수 있으므로 주의하시길 바랍니다. <br> <br> 사업자등록번호:
-					111-22-33333 통신판매업신고번호 : 제1111-서울역삼-2222호 대표 : 금민석 <br> 주소 :
-					서울시 역삼동 어쩌주 저쩌구 고객센터: 1234-1004 <br> <br> <b>ⓒ 2020
-						Recipe Factory Corp. Ltd. All rights reserved</b>
-				</div>
-			</div>
-		</div>
-	</footer>
+
 	<script>
-		function logout(){
-			location.href='<%= request.getContextPath() %>/logout.me';
-		}
 		
-		function memberJoin(){
-			location.href="<%= request.getContextPath() %>/signUpForm.me";
-		}
-		
-		function goHome(){
-			location.href='<%= request.getContextPath() %>';
-		}
-		
-		function goNotice(){
-			location.href='<%= request.getContextPath() %>/list.no';
-		}
-		
-		function goBoard(){
-			location.href='<%= request.getContextPath() %>/list.bo';
-		}
-		
-		function goThumbnail0(){
-			location.href='<%= request.getContextPath() %>/list.th';
-		}
-		function goThumbnail1(){
-			location.href='<%= request.getContextPath() %>/list.th';
-		}
-		function noticeboard(){
-			location.href="<%= request.getContextPath() %>/NoticeListServlet.no";
-		}
-		
-		function qna(){
-		      location.href="<%=request.getContextPath() %>/QboardListServlet.qb";
-		}
-		function fqna(){
-			location.href="<%= request.getContextPath()%>/FAQListServlet.fa";
-		}
 	</script>
 </body>
 </html>

@@ -122,7 +122,7 @@ public class DiscussController {
 		
 		int rankCheck = mService.muchPoint(id);
 		
-		
+		int rankChange = 0;
 		if(rankCheck>=0 && rankCheck<=1000) {
 			int rank = 1;
 				
@@ -130,9 +130,8 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 			
-			int rankChange=mService.changeRank(cap);
+			rankChange=mService.changeRank(cap);
 			
-			return rankChange;
 		} else if(rankCheck>1000 && rankCheck<=3000) {
 			int rank = 2;
 			
@@ -140,9 +139,8 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 		
-			int rankChange=mService.changeRank(cap);
+			rankChange=mService.changeRank(cap);
 			
-			return rankChange;
 		} else if(rankCheck>3000 && rankCheck<=7000) {
 			int rank = 3;
 			
@@ -150,9 +148,7 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 				
-			int rankChange=mService.changeRank(cap);
-			System.out.println("rankChange"+rankChange);
-			return rankChange;
+			rankChange=mService.changeRank(cap);
 		} else if(rankCheck>7000 && rankCheck<=10000) {
 			int rank = 4;
 			
@@ -160,9 +156,8 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 				
-			int rankChange=mService.changeRank(cap);
+			rankChange=mService.changeRank(cap);
 			
-			return rankChange;
 		} else {
 			int rank = 0;
 			
@@ -170,11 +165,14 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 				
-			int rankChange=mService.changeRank(cap);
-			
-			return rankChange;
+			rankChange=mService.changeRank(cap);
 		}
-		
+		if(pointUpU >0 && pointUp >0) {
+			login.setPoint(login.getPoint()+point);
+		}
+		session.invalidate();
+		session.setAttribute("loginUser", login);
+		return rankChange;
 	}
 	
 	// 토론방 상세페이지 이동

@@ -116,9 +116,9 @@
 					<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
 				</div>
 				<div class="sub" id="info">
-						${loginUser.getName() }님<br>
+						${ loginUser.getName() }님<br>
 						반갑습니다.<br>
-						보유포인트 = ${loginUser.getPoint() }PT<br>
+						보유포인트 = ${ loginUser.getPoint() }PT<br>
 				</div>
 			</c:if>
 			<c:if test="${ empty loginUser }">
