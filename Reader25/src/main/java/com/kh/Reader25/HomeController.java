@@ -52,16 +52,12 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("/recod.do")
+	@RequestMapping(value="/recod.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Board> recommend(@ModelAttribute Board b, @RequestParam("Board") int value, HttpSession session) {
-		System.out.println(1);
+	public ArrayList<Board> recommend(Board b) {
 		ArrayList<Board> result = bService.recd(value);
-		if(result.size() > 0) {
-			return result;
-		} else {
-			throw new BoardException("메인페이지 리스트 조회에 실패하였습니다");
-		}
+
+		return result;
 	}
 	@RequestMapping("about.ab")
 	public String aboutViewPage() {

@@ -168,7 +168,6 @@ public interface BoardService {
 	ArrayList<Board> tiw();
 
 
-	ArrayList<Board> views_d();
 
 	ArrayList<Comments> selectLComments(int comNo);
 

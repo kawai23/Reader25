@@ -504,11 +504,6 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.deleteCount(sqlSession, boardNo);
 	}
 
-	@Override
-	public ArrayList<Board> views_d() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int upPoint(HashMap<String, Object> map) {
