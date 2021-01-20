@@ -38,6 +38,7 @@ import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -46,6 +47,10 @@ import com.kh.Reader25.member.model.vo.Member;
 public class BoardController {
 	@Autowired
 	private BoardService bService;
+	
+	//포인트 관련
+	@Autowired
+	private MemberService mService;
 	
 	// 1. 공지사항 code = 0  ----------------------------------------------------
 	// (1) 리스트 페이지
@@ -213,21 +218,17 @@ public class BoardController {
 							HttpServletRequest request) {
 		
 		int result = bService.insertIn(b);
-		//System.out.println("b입니다"+b);
-		//System.out.println("uploadFile입니다"+uploadFile);
 		
 		int boardNo = bService.seachBoardNo(b);
 		b.setBoardNo(boardNo);
-
+		
 		if(uploadFile != null) {//첨부파일이 있다면
 			at = saveFile2(uploadFile, request, 1);
 			// renameFileName에 saveFile의 반환값을 넣어준다. 파일을 저장할 buploadFiles까지 가기 위해서는
 			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
 			at.setAtcLevel(0);
 			at.setBoardNo(boardNo);
-			//System.out.println("at이쥬"+at);
 			int resultF = bService.insetFile(at);
-			//System.out.println("at얍"+at);
 			if(resultF > 0) {
 				System.out.println("파일업로드 성공");
 			} else {
@@ -244,7 +245,6 @@ public class BoardController {
 	//문의사항 파일 저장 컨트롤러
 	public Attachment saveFile2(MultipartFile file, HttpServletRequest request, int code) {
 		
-		//System.out.println("file이에요"+file);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		File folder = new File(savePath);
@@ -278,18 +278,13 @@ public class BoardController {
 	@RequestMapping("idetail.in")
 	public ModelAndView indetailView(@RequestParam("boardNo") int boardNo,
 									@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
-		//System.out.println("boardNo입니다"+boardNo);
 		Board board = bService.selectBoard(boardNo);
-		//System.out.println("board입니다"+board);
 		ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-		//System.out.println("atList입니다"+atList);
 		Member login = (Member)session.getAttribute("loginUser");
-		//String loginUser = login.getId();
-		//System.out.println(loginUser);
+		
 		if(board != null) {
 			mv.addObject("board", board)
 				.addObject("page", page)
-				//.addObject("loginUser", loginUser)
 				.setViewName("inquiryDetail");
 			if(atList != null) {
 				mv.addObject("atList", atList);
@@ -304,15 +299,12 @@ public class BoardController {
 	@RequestMapping("addAdminComments.in")
 	@ResponseBody
 	public String addAdminComments(@ModelAttribute Comments c, @RequestParam("comment") String comment, HttpSession session) {
-		//System.out.println("ok");
-		//System.out.println("C1:"+c);
+		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String userId = loginUser.getId();
 			
 		c.setUserId(userId);
 		c.setComment(comment);
-			 
-		//System.out.println("C2:"+c);
 			
 		int result = bService.insertComments(c);
 		int upCount = bService.updateCount(c);
@@ -327,16 +319,12 @@ public class BoardController {
 	//문의사항 관리자 댓글 불러오기
 	@RequestMapping("aCList.in")
 	public void getACList(@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId, HttpServletResponse response) {
-		//System.out.println("boardNo입니다"+boardNo);
-		//System.out.println("user_id입니다"+userId);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("boardNo", boardNo);
 		map.put("userId", userId);
-		//System.out.println("map입니다"+map);
 		
 		ArrayList<Comments> aCList = bService.selectAdminCommentList(map);
-		//System.out.println("aCList입니다"+aCList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -353,7 +341,7 @@ public class BoardController {
 	public void getuserComments(@RequestParam(value = "page0", required = false, defaultValue = "1") Integer page0,
 			@RequestParam("boardNo") int boardNo, @RequestParam("userId") String userId,
 			HttpServletResponse response) {
-		//System.out.println("userId나올까"+userId);	
+		
 		response.setContentType("application/json; charset=UTF-8");
 		int currentPage1 = 1;
 
@@ -409,14 +397,9 @@ public class BoardController {
 							@ModelAttribute Attachment at,
 							@RequestParam("uploadFile") MultipartFile uploadFile,
 							ModelAndView mv) {
-		//System.out.println("board입니다"+b);
-		
 		b.setBoardNo(boardNo);
 		
 		int result = bService.updateInquiryBoard(b);
-		//System.out.println(b);
-		//System.out.println(result);
-		//System.out.println(b.getBoardNo());
 		
 		if(uploadFile != null) {//첨부파일이 있다면
 			int resultD = bService.deleteFile(boardNo);
@@ -425,9 +408,7 @@ public class BoardController {
 			// HttpServletRequest가 필요하므로 매개변수로 추가해준다.
 			at.setAtcLevel(0);
 			at.setBoardNo(boardNo);
-			//System.out.println("at이쥬"+at);
 			int resultF = bService.insetFile(at);
-			//System.out.println("at얍"+at);
 			if(resultF > 0) {
 				System.out.println("파일업로드 성공");
 			} else {
@@ -518,7 +499,7 @@ public class BoardController {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("loginUser", id);
 			map.put("boardNo", boardNo);
-						
+			
 			heart = bService.findLike(map) == 1? 1:0;
 		}
 		
@@ -606,12 +587,13 @@ public class BoardController {
 		}
 	}
 	
+	//리뷰작성
 	@RequestMapping("insert.re") 
 	public String bookReviewInsert(@ModelAttribute Board b, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile,
 									HttpServletRequest request,
 									@RequestParam("booktitle") String booktitle,
 									@RequestParam("author") String author,
-									@RequestParam("wise") String wise) {
+									@RequestParam("wise") String wise, HttpSession session) {
 		String contentAddTag =  booktitle + "#책제목"  + author + "#작가" + wise + "#명언" + b.getbContent();
 		b.setbContent(contentAddTag);
 		
@@ -624,7 +606,7 @@ public class BoardController {
 		int result = 0;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request, 2);
-			// ! 만일 파일이 한 개 일 시
+			
 			at.setAtcLevel(0);
 			result = bService.insertBoardAndFile(b, at);
 		}else {
@@ -632,11 +614,85 @@ public class BoardController {
 		}
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeRe(session);
+
 			return "redirect:book.re";
 		}else {
 			throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 		}
 	}
+	
+	public int pointChangeRe(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 200;
+		String message = "책 리뷰 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		}
+		
+	}
+	
 	// 수정하기 뷰
 	@RequestMapping("modify.re")
 	public ModelAndView reviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
@@ -848,10 +904,7 @@ public class BoardController {
 		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
 		ArrayList<Board> bList = bService.selectSearchSortList(map, pi);
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
-		
-		System.out.println(listCount);
-		System.out.println(bList);
-		
+			
 		if(bList != null) {
 			String[] wiseArr = new String[bList.size()];
 			String[] contentArr = new String[bList.size()];
@@ -903,6 +956,31 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	//댓글 수정하기
+	@RequestMapping("comupdate.re")
+	@ResponseBody
+	public int updateComment(@RequestParam("comNo") String comNo, @RequestParam("comment") String comment,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", comment);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	//댓글 삭제하기
+	@RequestMapping("commentdel.re")
+	@ResponseBody
+	public int deleteComment(@RequestParam("comNo") String comNo, @RequestParam("boardNo") String boardNo) {
+		int result = bService.deleteComments(comNo);
+		if(result > 0) {
+			result = bService.deleteCount(boardNo);
+		}
+		return result;
+	}
 	//책리뷰 code = 2-------------------------------------------------------------
 
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////
@@ -919,7 +997,6 @@ public class BoardController {
 		SimpleDateFormat format1 = new SimpleDateFormat( "yy/MM/dd");
 		Calendar calendar = Calendar.getInstance();
 		String enrollDay = format1.format(calendar.getTime());
-        //System.out.println("enrollDay"+enrollDay);
 			
 		int listCount = bService.getTIWListCount();
 		int todayListCount = bService.todayListCount(enrollDay);
@@ -950,20 +1027,87 @@ public class BoardController {
 	@RequestMapping("TIWinsert.to")
 	public String TIWinsert(@ModelAttribute Board b,
 				@RequestParam("code1") String code1,
-				@RequestParam("code2") String code2) {
-		//System.out.println(b);
-		//System.out.println(code1);
-		//System.out.println(code2);
+				@RequestParam("code2") String code2, HttpSession session) {
 		
 		b.setCate(code1+"/"+code2);
-//		System.out.println(b);
 		
 		int result = bService.insertTIW(b);
 		
 		if(result > 0) {
+			//포인트 관련
+			int point = pointChangeTIW(session);
+						
 			return "redirect:goTIWList.to";
 		} else {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
+		}
+	}
+	
+	public int pointChangeTIW(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 300;
+		String message = "오늘은 나도 작가 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
 		}
 	}
 	
@@ -973,7 +1117,6 @@ public class BoardController {
 									@RequestParam("page") int page, @RequestParam(value="cpage", required=false) Integer cpage, 
 									ModelAndView mv, HttpSession session) {
 		
-		//System.out.println("loginUser"+loginUser);
 		Board board = bService.selectTIWBoard(boardNo);
 		
 		Member login = (Member)session.getAttribute("loginUser");
@@ -985,7 +1128,6 @@ public class BoardController {
 		//map.put("code", code);
 				
 		int heart = bService.findLike(map) == 1? 1:0;
-		//System.out.println("heart"+heart);
 		
 		String cate = board.getCate();
 		
@@ -1004,7 +1146,6 @@ public class BoardController {
 				mv.addObject("heart", heart);
 			} else {
 				mv.addObject("heart", heart);
-				//System.out.println("heart000"+heart);
 			}
 		} else {
 			throw new BoardException("오늘은 나도 작가 게시글 상세보기를 실패하였습니다.");
@@ -1025,8 +1166,6 @@ public class BoardController {
 
         Like.setB_no(b_no);
         Like.setM_no(m_no);
-        //System.out.println(Like);
-        //System.out.println(heart);
         
         if(heart >= 1) {
             bService.deleteLike(Like);
@@ -1046,16 +1185,13 @@ public class BoardController {
 	@RequestMapping("addComments.to")
 	@ResponseBody
 	public String addComments(@ModelAttribute Comments c, @RequestParam("comment") String comment, HttpSession session) {
-		//System.out.println("ok");
-		//System.out.println("C1:"+c);
+	
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		String userId = loginUser.getId();
 		
 		c.setUserId(userId);
 		c.setComment(comment);
-		 
-		//System.out.println("C2:"+c);
-		
+		 	
 		int result = bService.insertComments(c);
 		int upCount = bService.updateCount(c);
 		
@@ -1068,20 +1204,6 @@ public class BoardController {
 	
 	//댓글 불러오기
 	@RequestMapping("cList.to")
-//	public void getCommentsList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
-//		
-//		ArrayList<Comments> cList = bService.selectCommentsList(boardNo);
-//		//System.out.println("cList"+cList);
-//		response.setContentType("application/json; charset=UTF-8");
-//		Gson gson = new GsonBuilder().setDateFormat("yy-MM-dd").create();
-//		try {
-//			gson.toJson(cList, response.getWriter());
-//		} catch (JsonIOException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	public void getCommentsList(@RequestParam(value="page1", required=false, defaultValue="1") Integer page1,
 								@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 		
@@ -1094,14 +1216,11 @@ public class BoardController {
 		
 		int listCount = bService.getCommentListCount(boardNo);
 		PageInfo pi1 = Pagination.getPageInfo5_1(currentPage1, listCount);
-		//System.out.println("listCount"+listCount);
 		ArrayList<Comments> cList = bService.selectAnotherComments(boardNo, pi1);
-		//System.out.println("cList"+cList);
 		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("cList", cList);
 		map.put("pi1", pi1);
-		//System.out.println("map"+map);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
 		try {
@@ -1112,6 +1231,39 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//댓글수정
+	@RequestMapping("commentUp.to")
+	@ResponseBody
+	public int commentUp(@RequestParam("comment") String bContent,
+							@RequestParam("comNo") String comNo,
+							@RequestParam("userId") String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("bContent", bContent);
+		map.put("userId", userId);
+		
+		int result = bService.updateComments(map);
+		
+		return result;
+	}
+	
+	//댓글삭제
+	@RequestMapping("commentDe.to")
+	@ResponseBody
+	public int commentDe(@RequestParam("comNo") String comNo
+						,@RequestParam("bNo") String boardNo) {
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("comNo", comNo);
+		map.put("boardNo", boardNo);
+		
+		int result = bService.deleteComments(comNo);
+		int upCount = bService.deleteCount(boardNo);
+			
+		return result;
+	}
+	
 	
 	// 오늘은 나도 작가 = 5 글 수정 폼 이동 컨트롤러
 	@RequestMapping("TIWUpdateView.to")
@@ -1138,9 +1290,6 @@ public class BoardController {
 		b.setBoardNo(boardNo);
 		
 		int result = bService.updateTIWBoard(b);
-		//System.out.println(b);
-		//System.out.println(result);
-		//System.out.println(b.getBoardNo());
 		
 		if(result > 0) {
 			mv.addObject("page", page)
@@ -1172,8 +1321,6 @@ public class BoardController {
 									ModelAndView mv) {
 		String condition = request.getParameter("searchCondition");
 		String value = request.getParameter("searchValue");
-		System.out.println("condition"+condition);
-		System.out.println("value"+value);
 		
 		if(condition.equals("writer")) {
 			serchC.setWriter(value);
@@ -1217,10 +1364,7 @@ public class BoardController {
 	public ModelAndView searchTIWCate(@ModelAttribute SearchCate serCa,
 									@RequestParam("cate") String cate, @RequestParam("userId") String userId,
 									HttpServletRequest request, HttpServletResponse response, 
-									ModelAndView mv) {
-		//System.out.println("cate"+cate);
-		//System.out.println("userId"+userId);
-		
+									ModelAndView mv) {		
 		//currentPage 설정
 		int currentPage = 1; //기본
 		if(request.getParameter("currentPage") != null) { //currentPage가 들어 왔다면
@@ -1248,44 +1392,33 @@ public class BoardController {
 		}	
 	
 	//오늘은 나도 작가 검색 자동완성 컨트롤러
-		@RequestMapping("searchTIWsub.to")
-		public void searchTTitle(@RequestParam("tTitle") String bTitle,@RequestParam("searchCondition") String condition,
+	@RequestMapping("searchTIWsub.to")
+	public void searchTTitle(@RequestParam("tTitle") String bTitle,@RequestParam("searchCondition") String condition,
 								@ModelAttribute SearchCondition serchC,
 								HttpServletRequest request, HttpServletResponse response
 								, ModelAndView mv) {
-			response.setContentType("application/json; charset=UTF-8");	
-			System.out.println(bTitle+"검색단어");
-			System.out.println(condition+"condition");
-			ArrayList<Board> tlist = null;
+		response.setContentType("application/json; charset=UTF-8");	
+		ArrayList<Board> tlist = null;
 			
-			if(condition.equals("writer")) {
-				String userId = bTitle;
-				tlist = bService.selectSearchTTitleListWriter(userId);
-				System.out.println("작가");
-			} else if(condition.equals("title")) {
-				tlist = bService.selectSearchTTitleListTitle(bTitle);
-				System.out.println("제목");
-			} else if(condition.contentEquals("content")) {
-				String bContent = bTitle;
-				tlist = bService.selectSearchTTitleListContent(bContent);
-				System.out.println("내용");
-			}
-			System.out.println(tlist+"tlist검색단어");
-			//ArrayList<Board> tlist = bService.selectSearchTTitleList(serchC);
-			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
-			
-			try {
-				gson.toJson(tlist, response.getWriter());
-			} catch (JsonIOException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			
-
-				
+		if(condition.equals("writer")) {
+			String userId = bTitle;
+			tlist = bService.selectSearchTTitleListWriter(userId);
+		} else if(condition.equals("title")) {
+			tlist = bService.selectSearchTTitleListTitle(bTitle);
+		} else if(condition.contentEquals("content")) {
+			String bContent = bTitle;
+			tlist = bService.selectSearchTTitleListContent(bContent);
 		}
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+			
+		try {
+			gson.toJson(tlist, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 	
 	////////////////오늘은 나도 작가(TIW) 컨트롤러////////////////////////
@@ -2056,6 +2189,8 @@ public class BoardController {
 				@RequestParam("page") int page, ModelAndView mv) {
 			Board board = bService.selectBoard(boardNo);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
+			
+			System.out.println(atlist);
 			if (board != null) {
 
 				String booktitle = board.getbContent().substring(0, (board.getbContent()).indexOf("#책제목"));
@@ -2160,39 +2295,43 @@ public class BoardController {
 		@RequestMapping("update.bo")
 		public ModelAndView bookRD(@RequestParam("page") int page, @ModelAttribute Board b,
 										@RequestParam("reloadFile") MultipartFile[] reloadFile,
-										HttpServletRequest request, @ModelAttribute  Attachment at,
+										HttpServletRequest request,
 										ModelAndView mv,
 										@RequestParam("booktitle") String booktitle,
-										@RequestParam("author") String author,
+										@RequestParam("author") String author, @RequestParam("nameArr") String[] nameArr,
 										@RequestParam("wise") String wise) {
 			
 			String contentAddTag =  booktitle + "#책제목"  + author + "#작가" + b.getbContent();//b.getbContent() 이거 뭐죠?
-			b.setbContent(contentAddTag);
 			
+			b.setbContent(contentAddTag);
+			ArrayList<Attachment> atList = new ArrayList<Attachment>();
 			if (reloadFile.length != 0) { // 업로드파일이 !=0 (없을시)
 				b.setCode(3); // 공지사항 코드
+				
+				for(String str : nameArr) {											// at 에 담아준다.
+					deleteFile(str,request);
+				}
 				for (int i = 0; i < reloadFile.length; i++) {// 업르드 파일의 수만큼 돌린다
 					/*Attachment at = saveFile(uploadFile[i], request, 3);*/ // 업로드 파일 저장하기 위해 파일이름 구별하여 저장하기 위해 사용하고 saveFile에
 																			// uploadFile[i], request, 3 의 값을 받아와 Attachment
-																			// at 에 담아준다.
-					ArrayList<Attachment> atList = new ArrayList<Attachment>();
-					if (i == reloadFile.length -1) {
+					
+					Attachment at = saveFile(reloadFile[i], request, 3);
+					if(i == reloadFile.length -1) {
 						at.setAtcLevel(0); // setAtcLevel() 썸내일 을 설정해주는 메소드
 					} else {
 						at.setAtcLevel(1);// setAtcLevel(1); 가로안에 1이 들어가면 썸내일이 아니다
 					}
+					at.setBoardNo(b.getBoardNo());
 					atList.add(at); // 여러개의 파일을 담을수있는 객체를 at라는객체를 add라는 메소드를 통하여 추가로 담아준다.
 				}
 			}
-			int result = bService.updateBoardAndFile(b,at);
+			int result = bService.updateBoardAnFiles(b,atList);
 			
 			if(result > 0) {
 				Board board = bService.selectBoard(b.getBoardNo());
-				Attachment attach = bService.selectAttachment(b.getBoardNo());// 이거 여러
 				mv.addObject("board", board)
 				  .addObject("boardNo", b.getBoardNo())
 				  .addObject("page", page)
-				  .addObject("at", attach)
 				  .setViewName("redirect:redetail.bo");
 			}else {
 				throw new BoardException("리뷰 게시물 수정에 실패하였습니다.");

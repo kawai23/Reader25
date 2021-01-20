@@ -8,6 +8,11 @@
 <title>Reader들을 위한 Reader 25</title>
 
 <script src="<%=request.getContextPath()%>/smartedit/js/service/HuskyEZCreator.js"></script>
+<!-- jqyery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
 <style>
 /*화면*/
 .outer{
@@ -113,10 +118,88 @@ select{font-family: 카페24 아네모네에어; font-size:17px;}
 		margin-top: 20px;
 		min-height: 300px;
 	}
+.jquery-modal blocker current {
+	visibility: none;
+}
+
+.modal {
+	margin: 40% auto;
+	padding: 20px;
+	text-align: center;
+}
+
+.modal-back {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-close, .modal-accept {
+	background-color: rgba(137, 18, 18, 1);
+	color: white;
+	width: 80px;
+	height: 30px;
+	border: none;
+	display: inline-block;
+	left: 40%;
+}
+
+.modal-accept {
+	background-color: rgba(85, 83, 83, 1);
+}
+
+.modal p {
+	display: inline-block;
+}
+
+.modal img {
+	position: relative;
+	top: 10px;
+}
 </style>
 </head>
 <body>
 	<c:import url="../common/menubar.jsp"/>
+	
+	<!-- 에러 모달창 -->
+	<div class="modal-back" id="t-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>제목을 입력해 주세요</p>
+				<button class="modal-close" value="Close">Close</button>
+			</div>
+		</div>
+	</div>
+		<div class="modal-back" id="c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>
+					작성한 내용이 사라집니다. 작성 취소하시겠습니까? 
+				</p>
+				<button class="modal-accept" value="accept">네</button>
+				<button class="modal-close" value="Close">아니오</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+			$('.modal-accept').click(function(){
+				location.href = "javascript:history.go(-1)";
+			});
+		});
+	</script>
 	
 	<div class="outer">
 	
@@ -161,7 +244,7 @@ select{font-family: 카페24 아네모네에어; font-size:17px;}
 			
 			<div class="btn-div" align="center">
 				<button type="submit" id="submit-btn">작성완료</button>
-				<input type="reset" id="btn2" onclick="location.href='javascript:history.go(-1);'" value="작성취소">
+				<input type="reset" id="btn2" value="작성취소">
 				
 			</div>
 			<br><br>
@@ -198,6 +281,38 @@ select{font-family: 카페24 아네모네에어; font-size:17px;}
 					reader.readAsDataURL(value.files[0]);
 				}
 			}
+			
+			$('#submit-btn').click(function(){
+				oEditors.getById["smart_edit"].exec("UPDATE_CONTENTS_FIELD",[]);
+
+				// validate 검증하기
+				 var title = $('#title').val()
+				 var bname = $('#code2').val()
+				 
+				 if(title == ""){
+					 event.preventDefault();
+					 this.blur();
+					 $('#t-modal').show();
+					 $('#t-modal .modal').show();
+					return false;
+				} else if(bname == ""){
+					event.preventDefault();
+					 this.blur();
+					 $('#b-modal').show();
+					 $('#b-modal .modal').show();
+					return false;
+				} else{
+					$('#TIW_form').submit();
+				}
+			});
+			
+			$(function(){
+				$('#btn2').click(function(){
+					event.preventDefault();
+					$('#c-modal').show();
+					$('#c-modal .modal').show();
+				});
+			});
 		</script>
 	<%-- <%@ include file="../common/footer.jsp" %> --%>
 </body>

@@ -828,7 +828,7 @@
 		order by b_count desc
 	]]>
 	</select>
-			<select id = "selectTitleVD" resultMap="boardResultSet">
+	<select id = "selectTitleVD" resultMap="boardResultSet">
 	<![CDATA[
         SELECT B_TITLE
         FROM BOARD
@@ -836,4 +836,34 @@
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
+	
+	<update id="updateComments">
+		update comments
+		set CONTENT=#{bContent}
+		where COM_NO=#{comNo}
+	</update>
+	
+	<delete id="deleteComments">
+		DELETE FROM comments
+		WHERE COM_NO=#{comNo}
+    </delete>
+    
+    <update id="deleteCount">
+		update board
+		set COM_COUNT = COM_COUNT - 1
+		where board_no = #{boardNo}
+	</update>
+	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pNo" column="POINTNO"/>
+		<result property="pCon" column="P_CONTENT"/>
+		<result property="id" column="MID"/>
+		<result property="point" column="POINT_CHECK"/>
+	</resultMap>
+	
+	<insert id="upPoint" parameterType="Point">
+		insert into point
+		values (SEQ_POID.nextval, #{pCon}, #{id}, #{point})
+	</insert>
+	
 </mapper>

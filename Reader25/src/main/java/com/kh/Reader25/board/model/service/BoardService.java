@@ -170,11 +170,25 @@ public interface BoardService {
 
 	int todayListCount(String enrollDay);
 
-	ArrayList<Board> review_d();
+	ArrayList<Board> review();
 
-	ArrayList<Board> tiw_d();
+	ArrayList<Board> tiw();
 
-	ArrayList<Board> views_d();
+
+
+	ArrayList<Comments> selectLComments(int comNo);
+
+	int updateComments(HashMap<String, Object> map);
+
+	int deleteComments(String comNo);
+
+	int deleteCount(String boardNo);
+
+
+	ArrayList<Board> views();
+	
+
+	int upPoint(HashMap<String, Object> map);
 
 	ArrayList<String> searchLikeList(SearchCondition sc);
 

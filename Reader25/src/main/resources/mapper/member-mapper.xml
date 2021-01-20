@@ -125,4 +125,22 @@
 				default, sysdate, default, default, default)
 	</insert>
 	
+	<update id="upPointUser">
+		UPDATE member 
+		SET MPOINT = MPOINT + #{point} 
+		WHERE user_id = #{id}
+	</update>
+	
+	<select id="muchPoint" resultType="_int">
+		select MPOINT
+		from member
+		where user_id = #{id}
+	</select>
+	
+	<update id="changeRank">
+		UPDATE member 
+		SET MRANK = #{rank} 
+		WHERE user_id = #{id}
+	</update>
+	
 </mapper>

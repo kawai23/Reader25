@@ -5,14 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.discuss.model.service.DiscussService;
@@ -35,15 +41,23 @@ public class HomeController {
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
 		
-		ArrayList<Board> review_d = bService.review_d();
-		ArrayList<Discuss> discuss_d = dService.discuss_d();
-		ArrayList<Board> tiw_d = bService.tiw_d();
-		ArrayList<Board> views_d = bService.views_d();
-		model.addAttribute("review_d", review_d);
-		model.addAttribute("discuss_d", discuss_d);
-		model.addAttribute("tiw", tiw_d);
-		model.addAttribute("views_d", views_d);
+		ArrayList<Board> review = bService.review();
+		ArrayList<Discuss> discuss = dService.discuss();
+		ArrayList<Board> tiw = bService.tiw();
+		ArrayList<Board> views = bService.views();
+		model.addAttribute("review", review);
+		model.addAttribute("discuss", discuss);
+		model.addAttribute("tiw", tiw);
+		model.addAttribute("views", views);
 		return "home";
 	}
 	
+	@RequestMapping("about.ab")
+	public String aboutViewPage() {
+		return "about";
+	}
+	@RequestMapping("statistic.ad")
+	public String statisticPage() {
+		return "statistic";
+	}
 }

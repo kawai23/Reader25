@@ -11,7 +11,6 @@
 		background:rgba(246, 246, 246, 1);
 	}
 	section{
-		display:inline-block;
 		min-height: 700px;
 		position: absolute;
 		left:160px;
@@ -169,5 +168,6 @@
 		</div>
 		</div>
 	</section>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

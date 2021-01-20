@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.common.Pagination;
@@ -30,7 +33,10 @@ import com.kh.Reader25.discuss.model.exception.DiscussException;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 import com.kh.Reader25.discuss.model.vo.Reply;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
+
+@SessionAttributes("loginUser")
 
 @Controller
 public class DiscussController {
@@ -38,7 +44,12 @@ public class DiscussController {
 	@Autowired
 	private DiscussService dService;
 
+	//포인트 관련
+	@Autowired
+	private MemberService mService;
 	
+	@Autowired
+	private BoardService bService;
 	
 	// 토론방 전체 페이지(+검색포함)
 	@RequestMapping("discuss.di")
@@ -74,9 +85,10 @@ public class DiscussController {
 	
 	// 토론방 작성
 	@RequestMapping("discussInsert.di")
-	public String discussInsert(@ModelAttribute Discuss d, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+	public String discussInsert(@ModelAttribute Discuss d, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
 		d.setdWriter(((Member)(request.getSession().getAttribute("loginUser"))).getId());
-
+		
+		//System.out.println("잘받아오나?"+d);
 		Attachment at = null;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request);
@@ -87,11 +99,87 @@ public class DiscussController {
 		d.setdContent(d.getdContent().replace("</p>", ""));
 		
 		int result = dService.insertDiscuss(d, at);
+		
 		if(result >0) {
+			//포인트 관련
+			int point = pointChange(session);
+			//System.out.println("point"+point);
+			
 			return "redirect:discuss.di";
 		} else {
 			throw new DiscussException("토론방 작성에 실패하였습니다.");
 		}
+	}
+	
+	public int pointChange(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 150;
+		String message = "토론방 글 작성!";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+		
+		int pointUpU = mService.upPointUser(map);
+		int pointUp = bService.upPoint(map);
+		
+		int rankCheck = mService.muchPoint(id);
+		
+		
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+		
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			System.out.println("rankChange"+rankChange);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		} else {
+			int rank = 0;
+			
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+			
+			return rankChange;
+		}
+		
 	}
 	
 	// 토론방 상세페이지 이동

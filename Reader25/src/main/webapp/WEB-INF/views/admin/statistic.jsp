@@ -12,7 +12,10 @@
 		<h3 id="header-h2">통계 자료</h3>
 	</header>
 	<%@ include file="header.jsp" %>
-	<!-- Google Analytics Report API사용하기 -->
+	<section>
+		전체 방문자 수 : ${sessionScope.totalCount }<br>
+		오늘 방문자 수 : ${sessionScope.todayCount }
+	</section>
 	<!--  1. 방문자 수 -->
 	<!--  2. 인기 글 -->
 	<!--  3. 회원 유입 수  -->

@@ -127,6 +127,10 @@
 		color:white;
 	}
 	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
+	.comment .com-btn{float:right;}
+	.com-btn{font-size: 13px; color:rgb(180, 180, 180);}
+	.com-btn:hover{cursor:pointer; color:rgb(100, 100, 100);}
+	#com-btn-span{margin-left:5px; margin-right:5px;}
 	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
 	.user-div{width: 97%;margin:auto;}
 	.text-count{float:right; color:rgb(200, 200, 200);}
@@ -194,12 +198,15 @@
 	}
 	.btns-div{
 		font-size: 18px;
+		margin:auto;
 		margin-top: 10px;
+		margin-bottom: 50px;
 		height: 25px;
-		float: right;
-		margin-right: 10%;
 		top: -30px;
+		width: 80%;
+		max-width: 1000px;
 	}
+	.btns-div button{float: right; margin-left: 10px; margin-top: 20px;}
 	.write-btn{
 		background:rgba(255, 195, 152, 1);
 		width: 80px;
@@ -252,7 +259,7 @@
 		overflow: auto; 
 		background: rgba(0, 0, 0, 0.4); 
 	}
-	.modal-close, .modal-accept{
+	.modal-close, .modal-accept, .modal-yes, .modal-update{
 		background-color: rgba(137, 18, 18, 1);
 		color:white;
 		width: 80px;
@@ -261,7 +268,7 @@
 		display:inline-block;
 		left: 40%;
 	}
-	#modal-ok{background:rgba(85, 83, 83, 1);}
+	#modal-ok,.modal-yes,.modal-update{background:rgba(85, 83, 83, 1);}
 	.modal-accept{
 		background-color: rgba(85, 83, 83, 1);
 	}
@@ -272,10 +279,12 @@
 		position:relative;
 		top: 10px;
 	}
+	#comment-input-update{width:450px;height:70px; resize: none;}
 </style>
 </head>
 <body>
 	<%@include file="../common/menubar.jsp" %>
+	
 	<!-- 에러 모달창 -->
 	<div class="modal-back" id="del-modal">
 		<div class="modal">
@@ -319,6 +328,42 @@
 			</div>
 		</div>
 	</div>
+		<div class="modal-back" id="del-c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<input type="hidden" id="comNo">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>정말로 이 댓글을 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-yes" value="yes">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="update-c-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<div class="comment-write">
+					<input type="hidden" id="update-comNo">
+					<span class="text-count" id="counter">0/500</span>
+					<textarea id="comment-input-update" maxlength="500"></textarea>
+				</div>
+				<br>
+				<button class="modal-update">수정</button>
+				<button class="modal-close" value="Close">취소</button>
+				
+				<script type="text/javascript">
+				$(function(){
+					 $('#comment-input-up').keyup(function(){
+						 var content = $(this).val();
+						 $('#counter').html(content.length +'/500');
+					 });
+				 });
+				</script>
+			</div>
+		</div>
+	</div>
+	
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -327,6 +372,39 @@
 			});
 			$('#login-modal .modal-accept').click(function(){
 				location.href="loginView.me";
+			});
+			$('.modal-yes').click(function(){
+				var comNo=$('#comNo').val();
+				var boardNo = ${board.boardNo};
+				
+				$.ajax({ 
+					type : "POST",
+					url : 'commentdel.re',
+					data:{comNo:comNo, boardNo:boardNo},
+					success:function(data){
+						if(data>0){
+							$('.modal').hide();
+							$('.modal-back').hide();
+						}
+					}
+				});
+			});
+			$('.modal-update').click(function(){
+				var comment = $('#comment-input-update').val();
+				var userId = '${loginUser.id}';
+				var comNo = $('#update-comNo').val();
+				$.ajax({ 
+					type : "POST",
+					url : 'comupdate.re',
+					data:{comNo:comNo, comment:comment, userId:userId},
+					success:function(data){
+						if(data>0){
+							console.log(data);
+							$('.modal').hide();
+							$('.modal-back').hide();
+						} 
+					}
+				});
 			});
 		});
 	</script>
@@ -357,7 +435,8 @@
 						var heartC = $('.heart');
 						$.ajax({
 							url: 'heart.to',
-							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
+							type :'POST',
+							data:{boardNo:'${board.boardNo}', heart:'${heart}','code':'${ board.code }'},
 							success:function(data){
 								heartC.prop('name', data);
 								console.log(data);
@@ -540,6 +619,14 @@
 						
 						$top.append($idspan);
 						$top.append($datespan);
+						if('${loginUser.id}' == cList[i].userId){
+							$modifybtn = $('<span class="com-btn">').text('수정').on('click', function(){modifyCom(cList[i]);});
+							$span = $('<span class="com-btn" id="com-btn-span">').text('|');
+							$deletebtn = $('<span class="com-btn">').text('삭제').on('click', function(){deleteCom(cList[i].comNo);});
+							$top.append($deletebtn);
+							$top.append($span);
+							$top.append($modifybtn);
+						}
 						
 						$comment.append($top);
 						$comment.append($commentDiv);
@@ -547,6 +634,17 @@
 					}
 				 }
 			 });
+		 }
+		 function deleteCom(value){
+			 $('#del-c-modal').show();
+			 $('#del-c-modal .modal').show();
+			 $('#comNo').val(value);
+		 }
+		 function modifyCom(value){
+			 $('#update-c-modal').show();
+			 $('#update-c-modal .modal').show();
+			 $('#update-comNo').val(value.comNo);
+			 $('#comment-input-update').val(value.comment);
 		 }
 		</script>
 		 
@@ -762,5 +860,6 @@
 			}
 		</script>
 	</section>
+	<%@include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -128,6 +128,24 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.insertNMember(sqlSession, m);
 	}
 
+	@Override
+	public int upPointUser(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mDAO.upPointUser(sqlSession, map);
+	}
+
+	@Override
+	public int muchPoint(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.muchPoint(sqlSession, id);
+	}
+
+	@Override
+	public int changeRank(HashMap<String, Object> cap) {
+		// TODO Auto-generated method stub
+		return mDAO.changeRank(sqlSession, cap);
+	}
+
 
 	
 
