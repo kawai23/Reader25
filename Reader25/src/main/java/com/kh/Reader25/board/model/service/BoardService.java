@@ -168,7 +168,6 @@ public interface BoardService {
 	ArrayList<Board> tiw();
 
 
-	ArrayList<Board> views_d();
 
 	ArrayList<Comments> selectLComments(int comNo);
 
@@ -181,7 +180,6 @@ public interface BoardService {
 
 	ArrayList<Board> views();
 	
-	ArrayList<Board> recd(int value);
 
 	int upPoint(HashMap<String, Object> map);
 

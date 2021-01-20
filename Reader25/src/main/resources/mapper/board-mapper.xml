@@ -696,7 +696,7 @@
 		order by b_count desc
 	]]>
 	</select>
-			<select id = "selectTitleVD" resultMap="boardResultSet">
+	<select id = "selectTitleVD" resultMap="boardResultSet">
 	<![CDATA[
         SELECT B_TITLE
         FROM BOARD

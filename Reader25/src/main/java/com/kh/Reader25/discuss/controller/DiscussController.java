@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +35,8 @@ import com.kh.Reader25.discuss.model.vo.Discuss;
 import com.kh.Reader25.discuss.model.vo.Reply;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
+
+@SessionAttributes("loginUser")
 
 @Controller
 public class DiscussController {
@@ -84,7 +87,8 @@ public class DiscussController {
 	@RequestMapping("discussInsert.di")
 	public String discussInsert(@ModelAttribute Discuss d, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
 		d.setdWriter(((Member)(request.getSession().getAttribute("loginUser"))).getId());
-
+		
+		//System.out.println("잘받아오나?"+d);
 		Attachment at = null;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request);
@@ -99,6 +103,7 @@ public class DiscussController {
 		if(result >0) {
 			//포인트 관련
 			int point = pointChange(session);
+			//System.out.println("point"+point);
 			
 			return "redirect:discuss.di";
 		} else {
@@ -109,7 +114,7 @@ public class DiscussController {
 	public int pointChange(HttpSession session) {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
-		int point = 300;
+		int point = 150;
 		String message = "토론방 글 작성!";
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
