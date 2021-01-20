@@ -52,13 +52,6 @@ public class HomeController {
 		return "home";
 	}
 	
-//	@RequestMapping(value="/recod.do", method=RequestMethod.POST)
-//	@ResponseBody
-//	public ArrayList<Board> recommend(Board b) {
-//		ArrayList<Board> result = bService.recd(value);
-//
-//		return result;
-//	}
 	@RequestMapping("about.ab")
 	public String aboutViewPage() {
 		return "about";

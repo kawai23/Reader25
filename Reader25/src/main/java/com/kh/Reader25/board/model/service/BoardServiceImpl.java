@@ -475,10 +475,6 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> views() {
 		return bDAO.views(sqlSession);
 	}
-	@Override
-	public ArrayList<Board> recd(int value) {
-		return bDAO.recd( value, sqlSession);
-	}
 
 	@Override
 	public ArrayList<Comments> selectLComments(int comNo) {

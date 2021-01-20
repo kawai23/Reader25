@@ -180,7 +180,6 @@ public interface BoardService {
 
 	ArrayList<Board> views();
 	
-	ArrayList<Board> recd(int value);
 
 	int upPoint(HashMap<String, Object> map);
 

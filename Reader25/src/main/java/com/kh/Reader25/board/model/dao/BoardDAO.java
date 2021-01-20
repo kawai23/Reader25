@@ -454,12 +454,6 @@ public class BoardDAO {
 
 
 	
-	public ArrayList<Board> recd(int value, SqlSessionTemplate sqlSession) {
-		
-		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.recd", value);
-		System.out.println(result);
-		return result;
-	}
 
 	public int upPoint(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
