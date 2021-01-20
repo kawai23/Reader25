@@ -1,9 +1,9 @@
 package com.kh.Reader25;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,15 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.visit.model.service.VisitorService;
 
 /**
  * Handles requests for the application home page.
@@ -33,6 +34,9 @@ public class HomeController {
 	private BoardService bService;
 	@Autowired
 	private DiscussService dService;
+	@Autowired
+	private VisitorService vService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -68,7 +72,23 @@ public class HomeController {
 		return "about";
 	}
 	@RequestMapping("statistic.ad")
-	public String statisticPage() {
-		return "statistic";
+	public ModelAndView statisticPage(@RequestParam(value="month", required=false) Integer month, 
+								@RequestParam(value="page", required=false) Integer page,
+								ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		List<Map<String,String>> dayList = vService.getDayVisitor();
+		List<Map<String, String>> monthList = vService.getMonthVisitor();
+		int monthCount = vService.getVisitMonthCount();
+		
+		mv.addObject("dayList", dayList);
+		mv.addObject("monthList", monthList);
+		mv.addObject("monthCount", monthCount);
+		
+		mv.setViewName("statistic");
+		
+		return mv;
 	}
 }

@@ -27,6 +27,8 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.SearchCate" alias="SearchCate"/>
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Discuss" alias="Discuss"/>
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Reply" alias="Reply"/>
+		
+		<typeAlias type="com.kh.Reader25.visit.model.vo.Visitor" alias="Visitor"/>
 	</typeAliases>
 	
 	<mappers>

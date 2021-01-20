@@ -25,7 +25,6 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession"/><!-- 매개변수 생성자로 값을 집어 넣는 것 -->
 	</bean>
-	
 
 	<!-- 파일 업로드 시 사용할 MultipartResolver -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
