@@ -1779,6 +1779,8 @@ public class BoardController {
 	}
 	
 	
+	
+	
 	@RequestMapping("myLikeList.me")
 	public ModelAndView myLikeList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 		// 마이페이지에서 검색
@@ -1881,7 +1883,83 @@ public class BoardController {
 	
 	
 	
+	@RequestMapping("searchComplete.me")
+	@ResponseBody
+	public String searchLike(@RequestParam("tTitle") String bTitle,@RequestParam("searchCondition") String condition,
+			HttpServletRequest request, HttpServletResponse response
+			, ModelAndView mv , HttpSession session) {
+		
+		response.setContentType("application/json; charset=UTF-8");	
+		System.out.println(bTitle+"검색단어");
+		System.out.println("condition" + condition + "?");
+		ArrayList<String> tlist = null;
+		
+		
+		
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
 	
+		sc.setmId(mId);
+		
+		
+		
+		
+		
+		if (condition.equals("Title")) {
+			
+			sc.setTitle(bTitle);
+			
+		}else if (condition.equals("내용")) {
+			
+			sc.setContent(bTitle);
+		}
+		
+		
+		System.out.println("sc = " + sc);
+		
+		tlist = bService.searchLikeList(sc);
+		
+		System.out.println(tlist);
+		
+
+		
+		//return tlist;
+		
+		String [] array= tlist.toArray(new String[tlist.size()]);
+		
+		
+		
+		
+		Gson gson = new Gson();
+
+	    return gson.toJson(array);
+	    
+	    
+		
+
+
+
+
+}
+	
+	
+	
+	
+	@RequestMapping("test.me")
+	public String test() {
+		return "test"; //수정한 jsp파일 이름 집어넣기 !
+	}
 	
 	
 	

@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -20,9 +19,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
 
 
 <style>
+
+	th{width: 16%}
 
 
 </style>
@@ -39,7 +44,10 @@
  
  
  	  <div class="col-sm-2"></div>
-	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
+ 	  
+ 	  
+ 	  <%@ include file="../common/sideMenubar.jsp"%> 
+	 <%--  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
 	  
 <!-- 	  <img src=""> -->
 	  
@@ -72,7 +80,7 @@
 				<br>
 			
 	  
-	  </div>
+	  </div> --%>
 	  
 	  
 	  
@@ -112,18 +120,18 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr class="contentTR">
+							<tr >
 								<td><input type="checkbox"  name="mInfo" value="${ b.likeNo }" ></td>
 								
 								
-								<td >${ b.boardNo }</td>
-								<td style="display: none;">${ b.code }</td>
-								<td >${ b.bTitle }</td>
+								<td class="contentTR">${ b.boardNo }</td>
+								<td style="display: none;" class="contentTR">${ b.code }</td>
+								<td class="contentTR">${ b.bTitle }</td>
 								
-								<td >${ b.userId }</td>
+								<td class="contentTR">${ b.userId }</td>
 								
-								<td >${ b.bLike }</td>
-								<td >${ b.bCount }</td>
+								<td class="contentTR">${ b.bLike }</td>
+								<td class="contentTR">${ b.bCount }</td>
 					
 								
 
@@ -189,32 +197,111 @@
 						
 			
 				
+			
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+		<script type="text/javascript">
+				
+				
+	
+				
+				$(function(){
+					
+
+
+					$('#seachDate').keyup(function(){
+						var searchCondition =  $.trim($("#Search1").text());
+						var tTitle = $.trim($(this).val());				
+						
+						if(tTitle.length>0){
+							
+							$.ajax({
+								type: 'POST',
+								url: "searchComplete.me",
+								data: {tTitle:tTitle,searchCondition:searchCondition},
+								dataType: 'json',
+								success:function(data){		
+									console.log(data);
+									
+									
+									$("#seachDate").autocomplete({ 
+										source : data,	
+										select : function(event, ui) {	
+											console.log(ui.item);
+										},
+										focus : function(event, ui) {	
+											return false;
+										},
+										minLength: 1,
+										autoFocus: true, 
+									
+										delay: 300,	
+
+										
+										close : function(event){	
+											console.log(event);
+										}
+									});
+							
+
+
+								}
+							});
+							
+						}
+						
+					});
+
+
+
+	})
+	
+	
+	
+
+
+				
+				
+				</script>
 				
 				
 				
 				
 				
+		<script>
+		
+		
+			
+
+
+
+			
+
+
+
 				
 				
+
 				
-				
-				<script >
 				
 				$('.contentTR').mouseenter(function(){
 					
-					$(this).css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+					$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
 					
 					
-					console.log($(this).children('td').eq(2).text());
+					
 				}).mouseout(function(){
 					
-					$(this).css({'color':'black' , 'font-weight' : 'normal'});
+					$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
 					
 					
 				}).click(function(){
 					
-					var boardNo = $(this).children('td').eq(1).text();
-					var code = $(this).children('td').eq(2).text();
+					
+					
+					var boardNo = $(this).parent().children('td').eq(1).text();
+					var code =$(this).parent().children('td').eq(2).text();
 					var path = "";
 					
 					if(code == 5){
@@ -524,7 +611,7 @@
 					        	
 					        	
 					      
-					        	var check = ${ !empty searchValue  } ; 
+					        	var check = ${ !empty searchValue   } ; 
 					        	
 					        	var searchCondition = null;
 					        	

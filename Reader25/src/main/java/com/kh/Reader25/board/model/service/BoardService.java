@@ -176,6 +176,8 @@ public interface BoardService {
 
 	ArrayList<Board> views_d();
 
+	ArrayList<String> searchLikeList(SearchCondition sc);
+
 
 
 

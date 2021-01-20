@@ -262,9 +262,9 @@
  		
  		</if>
  		
- 		<if test="no != null">
+ 		<if test="content != null">
  		
- 			and B_CONTENT = #{no} 
+ 			and B_CONTENT like '%' || #{content} || '%'
  		
  		</if> 
  	
@@ -309,6 +309,51 @@
 		WHERE LIKENO=#{s} 
     </delete>
     
+    
+    <select id="searchLikeList" resultType="string">
+ 	
+ 	
+ 		select 
+ 		
+ 		<if test="title != null">
+ 		
+ 			DISTINCT board.b_title
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			DISTINCT board.B_CONTENT
+ 		
+ 		</if>
+ 			
+ 			 
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y'		
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		
+ 		</if>
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		
+ 	
+ 	</select>
     
     <resultMap type="Board" id="boardResultSet2">
 		<id property="boardNo" column="BOARD_NO"/>

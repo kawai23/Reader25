@@ -457,6 +457,10 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
 	}
 
+	public ArrayList<String> searchLikeList(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchLikeList", sc);
+	}
+
 
 
 

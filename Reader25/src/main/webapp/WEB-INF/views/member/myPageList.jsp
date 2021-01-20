@@ -11,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 
@@ -18,6 +20,8 @@
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
 
 
 
@@ -110,16 +114,16 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr class="contentTR">
+							<tr >
 								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
 								
 								
-								<td >${ b.boardNo }</td>
-								<td >${ b.bTitle }</td>
+								<td class="contentTR">${ b.boardNo }</td>
+								<td class="contentTR">${ b.bTitle }</td>
 								
 								
-								<td >${ b.bCount }</td>
-								<td>
+								<td class="contentTR">${ b.bCount }</td>
+								
 								
 							</tr>
 							
@@ -231,18 +235,18 @@
 					
 					$('.contentTR').mouseenter(function(){
 						
-						$(this).css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+						$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
 						
 						
 						console.log(boardNo);
 					}).mouseout(function(){
 						
-						$(this).css({'color':'black' , 'font-weight' : 'normal'});
+						$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
 						
 						
 					}).click(function(){
 						
-						var boardNo = $(this).children('td').eq(1).text();
+						var boardNo = $(this).parent().children('td').eq(1).text();
 						
 						
 						
@@ -616,6 +620,14 @@
 						
 						
 						</script>
+						
+						
+		
+	
+		
+		
+		
+	
 
 
 </body>

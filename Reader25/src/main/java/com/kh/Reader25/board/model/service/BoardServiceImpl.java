@@ -510,6 +510,11 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.views_d(sqlSession);
 	}
 
+	@Override
+	public ArrayList<String> searchLikeList(SearchCondition sc) {
+		return bDAO.searchLikeList(sqlSession, sc);
+	}
+
 
 
 
