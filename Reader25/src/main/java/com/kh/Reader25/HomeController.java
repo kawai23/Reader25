@@ -1,30 +1,18 @@
 package com.kh.Reader25;
 
-<<<<<<< HEAD
-=======
 import java.io.IOException;
-import java.text.DateFormat;
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.List;
-=======
-import java.util.Date;
-import java.util.HashMap;
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,14 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
-import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 import com.kh.Reader25.visit.model.service.VisitorService;
-import com.kh.Reader25.member.model.vo.Member;
 
 /**
  * Handles requests for the application home page.

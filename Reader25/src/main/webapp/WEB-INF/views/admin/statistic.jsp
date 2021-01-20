@@ -49,8 +49,8 @@
 // 				console.log(${dayList.size()});
 				var size = '${dayList.size()}';
 				for(var i = 0; i < ${dayList.size()}; i++){
-					day[i] = "${dayList.day}";
-					dayCount[i] = "${dayList.count}";
+					day[i] = "${dayList.get(i)}";
+					dayCount[i] = "${dayList.get(i)}";
 				}
 			});
 			
