@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,43 +38,42 @@
 		</div>
 		<h4>사이트 방문자 현황 그래프</h4>
 		<div class="day-graph" id="chart_div">
-			
+		</div>
+		<div id="chart_month">
 		</div>
 		<script>
-			var day = new Array();
-			var dayCount = new Array();
-			$(function(){
-				console.log('${dayList}');
-				console.log('${monthList}');
-				console.log('${monthCount}');
-// 				console.log(${dayList.size()});
-				var size = '${dayList.size()}';
-				for(var i = 0; i < ${dayList.size()}; i++){
-					day[i] = "${dayList.get(i)}";
-					dayCount[i] = "${dayList.get(i)}";
-				}
-			});
 			
 		 	google.charts.load('current', {'packages':['corechart']});
 	     	google.charts.setOnLoadCallback(drawChart);
+	     	
 	     	function drawChart() {
-	     	        var data = google.visualization.arrayToDataTable([
-	     	          ['Year', 'Sales', 'Expenses'],
-	     	          ['2013',  1000,      400],
-	     	          ['2014',  1170,      460],
-	     	          ['2015',  660,       1120],
-	     	          ['2016',  1030,      540]
+	     	        var data = new google.visualization.arrayToDataTable([
+	     	        	['Day','Count']
+	     	        	${dayStr}
+	     	        ]);
+	     	        var data2 = new google.visualization.arrayToDataTable([
+	     	        	['Month','Count']
+	     	        	${monthStr}
 	     	        ]);
 
 	     	        var options = {
-	     	          title: 'Company Performance',
-	     	          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+	     	          title: '일별 방문자 차트',
+	     	          hAxis: {title: 'Day',  titleTextStyle: {color: '#333'}},
 	     	          vAxis: {minValue: 0}
 	     	        };
+	     	        
+	     	       var options2 = {
+	 	     	          title: '월별 방문자 차트',
+	 	     	          hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
+	 	     	          vAxis: {minValue: 0}
+	 	     	        };
 
 	     	        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
 	     	        chart.draw(data, options);
-	     	      }
+	     	        
+	     	       var chart = new google.visualization.AreaChart(document.getElementById('chart_month'));
+	     	        chart.draw(data2, options2);
+	     	}
  		 </script>
 		<div class="month-graph">
 		</div>

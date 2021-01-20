@@ -92,8 +92,26 @@ public class HomeController {
 		List<Map<String, String>> monthList = vService.getMonthVisitor();
 		int monthCount = vService.getVisitMonthCount();
 		
+		// 값가공
+		String dayStr = "";
+		for(int i = 0; i < dayList.size(); i++) {
+			if(i != dayList.size()) {
+				dayStr += ",";
+			}
+			dayStr += "['" + dayList.get(i).get("day") +"'," + dayList.get(i).get("count") + "]";
+		}
+		String monthStr = "";
+		for(int i = 0; i < monthList.size(); i++) {
+			if(i != monthList.size()) {
+				monthStr += ",";
+			}
+			monthStr += "['" + monthList.get(i).get("month") +"'," + monthList.get(i).get("count") + "]";
+		}
+		
 		mv.addObject("dayList", dayList);
+		mv.addObject("dayStr", dayStr);
 		mv.addObject("monthList", monthList);
+		mv.addObject("monthStr", monthStr);
 		mv.addObject("monthCount", monthCount);
 		
 		mv.setViewName("statistic");
