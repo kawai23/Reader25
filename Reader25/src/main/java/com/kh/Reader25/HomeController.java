@@ -1,12 +1,24 @@
 package com.kh.Reader25;
 
+<<<<<<< HEAD
+=======
+import java.io.IOException;
+import java.text.DateFormat;
+>>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.util.Date;
+import java.util.HashMap;
+>>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +30,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 import com.kh.Reader25.visit.model.service.VisitorService;
+import com.kh.Reader25.member.model.vo.Member;
 
 /**
  * Handles requests for the application home page.
@@ -56,15 +73,22 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("/recod.do")
+	@RequestMapping( value = "/recod.do")
 	@ResponseBody
-	public ArrayList<Board> recommend(@ModelAttribute Board b, @RequestParam("Board") int value, HttpSession session) {
-		System.out.println(1);
+	public void recd(HttpServletResponse response) {
+		int value = 30;
 		ArrayList<Board> result = bService.recd(value);
-		if(result.size() > 0) {
-			return result;
-		} else {
-			throw new BoardException("메인페이지 리스트 조회에 실패하였습니다");
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	@RequestMapping("about.ab")

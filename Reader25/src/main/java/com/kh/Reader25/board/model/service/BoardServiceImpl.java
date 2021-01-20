@@ -475,10 +475,6 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> views() {
 		return bDAO.views(sqlSession);
 	}
-	@Override
-	public ArrayList<Board> recd(int value) {
-		return bDAO.recd( value, sqlSession);
-	}
 
 	@Override
 	public ArrayList<Comments> selectLComments(int comNo) {
@@ -504,18 +500,18 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.deleteCount(sqlSession, boardNo);
 	}
 
-	@Override
-	public ArrayList<Board> views_d() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int upPoint(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return bDAO.upPoint(sqlSession, map);
 	}
-
+	
+	@Override
+	public ArrayList<Board> recd(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recd(sqlSession, value);
+	}
 
 
 	

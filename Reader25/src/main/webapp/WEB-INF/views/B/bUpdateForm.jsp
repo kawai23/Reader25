@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.kh.Reader25.board.model.vo.*" %>
+<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,22 +46,30 @@
 		color: rgba(85, 83, 83, 1);		
 	}
 	.content{
+		min-height: 800px;
 		margin-top: 30px;
 	}
 	.file-div{
-		width: 300px;
-		margin:auto;
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+/* 		width: 300px; */
+/* 		margin:auto; */
 	}
 	.file-img{/* 이미지 부분  */
-		height: 250px;
-		line-height:250px;
+		display: inline-block;
+/* 		width: 300px; */
+/* 		height: 250px; */
+/* 		line-height:250px; */
 		margin-top: 20px;
 		background: lightgray;
-		text-align: center;
+/* 		text-align: center; */
 	}
 	.file-img>img{
-		max-height:100%;
-		max-width: 100%;
+/* 		max-height:100%; */
+/* 		max-width: 100%; */
+		width: 400px;
+		height: 300px;
 		object-fit: cover;
 		vertical-align: middle;
 	}
@@ -177,16 +185,28 @@
 			</div>
 			<div class="content">
 				<div class="file-div">
-					<input type="file" id="input-file" name="reloadFile" onchange="loadImg(this);" accept="image/jpg, image/jpeg, image/png"> 
+					<input type="file" id="input-file" name="reloadFile" onchange="loadImg(this);" accept="image/jpg, image/jpeg, image/png" multiple="multiple"> 
+					<br>
 					<div class="file-img" id="file-img">
 						<c:if test="${atlist ne null}">
 							<c:forEach items="${ atlist }" var="at">
-						<img id="load-img" src="resources/buploadFiles/${at.atcName }">
+							<img id="load-img" src="resources/buploadFiles/${at.atcName }">
 						</c:forEach>
 						</c:if>
 					</div>
+					<%		
+						ArrayList<Attachment> atlist = (ArrayList<Attachment>)request.getAttribute("atlist");
+						String[] nameArr = new String[atlist.size()];
+						for(int i = 0; i < atlist.size(); i++){
+							nameArr[i] = atlist.get(i).getAtcName();
+						}
+					%>
+					<input type="hidden" name="nameArr" value="<%=nameArr%>">
+					
 					<c:if test="${atlist eq null }"/>
 				</div>
+				<br>
+				<br>
 				<div class="wise-div">
 					<img src="resources/images/bookreview/quote4.png">
 					<input name="wise" type="text" value="${ wise }">
@@ -223,16 +243,30 @@
 			$('#file-img').click(function(){
 				$('#input-file')[0].click();
 			});
-			function loadImg(value) {
-				if (value.files[0]) {
-					var reader = new FileReader();
-					fileCheck = true;
-					reader.onload = function(e) {
- 						$('#load-img').attr('src', e.target.result);
-					}
-					reader.readAsDataURL(value.files[0]);
-				}
-			}
+			function loadImg(value){
+	               if (value.files){
+	                  $('#file-img').html('');
+	                  $uploadImage = $('#file-img')
+	                  $uploadImage.html('')
+	                  for(var i = 0; i < value.files.length; i++){
+	                     if(window.FileReader){ // modern browser 
+	                        var filename = value.files[i].name; 
+	                     } else { // old IE 
+	                        var filename = $(this).val().split('/').pop().split('\\').pop(); // 파일명만 추출 
+	                     }
+	                     $('.upload-name').val(filename);
+	                     
+	                     var reader = new FileReader();
+	                        reader.onload = function(e) {
+	                           $imgBox = $('<div class="image-box">');
+	                           $img = $('<img>').attr('src', e.target.result);
+	                           $imgBox.append($img);
+	                           $uploadImage.append($imgBox);
+	                        }
+	                        reader.readAsDataURL(value.files[i]);
+	                  }
+	               }
+	            }
 		</script>
 	</section>
 </body>

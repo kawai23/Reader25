@@ -120,7 +120,7 @@ input, select{
 	
 		<table id="TIWTable" align="center">
 			<tr>
-				<th>글 번호</th>
+				<th height="40px">글 번호</th>
 				<th>원작</th>
 				<th width="350px">제목</th>
 				<th>작가</th>
@@ -129,7 +129,7 @@ input, select{
 			</tr>
 			<c:forEach var="b" items="${ list }">
 			<tr class="contentTR">
-				<td align="center">${ b.boardNo }</td>
+				<td align="center" height="30px">${ b.boardNo }</td>
 				<td align="center">
 					<c:url var="searchTIWCate" value="searchTIWCate.to">
 						<c:param name="cate" value="${ b.cate }"/>
@@ -158,6 +158,7 @@ input, select{
 			</tr>
 			</c:forEach>
 		</table>
+		
 		
 		<!-- 오늘은 나도 작가 리스트 페이징 부분 -->
 		<!-- 페이징 버튼 -->
@@ -196,12 +197,13 @@ input, select{
 				<a href="${ Next }">&gt;</a>
 			</c:if>
 		</div>
+		<br><br>
 		<div class="insertbuttonArea" align="right">			
 			<c:if test="${ loginUser ne null }">
 				<input type="button" onclick="location.href='writeTIW.to';" id="writeTIWBtn" class="btn1" value="글쓰기">
 			</c:if>
 		</div>
-		
+		<br><br>
 		<!---------------- 3. 게시물 검색 ------------------>
 		<div id="searchArea" align="center">
 			<label>찾아보기</label>
