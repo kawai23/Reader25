@@ -626,7 +626,7 @@ public class BoardController {
 	public int pointChangeRe(HttpSession session) {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
-		int point = 300;
+		int point = 200;
 		String message = "책 리뷰 글 작성!";
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();

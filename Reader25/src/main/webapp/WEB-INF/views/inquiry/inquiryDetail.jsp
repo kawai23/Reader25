@@ -38,9 +38,10 @@
 	}
 	.inquiry-header{
 		text-align: center;
-		font-size: 25px;
+		font-size: 35px;
 		margin-bottom: 10px;
 		font-weight: bolder;
+		font-family: 카페24 아네모네;
 	}
 	#inquiry-contents{
 		border-top: 2px solid rgba(245, 113, 92, 1);
@@ -55,6 +56,7 @@
 		display:inline-block;
 		width: 100px;
 		font-weight: bold;
+		font-size:25px;
 	}
 	.image-div{
 		width: 500px;
@@ -103,6 +105,7 @@
 		width: 80px;
 		margin: 5px;
 		color:white;
+		font-family: 카페24 아네모네에어;
 	}
 	 textarea{
 		clear:both;
@@ -111,6 +114,7 @@
 		height: 50%;
 		resize: none;
 		border: none;
+		font-family: 카페24 아네모네에어;
 }
 	.comment{border-bottom: 1px solid rgb(230, 230, 230);margin:5px;}
 	.comment-content{margin: 6px; font-size: 13px;color: rgba(85, 83, 83, 1);}
@@ -123,6 +127,7 @@
 		height: 55%;
 		resize: none;
 		border: none;
+		font-family: 카페24 아네모네에어;
 	}
 	.btn-div{
 		width: 80%;
@@ -170,6 +175,7 @@
 		margin: 40% auto; 
 		padding: 20px;
 		text-align: center;
+		font-family: 카페24 아네모네에어;
 	}
 	.modal-back {
 		display: none; 
@@ -208,8 +214,30 @@
 		top: 10px;
 	}
 .no1{font-size:0px;}
-.updateBtn, .deleteBtn{display:inline-block; margin-left: 30px; margin-right: 10px; font-size: 12px;}
-
+#updateBtn{
+	width:35px; height: 30px;
+	display:inline-block;
+	margin-right: 5px; font-size: 12px; 
+	background-color: rgba(255,195,152,0.5); color:white;
+	font-family: 카페24 아네모네에어; font-size:13px;
+	border: 0px solid rgba(235, 235, 235, 1);
+	border-radius:100px;
+}
+#deleteBtn{
+	width:36px; height: 30px;
+	display:inline-block; margin-left: 5px; 
+	 font-size: 12px; 
+	background-color: rgba(196,196,196,0.5); color:darkgray;
+	font-family: 카페24 아네모네에어; font-size:13px;
+	border: 0px solid rgba(235, 235, 235, 1);
+	border-radius:100px;
+}
+#nono{
+	color:white;
+}
+#comment-add{
+	width:80px; height: 35px;
+}
 </style>
 </head>
 <body>
@@ -372,7 +400,7 @@
 	<section>
 		<div class="inquiry-div">
 			<div class="inquiry-header">문의사항</div>
-			<h8 align="center">${ board.boardNo }번 글 상세보기</h8>
+			<h8 align="center" id="nono">${ board.boardNo }번 글 상세보기</h8>
 			<div id="inquiry-contents">
 				<div class="title">
 					<span class="title-span">제목</span>
@@ -383,7 +411,7 @@
 					<span>${ board.userId }</span>
 					<input type="hidden" name="userId" value="${ board.userId }">
 				</div>
-				
+				<br>
 				<!-- 이미지 파일 넣기 -->
 				<% 
 					ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
@@ -525,8 +553,10 @@
 						<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
 					</div>
 					<button id="comment-add">댓글 등록</button>
+					<br>
 				</div>
-			
+				<br>
+				<br>
 			
 				<script>
 		 		$(function(){
@@ -628,8 +658,8 @@
 								$comments.append($comment);
 								
 								if('${loginUser.id}' == cList[i].userId){
-									$top.append($btn1);
 									$top.append($btn2);
+									$top.append($btn1);
 								}
 							}
 						 }
@@ -658,7 +688,7 @@
 		</div>
 		
 		
-		
+		<br>
 		</c:if>
 		<div class="btn-div">
 			<c:url var="inquiryUpdate" value="inquiryUpView.in">
@@ -677,6 +707,7 @@
 			</c:if>
 			<button class="list-btn"  onclick="location.href='${ goInquiryList }'">목록으로</button>
 		</div>
+		<br><br>
 		<script>
 			function deleteinquiry(){
 				$('#del-modal').show();

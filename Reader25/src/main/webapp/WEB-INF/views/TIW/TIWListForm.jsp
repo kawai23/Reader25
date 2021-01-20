@@ -159,6 +159,7 @@ input, select{
 			</c:forEach>
 		</table>
 		
+		
 		<!-- 오늘은 나도 작가 리스트 페이징 부분 -->
 		<!-- 페이징 버튼 -->
 		<div class="paging-div">
