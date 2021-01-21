@@ -741,4 +741,35 @@
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
+	
+	<select id="topWriterList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopWriter
+			where rownum <= 3
+		]]>
+	</select>
+	
+	<resultMap type="TWITopWriter" id="TWITopWriterResultSet">
+		<id property="id" column="USER_ID"></id>
+		<result property="count" column="COUNT"></result>
+	</resultMap>
+		
+	<select id="topCommenterList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopComment
+			where rownum <= 3
+		]]>
+	</select>
+	
+	<select id="topLikerList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopLike
+			where rownum <= 3
+		]]>
+	</select>
+	
+	
 </mapper>

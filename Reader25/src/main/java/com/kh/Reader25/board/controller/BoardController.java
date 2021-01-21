@@ -2,6 +2,8 @@ package com.kh.Reader25.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +39,7 @@ import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -1000,6 +1003,10 @@ public class BoardController {
 			
 		int listCount = bService.getTIWListCount();
 		int todayListCount = bService.todayListCount(enrollDay);
+		
+		ArrayList<TWITopWriter> btList = bService.topWriterList();
+		ArrayList<TWITopWriter> bcList = bService.topCommenterList();
+		ArrayList<TWITopWriter> blList = bService.topLikerList();
 			
 		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
 			
@@ -1008,6 +1015,9 @@ public class BoardController {
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+			mv.addObject("btList", btList);
+			mv.addObject("bcList", bcList);
+			mv.addObject("blList", blList);
 			mv.addObject("todayListCount", todayListCount);
 			mv.setViewName("TIWListForm");
 		} else {
