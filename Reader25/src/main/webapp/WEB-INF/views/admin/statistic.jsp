@@ -96,7 +96,7 @@
 </head>
 <body>
 	<header>
-		<img src="#logo"/>
+		<img src="#logo" id="logo-img" onclick="goHome();"/>
 		<h3 id="header-h2">통계 자료</h3>
 	</header>
 	<%@ include file="header.jsp" %>
