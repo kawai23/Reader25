@@ -47,7 +47,7 @@ input, select{
 }
 /*글자*/
 .txt_TIW{
-	font-size:40px;
+	font-size:50px;
 	font-family: 카페24 아네모네;
 	text-align: center;
 }
@@ -130,6 +130,25 @@ hr{
 }
 #line{ margin-left: 30%; }
 #topList{font-size: 14px;}
+img{
+	-webkit-animation:blink 1s ease-in-out infinite alternate;
+    -moz-animation:blink 1s ease-in-out infinite alternate;
+    animation:blink 1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+
+
 </style>
 </head>
 <body>

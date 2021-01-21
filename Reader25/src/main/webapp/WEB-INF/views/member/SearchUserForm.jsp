@@ -130,7 +130,7 @@
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
 				<p>임시 비밀번호는</p>
-				<p id="pw_value">입니다.</p>
+				<p id="pw_value"></p>입니다.
 				<p>가입 시 기입한 메일로도 비밀번호를 보냈으니 확인해주세요.</p>
 				<p>로그인 후 비밀번호 변경을 해주세요</p>
 				<br>
