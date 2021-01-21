@@ -9,7 +9,7 @@
     
 <title>Reader25란</title>
 
-<style>
+<style> 
 
 	section{
 		width:80%; min-width: 1000px; min-height: 500px; margin:auto; margin-top: 50px;
@@ -52,7 +52,7 @@
         height: 200px;
         border-radius: 50%;
         background: transparent linear-gradient(180deg, #FF6C6C 0%, #FFC6C6 100%) 0% 0% no-repeat padding-box;
-        opacity: 0.77;
+        opacity: 0.57;
         
         animation-duration:30s; animation-iteration-count:6; animation-name:aa_ani;
     }
@@ -78,7 +78,7 @@
         width: 683px;
         height: 682px;
         background: transparent linear-gradient(46deg, #F5715C 0%, #F5325C 80%) 0% 0% no-repeat padding-box;
-        opacity: 0.77;
+        opacity: 0.37;
         border-radius: 50%;
         
         animation-duration:30s; animation-iteration-count:6; animation-name:bb_ani;
@@ -107,7 +107,7 @@
         height: 300px;
         transform: matrix(-0.97, 0.26, -0.26, -0.97, 0, 0);
         background: transparent linear-gradient(46deg, #FFCCAE 0%, #A84E19 100%) 0% 0% no-repeat padding-box;
-        opacity: 0.77;
+        opacity: 0.37;
         border-radius: 50%;
         
         animation-duration:30s; animation-iteration-count:6; animation-name:cc_ani;
@@ -135,7 +135,7 @@
         width: 400px;
         height: 400px;
         background: transparent linear-gradient(180deg, #F7B45E 0%, #FFFFB4 60%) 0% 0% no-repeat padding-box;
-        opacity: 0.77;
+        opacity: 0.47;
         border-radius: 50%;
         
         animation-duration:30s; animation-iteration-count:6; animation-name:dd_ani;
