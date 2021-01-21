@@ -372,8 +372,59 @@
 	</resultMap>
     
     
+    
+    
  	
+	<select id="MyPointListCount"   resultType="_int">
+ 	
+ 	
+ 		
+ 		
+ 		select count(*)
+		from point  
+		where  MID =  #{mId};
 
+ 		
+ 		<if test="no != null">
+ 		
+ 			and POINTNO  #{no} 
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and P_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 	</select>
+ 	
+ 	<select id="MyPointList" resultType="pointResultSet">
+ 	
+ 	
+ 		select *
+		from point  
+		where  MID =  #{mId};
+
+ 		
+ 		<if test="no != null">
+ 		
+ 			and POINTNO  #{no} 
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and P_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		order by POINTNO desc
+ 	
+ 	</select>
+ 	
+ 	
+ 	
 	
 	
 

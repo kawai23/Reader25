@@ -89,12 +89,12 @@
 
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
-							<th>구매번호</th>
-							<th>책이름</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>결제일</th>
-							<th>결제상태</th>
+							
+							<th>번호</th>
+							<th>포인트</th>
+							<th>적립내역</th>
+						
+							
 							
 							
 						 </tr>
@@ -114,17 +114,14 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.pNo }" ></td>
+								
+								<td >${  b.pNo }</td>
+								<td >${ b.pCon }</td>
+								<td >${ b.point }</td>
 								
 								
-								<td >${ b.pay_no }</td>
-								<td >${ b.book_name }</td>
 								
-								
-								<td >${ b.book_v }</td>
-								<td >${ b.price }</td>
-								<td >${ b.PAY_DATE }</td>
-								<td >${ b.pay_status }</td>
 								
 								
 								<td>
@@ -225,7 +222,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myPayList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
+ 		    	location.href='myPointList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -261,7 +258,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myPayList.me"></c:set>
+						<c:set var="loc" value="myPointList.me"></c:set>
 						
  
 				    

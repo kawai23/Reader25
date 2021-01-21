@@ -9,6 +9,7 @@ import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -191,6 +192,10 @@ public interface BoardService {
 	int upPoint(HashMap<String, Object> map);
 
 	ArrayList<String> searchLikeList(SearchCondition sc);
+
+	int MyPointListCount(SearchCondition sc);
+
+	ArrayList<Point> MyPointList(SearchCondition sc, PageInfo pi);
 
 
 

@@ -46,7 +46,7 @@
  	  <div class="col-sm-2"></div>
  	  
  	  
- 	  <%@ include file="../common/sideMenubar.jsp"%> 
+ 	  <%@ include file="../common/mySideMenubar.jsp"%> 
 	 <%--  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
 	  
 <!-- 	  <img src=""> -->

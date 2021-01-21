@@ -17,17 +17,18 @@ import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 
 @Service("bService")
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardDAO bDAO;
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	@Override
 	public int getListCount(int code) {
 		return bDAO.getListCount(sqlSession, code);
@@ -59,30 +60,30 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public Board selectTIWBoard(int boardNo) {
 		int result = bDAO.addTIWReadCount(sqlSession, boardNo);
-		
+
 		Board b = null;
-		if(result > 0) {
+		if (result > 0) {
 			b = bDAO.selectTIWBoard(sqlSession, boardNo);
 		}
-		
+
 		return b;
 	}
 
 	@Override
 	public int insertBoardAndFiles(Board b, ArrayList<Attachment> atList) {
 		int result = bDAO.insertBoard(sqlSession, b);
-		if(result > 0) {
+		if (result > 0) {
 			result = bDAO.insertAttachmentList(sqlSession, atList);
 		}
-		
+
 		return result;
 	}
 
 	public Board selectupTIWBoard(int boardNo) {
 		Board b = null;
-		
+
 		b = bDAO.selectTIWBoard(sqlSession, boardNo);
-		
+
 		return b;
 	}
 
@@ -103,7 +104,7 @@ public class BoardServiceImpl implements BoardService{
 		Board b = null;
 		// 1. 조회수 증가
 		int result = bDAO.addReadCount(sqlSession, boardNo);
-		if(result > 0) {
+		if (result > 0) {
 			b = bDAO.selectBoard(sqlSession, boardNo);
 		}
 		return b;
@@ -123,8 +124,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void deleteLike(Liketo like) {
 		// TODO Auto-generated method stub
-		
-		
+
 		bDAO.deleteLike(sqlSession, like);
 	}
 
@@ -132,7 +132,7 @@ public class BoardServiceImpl implements BoardService{
 	public void insertLike(Liketo like) {
 		// TODO Auto-generated method stub
 		bDAO.insertLike(sqlSession, like);
-		
+
 	}
 
 	public ArrayList<Attachment> selectAttachmentTList(int atcCode) {
@@ -142,7 +142,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int insertBoardAndFile(Board b, Attachment at) {
 		int result = bDAO.insertBoard(sqlSession, b);
-		if(result > 0) {
+		if (result > 0) {
 			result = bDAO.insertAttachment(sqlSession, at);
 		}
 		return result;
@@ -180,6 +180,7 @@ public class BoardServiceImpl implements BoardService{
 	public int getReListCount(String booktitle) {
 		return bDAO.getReListCount(sqlSession, booktitle);
 	}
+
 	@Override
 	public int updateLike(Liketo like) {
 		// TODO Auto-generated method stub
@@ -192,7 +193,6 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.getCommentListCount(sqlSession, boardNo);
 	}
 
-
 	@Override
 	public int getSearchMyListCount(SearchCondition sc) {
 		// TODO Auto-generated method stub
@@ -201,27 +201,25 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public ArrayList<Board> SeachMyList(SearchCondition sc, PageInfo pi) {
-		
-		return bDAO.SeachMyList(sqlSession,sc, pi);
+
+		return bDAO.SeachMyList(sqlSession, sc, pi);
 	}
-	
-	
+
 	@Transactional
 	@Override
 	public int deletemBList(String[] lists) {
-		
-		
+
 		int result = 0;
-		
-		for(String s: lists) {			
-			
+
+		for (String s : lists) {
+
 			result += bDAO.deletemBList(sqlSession, s);
 
 		}
-		if(result != lists.length) {
-			
+		if (result != lists.length) {
+
 			throw new BoardException("마이페이지 리스트 삭제 실패");
-		}		
+		}
 		return result;
 	}
 
@@ -230,7 +228,7 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.getSearchTIWResultListCount(sqlSession, serchC);
 	}
-	
+
 	@Override
 	public int getSearchCateResultListCount(SearchCate serCa) {
 		// TODO Auto-generated method stub
@@ -268,7 +266,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateBoardAndFile(Board b, Attachment attachment) {
 		int result = bDAO.updateBoard(sqlSession, b);
-		if(result > 0) {
+		if (result > 0) {
 			result = bDAO.updateAttachment(sqlSession, attachment);
 			System.out.println(result);
 		}
@@ -277,13 +275,14 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int deleteBoardAndFile(int boardNo) {
-		
+
 		int result = bDAO.deleteBoard(sqlSession, boardNo);
-		if(result > 0) {
+		if (result > 0) {
 			result = bDAO.deleteAttachment(sqlSession, boardNo);
 		}
 		return result;
 	}
+
 	@Override
 	public int insertBoard(Board b) {
 		return bDAO.insertBoard(sqlSession, b);
@@ -300,8 +299,6 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.insertIn(sqlSession, b);
 	}
 
-	
-
 	@Override
 	public int seachBoardNo(Board b) {
 		// TODO Auto-generated method stub
@@ -316,11 +313,11 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public ArrayList<Pay> SeachMyPayList(SearchCondition sc, PageInfo pi) {
-		return bDAO.SeachMyPayList(sqlSession,sc, pi);
+		return bDAO.SeachMyPayList(sqlSession, sc, pi);
 	}
 
 	public ArrayList<Board> selectSearchReviewList(SearchReview sr, PageInfo pi) {
-		return bDAO.searchReviewList(sqlSession,sr, pi);
+		return bDAO.searchReviewList(sqlSession, sr, pi);
 	}
 
 	@Override
@@ -342,7 +339,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectSearchSortList(HashMap<String, String> map, PageInfo pi) {
 		return bDAO.selectSearchSortList(sqlSession, map, pi);
 	}
-	
+
 	@Override
 	public int insetFile(Attachment at) {
 		// TODO Auto-generated method stub
@@ -378,25 +375,23 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.deleteInquiryBoard(sqlSession, boardNo);
 	}
-	
 
 	@Transactional
 	@Override
 	public int myPayDelete(String[] lists) {
 		int result = 0;
-		
-		for(String s: lists) {			
-			
+
+		for (String s : lists) {
+
 			result += bDAO.myPayDelete(sqlSession, s);
 
 		}
-		if(result != lists.length) {
-			
+		if (result != lists.length) {
+
 			throw new BoardException("구매 리스트 삭제 실패");
-		}		
+		}
 		return result;
 	}
-
 
 	@Override
 	public int getuserCommentsListCount(HashMap<String, Object> umap) {
@@ -424,8 +419,8 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public ArrayList<Board> MyLikeList(SearchCondition sc, PageInfo pi) {
-		
-		return bDAO.MyLikeList(sqlSession,sc, pi);
+
+		return bDAO.MyLikeList(sqlSession, sc, pi);
 	}
 
 	public ArrayList<Board> selectSearchTTitleListTitle(String bTitle) {
@@ -451,12 +446,11 @@ public class BoardServiceImpl implements BoardService{
 //		return bDAO.selectSearchTTitleList(sqlSession, serchC);
 //	}
 
-
 	public int updateBoardAnFiles(Board b, ArrayList<Attachment> uploadAtList) {
 		int result = bDAO.updateBoard(sqlSession, b);
-		if(result > 0) {
+		if (result > 0) {
 			result = bDAO.deleteAttachmentList(sqlSession, b.getBoardNo());
-			if(result > 0) {
+			if (result > 0) {
 				result = bDAO.insertAttachmentList2(sqlSession, uploadAtList);
 			}
 		}
@@ -473,38 +467,35 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bDAO.todayListCount(sqlSession, enrollDay);
 	}
+
 	@Override
 	public ArrayList<Board> review() {
 		return bDAO.review(sqlSession);
 	}
-	
 
 	@Transactional
 	@Override
 	public int myLikeDelete(String[] lists) {
-		
+
 		int result = 0;
-		
-		for(String s: lists) {			
-			
+
+		for (String s : lists) {
+
 			result += bDAO.myLikeDelete(sqlSession, s);
 
 		}
-		if(result != lists.length) {
-			
+		if (result != lists.length) {
+
 			throw new BoardException("좋아요  삭제 실패");
-		}		
+		}
 		return result;
 	}
-
-	
-
-
 
 	@Override
 	public ArrayList<Board> tiw() {
 		return bDAO.tiw(sqlSession);
 	}
+
 	@Override
 	public ArrayList<Board> views() {
 		return bDAO.views(sqlSession);
@@ -534,7 +525,6 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.deleteCount(sqlSession, boardNo);
 	}
 
-
 	@Override
 	public int upPoint(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -546,8 +536,15 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.searchLikeList(sqlSession, sc);
 	}
 
+	@Override
+	public int MyPointListCount(SearchCondition sc) {
 
+		return bDAO.MyPointListCount(sqlSession, sc);
+	}
 
+	@Override
+	public ArrayList<Point> MyPointList(SearchCondition sc, PageInfo pi) {
+		return bDAO.MyPointList(sqlSession, sc, pi);
+	}
 
-	
 }

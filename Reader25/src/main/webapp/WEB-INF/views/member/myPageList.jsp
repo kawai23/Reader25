@@ -45,13 +45,19 @@
  
  
  	  <div class="col-sm-2"></div>
-	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
+ 	  
+ 	  
+ 	  
+ 	  
+ 	   <%@ include file="../common/mySideMenubar.jsp"%> 
+<!-- 	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" > -->
 	  
-<!-- 	  <img src=""> -->
+<!-- <!-- 	  <img src=""> --> -->
 	  
-	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
+<%-- 	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br> --%>
 	  
-	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
+	  
+<%-- 	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr> --%>
 	  
 	  
 	 
@@ -60,25 +66,25 @@
 
 
 				
-						<a href="myUpdateForm.me" class="list-group-item">내 정보 수정</a> 
-						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a> 
-						<hr>
+<!-- 						<a href="myUpdateForm.me" class="list-group-item">내 정보 수정</a>  -->
+<!-- 						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a>  -->
+<!-- 						<hr> -->
 						
-						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
-						<a href="myList.me?code=3" class="list-group-item"  id="c3">책방 리스트</a>
-						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
-						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
-						<a href="myLikeList.me" class="list-group-item">좋아요/북마크</a>
+<!-- 						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a> -->
+<!-- 						<a href="myList.me?code=3" class="list-group-item"  id="c3">책방 리스트</a> -->
+<!-- 						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a> -->
+<!-- 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a> -->
+<!-- 						<a href="myLikeList.me" class="list-group-item">좋아요/북마크</a> -->
 						
-						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a>
+<!-- 						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a> -->
 
 				
-				<br>
-				<br>
-				<br>
+<!-- 				<br> -->
+<!-- 				<br> -->
+<!-- 				<br> -->
 			
 	  
-	  </div>
+<!-- 	  </div> -->
 	  
 	  
 	  
