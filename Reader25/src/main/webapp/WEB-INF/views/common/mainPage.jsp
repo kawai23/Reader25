@@ -346,12 +346,9 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
-		    var data = 1;
 		    
 		    $.ajax({
 		    	url: "recod.do",
-		    	type : "POST",
-		    	data : {data : data},
 		    	success : function(data){
 		    		console.log(data);
 		    	},

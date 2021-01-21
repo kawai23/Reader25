@@ -90,4 +90,5 @@ public class DiscussDAO {
 	public int rUpdate(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("DiscussMapper.rUpdate", r);
 	}
+	
 }
