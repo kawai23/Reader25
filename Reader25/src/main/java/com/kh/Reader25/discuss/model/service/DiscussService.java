@@ -40,4 +40,6 @@ public interface DiscussService {
 	void changePCN(Map<String, Object> d);
 	// 댓글 수정
 	int rUpdate(Reply r);
+	// 모든 토론방 검색
+	ArrayList<Discuss> selectAllList();
 }

@@ -65,9 +65,11 @@ public class DiscussController {
 		int listCount = dService.getListCount(s);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		ArrayList<Discuss> dList = dService.selectList(pi,s);
+		ArrayList<Discuss> dAllList = dService.selectAllList();
 		ArrayList<Attachment> atList = dService.selectatList();
 		if(dList != null) {
 			mv.addObject("dList", dList)
+				.addObject("dAllList", dAllList)
 				.addObject("pi", pi)
 				.addObject("atList", atList)
 				.setViewName("discussList");
@@ -175,7 +177,6 @@ public class DiscussController {
 		if(pointUpU >0 && pointUp >0) {
 			login.setPoint(login.getPoint()+point);
 		}
-		session.invalidate();
 		session.setAttribute("loginUser", login);
 		return rankChange;
 	}
