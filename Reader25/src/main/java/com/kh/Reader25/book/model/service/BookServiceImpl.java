@@ -37,4 +37,16 @@ public class BookServiceImpl implements BookService{
 	public ArrayList<Pay> selectPayList(PageInfo pi) {
 		return b_DAO.selectPayList(sqlSession, pi);
 	}
+
+	@Override
+	public ArrayList<Book> selectBookList(PageInfo pi) {
+		return b_DAO.selectBookList(sqlSession, pi);
+	}
+
+	@Override
+	public Book selectBook(int b_no) {
+		return b_DAO.selectBook(sqlSession, b_no);
+	}
+
+	
 }

@@ -2,11 +2,8 @@ package com.kh.Reader25.board.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -40,6 +37,8 @@ import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
+import com.kh.Reader25.book.model.service.BookService;
+import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -54,6 +53,9 @@ public class BoardController {
 	//포인트 관련
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private BookService b_Service;
 	
 	// 1. 공지사항 code = 0  ----------------------------------------------------
 	// (1) 리스트 페이지
@@ -1866,35 +1868,29 @@ public class BoardController {
 
 	// ------------------------------------------------------------------------ 책방
 		@RequestMapping("gobookr.bo")
-		public ModelAndView gobookr(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) { // ModelAndView
-																														// 는
-																														// 값을
-																														// 화면에
-																														// 전달할때
-																														// 쓰는
-																														// 객체
+		public ModelAndView gobookr(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) { 
 			int currentPage = 1; // currentPage 현재 페이지
-			if (page != null) { // page 값이 null 이 아닐때 currentPage에 page라는 값이 넣어진다
+			if (page != null) { 
 				currentPage = page;
 			}
-			int code = 3; // 책방 관한 게시물을 가져올때 코드를 지정하여 다른게시물과 차별점을 두어 구별할수있게 지정한 코드의 게시물만 가져올수있게 한다
-			int listCount = bService.getListCount(code);// 총 게시물 갯수
+			int code = 3; 
+			int listCount = bService.getListCount(code);
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);// PageInfo는 게시물 페이징을 설정 하는 객체
-			// Pagination는 getPageInfo2 1에서 5까지 있는데 페이징을 자동으로 계산할수 있게끔 도와주는 객체
 			ArrayList<Board> bList = bService.selectList(pi, code); // selectList 총 게시물을 불러오는 함수 // 총 게시물 리스트를 받아오는 객체
-			// 객체를 여러개 담을수 있는 객체
-			/* ArrayList<Attachment> atList = bService.gobookr("Code"); */
-			/* bService.selectAttachmentTList(code); */
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
+			ArrayList<Book> bookList = b_Service.selectBookList(pi);
 			if (bList != null) {
-				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
-						.addObject("pi", pi).addObject("atList", atList).setViewName("gobookr");// setViewName view 이름을
+				mv.addObject("bList", bList) 
+						.addObject("pi", pi)
+						.addObject("atList", atList)
+						.addObject("bookList", bookList)
+						.setViewName("gobookr");
 																								// 지정해준다
 			} else {
 				throw new BoardException("책방 게시글 전체 조회에 실패하였습니다."); // 사용자 예외를 발생시켰을때 "게시글 전체 조회에 실패하였습니다." 라고 오류 메시지를 띄움
 			}
-			return mv; // 최종 반환값을 mv로 반환해준다.
+			return mv; 
 		}
 
 		@RequestMapping("write.bo") // ****-------------------이거랑
@@ -1950,26 +1946,17 @@ public class BoardController {
 
 		@RequestMapping("redetail.bo")
 		public ModelAndView bookroomD(@RequestParam("boardNo") int boardNo,
-
+				@RequestParam("b_no") int b_no,
 				@RequestParam("page") int page, ModelAndView mv) {
 			Board board = bService.selectBoard(boardNo);
+			Book book = b_Service.selectBook(b_no);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
 			
-			System.out.println(atlist);
-			if (board != null) {
-
-				String booktitle = board.getbContent().substring(0, (board.getbContent()).indexOf("#책제목"));
-				String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목") + 4);
-				String author = exbook.substring(0, exbook.indexOf("#작가"));
-				String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
-				String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
-
-				board.setbContent(content);
+			if (board != null && book != null) {
 
 				mv.addObject("board", board);
 				mv.addObject("atlist", atlist);
-				mv.addObject("booktitle", booktitle);
-				mv.addObject("author", author);
+				mv.addObject("book", book);
 				mv.addObject("page", page);
 				mv.setViewName("bookRD");// 북 상세페이지
 			}

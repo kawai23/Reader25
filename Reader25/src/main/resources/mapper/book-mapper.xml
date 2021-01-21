@@ -43,4 +43,16 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="book_no" column="BOOK_NO"/>
 	</resultMap>
+	
+	<select id="selectBookList" resultMap="bookResultSet">
+		select *
+		from book
+		where status = 'Y'
+	</select>
+	
+	<select id="selectBook" resultMap="bookResultSet">
+		select *
+		from book
+		where status = 'Y' and book_no = #{b_no}
+	</select>
 </mapper>

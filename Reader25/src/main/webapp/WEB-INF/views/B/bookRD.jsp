@@ -776,11 +776,11 @@ body {
 		<!---------------------------------- 책제목 ------------------------------------>
 		<div class="info-box">
 		<div class="info-contents">
-			<h3 class="title">책제목: ${ board.bTitle }</h3>
+			<h3 class="title">책제목: ${ book.b_name }</h3>
 			<p class="tag">#제목</p>
-			<span class="info" id="author">${booktitle }</span>
+			<span class="info" id="author">${book.author }</span>
 			<p class="tag">#작가</p>
-			<span class="info" id="sort">${author }</span> <br>
+			<span class="info" id="sort">${book.author }</span> <br>
 			<p class="tag">거래자</p>
 			<span class="info" id="sort">${board.userId }</span>
 		</div>
