@@ -176,8 +176,8 @@ select::-ms-expand {
 	padding: 0;
 	margin: 0;
 	display: inline-block;
-	width: 30px;
-	height: 30px;
+	width: 26px;
+	height: 26px;
 	color: rgba(85, 83, 83, 1);
 	font-size: 17px;
 	background: rgba(229, 229, 229, 1);

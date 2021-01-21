@@ -18,7 +18,7 @@
 	}
 	
 	.logo{
-        padding: 10px; left: 20%; position: relative; z-index: 3;
+        padding: 10px;  margin:auto;z-index: 3;
     }
 	#myImg{
 		width: 700px; height: 460px;  opacity: 0.47; 
