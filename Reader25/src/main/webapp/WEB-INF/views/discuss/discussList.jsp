@@ -23,6 +23,8 @@
 	    height: 110px;
 	    padding:5px; 
 		border: 1px solid black;
+		border-radius:50px;
+		text-align: center;
 	}
 	.sub{display:inline-block;}
 	#info{margin-top: 20px;}
@@ -55,6 +57,7 @@
 		width: 310px; 
 	    height: 455px;
 		border: 1px solid black;
+		border-radius:50px;
 	}
 	.subMenuLi {
 		display: block;
@@ -73,6 +76,7 @@
 	.outerBg {
  		display: inline;
  		margin-left: 400px;
+ 		border-bottom: 1px solid black;
 	}
 	.outerText {
 		font-size: 60px;
@@ -80,14 +84,15 @@
 	}
 	#head{float:none;}
 	#body{float:none;}
-	#search-icon{width: 20px; height: 18px;}
+	#search-icon{width: 20px;}
+	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
 	#btn{width: 100px;height: 30px; background:#C95F12;}
 	#btn:hover{cursor: pointer;}
 	/*검색관련*/
-	#search-input{width: 110px;height: 26px;}
-	#search-type{height: 30px;}
+	#search-input{width: 110px;border: none;background: none;}
+	#search-type{border: none;}
 	#bimg{width: 100px;height: 100px;}
 	#orderTable{table-layout:fixed;}
 	#dC{ /*글자수 제한(...) 포시*/
@@ -107,44 +112,97 @@
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
+	
+	<c:forEach var = "d" items="${ discuss }" begin = "0" end = "13" varStatus="status">
+               <div id="discuss<c:out value="${status.count}"/>"style = "width : 100%">
+               <p class = "ellipsis"><c:out value = "${ d.dTitle }"/></p>
+               </div>
+    </c:forEach>
 	<br><br>
 	<section>
 		<div id="infomenu">
-		<div id="subBlue">
-			<c:if test="${ !empty loginUser }">
-				<div class="sub">
-					<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
-				</div>
-				<div class="sub" id="info">
-						${loginUser.getName() }님<br>
-						반갑습니다.<br>
-						보유포인트 = ${loginUser.getPoint() }PT<br>
-				</div>
-			</c:if>
-			<c:if test="${ empty loginUser }">
-				<button class = "login_font" onclick="location.href='loginView.me'">로그인하기</button>
-				<button class = "Sign_Up_font" onclick="location.href='enrollView.me'">회원가입</button>
-				<br>
-				<br>
-				<span id = "find_id" onclick="location.href='searchUserForm.me'"><a>아이디 찾기</a> </span> | 
-				<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>비밀번호 찾기</a></span>
-			</c:if>
-		</div>
-			<br><br>
-			<div id="subMenuDiv">
-				<h2>메뉴바</h2>
-				<ul>
-					<li class="subMenuLi">
-						<a class="submenuLink" href="book.re">도서리뷰</a>
-					</li>
-					<li class="subMenuLi">
-						<a class="submenuLink" href="goTIWList.to">책방</a>
-					</li>
-					<li class="subMenuLi">
-						<a class="submenuLink" href="discuss.di">토론방</a>
-					</li>
-				 </ul>
+			<div id="subBlue">
+				<c:if test="${ !empty loginUser }">
+					<div class="sub">
+						<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
+					</div>
+					<div class="sub" id="info">
+							${ loginUser.getName() }님<br>
+							반갑습니다.<br>
+							보유포인트 = ${ loginUser.getPoint() }PT<br>
+					</div>
+				</c:if>
+				<c:if test="${ empty loginUser }">
+					<button class = "login_font" onclick="location.href='loginView.me'">로그인하기</button>
+					<button class = "Sign_Up_font" onclick="location.href='enrollView.me'">회원가입</button>
+					<br>
+					<br>
+					<span id = "find_id" onclick="location.href='searchUserForm.me'"><a>아이디 찾기</a> </span> | 
+					<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>비밀번호 찾기</a></span>
+				</c:if>
 			</div>
+			<br><br>
+<!-- 			<div id="subMenuDiv"> -->
+<!-- 				<h2>메뉴바</h2> -->
+<!-- 				<ul> -->
+<!-- 					<li class="subMenuLi"> -->
+<!-- 						<a class="submenuLink" href="book.re">도서리뷰</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="subMenuLi"> -->
+<!-- 						<a class="submenuLink" href="goTIWList.to">책방</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="subMenuLi"> -->
+<!-- 						<a class="submenuLink" href="discuss.di">토론방</a> -->
+<!-- 					</li> -->
+<!-- 				 </ul> -->
+<!-- 			</div> -->
+			<div>
+				<c:set var="count" value="0"/>
+				<h3>현재 열린 토론방</h3>
+				<ul>
+					<c:forEach var="d" items="${ dAllList }">
+					<c:if test="${count < 5 }">
+						<c:if test="${d.dStatus == 'Y'}">
+						<c:set var="count" value="${count + 1}"/>
+							<li>${d.dTitle}</li>
+						</c:if>
+					</c:if>
+					</c:forEach>
+					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
+				</ul>
+			</div>
+			<hr><br>
+			<div>
+				<h3>현재 닫힌 토론방</h3>
+				<ul>
+					<c:forEach var="d" items="${ dAllList }">
+					<c:if test="${count < 5 }">
+						<c:if test="${d.dStatus == 'N'}">
+						<c:set var="count" value="${count + 1}"/>
+							<li>${d.dTitle}</li>
+						</c:if>
+					</c:if>
+					</c:forEach>
+					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
+				</ul>
+			</div>
+			<c:if test="${ !empty loginUser }">
+			<hr><br>
+				<div>
+					<h3>내가 연 토론방</h3>
+					<ul>
+						<c:forEach var="d" items="${ dAllList }">
+						<c:if test="${count < 5 }">
+							<c:if test="${(d.dWriter == loginUser.id) && d.dStatus == 'Y'}">
+								<c:set var="count" value="${count + 1}"/>
+								<li>${d.dTitle}</li>
+							</c:if>
+						</c:if>
+						</c:forEach>
+						<c:if test="${count == 0 }"> 토론방을 연적이 없습니다.</c:if>
+					</ul>
+				</div>
+			</c:if>
 		</div>
 		<div class="outer">
 			<div id="head">
@@ -159,7 +217,7 @@
 						<option value="3">작성자</option>
 					</select>
 					<input type="text" id="search-input">
-					<button class="img-span" id="search"><img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/></button>
+					<span class="img-span"><img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/></span>
 				</div>
 			</div>
 			<div id="body">
@@ -258,11 +316,36 @@
 						});
 					});
 
-					$('#search').click(function(){
+					// 검색 기능
+					$('#search-icon').click(function(){
+						search();
+					});
+					$('#search-input').keydown(function(key){
+						if(key.keyCode == 13){
+							search();
+						}
+					});
+					function search(){
 						var text = $('#search-input').val();
 						var type = $('#search-type').val();
 					
 						location.href="discuss.di?text="+text+"&type="+type;
+					}
+					// 자동완성
+					$(function(){
+						var sc = '';
+						$('#search-type').change(function(){
+							sc = $(this).val();
+						});
+						var category = ['제목','내용','작성자'];
+						$('#search-input').keyup(function(){
+							if(sc == 'category'){
+								$('#search-input').autocomplete({
+									source : category
+								});
+							}
+						});
+						
 					});
 				</script>
 			</div>
