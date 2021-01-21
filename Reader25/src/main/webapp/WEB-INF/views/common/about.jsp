@@ -154,9 +154,8 @@
                 
             }
         }
-    
-    
-
+        .chart{width: 80%;min-width: 1000px; min-height: 500px; margin:auto; }
+        .chart .img-div{width:800px; margin:auto;}
 </style>
 </head>
 <body>
@@ -182,7 +181,9 @@
 	    <div class="circle3"> </div>
 	    <div class="circle4"></div> 
 	</section>
-	
+	<div class="chart">
+		<div class="img-div"><img src="resources/images/about/chart.png"/></div>
+	</div>
 	 <%@ include file="footer.jsp" %>
 </body>
 </html>
