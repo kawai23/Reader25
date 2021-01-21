@@ -104,7 +104,7 @@
 	<select id="selectDiscuss" resultMap="discussResultSet">
 		SELECT *
 		FROM DISCUSS
-		WHERE D_STATUS='Y' AND D_NO = #{dNo}
+		WHERE D_NO = #{dNo}
 	</select>
 	
 	<!-- 토론방 상세페이지 사진검색 -->
