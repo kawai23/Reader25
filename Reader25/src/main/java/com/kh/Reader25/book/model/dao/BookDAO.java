@@ -31,4 +31,9 @@ public class BookDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("bookMapper.selectPayList", null, rowBounds);
 	}
+
+	public int insertBook(SqlSessionTemplate sqlSession, Book book) {
+		
+		return sqlSession.insert("bookMapper.insertBook", book);
+	}
 }

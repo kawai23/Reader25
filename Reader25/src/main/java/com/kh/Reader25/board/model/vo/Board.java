@@ -1,7 +1,6 @@
 package com.kh.Reader25.board.model.vo;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class Board {
 	private int boardNo;
@@ -27,7 +26,11 @@ public class Board {
 
 
 	public Board(int boardNo, String bTitle, String bContent, int bCount, int bLike, int comCount, String bStatus,
+
 			Date enrollDay, Date updateDay, String cate, int code, String userId, int likeNo) {
+
+	
+
 		super();
 		this.boardNo = boardNo;
 		this.bTitle = bTitle;
@@ -41,7 +44,11 @@ public class Board {
 		this.cate = cate;
 		this.code = code;
 		this.userId = userId;
+
 		this.likeNo = likeNo;
+
+		
+
 	}
 
 
@@ -187,6 +194,7 @@ public class Board {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
 
 
 
@@ -210,6 +218,11 @@ public class Board {
 				+ likeNo + "]";
 	}
 
+
 	
 	
 }
+
+	
+
+

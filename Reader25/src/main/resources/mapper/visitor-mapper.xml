@@ -35,9 +35,14 @@
 	</select>
 	
 	<select id="getDayVisitor" resultMap="dayCount">
-		select to_char(visit_time,'yyyy/MM/dd') as day,count(*) as count
-		from visitor
-		group by to_char(visit_time,'yyyy/MM/dd')
+		<![CDATA[
+			select * from(
+			select to_char(visit_time,'yyyy/MM/dd') as day,count(*) count
+			from visitor
+			where to_char(visit_time,'yyyy/MM/dd') <= #{today}
+			group by to_char(visit_time,'yyyy/MM/dd')
+			order by to_char(visit_time,'yyyy/MM/dd')  desc) where rownum <= 5
+		]]>
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="dayCount">
@@ -46,14 +51,24 @@
 	</resultMap>
 	
 	<select id="getMonthVisitor" resultMap="monthCount">
-		select to_char(visit_time,'yyyy/MM') as month,count(*) as count
-		from visitor
-		group by to_char(visit_time,'yyyy/MM')
+		<![CDATA[
+			select * from(
+			select to_char(visit_time,'yyyy/MM') as month,count(*) as count
+			from visitor
+			where to_char(visit_time, 'yyyy/MM') <= #{month}
+			group by to_char(visit_time,'yyyy/MM')
+			order by to_char(visit_time,'yyyy/MM') desc) where rownum <= 5
+		]]>
 	</select>
 	
 	<resultMap type="java.util.HashMap" id="monthCount">
 		<result javaType="java.lang.String" column="month" property="month"/>
 		<result javaType="java.lang.String" column="count" property="count"/>
 	</resultMap>
+	
+	<select id="selectListVisitor" resultType="Visitor">
+		select to_char(visit_time,'yyyy-mm-dd HH24:mm:ss') as visit_time, visit_ip, visit_refer, visit_agent
+		from visitor v
+	</select>
 	
 </mapper>

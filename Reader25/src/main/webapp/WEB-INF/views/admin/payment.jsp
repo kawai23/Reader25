@@ -18,6 +18,7 @@
 	.paylist-div{
 		min-height: 100px; 
 		background: white;
+		max-width: 1200px;
 		margin: auto;
 		margin-top: 20px;
 		border-radius: 5px;

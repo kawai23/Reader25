@@ -22,7 +22,7 @@
 	nav{
 		display:inline-block;
 		background:rgba(39, 50, 56, 1);
-		min-height: 700px;
+		min-height: 1000px;
 		width: 150px;
 		border: 1px solid rgba(39, 50, 56, 1);
 		float:left;

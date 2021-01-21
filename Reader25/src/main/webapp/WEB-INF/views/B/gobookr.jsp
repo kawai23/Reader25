@@ -246,7 +246,8 @@ select::-ms-expand {
 		</div>
 		<div class="list-all-div">
 			<%	ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
-				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");%>
+				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+			%>
 			<% for(Board b : bList){ %>
 				<div class="list-div">
 					<div class="img-div">
@@ -264,7 +265,7 @@ select::-ms-expand {
 							<li class="title-li"><%=b.getbTitle()%></li>
 							<li class="tag-li">#작가 #분야</li>
 							<li class="writer-li"><%=b.getUserId() %></li>
-							<!-- <li class="wise-li">명언</li> -->
+							<%-- <li class="bookAmount-li"><%=b_price() %></li> --%>
 						</ul>
 					</div>
 				</div>

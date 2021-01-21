@@ -284,12 +284,11 @@ background: #C95F12;
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton2()">주간</button>
 		<button class = "b_reco" id = "button_pink" onclick = "clickbutton3()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div id = "test1"style = "width : 100%">
-		<br>
-			<c:forEach var = "r" items="${ views }" begin = "0" end = "13">
-				<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
-			</c:forEach>
-		</div>
+		<c:forEach var = "r" items="${ views }" begin = "0" end = "13" varStatus="status">
+			<div class="reco_c" id = "reco<c:out value="${status.count}"/>" style = "width : 100%">
+				<a class = "ellipsis"><c:out value = "${ r.bTitle }"/></a>
+			</div>
+		</c:forEach>
 		</div>
 	</div> <!-- 이달의 책 추천 List -->
 	<div class = "bestreview">
@@ -298,12 +297,15 @@ background: #C95F12;
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton5()">주간</button>
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton6()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div style = "width : 100%">
-		<br>
-			<c:forEach var = "r" items="${ review }" begin = "0" end = "13">
-				<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
-			</c:forEach>
-		</div>
+
+			<form name = "REVIEW_T" id = "REVIEW_T">
+				<c:forEach var = "r" items="${ review }" begin = "0" end = "13" varStatus="status">
+					<div class = "review_c" id = "review<c:out value = "${ status.count }"/>" style = "width : 100%">
+						<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
+					</div>					
+				</c:forEach>
+			</form>
+
 		</div>
 	</div>
 	<div class = "rt_debate">
@@ -312,12 +314,11 @@ background: #C95F12;
 		<button class = "debate" id = "button_pink" onclick = "clickbutton8()">주간</button>
 		<button class = "debate" id = "button_pink" onclick = "clickbutton9()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div style = "width : 100%">
-		<br>
-			<c:forEach var = "d" items="${ discuss }" begin = "0" end = "13">
-				<p class = "ellipsis"><c:out value = "${ d.dTitle }"/></p>
-			</c:forEach>
-		</div>
+				<c:forEach var = "d" items="${ discuss }" begin = "0" end = "13" varStatus="status">
+					<div class="discuss_c" id="discuss_t<c:out value="${status.count}"/>"style = "width : 100%">
+					<p class = "ellipsis"><c:out value = "${ d.dTitle }"/></p>
+					</div>
+				</c:forEach>
 		</div>
 	</div>
 	<div class = "tiw_t">
@@ -326,12 +327,15 @@ background: #C95F12;
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton11()">주간</button>
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton12()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		<div style = "width : 100%">
-		<br>
-			<c:forEach var = "t" items="${ tiw }" begin = "0" end = "13">
-				<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
-			</c:forEach>
-		</div>
+		
+			<form name = "TIW_T" id = "TIW_T">
+				<c:forEach var = "t" items="${ tiw }" begin = "0" end = "13">
+					<div class="tiw_c" id="tiw_t<c:out value="${status.count}"/>"style = "width : 100%">
+						<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
+					</div>
+				</c:forEach>
+			</form>
+
 		</div>
 	</div>
 	</div>
@@ -351,6 +355,8 @@ background: #C95F12;
 		    	url: "recod.do",
 		    	success : function(data){
 		    		console.log(data);
+		    		Reset_r();
+
 		    	},
 		    	error: function(){
 		    		alert("정보소환에 실패하였습니다");
@@ -368,6 +374,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "recoy.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton3(){
 			var div2 = document.getElementsByClassName('b_reco');
@@ -380,6 +397,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "recom.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton4(){
 			var div2 = document.getElementsByClassName('best_re');
@@ -392,6 +420,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "reviewd.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton5(){
 			var div2 = document.getElementsByClassName('best_re');
@@ -404,6 +443,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "revieww.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton6(){
 			var div2 = document.getElementsByClassName('best_re');
@@ -416,6 +466,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "reviewm.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton7(){
 			var div2 = document.getElementsByClassName('debate');
@@ -428,6 +489,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "discussd.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton8(){
 			var div2 = document.getElementsByClassName('debate');
@@ -440,6 +512,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "discussw.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton9(){
 			var div2 = document.getElementsByClassName('debate');
@@ -452,6 +535,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "discussm.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton10(){
 			var div2 = document.getElementsByClassName('TIW');
@@ -464,6 +558,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "tiwd.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton11(){
 			var div2 = document.getElementsByClassName('TIW');
@@ -476,6 +581,17 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "tiww.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
 		function clickbutton12(){
 			var div2 = document.getElementsByClassName('TIW');
@@ -488,8 +604,30 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
+		    $.ajax({
+		    	url: "tiwm.do",
+		    	success : function(data){
+		    		console.log(data);
+		    		Reset_r();
+
+		    	},
+		    	error: function(){
+		    		alert("정보소환에 실패하였습니다");
+		    	}
+		    });
 		}
-	
+		function Reset_r(){ // 책추천
+			$('.reco_c').remove();
+		}
+		function Reset_v(){ // 책 리뷰
+			$('.review_c').remove();
+		}
+		function Reset_d(){ // 토론
+			$('.discuss_c').remove();
+		}
+		function Reset_t(){ // 오나작
+			$('.tiw_c').remove(); 
+		}
 	</script>
 	
 </body>

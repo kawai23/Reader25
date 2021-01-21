@@ -2,6 +2,8 @@ package com.kh.Reader25.member.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.member.model.vo.Member;
@@ -51,6 +53,9 @@ public interface MemberService {
 	int muchPoint(String id);
 
 	int changeRank(HashMap<String, Object> cap);
+
+
+	List<Map<String, String>> getEnrollList(String today);
 
 
 

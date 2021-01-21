@@ -90,5 +90,9 @@ public class DiscussDAO {
 	public int rUpdate(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("DiscussMapper.rUpdate", r);
 	}
+	// 모든 토론방 검색
+	public ArrayList<Discuss> selectAllList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("DiscussMapper.selectAllList");
+	}
 	
 }
