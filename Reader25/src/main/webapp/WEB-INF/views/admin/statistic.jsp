@@ -100,6 +100,11 @@
 		<h3 id="header-h2">통계 자료</h3>
 	</header>
 	<%@ include file="header.jsp" %>
+	<script>
+		function goHome(){
+			location.href="home.do";
+		}
+	</script>
 	<section>
 		<div class="count">
 			전체 방문자 수 : <span>${sessionScope.totalCount }</span><br>
