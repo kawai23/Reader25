@@ -240,4 +240,11 @@
         ORDER BY D_COUNT DESC
 		]]>
 	</select>
+	
+	<!-- 토론방 모두 가지고오기  -->
+	<select id="selectAllList" resultMap="discussResultSet">
+		SELECT *
+		FROM DISCUSS
+		ORDER BY D_CREATE
+	</select>
 </mapper>

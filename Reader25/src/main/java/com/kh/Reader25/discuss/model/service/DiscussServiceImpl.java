@@ -122,5 +122,10 @@ public class DiscussServiceImpl  implements DiscussService{
 	public int rUpdate(Reply r) {
 		return dDAO.rUpdate(sqlSession, r);
 	}
+	// 모든 토론방 검색
+	@Override
+	public ArrayList<Discuss> selectAllList() {
+		return dDAO.selectAllList(sqlSession);
+	}
 
 }

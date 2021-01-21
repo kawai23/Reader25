@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>JSP&Servlet</title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 	<%-- body{
 		background:url('<%= request.getContextPath() %>/images/bg.png') no-repeat center center fixed;
@@ -87,13 +88,12 @@ footer{
 }
 
 
-
 </style>
 </head>
 <body>
 	<!-- <h1 align="center">Reader25</h1> -->
 <%@include file="../common/menubar.jsp" %>
-	<br><br><br><br><br><br><br><br>
+	<br>
 	  
 	  
 	<div class="outer">
@@ -112,14 +112,14 @@ footer{
 					<tr>
 						<td><input type="hidden" name="chk" ></td>
 						<td><input type="text" name="p_id"></td>
-						<td><input type="text" name="p_name"></td>
+						<td><input type="text" id="pName" name="p_name"></td>
 						<td><input type="text" name="cart_price" ></td>
 						<td><input type="text" name="amount"></td>
 					</tr>
 					
 				</table>		
 				<br><br><br><br>
-				총 금액 : <input type="text" name="total" >	
+				총 금액 : <input type="text" id="totla" name="total" >	
 				<br><br><br><br>
 				
 			</div>
@@ -131,7 +131,7 @@ footer{
 				<table id="table2">
 					<tr>
 						<td width="200px">수령인</td>
-						<td width="200px"><input type="text" name="orderName"></td>
+						<td width="200px"><input type="text" id="orderName" name="orderName"></td>
 					</tr>				
 					<tr>
 						<td>아이디</td>
@@ -139,11 +139,11 @@ footer{
 					</tr>
 					<tr>
 						<td>휴대폰 번호</td>
-					<td><input type="text" maxlength="11" name="orderPhone" placeholder="(-없이)01012345678" ></td>
+					<td><input type="text" maxlength="11" name="orderPhone" id="orderPhone" placeholder="(-없이)01012345678" ></td>
 					</tr>
 					<tr>
 						<td>이메일</td>
-						<td><input type="text" name="email"></td>
+						<td><input type="text" id="" name="email"></td>
 					</tr>
 					<tr>
 						<td>우편번호</td>
@@ -179,61 +179,42 @@ footer{
 	  
 	  
 	<br><br><br><br><br><br><br><br>
-	<footer>
-	<div class="footer">
-			<div class="frame botton_area">
-				<div id="bottom_logo">
-				<img src="${ pageContext.servletContext.contextPath }
-				/images/Logo2.png"style="float: left;  margin: 0 auto;"  
-				width="210" height="45" ></div>
-				<br>
-				<div id="notice">
-					레시피팩토리에 게시된 모든 컨텐츠들은 저작권법에 의거 보호받고 있습니다. <br> 저작권자 또는
-					(주)레시피팩토리의 승인없이 컨텐츠의 일부 또는 전부를 복제,전송,배포 및 기타의 방법으로 저작물을 이용할 경우에는<br>
-					저작권법에 의해 법적 조치에 처해질 수 있으므로 주의하시길 바랍니다. <br> <br> 사업자등록번호:
-					111-22-33333 통신판매업신고번호 : 제1111-서울역삼-2222호 대표 : 금민석 <br> 주소 :
-					서울시 역삼동 어쩌주 저쩌구 고객센터: 1234-1004 <br> <br> <b>ⓒ 2020
-						Recipe Factory Corp. Ltd. All rights reserved</b>
-				</div>
-			</div>
-		</div>
-	</footer>
+
 	<script>
-		function logout(){
-			location.href='<%= request.getContextPath() %>/logout.me';
-		}
-		
-		function memberJoin(){
-			location.href="<%= request.getContextPath() %>/signUpForm.me";
-		}
-		
-		function goHome(){
-			location.href='<%= request.getContextPath() %>';
-		}
-		
-		function goNotice(){
-			location.href='<%= request.getContextPath() %>/list.no';
-		}
-		
-		function goBoard(){
-			location.href='<%= request.getContextPath() %>/list.bo';
-		}
-		
-		function goThumbnail0(){
-			location.href='<%= request.getContextPath() %>/list.th';
-		}
-		function goThumbnail1(){
-			location.href='<%= request.getContextPath() %>/list.th';
-		}
-		function noticeboard(){
-			location.href="<%= request.getContextPath() %>/NoticeListServlet.no";
-		}
-		
-		function qna(){
-		      location.href="<%=request.getContextPath() %>/QboardListServlet.qb";
-		}
-		function fqna(){
-			location.href="<%= request.getContextPath()%>/FAQListServlet.fa";
+		function buy(){//필수 동의 체크 확인
+			var pName = $("#pName").val();
+			var pPrice = $("#total").val();
+
+			var orderName = $("#orderName").val();
+			var orderEmail = $("#orderEmail").val();
+			var orderPhone = $("#orderPhone").val();
+			
+			var orderAddress = $("#joinAddress1").val() + $("#joinAddress2").val(); // 우폄번호 / 주소 로 나뉘어있어 나눠라ㅏ
+			var orderPost = $("#userPostal").val();
+				if(check){
+					IMP.init('imp09501430');//내가맹점고유번호
+				    IMP.request_pay({
+				          pg : 'html5_inicis', // version 1.1.0부터 지원.
+				          pay_method : 'card', // 결제수단
+				          merchant_uid : 'merchant_' + new Date().getTime(), // 주문번호
+				          name : pName, //주문 명
+				          amount : pPrice, //판매 가격
+				          buyer_email : orderEmail, // 구매재 이메일
+				          buyer_name : orderName, // 구매자 이름
+					      buyer_tel : orderPhone, // 구매자 핸드폰 번호
+					      buyer_addr : orderAddress, // 구매자 주소
+				          buyer_postcode : orderPost // 구매자 우편번호
+				      }, function(rsp) {
+				          if ( rsp.success ) {
+							$('#buyForm').submit();
+				          } else {
+				        	  alert('결재에 실패하였습니다.');
+				          }
+				      });
+				} else {
+					alert('주문 동의를 해주세요.');
+					return false;
+				}
 		}
 	</script>
 </body>

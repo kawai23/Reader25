@@ -41,4 +41,8 @@ public class BookDAO {
 	public Book selectBook(SqlSessionTemplate sqlSession, int b_no) {
 		return sqlSession.selectOne("bookMapper.selectBook", b_no);
 	}
+	public int insertBook(SqlSessionTemplate sqlSession, Book book) {
+		
+		return sqlSession.insert("bookMapper.insertBook", book);
+	}
 }

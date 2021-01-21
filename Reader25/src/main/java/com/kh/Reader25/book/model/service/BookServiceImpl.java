@@ -48,5 +48,9 @@ public class BookServiceImpl implements BookService{
 		return b_DAO.selectBook(sqlSession, b_no);
 	}
 
+	@Override
+	public int insertBook(Book book) {
+		return b_DAO.insertBook(sqlSession, book);
 	
+	}
 }

@@ -20,5 +20,6 @@ public interface BookService {
 
 	Book selectBook(int b_no);
 
+	int insertBook(Book book);
 
 }
