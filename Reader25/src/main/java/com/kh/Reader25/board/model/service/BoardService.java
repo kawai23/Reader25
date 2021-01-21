@@ -12,6 +12,7 @@ import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 
 public interface BoardService {
@@ -168,7 +169,6 @@ public interface BoardService {
 	ArrayList<Board> tiw();
 
 
-	ArrayList<Board> views_d();
 
 	ArrayList<Comments> selectLComments(int comNo);
 
@@ -181,9 +181,17 @@ public interface BoardService {
 
 	ArrayList<Board> views();
 	
-	ArrayList<Board> recd(int value);
 
 	int upPoint(HashMap<String, Object> map);
+
+	ArrayList<Board> recd(int value);
+
+	ArrayList<TWITopWriter> topWriterList();
+
+	ArrayList<TWITopWriter> topCommenterList();
+
+	ArrayList<TWITopWriter> topLikerList();
+
 
 
 

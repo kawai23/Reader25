@@ -39,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.dao.KakaoController;
@@ -58,6 +59,10 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
+	
+	//포인트 관련
+	@Autowired
+	private BoardService bService;
 	
 	//메일 발송 관련
 	@Autowired
@@ -89,8 +94,7 @@ public class MemberController {
 		
 		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
 		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
-		//System.out.println("네이버:" + naverAuthUrl);
-		
+				
 		//네이버 
 		model.addAttribute("naver_url", naverAuthUrl);
 		// 카카오 로그인 
@@ -102,9 +106,8 @@ public class MemberController {
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
+	public String callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
 			@RequestParam String state, HttpSession session) throws IOException, ParseException {
-		//System.out.println("여기는 callback");
 		
 		ModelAndView mav = new ModelAndView(); 
 		
@@ -133,8 +136,6 @@ public class MemberController {
 		m.setPhone(phone);
 		m.setGender(gender);
 		
-		//System.out.println("id"+id+"gender"+gender+"email"+email);
-		
 		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
 			
 			if(isUsable==0) {
@@ -144,14 +145,13 @@ public class MemberController {
 				
 				int result = mService.insertNMember(m);
 				
-				//System.out.println("result"+result);
-				
-				if(result != 0) {
+				if(result != 0) {					
 					Member loginUser = mService.memberLogin(m);
 					//아이디만 일치했을때에 대한 멤버 정보가 있음
 									
 					model.addAttribute("loginUser", loginUser);
-					mav.setViewName("home");
+					
+					return "redirect:home.do";
 				} else {
 					mav.setViewName("Login"); 
 				}
@@ -160,18 +160,17 @@ public class MemberController {
 				//아이디만 일치했을때에 대한 멤버 정보가 있음
 								
 				model.addAttribute("loginUser", loginUser);
-				mav.setViewName("home");
-			}
-		//System.out.println("session"+session);
+				return "redirect:home.do";
+			}			
+			return "redirect:home.do";
 			
-		mav.setViewName("home"); 
-			
-		return mav;
+		
 	}
+	
 
 	//카카오 로그인 성공시 컨트롤러
 	@RequestMapping(value = "/kakaologin.do", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST }) 
-	public ModelAndView kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
+	public String kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session) throws Exception { 
 		ModelAndView mav = new ModelAndView(); 
@@ -202,15 +201,12 @@ public class MemberController {
 		kbirthDay = kakao_account.path("birthday").asText(); 
 		kage = kakao_account.path("age_range").asText(); 
 				
-		//System.out.println();
 		m.setEmail(email);
 		m.setName(name);
 		m.setId(id);
 		m.setPwd(pwd);
 		m.setPhone(phone);
 		m.setGender(gender);
-		
-		//System.out.println(m);
 		
 		int isUsable = mService.checkIdDup(id) == 0 ? 0 : 1;
 		
@@ -221,30 +217,23 @@ public class MemberController {
 			
 			int result = mService.insertKMember(m);
 			
-			//System.out.println("result"+result);
-			
 			if(result != 0) {
+				
 				Member loginUser = mService.memberLogin(m);
 				//아이디만 일치했을때에 대한 멤버 정보가 있음
 								
 				model.addAttribute("loginUser", loginUser);
-				mav.setViewName("home");
+				return "redirect:home.do";
 			} else {
-				mav.setViewName("Login"); 
+				return "redirect:home.do"; 
 			}
 		} else {
 			Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
 							
 			model.addAttribute("loginUser", loginUser);
-			mav.setViewName("home");
+			return "redirect:home.do";
 		}
-		
-		System.out.println("session"+session);
-		
-		mav.setViewName("home"); 
-		
-		return mav;
 	}
 
 
@@ -256,15 +245,11 @@ public class MemberController {
 
 		Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
-			
-		//System.out.println("m받아온거"+m);
-			
+						
 		if(bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 			model.addAttribute("loginUser", loginUser);
 			return "redirect:home.do";
 		} else {
-				//model.addAttribute("message", "로그인에 실패하였습니다.");
-				//return "../common/errorPage";
 			throw new MemberException("로그인에 실패했습니다.");
 		}		
 	}
@@ -294,12 +279,7 @@ public class MemberController {
 	@RequestMapping("minsert.me")
 	public String memberInsert(@ModelAttribute Member m, @RequestParam("joinPostal") String post,
 								@RequestParam("joinAddress1") String address1,
-								@RequestParam("joinAddress2") String address2) {
-		
-		//System.out.println(m);
-		//System.out.println(post);
-		//System.out.println(address1);
-		//System.out.println(address2);
+								@RequestParam("joinAddress2") String address2, HttpSession session) {
 		
 		m.setAddress(post+"/"+address1+"/"+address2);
 		
@@ -308,7 +288,7 @@ public class MemberController {
 		
 		int result = mService.insertMember(m);
 				
-		if(result > 0) {
+		if(result > 0) {			
 			return "Login";
 		} else {
 			throw new MemberException("회원가입에 실패했습니다.");
@@ -347,9 +327,7 @@ public class MemberController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("user_name", user_name);
 		map.put("user_phone", user_phone);
-		//System.out.println(map);
 		String result = mService.searchId(map);
-		//System.out.println(result);
 
 		return result;
 	}
@@ -398,14 +376,13 @@ public class MemberController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("user_id", user_id);
 		map.put("key", encNewPwd);
-		//System.out.println(map);
 		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 '"+ user_id +"' 님</h2><br><br>" 
 				+ "<p>비밀번호 찾기를 신청해주셔서 임시 비밀번호를 발급해드립니다.</p>"
 				+ "<p>임시로 발급 드린 비밀번호는 <h2 style='color : blue'>'" + key +"'</h2>이며 로그인 후 마이페이지에서 비밀번호를 변경해주시면 됩니다.</p><br>"
 				+ "<h3><a href='http://localhost:8105/Reader25'>Reader25 홈페이지 접속 (클릭!) </a></h3><br><br>"
-				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
+				+ "Reader25에 향한 무한한 관심과 사랑 감사드립니다.";
 		try {
 			mail.setSubject("[Reader25] 임시 비밀번호가 발급되었습니다", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");
@@ -546,9 +523,6 @@ public class MemberController {
 	 @RequestMapping("mdelete.me")
 		public ModelAndView memberDelete(@ModelAttribute Member m , SessionStatus status, ModelAndView mv) {
 			
-			
-		 
-		 System.out.println(m);
 		 
 		 int result = mService.memberDelete(m);
 			
@@ -579,12 +553,6 @@ public class MemberController {
 			@RequestParam("joinAddress2") String address2, HttpSession session , Model model) {
 	
 
-		
-				System.out.println(m);
-				System.out.println(post);
-				System.out.println(address1);
-				System.out.println(address2);
-				
 				//Member member = mService.memberLogin((Member) session.getAttribute("loginUser"));
 				
 				Member member = (Member) session.getAttribute("loginUser");
@@ -601,9 +569,7 @@ public class MemberController {
 					m.setId(member.getId());
 				
 				
-					
-					System.out.println("비밀번호 일치 == " + m);
-					
+										
 					int result = mService.UpdateMember(m);
 					
 					System.out.println( m);

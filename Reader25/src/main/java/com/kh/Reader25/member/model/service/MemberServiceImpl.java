@@ -2,6 +2,8 @@ package com.kh.Reader25.member.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,6 +146,11 @@ public class MemberServiceImpl implements MemberService {
 	public int changeRank(HashMap<String, Object> cap) {
 		// TODO Auto-generated method stub
 		return mDAO.changeRank(sqlSession, cap);
+	}
+
+	@Override
+	public List<Map<String, String>> getEnrollList(String today) {
+		return mDAO.getEnrollList(sqlSession, today);
 	}
 
 

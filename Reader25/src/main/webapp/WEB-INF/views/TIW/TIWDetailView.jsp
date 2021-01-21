@@ -208,7 +208,24 @@ textarea{
 		top: 10px;
 }
 .no1{font-size:0px;}
-.updateBtn, .deleteBtn{display:inline-block; margin-left: 30px; margin-right: 10px; font-size: 12px;}
+#updateBtn{
+	width:35px; height: 30px;
+	display:inline-block;
+	margin-right: 5px; font-size: 12px; 
+	background-color: rgba(255,195,152,0.5); color:white;
+	font-family: 카페24 아네모네에어; font-size:13px;
+	border: 0px solid rgba(235, 235, 235, 1);
+	border-radius:100px;
+}
+#deleteBtn{
+	width:36px; height: 30px;
+	display:inline-block; margin-left: 5px; 
+	 font-size: 12px; 
+	background-color: rgba(196,196,196,0.5); color:darkgray;
+	font-family: 카페24 아네모네에어; font-size:13px;
+	border: 0px solid rgba(235, 235, 235, 1);
+	border-radius:100px;
+}
 </style>
 </head>
 <body>
@@ -434,11 +451,6 @@ textarea{
 					
 					<tr>
 						<td colspan="9" align="center">
-							<!-- <div style="text-align: right;">
-						       <a class="heart">
-						           <img id="heart" src="">
-						       </a>
-						   </div> -->
 							<c:choose>
 							  <c:when test="${heart eq '1'}">
 							    <a class="heart"><img id="heart" src="resources/images/like/like.png"></a>
@@ -574,8 +586,8 @@ textarea{
 							$comments.append($comment);
 							
 							if('${loginUser.id}' == cList[i].userId){
-								$top.append($btn1);
 								$top.append($btn2);
+								$top.append($btn1);
 							}
 						}
 					 }

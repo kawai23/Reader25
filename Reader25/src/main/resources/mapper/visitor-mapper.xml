@@ -25,6 +25,50 @@
 	<select id="getVisitTodayCount" resultType="_int">
 		select count(*)
 		from visitor
-		where substr(to_char(visit_time),1,9) = visit_time(sysdate,'yy/MM/dd')
+		where to_char(visit_time, 'yyyyMMdd') = to_char(sysdate,'yyyyMMdd')
 	</select>
+	
+	<select id="getVisitMonthCount" resultType="_int">
+		select count(*)
+		from visitor
+		where to_char(visit_time, 'yyyyMM') = to_char(sysdate,'yyyyMM')
+	</select>
+	
+	<select id="getDayVisitor" resultMap="dayCount">
+		<![CDATA[
+			select * from(
+			select to_char(visit_time,'yyyy/MM/dd') as day,count(*) count
+			from visitor
+			where to_char(visit_time,'yyyy/MM/dd') <= #{today}
+			group by to_char(visit_time,'yyyy/MM/dd')
+			order by to_char(visit_time,'yyyy/MM/dd')  desc) where rownum <= 5
+		]]>
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="dayCount">
+		<result javaType="java.lang.String" column="day" property="day"/>
+		<result javaType="java.lang.String" column="count" property="count"/>
+	</resultMap>
+	
+	<select id="getMonthVisitor" resultMap="monthCount">
+		<![CDATA[
+			select * from(
+			select to_char(visit_time,'yyyy/MM') as month,count(*) as count
+			from visitor
+			where to_char(visit_time, 'yyyy/MM') <= #{month}
+			group by to_char(visit_time,'yyyy/MM')
+			order by to_char(visit_time,'yyyy/MM') desc) where rownum <= 5
+		]]>
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="monthCount">
+		<result javaType="java.lang.String" column="month" property="month"/>
+		<result javaType="java.lang.String" column="count" property="count"/>
+	</resultMap>
+	
+	<select id="selectListVisitor" resultType="Visitor">
+		select to_char(visit_time,'yyyy-mm-dd HH24:mm:ss') as visit_time, visit_ip, visit_refer, visit_agent
+		from visitor v
+	</select>
+	
 </mapper>

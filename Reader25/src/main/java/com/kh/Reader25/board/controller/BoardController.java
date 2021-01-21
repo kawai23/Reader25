@@ -2006,7 +2006,7 @@ public class BoardController {
 	@RequestMapping("pcs.bo") // ****-------------------이거랑pcs.bo
 	public String purchaseCart() {
 		return "purchaseCart";	
-		}
+	}
 	/*
 	 * @RequestMapping("delete.rr") public String
 	 * deletebook(@RequestParam("boardNo") int boardNo) { int result =

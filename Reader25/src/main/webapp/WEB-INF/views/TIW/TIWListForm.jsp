@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Reader들을 위한 Reader 25</title>
-
 <style>
 /*화면*/
 .outer{
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
-		margin-bottom: 5%; min-width: 1000px;
+		margin-bottom: 0%; min-width: 1000px;
 		padding-top: 15px;
 		background-color:  #F6F6F6; 
 		font-family: 카페24 아네모네에어;
@@ -47,7 +47,7 @@ input, select{
 }
 /*글자*/
 .txt_TIW{
-	font-size:40px;
+	font-size:50px;
 	font-family: 카페24 아네모네;
 	text-align: center;
 }
@@ -107,6 +107,48 @@ input, select{
 .autocomplete-suggestions strong { font-weight: bold; color: orange; }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+.topWriter{
+	display:inline-block;
+}
+
+.top{
+	border-spacing: 10px -10px;
+}
+#toplist-div{
+	background: white;
+	margin: auto;
+	margin-top: 20px;
+	border-radius: 2px;
+	box-shadow: 0px 2px 2px 3px lightgray;
+	padding: 20px;
+	width: 60%
+}
+
+hr{
+	border-top: 1px solid red; width: 800px; border-style: outset;
+}
+#line{ margin-left: 30%; }
+#topList{font-size: 14px;}
+img{
+	-webkit-animation:blink 1s ease-in-out infinite alternate;
+    -moz-animation:blink 1s ease-in-out infinite alternate;
+    animation:blink 1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0.5;}
+    100% {opacity:1;}
+}
+
+
 </style>
 </head>
 <body>
@@ -116,11 +158,122 @@ input, select{
 	
 	<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
 	
+	<%
+		ArrayList<TWITopWriter> btList = (ArrayList<TWITopWriter>)request.getAttribute("btList");
+		ArrayList<TWITopWriter> bcList = (ArrayList<TWITopWriter>)request.getAttribute("bcList");
+		ArrayList<TWITopWriter> blList = (ArrayList<TWITopWriter>)request.getAttribute("blList");
+	%>
+	<img id="line" src="resources/images/icon/line2.png" width="500px" height="20px">
+	<div id="toplist-div">
+		<table id="top" align="center">
+			<tr>
+				<th width="250px">
+					<h4>다작왕 TOP3</h4>
+				</th>
+				<th width="250px">
+					<h4>댓글왕 TOP3</h4>
+				</th>
+				<th width="250px">
+					<h4>좋아요왕 TOP3</h4>
+				</th>
+			</tr>
+			<tr>
+				<td align="center">
+				
+					<div class="topWriter">
+						<div class="topWriter-list" align="center"></div>
+						<% if(btList.isEmpty()) { %>
+							등록된 다작왕이 없습니다.
+						<% } else { %>
+						<% for(int i = 0; i<btList.size(); i++){ %>
+							<% TWITopWriter b = btList.get(i); %>
+							<div class="thumb-list" align="center">
+								<div>
+									<input type="hidden" value="<%= b.getId() %>">
+									<% if(i == 0) { %>
+										<img src="resources/images/icon/crown.png" width="60px" height="30px">
+									<% } else if(i == 1) { %>
+										<img src="resources/images/icon/crown3.png" width="60px" height="30px">
+									<% } else { %>
+										<img src="resources/images/icon/crown2.png" width="60px" height="30px">
+									<% } %>
+								</div>
+								<p id="topList">[아이디] <%= b.getId() %></p>
+							</div>
+						<% } %>
+						<% } %>
+					</div>												
+				
+				</td>
+				
+				<td align="center">
+				
+					<div class="topWriter">
+						<div class="topWriter-list" align="center"></div>
+						<% if(bcList.isEmpty()) { %>
+							등록된 댓글왕이 없습니다.
+						<% } else { %>
+						<% for(int i = 0; i<bcList.size(); i++){ %>
+							<% TWITopWriter b = bcList.get(i); %>
+							<div class="thumb-list" align="center">
+								<div>
+									<input type="hidden" value="<%= b.getId() %>">
+									<% if(i == 0) { %>
+										<img src="resources/images/icon/crown.png" width="60px" height="30px">
+									<% } else if(i == 1) { %>
+										<img src="resources/images/icon/crown3.png" width="60px" height="30px">
+									<% } else { %>
+										<img src="resources/images/icon/crown2.png" width="60px" height="30px">
+									<% } %>
+								</div>
+								<p id="topList">[아이디] <%= b.getId() %></p>
+							</div>
+						<% } %>
+						<% } %>
+					</div>												
+				
+				</td>
+				
+				<td align="center">
+				
+					<div class="topWriter">
+						<div class="topWriter-list" align="center"></div>
+						<% if(blList.isEmpty()) { %>
+							등록된 좋아요왕이 없습니다.
+						<% } else { %>
+						<% for(int i = 0; i<blList.size(); i++){ %>
+							<% TWITopWriter b = blList.get(i); %>
+							<div class="thumb-list" align="center">
+								<div>
+									<input type="hidden" value="<%= b.getId() %>">
+									<% if(i == 0) { %>
+										<img src="resources/images/icon/crown.png" width="60px" height="30px">
+									<% } else if(i == 1) { %>
+										<img src="resources/images/icon/crown3.png" width="60px" height="30px">
+									<% } else { %>
+										<img src="resources/images/icon/crown2.png" width="60px" height="30px">
+									<% } %>
+								</div>
+								<p id="topList">[아이디] <%= b.getId() %></p>
+							</div>
+						<% } %>
+						<% } %>
+					</div>												
+				
+				</td>
+			</tr>
+		</table>
+	</div>	
+	<br><br>
+	
+	<img id="line" src="resources/images/icon/line2.png" width="500px" height="20px">
+	<br>
+	
 	<h3 align="center">총 게시글 갯수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
 	
 		<table id="TIWTable" align="center">
 			<tr>
-				<th>글 번호</th>
+				<th height="40px">글 번호</th>
 				<th>원작</th>
 				<th width="350px">제목</th>
 				<th>작가</th>
@@ -129,7 +282,7 @@ input, select{
 			</tr>
 			<c:forEach var="b" items="${ list }">
 			<tr class="contentTR">
-				<td align="center">${ b.boardNo }</td>
+				<td align="center" height="30px">${ b.boardNo }</td>
 				<td align="center">
 					<c:url var="searchTIWCate" value="searchTIWCate.to">
 						<c:param name="cate" value="${ b.cate }"/>
@@ -158,6 +311,7 @@ input, select{
 			</tr>
 			</c:forEach>
 		</table>
+		
 		
 		<!-- 오늘은 나도 작가 리스트 페이징 부분 -->
 		<!-- 페이징 버튼 -->
@@ -196,12 +350,13 @@ input, select{
 				<a href="${ Next }">&gt;</a>
 			</c:if>
 		</div>
+		<br><br>
 		<div class="insertbuttonArea" align="right">			
 			<c:if test="${ loginUser ne null }">
 				<input type="button" onclick="location.href='writeTIW.to';" id="writeTIWBtn" class="btn1" value="글쓰기">
 			</c:if>
 		</div>
-		
+		<br><br>
 		<!---------------- 3. 게시물 검색 ------------------>
 		<div id="searchArea" align="center">
 			<label>찾아보기</label>
@@ -218,7 +373,7 @@ input, select{
 			
 		</div>
 		
-		<br><br><br><br>
+		<br><br>
 		
 		<script src="//code.jquery.com/jquery.min.js"></script>
 		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.26/jquery.autocomplete.min.js'></script>
