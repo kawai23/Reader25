@@ -20,6 +20,7 @@ import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService{
@@ -511,6 +512,24 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> recd(int value) {
 		// TODO Auto-generated method stub
 		return bDAO.recd(sqlSession, value);
+	}
+
+	@Override
+	public ArrayList<TWITopWriter> topWriterList() {
+		// TODO Auto-generated method stub
+		return bDAO.topWriterList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<TWITopWriter> topCommenterList() {
+		// TODO Auto-generated method stub
+		return bDAO.topCommenterList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<TWITopWriter> topLikerList() {
+		// TODO Auto-generated method stub
+		return bDAO.topLikerList(sqlSession);
 	}
 
 

@@ -17,6 +17,9 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.Liketo" alias="Liketo"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.Comments" alias="Comments"/>
+		
+		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopWriter" alias="TWITopWriter"/>
+		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopComment" alias="TWITopComment"/>
 
 		<typeAlias type="com.kh.Reader25.book.model.vo.Book" alias="Book"/>
 
