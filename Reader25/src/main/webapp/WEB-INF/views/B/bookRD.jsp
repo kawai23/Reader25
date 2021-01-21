@@ -490,8 +490,7 @@ body {
 
 
 <!--============================여기서부터  ============================-->
-		 
-    
+	
       
        .slide{	
         width: 1000px;
@@ -510,6 +509,7 @@ body {
         left:10;
         font-size: 0;
         display: inline-block;
+        margin-left
       }
       .slide ul li{
         display: inline-block;
@@ -532,8 +532,6 @@ body {
 
 
 <!--============================여기까지 슬라이드 배너  ============================-->
-
-
 
 
 </style>
@@ -717,15 +715,16 @@ body {
 
 			<div class="purchase-btn">
 				<div class="a">
-					<a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> <a href="#"
-						class="cart-btn">장바구니</a>
+					<a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> 
+					<a href="cart.bo"class="cart-btn">장바구니</a>
+						
 				</div>
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					var imgs;
 					var img_count;
-					var img_position = -1;
+					var img_position = 0;
 
 					imgs = $(".slide ul");
 					img_count = imgs.children().length;
@@ -762,12 +761,12 @@ body {
 				});
 			</script>
 			<script>
-				function cart() {
-
-				}
-				function purchase() {
-
-				}
+			$('.cart-btn').click(function(){
+				location.href="<%=request.getContextPath()%>/cart.bo";
+			});
+			$('.pcs-btn').click(function(){
+				location.href="<%=request.getContextPath()%>/pcs.bo";
+			});
 			</script>
 
 
@@ -783,6 +782,9 @@ body {
 			<span class="info" id="sort">${author }</span> <br>
 			<p class="tag">거래자</p>
 			<span class="info" id="sort">${board.userId }</span>
+			<%-- <p class="tag">금액</p>
+			<span class="info" id="sort">${board.userAmount }</span> --%>
+			
 		</div>
 		</div>
 		<!---------------------------------- 내용박스 ------------------------------------>

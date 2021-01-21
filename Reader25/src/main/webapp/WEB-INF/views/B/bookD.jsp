@@ -240,8 +240,11 @@
 				</div>
 				
 				<div class="tag-div">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="booktitle" id="booktitle" placeholder="책제목">
+					<p class="tag">#</p><input type="text" class="bookInfo" name="book_name" id="booktitle" placeholder="책제목">
 					<p class="tag">#</p><input type="text" class="bookInfo" name="author" id="author" placeholder="작가">
+					<p class="tag">#</p><input type="text" class="bookAmount" name="price" id="amount" placeholder="금액">
+					<p class="tag">#</p><input type="text" class="bookAmount" name="book_q1"  placeholder="표지상태">
+					<p class="tag">#</p><input type="text" class="bookAmount" name="book_q2"  placeholder="내지상태">
 				</div>
 				<div class="content-edit" style="text-align:center;">
 					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
@@ -267,6 +270,7 @@
 				content = $('#smart_edit').val();
 				booktitle = $('#booktitle').val();
 				author = $('#author').val();
+				amount = $('#amount').val();
 				/* wise = $('#wise').val(); */
 				if(title == ''){
 					event.preventDefault();

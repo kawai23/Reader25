@@ -87,13 +87,12 @@ footer{
 }
 
 
-
 </style>
 </head>
 <body>
 	<!-- <h1 align="center">Reader25</h1> -->
 <%@include file="../common/menubar.jsp" %>
-	<br><br><br><br><br><br><br><br>
+	<br>
 	  
 	  
 	<div class="outer">

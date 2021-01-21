@@ -43,4 +43,9 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="book_no" column="BOOK_NO"/>
 	</resultMap>
+	<insert id="insertBook">
+		insert into book
+		values(book_seq.nextval, book_name=#{book_name}, price=#{price}, book_q1 = #{book_q1}, book_q2 = #{book_q2}, null,
+			author=#{author}, default)
+	</insert>
 </mapper>
