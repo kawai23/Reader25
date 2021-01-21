@@ -1,7 +1,10 @@
 package com.kh.Reader25;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -23,9 +26,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.PageInfo;
+import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.discuss.model.service.DiscussService;
 import com.kh.Reader25.discuss.model.vo.Discuss;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.visit.model.service.VisitorService;
+import com.kh.Reader25.visit.model.vo.Visitor;
 
 /**
  * Handles requests for the application home page.
@@ -38,6 +45,8 @@ public class HomeController {
 	private DiscussService dService;
 	@Autowired
 	private VisitorService vService;
+	@Autowired
+	private MemberService mService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -81,41 +90,115 @@ public class HomeController {
 		return "about";
 	}
 	@RequestMapping("statistic.ad")
-	public ModelAndView statisticPage(@RequestParam(value="month", required=false) Integer month, 
+	public ModelAndView statisticPage(@RequestParam(value="dayStart", required=false) String dayStart, 
 								@RequestParam(value="page", required=false) Integer page,
 								ModelAndView mv) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-		List<Map<String,String>> dayList = vService.getDayVisitor();
-		List<Map<String, String>> monthList = vService.getMonthVisitor();
+		// 오늘 날짜
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM");
+		Date time = new Date();
+		String today = sdf.format(time);
+		String month = sdf2.format(time);
+		
+		List<Map<String,String>> dayList = vService.getDayVisitor(today);
+		List<Map<String, String>> monthList = vService.getMonthVisitor(month);
 		int monthCount = vService.getVisitMonthCount();
 		
+		int listCount = mService.getMemListCount();
+		
+		List<Map<String, String>> enrollList = mService.getEnrollList(today);
 		// 값가공
-		String dayStr = "";
+		String dayStr = "['Day','방문자수','회원가입수']";
 		for(int i = 0; i < dayList.size(); i++) {
 			if(i != dayList.size()) {
 				dayStr += ",";
 			}
-			dayStr += "['" + dayList.get(i).get("day") +"'," + dayList.get(i).get("count") + "]";
+			if(enrollList.size() <= i) {
+				dayStr += "['" + dayList.get(i).get("day") +"'," + dayList.get(i).get("count") + ",0]";
+			}else {
+				dayStr += "['" + dayList.get(i).get("day") +"'," + dayList.get(i).get("count") + ","+ enrollList.get(i).get("count")+"]";
+			}
 		}
-		String monthStr = "";
+		String monthStr = "['Month','Count']";
 		for(int i = 0; i < monthList.size(); i++) {
 			if(i != monthList.size()) {
 				monthStr += ",";
 			}
 			monthStr += "['" + monthList.get(i).get("month") +"'," + monthList.get(i).get("count") + "]";
 		}
+		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
+		ArrayList<Visitor> visitList = vService.selectListVisitor(pi);
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
 		
-		mv.addObject("dayList", dayList);
+		
 		mv.addObject("dayStr", dayStr);
-		mv.addObject("monthList", monthList);
 		mv.addObject("monthStr", monthStr);
 		mv.addObject("monthCount", monthCount);
+		mv.addObject("visitList", visitList);
+		mv.addObject("pi", pi);
 		
 		mv.setViewName("statistic");
 		
 		return mv;
+	}
+	// 일별 방문자 현황 그래프
+	@RequestMapping("dayCount.ad")
+	public void getDayCount(@RequestParam("dayStart") String dayStart, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		// 값 가공
+		String[] dayArr = dayStart.split("-");
+		String day = "";
+		for(int i = 0; i < dayArr.length; i++) {
+			day += dayArr[i];
+			if(i != dayArr.length-1) {
+				day += "/";
+			}
+		}
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		
+		List<Map<String,String>> dayList = vService.getDayVisitor(day);
+		List<Map<String,String>> enrollList = mService.getEnrollList(day);
+		
+		map.put("dayList", dayList);
+		map.put("enrollList", enrollList);
+		
+		Gson gson = new Gson();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	//월별 방문자 현황 그래프
+	@RequestMapping("monthCount.ad")
+	public void getMonthCount(@RequestParam("monthStart") String monthStart, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		
+		// 값 가공
+		String[] monthArr = monthStart.split("-");
+		String month = "";
+		for(int i = 0; i < monthArr.length; i++) {
+			month += monthArr[i];
+			if(i != monthArr.length-1) {
+				month += "/";
+			}
+		}
+		List<Map<String,String>> monthList = vService.getMonthVisitor(month);
+		
+		Gson gson = new Gson();
+		try {
+			gson.toJson(monthList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

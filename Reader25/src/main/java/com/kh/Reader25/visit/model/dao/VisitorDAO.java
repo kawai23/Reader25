@@ -1,11 +1,14 @@
 package com.kh.Reader25.visit.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.visit.model.vo.Visitor;
 
 @Repository("vDAO")
@@ -27,12 +30,18 @@ public class VisitorDAO {
 		return sqlSession.selectOne("visitorMapper.getVisitMonthCount");
 	}
 
-	public List<Map<String,String>> getDayVisitor(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("visitorMapper.getDayVisitor");
+	public List<Map<String,String>> getDayVisitor(SqlSessionTemplate sqlSession, String today) {
+		return sqlSession.selectList("visitorMapper.getDayVisitor", today);
 	}
 
-	public List<Map<String, String>> getMonthVisitor(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("visitorMapper.getMonthVisitor");
+	public List<Map<String, String>> getMonthVisitor(SqlSessionTemplate sqlSession, String month) {
+		return sqlSession.selectList("visitorMapper.getMonthVisitor", month);
+	}
+
+	public ArrayList<Visitor> selectListVisitor(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("visitorMapper.selectListVisitor", null, rowBounds);
 	}
 
 
