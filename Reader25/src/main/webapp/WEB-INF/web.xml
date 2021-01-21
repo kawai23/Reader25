@@ -16,6 +16,15 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- 방문자수 세션리스너 등록 -->
+	<listener>
+		<listener-class>com.kh.Reader25.common.VisitCounter</listener-class>
+	</listener>
+	<listener> 
+		<listener-class> org.springframework.web.context.request.RequestContextListener </listener-class> 
+	</listener>
+
 
 	<!-- Processes application requests -->
 	<servlet>

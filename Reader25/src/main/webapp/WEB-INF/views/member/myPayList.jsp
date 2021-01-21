@@ -43,7 +43,7 @@
  	   <%@ include file="../common/mySideMenubar.jsp"%> 
 <!-- 	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" > -->
 	  
-<!-- <!-- 	  <img src=""> --> -->
+<!-- <!-- 	  <img src=""> --> 
 	  
 <%-- 	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br> --%>
 	  
@@ -75,6 +75,9 @@
 			
 	  
 <!-- 	  </div> -->
+
+
+
 	  
 	  
 	  
@@ -196,7 +199,14 @@
 				
 				
 				
+				$(function(){
+					
+					
+					$('#pay').addClass('active');
+					
+
 				
+				});
 				
 
 

@@ -271,6 +271,16 @@
 				
 		<script>
 		
+
+		$(function(){
+			
+
+				$('#like').addClass('active');
+				
+
+			
+			});
+		
 		
 			
 

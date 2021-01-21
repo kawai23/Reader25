@@ -286,7 +286,7 @@ background: #C95F12;
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div id = "test1"style = "width : 100%">
 		<br>
-			<c:forEach var = "r" items="${ views_d }" begin = "0" end = "13">
+			<c:forEach var = "r" items="${ views }" begin = "0" end = "13">
 				<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
 			</c:forEach>
 		</div>
@@ -300,7 +300,7 @@ background: #C95F12;
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
-			<c:forEach var = "r" items="${ review_d }" begin = "0" end = "13">
+			<c:forEach var = "r" items="${ review }" begin = "0" end = "13">
 				<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
 			</c:forEach>
 		</div>
@@ -314,7 +314,7 @@ background: #C95F12;
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
-			<c:forEach var = "d" items="${ discuss_d }" begin = "0" end = "13">
+			<c:forEach var = "d" items="${ discuss }" begin = "0" end = "13">
 				<p class = "ellipsis"><c:out value = "${ d.dTitle }"/></p>
 			</c:forEach>
 		</div>
@@ -328,7 +328,7 @@ background: #C95F12;
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
 		<div style = "width : 100%">
 		<br>
-			<c:forEach var = "t" items="${ tiw_d }" begin = "0" end = "13">
+			<c:forEach var = "t" items="${ tiw }" begin = "0" end = "13">
 				<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
 			</c:forEach>
 		</div>
@@ -346,12 +346,9 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
-		    var data = 1;
 		    
 		    $.ajax({
 		    	url: "recod.do",
-		    	type : "POST",
-		    	data : {data : data},
 		    	success : function(data){
 		    		console.log(data);
 		    	},

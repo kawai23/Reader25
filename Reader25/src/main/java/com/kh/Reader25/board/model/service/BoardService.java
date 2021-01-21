@@ -13,6 +13,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 
 public interface BoardService {
@@ -191,11 +192,23 @@ public interface BoardService {
 
 	int upPoint(HashMap<String, Object> map);
 
+
 	ArrayList<String> searchLikeList(SearchCondition sc);
 
 	int MyPointListCount(SearchCondition sc);
 
 	ArrayList<Point> MyPointList(SearchCondition sc, PageInfo pi);
+
+	ArrayList<Board> recd(int value);
+
+	ArrayList<TWITopWriter> topWriterList();
+
+	ArrayList<TWITopWriter> topCommenterList();
+
+	ArrayList<TWITopWriter> topLikerList();
+
+	int myPointDelete(String[] lists);
+
 
 
 

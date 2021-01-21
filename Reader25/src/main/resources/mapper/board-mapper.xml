@@ -382,12 +382,12 @@
  		
  		select count(*)
 		from point  
-		where  MID =  #{mId};
+		where  MID =  #{mId}
 
  		
  		<if test="no != null">
  		
- 			and POINTNO  #{no} 
+ 			and POINTNO=  #{no} 
  		
  		</if>
  		
@@ -399,17 +399,17 @@
  	
  	</select>
  	
- 	<select id="MyPointList" resultType="pointResultSet">
+ 	<select id="MyPointList" resultMap="pointResultSet">
  	
  	
  		select *
 		from point  
-		where  MID =  #{mId};
+		where  MID =  #{mId}
 
  		
  		<if test="no != null">
  		
- 			and POINTNO  #{no} 
+ 			and POINTNO =  #{no} 
  		
  		</if>
  		
@@ -422,6 +422,12 @@
  		order by POINTNO desc
  	
  	</select>
+ 	
+ 	
+ 	<delete id="myPointDelete">
+		DELETE FROM point
+		WHERE POINTNO=#{s} 
+    </delete>
  	
  	
  	
@@ -867,7 +873,7 @@
 	<![CDATA[
 		select b_title
 		from board
-		where code = '2' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		where code = '2' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
 		order by b_count desc
 	]]>
 	</select>
@@ -875,7 +881,7 @@
 	<![CDATA[
 		select b_title
 		from board
-		where code = '5' AND (enroll_day between trunc(sysdate) - 30 and trunc(sysdate +1)) AND ROWNUM <= 17
+		where code = '5' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
 		order by b_count desc
 	]]>
 	</select>
@@ -883,7 +889,7 @@
 	<![CDATA[
         SELECT B_TITLE
         FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 30 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 1 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
@@ -916,5 +922,43 @@
 		insert into point
 		values (SEQ_POID.nextval, #{pCon}, #{id}, #{point})
 	</insert>
+	<select id="recd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	
+	<select id="topWriterList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopWriter
+			where rownum <= 3
+		]]>
+	</select>
+	
+	<resultMap type="TWITopWriter" id="TWITopWriterResultSet">
+		<id property="id" column="USER_ID"></id>
+		<result property="count" column="COUNT"></result>
+	</resultMap>
+		
+	<select id="topCommenterList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopComment
+			where rownum <= 3
+		]]>
+	</select>
+	
+	<select id="topLikerList" resultMap="TWITopWriterResultSet">
+		<![CDATA[
+			select *
+			from TWITopLike
+			where rownum <= 3
+		]]>
+	</select>
+	
 	
 </mapper>

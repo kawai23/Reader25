@@ -21,6 +21,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService {
@@ -530,10 +531,33 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return bDAO.upPoint(sqlSession, map);
 	}
+	
+	@Override
+	public ArrayList<Board> recd(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recd(sqlSession, value);
+	}
 
 	@Override
 	public ArrayList<String> searchLikeList(SearchCondition sc) {
 		return bDAO.searchLikeList(sqlSession, sc);
+	}
+	public ArrayList<TWITopWriter> topWriterList() {
+		// TODO Auto-generated method stub
+		return bDAO.topWriterList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<TWITopWriter> topCommenterList() {
+		// TODO Auto-generated method stub
+		return bDAO.topCommenterList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<TWITopWriter> topLikerList() {
+		// TODO Auto-generated method stub
+		return bDAO.topLikerList(sqlSession);
+
 	}
 
 	@Override
@@ -546,5 +570,27 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Point> MyPointList(SearchCondition sc, PageInfo pi) {
 		return bDAO.MyPointList(sqlSession, sc, pi);
 	}
+	
+	
+
+	@Transactional
+	@Override
+	public int myPointDelete(String[] lists) {
+		
+		int result = 0;
+
+		for (String s : lists) {
+
+			result += bDAO.myPointDelete(sqlSession, s);
+
+		}
+		if (result != lists.length) {
+
+			throw new BoardException("좋아요  삭제 실패");
+		}
+		return result;
+	}
+	
+	
 
 }

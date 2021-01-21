@@ -106,7 +106,7 @@ public class MemberController {
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
+	public String callback(Model model, @ModelAttribute Member m, @RequestParam String code, 
 			@RequestParam String state, HttpSession session) throws IOException, ParseException {
 		
 		ModelAndView mav = new ModelAndView(); 
@@ -150,7 +150,8 @@ public class MemberController {
 					//아이디만 일치했을때에 대한 멤버 정보가 있음
 									
 					model.addAttribute("loginUser", loginUser);
-					mav.setViewName("home");
+					
+					return "redirect:home.do";
 				} else {
 					mav.setViewName("Login"); 
 				}
@@ -159,17 +160,17 @@ public class MemberController {
 				//아이디만 일치했을때에 대한 멤버 정보가 있음
 								
 				model.addAttribute("loginUser", loginUser);
-				mav.setViewName("home");
+				return "redirect:home.do";
 			}			
-		mav.setViewName("home"); 
+			return "redirect:home.do";
 			
-		return mav;
+		
 	}
 	
 
 	//카카오 로그인 성공시 컨트롤러
 	@RequestMapping(value = "/kakaologin.do", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST }) 
-	public ModelAndView kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
+	public String kakaoLogin(@ModelAttribute Member m, @RequestParam("code") String code, Model model,
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session) throws Exception { 
 		ModelAndView mav = new ModelAndView(); 
@@ -222,21 +223,17 @@ public class MemberController {
 				//아이디만 일치했을때에 대한 멤버 정보가 있음
 								
 				model.addAttribute("loginUser", loginUser);
-				mav.setViewName("home");
+				return "redirect:home.do";
 			} else {
-				mav.setViewName("Login"); 
+				return "redirect:home.do"; 
 			}
 		} else {
 			Member loginUser = mService.memberLogin(m);
 			//아이디만 일치했을때에 대한 멤버 정보가 있음
 							
 			model.addAttribute("loginUser", loginUser);
-			mav.setViewName("home");
+			return "redirect:home.do";
 		}
-				
-		mav.setViewName("home"); 
-		
-		return mav;
 	}
 
 

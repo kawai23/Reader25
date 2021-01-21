@@ -9,13 +9,17 @@
 <body>
 
 
- <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black"  >
+ <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black; width: 15%"  >
 	  
 <!-- 	  <img src=""> -->
-	  
-	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
-	  
-	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
+
+
+		
+		  
+		  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
+		  
+		  <p style="margin-left: 70px; color: white;"  href="myPointList.me">포인트 : 
+		   <a style=" color: white;"  href="myPointList.me"> ${loginUser.point }</a> <hr>
 	  
 	  
 	 
@@ -41,6 +45,8 @@
 				<br>
 				<br>
 				<br>
+				
+			
 			
 	  
 	  </div>

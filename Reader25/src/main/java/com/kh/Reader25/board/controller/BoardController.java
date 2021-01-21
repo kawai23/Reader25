@@ -2,6 +2,8 @@ package com.kh.Reader25.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -1000,6 +1003,10 @@ public class BoardController {
 			
 		int listCount = bService.getTIWListCount();
 		int todayListCount = bService.todayListCount(enrollDay);
+		
+		ArrayList<TWITopWriter> btList = bService.topWriterList();
+		ArrayList<TWITopWriter> bcList = bService.topCommenterList();
+		ArrayList<TWITopWriter> blList = bService.topLikerList();
 			
 		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
 			
@@ -1008,6 +1015,8 @@ public class BoardController {
 		if(list != null) {
 			mv.addObject("list", list);
 			mv.addObject("pi", pi);
+			mv.addObject("btList", btList);
+			mv.addObject("bcList", bcList);
 			mv.addObject("todayListCount", todayListCount);
 			mv.setViewName("TIWListForm");
 		} else {
@@ -2109,13 +2118,13 @@ public class BoardController {
 			
 			
 			
-			mv.setViewName("myPayList");
+			mv.setViewName("myPointList");
 			
 			
 		} catch (BoardException e) {
 			
 			
-			throw new BoardException("구매 리스트 삭제 실패");
+			throw new BoardException("포인트 리스트 조회 실패");
 			
 		}
 		
@@ -2124,6 +2133,62 @@ public class BoardController {
 		
 		
 		return mv; 
+	}
+	
+	@RequestMapping("myPointDelete.me")
+	public ModelAndView myPointDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		int result = bService.myPointDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myPointList.me");
+		} else {
+
+			throw new BoardException("구매 리스트 삭제 실패");
+		}
+
+		return mv;
+
 	}
 	
 	
@@ -2196,6 +2261,8 @@ public class BoardController {
 
 
 }
+	
+	
 	
 	
 	

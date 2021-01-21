@@ -17,6 +17,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 
 @Repository("bDAO")
 public class BoardDAO {
@@ -491,6 +492,7 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.upPoint", map);
 	}
 
+
 	public int MyPointListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		return sqlSession.selectOne("boardMapper.MyPointListCount", sc);
 	}
@@ -504,6 +506,32 @@ public class BoardDAO {
 		
 		
 		return  (ArrayList)sqlSession.selectList("boardMapper.MyPointList",sc , rowBounds);
+	}
+
+	public ArrayList<Board> recd(SqlSessionTemplate sqlSession, int value) {
+
+		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+	}
+
+	public ArrayList<TWITopWriter> topWriterList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.topWriterList");
+	}
+
+	public ArrayList<TWITopWriter> topCommenterList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.topCommenterList");
+	}
+
+	public ArrayList<TWITopWriter> topLikerList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.topLikerList");
+
+	}
+
+	public int myPointDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		return sqlSession.delete("boardMapper.myPointDelete",s);
 	}
 
 
