@@ -2,6 +2,8 @@ package com.kh.Reader25.member.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -145,9 +147,11 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.changeRank", cap);
 	}
-	
-	
 
+	public List<Map<String, String>> getEnrollList(SqlSessionTemplate sqlSession, String today) {
+		return sqlSession.selectList("memberMapper.getEnrollList", today);
+	}
+	
 
 
 }

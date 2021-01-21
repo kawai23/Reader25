@@ -1017,6 +1017,7 @@ public class BoardController {
 			mv.addObject("pi", pi);
 			mv.addObject("btList", btList);
 			mv.addObject("bcList", bcList);
+			mv.addObject("blList", blList);
 			mv.addObject("todayListCount", todayListCount);
 			mv.setViewName("TIWListForm");
 		} else {

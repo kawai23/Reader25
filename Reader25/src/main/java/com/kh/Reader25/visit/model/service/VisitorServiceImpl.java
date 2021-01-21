@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.visit.model.dao.VisitorDAO;
 import com.kh.Reader25.visit.model.vo.Visitor;
 
@@ -25,13 +26,18 @@ public class VisitorServiceImpl implements VisitorService{
 	}
 
 	@Override
-	public List<Map<String,String>> getDayVisitor() {
-		return vDAO.getDayVisitor(sqlSession);
+	public List<Map<String,String>> getDayVisitor(String today) {
+		return vDAO.getDayVisitor(sqlSession, today);
 	}
 
 	@Override
-	public List<Map<String, String>> getMonthVisitor() {
-		return vDAO.getMonthVisitor(sqlSession);
+	public List<Map<String, String>> getMonthVisitor(String month) {
+		return vDAO.getMonthVisitor(sqlSession, month);
+	}
+
+	@Override
+	public ArrayList<Visitor> selectListVisitor(PageInfo pi) {
+		return vDAO.selectListVisitor(sqlSession, pi);
 	}
 
 
