@@ -17,7 +17,7 @@
 		<result property="b_Q2" column="BOOK_Q2"/>
 		<result property="b_Q3" column="BOOK_Q2"/>
 		<result property="author" column="AUTHOR"/>
-		<result property="b_Stauts" column="STATUS"/>
+		<result property="b_Status" column="STATUS"/>
 	</resultMap>
 	
 	<select id="getPayList" resultType="_int">

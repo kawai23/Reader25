@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList" %>
+<%@ page import="com.kh.Reader25.board.model.vo.*, java.util.ArrayList,com.kh.Reader25.book.model.vo.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -207,14 +207,9 @@
 				</div>
 				<br>
 				<br>
-				<div class="wise-div">
-					<img src="resources/images/bookreview/quote4.png">
-					<input name="wise" type="text" value="${ wise }">
-					<img src="resources/images/bookreview/quote3.png">
-				</div>
 				<div class="tag-div">
-					<p class="tag">책제목</p><input type="text" class="title" name="title" value="${ board.bTitle }">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="booktitle" value="${ booktitle }">
+					<p class="tag">책제목</p><input type="text" class="title" name="b_name" value="${ book.b_name }">
+					<p class="tag">#</p><input type="text" class="bookInfo" name="booktitle" value="${ book.b_name }">
 					<p class="tag">#</p><input type="text" class="bookInfo" name="author" value="${author}">
 				</div>
 				<div class="content-edit" style="text-align:center;">
