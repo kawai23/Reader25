@@ -10,6 +10,7 @@
 <title>Reader25란</title>
 
 <style>
+
 	section{
 		width:80%; min-width: 1000px; min-height: 500px; margin:auto; margin-top: 50px;
 		position: relative; display: flex; 
@@ -53,7 +54,7 @@
         background: transparent linear-gradient(180deg, #FF6C6C 0%, #FFC6C6 100%) 0% 0% no-repeat padding-box;
         opacity: 0.77;
         
-        animation-duration:20s; animation-iteration-count:6; animation-name:aa_ani;
+        animation-duration:30s; animation-iteration-count:6; animation-name:aa_ani;
     }
     
     @keyframes aa_ani{
@@ -66,7 +67,7 @@
             }75%{
                 margin-left:20%; margin-top:-20%
             }100%{
-                margin-left:0%; 
+                
             }
         }
 
@@ -80,12 +81,12 @@
         opacity: 0.77;
         border-radius: 50%;
         
-        animation-duration:20s; animation-iteration-count:6; animation-name:bb_ani;
+        animation-duration:30s; animation-iteration-count:6; animation-name:bb_ani;
     }
     
     @keyframes bb_ani{
             0%{
-                margin-right:-10%; 
+                
             }25%{
                 margin-right:20%; margin-top:15%
             }50%{
@@ -93,7 +94,7 @@
             }70%{
                 margin-right:40%; margin-top:-50%
             }100%{
-                margin-right:0%; margin-top:0%
+                
             }
         }
 
@@ -109,7 +110,7 @@
         opacity: 0.77;
         border-radius: 50%;
         
-        animation-duration:20s; animation-iteration-count:6; animation-name:cc_ani;
+        animation-duration:30s; animation-iteration-count:6; animation-name:cc_ani;
     }
     
     @keyframes cc_ani{
@@ -122,7 +123,7 @@
             }75%{
                 margin-left:100%; margin-top:-40%
             }100%{
-                margin-left:0%; margin-top:0%
+                
             }
         }
 
@@ -137,12 +138,12 @@
         opacity: 0.77;
         border-radius: 50%;
         
-        animation-duration:20s; animation-iteration-count:6; animation-name:dd_ani;
+        animation-duration:30s; animation-iteration-count:6; animation-name:dd_ani;
     }
     
     @keyframes dd_ani{
             0%{
-                margin-right:-10%; 
+               
             }25%{
                 margin-right:40%; margin-top:-15%
             }50%{
@@ -150,16 +151,18 @@
             }70%{
                 margin-right:20%; margin-top:30%
             }100%{
-                margin-right:0%; 
+                
             }
         }
     
     
+
 </style>
 </head>
 <body>
 	<%@ include file="menubar.jsp" %>
 	<section>
+
 		<div class="logo">
 			<img id="myImg" align="center" src="resources/images/about/background2.jpg">
 			<div class="out">
@@ -171,6 +174,7 @@
 					‘새로워진 독서’ 독서를  혼자 즐기는 것이 아니라  <br>다양한 방법으로  많은 사람들과 나눌 수 있는 
 					 신개념 독서 커뮤니티
 				</p>
+
 			</div>
 	    </div>
 	    <div class="circle"></div> 

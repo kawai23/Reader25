@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Reader들을 위한 Reader 25</title>
-
 <style>
 /*화면*/
 .outer{
@@ -107,6 +107,10 @@ input, select{
 .autocomplete-suggestions strong { font-weight: bold; color: orange; }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+.topWriter{
+	display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -115,6 +119,94 @@ input, select{
 	<div class="outer">
 	
 	<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
+	
+	<%
+		ArrayList<TWITopWriter> btList = (ArrayList<TWITopWriter>)request.getAttribute("btList");
+		ArrayList<TWITopWriter> bcList = (ArrayList<TWITopWriter>)request.getAttribute("bcList");
+		ArrayList<TWITopWriter> blList = (ArrayList<TWITopWriter>)request.getAttribute("blList");
+	%>
+	
+	<table align="center">
+		<tr>
+			<th>
+				<h2>오나작 다작왕 TOP3</h2>
+			</th>
+			<th>
+				<h2>오나작 댓글왕 TOP3</h2>
+			</th>
+			<th>
+				<h2>오나작 좋아요왕 TOP3</h2>
+			</th>
+		</tr>
+		<tr>
+			<td>
+			
+				<div class="topWriter">
+					<div class="topWriter-list" align="center"></div>
+					<% if(btList.isEmpty()) { %>
+						등록된 다작왕이 없습니다.
+					<% } else { %>
+					<% for(int i = 0; i<btList.size(); i++){ %>
+						<% TWITopWriter b = btList.get(i); %>
+						<div class="thumb-list" align="center">
+							<div>
+								<input type="hidden" value="<%= b.getId() %>">
+								<img src="resources/images/icon/crown.png" width="100px" height="50px">
+							</div>
+							<p id="topRecipeList">[아이디] <%= b.getId() %></p>
+						</div>
+					<% } %>
+					<% } %>
+				</div>												
+			
+			</td>
+			
+			<td>
+			
+				<div class="topWriter">
+					<div class="topWriter-list" align="center"></div>
+					<% if(bcList.isEmpty()) { %>
+						등록된 댓글왕이 없습니다.
+					<% } else { %>
+					<% for(int i = 0; i<bcList.size(); i++){ %>
+						<% TWITopWriter b = bcList.get(i); %>
+						<div class="thumb-list" align="center">
+							<div>
+								<input type="hidden" value="<%= b.getId() %>">
+								<img src="resources/images/icon/crown2.png" width="100px" height="50px">
+							</div>
+							<p id="topRecipeList">[아이디] <%= b.getId() %></p>
+						</div>
+					<% } %>
+					<% } %>
+				</div>												
+			
+			</td>
+			
+			<td>
+			
+				<div class="topWriter">
+					<div class="topWriter-list" align="center"></div>
+					<% if(bcList.isEmpty()) { %>
+						등록된 좋아요왕이 없습니다.
+					<% } else { %>
+					<% for(int i = 0; i<bcList.size(); i++){ %>
+						<% TWITopWriter b = bcList.get(i); %>
+						<div class="thumb-list" align="center">
+							<div>
+								<input type="hidden" value="<%= b.getId() %>">
+								<img src="resources/images/icon/crown3.png" width="100px" height="50px">
+							</div>
+							<p id="topRecipeList">[아이디] <%= b.getId() %></p>
+						</div>
+					<% } %>
+					<% } %>
+				</div>												
+			
+			</td>
+		</tr>
+	</table>
+		
 	
 	<h3 align="center">총 게시글 갯수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
 	

@@ -17,6 +17,9 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.Liketo" alias="Liketo"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.Comments" alias="Comments"/>
+		
+		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopWriter" alias="TWITopWriter"/>
+		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopComment" alias="TWITopComment"/>
 
 		<typeAlias type="com.kh.Reader25.book.model.vo.Book" alias="Book"/>
 
@@ -27,6 +30,8 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.SearchCate" alias="SearchCate"/>
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Discuss" alias="Discuss"/>
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Reply" alias="Reply"/>
+		
+		<typeAlias type="com.kh.Reader25.visit.model.vo.Visitor" alias="Visitor"/>
 	</typeAliases>
 	
 	<mappers>

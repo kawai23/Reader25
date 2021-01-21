@@ -346,13 +346,11 @@ background: #C95F12;
 		        this.style.background = "#A84E19";
 		      })
 		    }
-		    var data = 1;
 		    
 		    $.ajax({
 		    	url: "recod.do",
-		    	type : "GET",
 		    	success : function(data){
-		    	console.log(data);
+		    		console.log(data);
 		    	},
 		    	error: function(){
 		    		alert("정보소환에 실패하였습니다");
