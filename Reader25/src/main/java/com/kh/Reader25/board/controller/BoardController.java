@@ -36,6 +36,7 @@ import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.common.Pagination;
@@ -990,35 +991,41 @@ public class BoardController {
 
 	// 오늘은 나도 작가 = 5 리스트 폼 이동 컨트롤러
 	@RequestMapping("goTIWList.to")
-	public ModelAndView goTIWList(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
-
-		int currentPage = 1;
-		if (page != null) {
-			currentPage = page;
-		}
-
-		SimpleDateFormat format1 = new SimpleDateFormat("yy/MM/dd");
-		Calendar calendar = Calendar.getInstance();
-		String enrollDay = format1.format(calendar.getTime());
-		// System.out.println("enrollDay"+enrollDay);
-
-		int listCount = bService.getTIWListCount();
-		int todayListCount = bService.todayListCount(enrollDay);
-
-		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
-
-		ArrayList<Board> list = bService.selectTIWList(pi);
-
-		if (list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.addObject("todayListCount", todayListCount);
-			mv.setViewName("TIWListForm");
-		} else {
-			throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");
-		}
-
-		return mv;
+	public ModelAndView goTIWList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
+	         
+	      int currentPage = 1;
+	      if(page != null) {
+	         currentPage = page;
+	      }
+	      
+	      SimpleDateFormat format1 = new SimpleDateFormat( "yy/MM/dd");
+	      Calendar calendar = Calendar.getInstance();
+	      String enrollDay = format1.format(calendar.getTime());
+	         
+	      int listCount = bService.getTIWListCount();
+	      int todayListCount = bService.todayListCount(enrollDay);
+	      
+	      ArrayList<TWITopWriter> btList = bService.topWriterList();
+	      ArrayList<TWITopWriter> bcList = bService.topCommenterList();
+	      ArrayList<TWITopWriter> blList = bService.topLikerList();
+	         
+	      PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
+	         
+	      ArrayList<Board> list = bService.selectTIWList(pi);
+	         
+	      if(list != null) {
+	         mv.addObject("list", list);
+	         mv.addObject("pi", pi);
+	         mv.addObject("btList", btList);
+	         mv.addObject("bcList", bcList);
+	         mv.addObject("blList", blList);
+	         mv.addObject("todayListCount", todayListCount);
+	         mv.setViewName("TIWListForm");
+	      } else {
+	         throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");
+	      }
+	         
+	      return mv;
 	}
 
 	// 오늘은 나도 작가 = 5 글 작성 폼 이동 컨트롤러
@@ -1217,7 +1224,7 @@ public class BoardController {
 	}
 
 	// 댓글 불러오기
-	@RequestMapping("cList.to")
+//	@RequestMapping("cList.to")
 //	public void getCommentsList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
 //		
 //		ArrayList<Comments> cList = bService.selectCommentsList(boardNo);
