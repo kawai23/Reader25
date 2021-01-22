@@ -781,9 +781,12 @@ body {
          </script>
          <script>
          $('.cart-btn').click(function(){
+             var SB_V;
+             var book_no;
+             var b_price;
              $.ajax({
                 url: 'insertCart.bo',
-                data:{}.
+                data:{b_price:b_price, book_no:book_no, SB_V:SB_V}.
                 success: function(data){
 		        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 					if(check){
