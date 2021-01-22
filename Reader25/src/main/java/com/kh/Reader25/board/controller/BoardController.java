@@ -2142,7 +2142,15 @@ public class BoardController {
 			
 			return mv;
 		}
-
+		
+		@RequestMapping("cart.bo") // ****-------------------이거랑pcs.bo
+		public String bookCart() {
+			return "bookCart";
+			}
+		@RequestMapping("pcs.bo") 
+		public String bookPurchase() {
+			return "bookPurchase";	
+			}
 		/*
 		 * @RequestMapping("delete.rr") public String
 		 * deletebook(@RequestParam("boardNo") int boardNo) { int result =
