@@ -2003,9 +2003,9 @@ public class BoardController {
 	public String bookCart() {
 		return "bookCart";
 		}
-	@RequestMapping("pcs.bo") // ****-------------------이거랑pcs.bo
-	public String purchaseCart() {
-		return "purchaseCart";	
+	@RequestMapping("pcs.bo") // 
+	public String bookPurchase() {
+		return "bookPurchase";	
 	}
 	/*
 	 * @RequestMapping("delete.rr") public String

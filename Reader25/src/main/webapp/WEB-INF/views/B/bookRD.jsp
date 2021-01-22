@@ -1122,11 +1122,9 @@ body {
 			});
 		</script>
 
-<<<<<<< HEAD
+
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
 	
-=======
-      <!---------------------------------- 작성자 이미지 ------------------------------------>
    
 
       <%-- <div class="bookreview-div">
@@ -1178,9 +1176,7 @@ body {
 
 
 
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 
-<<<<<<< HEAD
 		<%-- <div class="bookreview-div">
 			<div class="infos">
 				<div class="img-div">
@@ -1193,7 +1189,7 @@ body {
 				</div>
 				<c:if test="${atlist eq null }" />
 			</div> --%>
-=======
+			
       <div class="bookreview-div">
          <div class="infos">
             <div class="img-div">
@@ -1297,7 +1293,7 @@ body {
       </div>
       
       
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
+
 
 
 
@@ -1332,10 +1328,6 @@ body {
 				<c:if test="${atlist eq null }"/>
 			</div>  --%>
 
-<<<<<<< HEAD
-
-
-
 
 		<div class="bookreview-div">
 			<div class="infos">
@@ -1362,7 +1354,7 @@ body {
 
 			<div class="purchase-btn">
 				<div class="a">
-					<a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> 
+					<a href="pcs.bo" class="pcs-btn">구매하기</a> 
 					<a href="cart.bo"class="cart-btn">장바구니</a>
 						
 				</div>
@@ -1400,21 +1392,16 @@ body {
 							img_position++;
 						}
 					}
-
-					//이미지 끝까지 가면 버튼 사라지기
-
-					//첫 이미지로 돌아오기
-
 				});
-			</script>
-			<script>
-			$('.cart-btn').click(function(){
-				location.href="<%=request.getContextPath()%>/cart.bo";
-			});
 			$('.pcs-btn').click(function(){
 				location.href="<%=request.getContextPath()%>/pcs.bo";
 			});
+			
+			$('.cart-btn').click(function(){
+				location.href="<%=request.getContextPath()%>/cart.bo";
+			});
 			</script>
+		
 
 
 		</div>
@@ -1586,7 +1573,7 @@ body {
 		
 		
 	</section>
-=======
+	<script>
                for(var i = pi0.startPage; i <= pi0.endPage; i++){
                   if(pi0.currentPage == i){
                      $pNo = $('<p class="page0-no">').text(i);
@@ -1626,7 +1613,7 @@ body {
        }
       </script>
       
-      
+      <section>
       <div class="btns-div">
       <c:if test="${loginUser ne null }">
          <c:if test="${ loginUser.id eq board.userId }">
@@ -1651,6 +1638,6 @@ body {
       
       
    </section>
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
+
 </body>
 </html>
