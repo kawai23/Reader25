@@ -12,8 +12,7 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/list.css">
+
 <style>
 #maindiv1{
 	margin:auto;
@@ -94,7 +93,7 @@
 		width:400px;
 		height:50px;
 		display: inline-block;
-		border-color:#ffbb00;
+		border-color:#B3B2AF;
 		background: white;
 		border-style:solid;
 		border-width: thin; 
@@ -105,7 +104,7 @@
 	width:70px;
 	height:50px;
 	border-width: thin; 
-	border-color:#ffbb00;
+	border-color:#B3B2AF;
 	background-color:white;
 	font-size:18px;
 	
@@ -117,7 +116,7 @@
 .bt{
 		background-color:white; 
 		font-size:17px;
-		border-color:#ffbb00;
+		border-color:#B3B2AF;
 		height:50px;
 		margin: 5px;
 		border-width:0.5px;
@@ -149,7 +148,7 @@ a:active {
 }
 
 .line{
- 	border-bottom:1px solid #ffbb00;
+ 	border-bottom:1px solid #B3B2AF;
  	}
 .pline{
 	text-overflow:ellipsis;
@@ -161,8 +160,8 @@ a:active {
 .nogul{margin:auto;}
 
 .listcolor{
-	border-top:3px solid #ffbb00;
-	border-bottom:1.5px solid #ffbb00;
+	border-top:3px solid #B3B2AF;
+	border-bottom:1.5px solid #B3B2AF;
 	background-color:#ffd668;
 }
 
@@ -284,19 +283,19 @@ padding: 0;
 		
 	.contentline{
 		padding:30px;
- 		border-top:5px solid #ffbb00;
- 		border-bottom:2px solid #ffbb00;
+ 		border-top:5px solid #B3B2AF;
+ 		border-bottom:2px solid #B3B2AF;
  	
  	} 
  	.contentline2{
 		padding:30px;
- 		border-top:2px solid #ffbb00;
+ 		border-top:2px solid #B3B2AF;
 	}
 	
 	#extraline{
 		font-size:21px;
 		color:#A4A4A4;
-		border-bottom:2px solid #ffbb00;
+		border-bottom:2px solid #B3B2AF;
 		border-collapse:collapse;
 		border-spacing:0px;
 	}
@@ -460,7 +459,7 @@ padding: 0;
 .smallbt{
 		background-color:white; 
 		font-size:15px;
-		border-color:#ffbb00;
+		border-color:##B3B2AF;
 		height:30px;
 		margin: 5px;
 		border-width:0.5px;
@@ -568,18 +567,18 @@ padding: 0;
 .customfirst{
 	text-align:center;
 	height:70px;
-	border-top:3px solid #ffbb00;
-	border-left:3px solid #ffbb00;
-	border-right:3px solid #ffbb00;
-	border-bottom:3px solid #ffbb00;
+	border-top:3px solid #B3B2AF;
+	border-left:3px solid #B3B2AF;
+	border-right:3px solid #B3B2AF;
+	border-bottom:3px solid #B3B2AF;
 	background-color:#ffd668;
 }
 
 .customsecond{
 	text-align:top;
 	padding-left:12px;
-	border-left:3px solid #ffbb00;
-	border-right:3px solid #ffbb00;
+	border-left:3px solid #B3B2AF;
+	border-right:3px solid #B3B2AF;
 	border-bottom:2.5px solid #ffbb00;
 	
 }
@@ -588,7 +587,7 @@ padding: 0;
 		width:400px;
 		height:50px;
 		display: inline-block;
-		border-color:#ffbb00;
+		border-color:#B3B2AF;
 		background: white;
 		border-style:solid;
 		border-width: thin; 
@@ -602,10 +601,10 @@ padding: 0;
 	font-size:14pt;
 	text-align:center;
 	border-radius: 5px 5px 5px 5px;
-	border-top:1px solid #ffbb00;
-	border-left:1px solid #ffbb00;
-	border-right:1px solid #ffbb00;
-	border-bottom:1px solid #ffbb00;
+	border-top:1px solid #7A7A7A;
+	border-left:1px solid #7A7A7A;
+	border-right:1px solid #7A7A7A;
+	border-bottom:1px solid #7A7A7A;
 }
 
 /* 글목록 */
@@ -704,7 +703,14 @@ padding: 0;
   /* background-color: #ffbb00; */
   padding-left:10px;
 }
-
+.btn-a{
+	margin:auto
+}
+.btn-b{
+	width: 350px;
+	height:50px;
+	margin:auto
+}
 .longbt1{
 		background-color:#ffbb00; 
 		font-size:17px;
@@ -722,7 +728,7 @@ padding: 0;
 .longbt2{
 		background-color:white; 
 		font-size:17px;
-		border-color:#ffbb00;
+		border-color:#B3B2AF;
 		height:50px;
 		margin: 5px;
 		border-width:0.5px;
@@ -1262,7 +1268,7 @@ padding:5px;
 	top:100px;
 	margin:60px auto;
 	width:50%;
-	border: 3px solid #ffbb00;
+	border: 3px solid #B3B2AF;
 	border-radius:10px;
 	padding:100px;
 	font-size: 28px;
@@ -1272,7 +1278,7 @@ padding:5px;
 .check{
 	background-color:white; 
 		font-size:15px;
-		border-color:#ffbb00;
+		border-color:#B3B2AF;
 		height:40px;
 		border-style:solid;
 		cursor: pointer;
@@ -1286,7 +1292,7 @@ padding:5px;
 	
 }
 .check:hover{
-		background-color:#ffe08c;
+		background-color:#B3B2AF;
 	}
 #checkpw{
 	line-height:24px;
@@ -1393,7 +1399,9 @@ body{line-height: 1;}
 			<br> 
 		
 		<table class="list-table" style="border-spacing:0px;">
+					<tr>
 						<td align="left" style="text-align:left; font-size:18pt; padding:10px;">일반상품(1)</td>
+					</tr>
 				          <tr class="list-tableth" >
 				         	  <td width="10px;" style="border-top:4px solid orange; border-bottom:2px solid orange;">
 				         	   <label><input type="checkbox" value="alldelete"></label></td>
@@ -1444,16 +1452,17 @@ body{line-height: 1;}
 		
 		
 		<br><br><br>
-		
-		<input type="reset" value="전체상품주문" class="longbt1" style="margin-left:250px;">
+		<div class="btn-a">
+		<div class="btn-b">
+		<input type="reset" value="전체상품주문" class="longbt1" >
 		<input type="submit" value="선택상품주문" class="longbt2">
-		
-		
+		</div>
+		</div>
 	
-	
-</div>
 	
 </section>
+</div>
+	
 <br><br><br>
 <%@include file="../common/footer.jsp" %>
 

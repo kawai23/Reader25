@@ -46,7 +46,7 @@
   	#stime{float:right;}
    	ol{list-style: none;}
   	.Atext{float:left; margin-right: 20px;}
-  	#text{background: white; border: 1px solid black; width:85%;}
+  	#text{background: white; border: 1px solid black; width:85%; border-radius: 5px; padding: 10px;}
   	#user-icon{wdith:50px; height:50px; border-radius:50%;}
   	.wid{width:99%; margin: 3px;}
   	.rBtn1{float: right; margin: 3px;background: #FFC398;}
@@ -60,14 +60,22 @@
 		<div id="title">
 			<b>${d.getdTitle()}</b>
 		</div>
-		<div class="head" id="info">
-			의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
-		</div>
-		<div class="head">
-			<input type="radio"  name="discuss" value="찬성"> 찬성
-			<input type="radio" class="dradio" name="discuss" value="중립" checked> 중립
-			<input type="radio" class="dradio" name="discuss" value="반대"> 반대
-		</div><br>
+		<c:if test="${d.dStatus=='N' }"><br>
+			<div class="head" id="info">
+				토론이 끝난 주제로 댓글을 작성할수 없습니다.
+			</div>
+		</c:if>
+		<c:if test="${d.dStatus=='Y' }"><br>
+			<div class="head" id="info">
+				의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
+			</div>
+			<div class="head">
+				<input type="radio"  name="discuss" value="찬성"> 찬성
+				<input type="radio" class="dradio" name="discuss" value="중립" checked> 중립
+				<input type="radio" class="dradio" name="discuss" value="반대"> 반대
+			</div>
+		</c:if>
+		<br>
 		<div class="head">
 			<c:if test="${ d.atcNo == at.atcNo }">
 				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/>
@@ -110,20 +118,21 @@
 			<ol id="rol"><!-- 댓글달릴부분 -->
 			</ol>
 		</div>
+		<c:if test="${d.dStatus == 'Y' }">
 		<select class="wid" id="dis">
 			<option selected value="P">찬성</option>
 			<option value="N">중립</option>
 			<option value="C">반대</option>
 		</select><br>
-		<c:if test="${ !empty loginUser }">
-			<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+			<c:if test="${ !empty loginUser }">
+				<input type="text" class="wid" id="id" readonly value="${loginUser.id }"><br>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			</c:if>
+			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
+			<button class="btn" id="btn3">작성하기</button>
 		</c:if>
-		<c:if test="${ empty loginUser }">
-			<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
-		</c:if>
-		<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
-		<button class="btn" id="btn3">작성하기</button>
-		
 		<script>	
 			// 라디오버튼으로 댓글작성시 찬성,중립,반대 자동으로 체크
 			$("input:radio[name=discuss]").click(function(){
@@ -198,6 +207,7 @@
 									$id = $('<h3>').html(data[i].rWriter + " 님의 <span>반대</span> 의견");
 									$div1.append($img);
 									$div2.append($id);
+									$div2.append('<hr style="border: 1px solid #F5715C;">');
 									$div2.append($rContent);
 
 									if('${loginUser.id}' == data[i].rWriter){
@@ -218,6 +228,7 @@
 									}
 									$div1.append($img);
 									$div2.append($id);
+									$div2.append('<hr style="border: 1px solid #F5715C;">');
 									$div2.append($rContent);
 									
 									if('${loginUser.id}' == data[i].rWriter){
@@ -249,15 +260,19 @@
 			$('.rBtn1').mouseenter(function(){
 				$(this).css({'cursor':'pointer'});
 			});
-			
+
+			var dup = 0;
 			// 댓글 수정 폼 생성
 			function rUpdateFrom(rNo){
-				console.log(rNo);
+				console.log(dup);
+				if(dup == 0){
+					console.log("들어옴");
+					dup = rNo;
 				var PCN = $('#div-'+rNo).children().children().children().text();
 				$div = $('#div-'+rNo);
 				
 				var $rid = $('<input type="text" class="wid" readonly>').val('${loginUser.id}');
-				var $tarea = $('<textarea id="area-'+rNo+'" class="wid"- rows="10" cols="55"><br>').val($div.children().children().eq(1).text());
+				var $tarea = $('<textarea id="area-'+rNo+'" class="wid"- rows="10" cols="55"><br>').val($div.children().children().eq(2).text());
 				var $dselect = $('<select class="wid" id="select-'+rNo+'">');
 				var $option1 = $('<option value="P">').text("찬성");
 				var $option2 = $('<option value="N">').text("중립");
@@ -282,7 +297,8 @@
 				$div.children().children().eq(0).remove();
 				$div.children().children().eq(0).remove();
 				$div.children().children().eq(0).remove();
-				
+				$div.children().children().eq(0).remove();
+
 				$dselect.append($option1);
 				$dselect.append($option2);
 				$dselect.append($option3);
@@ -293,10 +309,17 @@
 				$div1.append($commitBtn);
 				$div1.append($closeBtn);
 				$div.append($div1);
+				} else {
+					getRList(); 
+					dup = 0;
+					setTimeout(function() { rUpdateFrom(rNo);}, 10);
+				}
+				console.log(dup);
 			}
 			
 			// 댓글 수정
 			function rUpdate(rNo, PCN){
+				dup = 0;
 				var rWriter = '${loginUser.id}';
 				var rContent = $('#area-'+rNo).val();
 				var rWhether = $('#select-'+rNo).val();
@@ -328,6 +351,7 @@
 			
 			// 댓글 수정 취소
 			function Reclose(){
+				dup = 0;
 				getRList();
 			}
 			

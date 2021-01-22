@@ -1019,40 +1019,41 @@ public class BoardController {
 	// 오늘은 나도 작가 = 5 리스트 폼 이동 컨트롤러
 	@RequestMapping("goTIWList.to")
 	public ModelAndView goTIWList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
-			
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		SimpleDateFormat format1 = new SimpleDateFormat( "yy/MM/dd");
-		Calendar calendar = Calendar.getInstance();
-		String enrollDay = format1.format(calendar.getTime());
-			
-		int listCount = bService.getTIWListCount();
-		int todayListCount = bService.todayListCount(enrollDay);
-		
-		ArrayList<TWITopWriter> btList = bService.topWriterList();
-		ArrayList<TWITopWriter> bcList = bService.topCommenterList();
-		ArrayList<TWITopWriter> blList = bService.topLikerList();
-			
-		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
-			
-		ArrayList<Board> list = bService.selectTIWList(pi);
-			
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.addObject("btList", btList);
-			mv.addObject("bcList", bcList);
-			mv.addObject("blList", blList);
-			mv.addObject("todayListCount", todayListCount);
-			mv.setViewName("TIWListForm");
-		} else {
-			throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");
-		}
-			
-		return mv;
+
+	         
+	      int currentPage = 1;
+	      if(page != null) {
+	         currentPage = page;
+	      }
+	      
+	      SimpleDateFormat format1 = new SimpleDateFormat( "yy/MM/dd");
+	      Calendar calendar = Calendar.getInstance();
+	      String enrollDay = format1.format(calendar.getTime());
+	         
+	      int listCount = bService.getTIWListCount();
+	      int todayListCount = bService.todayListCount(enrollDay);
+	      
+	      ArrayList<TWITopWriter> btList = bService.topWriterList();
+	      ArrayList<TWITopWriter> bcList = bService.topCommenterList();
+	      ArrayList<TWITopWriter> blList = bService.topLikerList();
+	         
+	      PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
+	         
+	      ArrayList<Board> list = bService.selectTIWList(pi);
+	         
+	      if(list != null) {
+	         mv.addObject("list", list);
+	         mv.addObject("pi", pi);
+	         mv.addObject("btList", btList);
+	         mv.addObject("bcList", bcList);
+	         mv.addObject("blList", blList);
+	         mv.addObject("todayListCount", todayListCount);
+	         mv.setViewName("TIWListForm");
+	      } else {
+	         throw new BoardException("오늘은 나도 작가 게시글 전체 조회에 실패했습니다.");
+	      }
+	         
+	      return mv;
 	}
 	
 	// 오늘은 나도 작가 = 5 글 작성 폼 이동 컨트롤러
@@ -1239,13 +1240,27 @@ public class BoardController {
 			throw new BoardException("댓글 등록에 실패하였습니다.");
 		}
 	}
-	
-	//댓글 불러오기
-	@RequestMapping("cList.to")
-	public void getCommentsList(@RequestParam(value="page1", required=false, defaultValue="1") Integer page1,
-								@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
-		
-		response.setContentType("application/json; charset=UTF-8");	 
+
+	// 댓글 불러오기
+//	@RequestMapping("cList.to")
+//	public void getCommentsList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+//		
+//		ArrayList<Comments> cList = bService.selectCommentsList(boardNo);
+//		//System.out.println("cList"+cList);
+//		response.setContentType("application/json; charset=UTF-8");
+//		Gson gson = new GsonBuilder().setDateFormat("yy-MM-dd").create();
+//		try {
+//			gson.toJson(cList, response.getWriter());
+//		} catch (JsonIOException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	public void getCommentsList(@RequestParam(value = "page1", required = false, defaultValue = "1") Integer page1,
+			@RequestParam("boardNo") int boardNo, HttpServletResponse response) {
+
+		response.setContentType("application/json; charset=UTF-8");
 		int currentPage1 = 1;
 		
 		if(page1 != null) {
