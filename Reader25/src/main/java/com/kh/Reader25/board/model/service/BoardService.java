@@ -192,6 +192,8 @@ public interface BoardService {
 
 	ArrayList<TWITopWriter> topLikerList();
 
+	int updateBoardInsertFile(Board b, Attachment attachment);
+
 
 
 

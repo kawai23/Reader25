@@ -730,7 +730,7 @@ public class BoardController {
 	// 수정하기
 	@RequestMapping("update.re")
 	public ModelAndView updateReviewBoard(@RequestParam("page") int page, @ModelAttribute Board b,
-									@RequestParam("reloadFile") MultipartFile reloadFile,
+									@RequestParam(value="reloadFile", required=false) MultipartFile reloadFile,
 									HttpServletRequest request, @ModelAttribute  Attachment at,
 									ModelAndView mv,
 									@RequestParam("booktitle") String booktitle,
@@ -741,15 +741,20 @@ public class BoardController {
 		b.setbContent(contentAddTag);
 		
 		if(reloadFile != null && !reloadFile.isEmpty()) {
-			if(at.getAtcName() != null) {
+			int result = 0;
+			Attachment attachment =  saveFile(reloadFile, request, 2);
+			System.out.println(":"+at.getAtcName()+":");
+			
+			if(at.getAtcName().trim() != "" && !at.getAtcName().isEmpty()) {
 				deleteFile(at.getAtcName(), request);
-			}
-			Attachment attachment = saveFile(reloadFile, request, 2);
-			if(attachment != null) {
+				result = bService.updateBoardAndFile(b,attachment);
+			}else {
+				
 				attachment.setAtcLevel(0);
+				attachment.setBoardNo(b.getBoardNo());
+				attachment.setAtcCode(2);
+				result = bService.updateBoardInsertFile(b,attachment);
 			}
-			attachment.setBoardNo(b.getBoardNo());
-			int result = bService.updateBoardAndFile(b,attachment);
 			
 			if(result > 0) {
 				Board board = bService.selectBoard(b.getBoardNo());
@@ -761,6 +766,19 @@ public class BoardController {
 				  .setViewName("redirect:redetail.re");
 			}else {
 				throw new BoardException("리뷰 게시물 수정에 실패하였습니다.");
+			}
+		}else {
+			int result = bService.updateBoard(b);
+			if(result >0) {
+				Board board = bService.selectBoard(b.getBoardNo());
+				Attachment attach = bService.selectAttachment(b.getBoardNo());
+				mv.addObject("board", board)
+				  .addObject("boardNo", b.getBoardNo())
+				  .addObject("page", page)
+				  .addObject("at", attach)
+				  .setViewName("redirect:redetail.re");
+			}else {
+				throw  new BoardException("리뷰 게시물 수정에 실패하였습니다.");
 			}
 		}
 		return mv;
