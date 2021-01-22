@@ -714,8 +714,8 @@ body {
 
          <div class="purchase-btn">
             <div class="a">
-               <a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> 
-               <a href="cart.bo"class="cart-btn">장바구니</a>
+               <span class="pcs-btn">구매하기</span> 
+               <span class="cart-btn">장바구니</span>
                   
             </div>
          </div>
@@ -761,7 +761,16 @@ body {
          </script>
          <script>
          $('.cart-btn').click(function(){
-            location.href="<%=request.getContextPath()%>/cart.bo";
+             $.ajax({
+                url: 'insertCart.bo',
+                data:{}.
+                success: function(data){
+		        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
+					if(check){
+						location.href="<%=request.getContextPath()%>/cart.bo";
+					}
+                }
+             });
          });
          $('.pcs-btn').click(function(){
             location.href="<%=request.getContextPath()%>/pcs.bo";
