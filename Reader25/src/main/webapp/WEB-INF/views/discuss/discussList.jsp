@@ -146,7 +146,7 @@
 					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
 				</ul>
 			</div>
-			<hr><br>
+			<br><hr><br>
 			<div>
 				<h3>현재 닫힌 토론방</h3>
 				<ul class="subul">
@@ -162,7 +162,7 @@
 				</ul>
 			</div>
 			<c:if test="${ !empty loginUser }">
-			<hr><br>
+			<br><hr><br>
 				<div>
 					<h3>내가 연 토론방</h3>
 					<ul class="subul">
@@ -180,7 +180,7 @@
 			</c:if>
 		</div>
 		<div class="outer">
-			<div id="head">
+			<div id="head"><br>
 				<div class="outerText">토론방</div>
 				<div class="outerBg">
 					<c:if test="${ !empty loginUser }">
@@ -194,7 +194,7 @@
 					<input type="text" id="search-input">
 					<span class="img-span"><img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/></span>
 				</div>
-			</div>
+			</div><br>
 			<div id="body">
 				<table id="orderTable">
 				<c:if test="${empty dList }">
@@ -236,47 +236,45 @@
 						댓글참여 : ${ d.dCount }개</td>
 					</tr>					
 				</c:forEach>
-					<!-- 페이징 처리 -->
-					<tr align="center" height="20" id="buttonTab">
-						<td colspan="6">
-							<!-- [이전] -->
-							<c:if test="${ pi.currentPage <= 1 }">
-								[<] &nbsp;
-							</c:if>
-							<c:if test="${ pi.currentPage > 1 }">
-								<c:url var="before" value="discuss.di">
-									<c:param name="page" value="${ pi.currentPage - 1 }"/>
-								</c:url>
-								<a href="${ before }">[<]</a> &nbsp;
-							</c:if>
-							
-							<!-- 페이지 -->
-							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-								<c:if test="${ p eq pi.currentPage }">
-									<font color="red" size="4"><b>[${ p }]</b></font>
-								</c:if>
-								
-								<c:if test="${ p ne pi.currentPage }">
-									<c:url var="pagination" value="discuss.di">
-										<c:param name="page" value="${ p }"/>
-									</c:url>
-									<a href="${ pagination }">${ p }</a> &nbsp;
-								</c:if>
-							</c:forEach>
-							
-							<!-- [다음] -->
-							<c:if test="${ pi.currentPage >= pi.maxPage }">
-								[>]
-							</c:if>
-							<c:if test="${ pi.currentPage < pi.maxPage }">
-								<c:url var="after" value="discuss.di">
-									<c:param name="page" value="${ pi.currentPage + 1 }"/>
-								</c:url> 
-								<a href="${ after }">[>]</a>
-							</c:if>
-						</td>
-					</tr>
 				</table>
+				<!-- 페이징 처리 -->
+				<div align="center" id="buttonTab"><br>
+						<!-- [이전] -->
+						<c:if test="${ pi.currentPage <= 1 }">
+							[<] &nbsp;
+						</c:if>
+						<c:if test="${ pi.currentPage > 1 }">
+							<c:url var="before" value="discuss.di">
+							<c:param name="page" value="${ pi.currentPage - 1 }"/>
+								</c:url>
+							<a href="${ before }">[<]</a> &nbsp;
+						</c:if>
+						
+						<!-- 페이지 -->
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:if test="${ p eq pi.currentPage }">
+								<font color="red" size="4"><b>[${ p }]</b></font>
+							</c:if>
+							
+							<c:if test="${ p ne pi.currentPage }">
+								<c:url var="pagination" value="discuss.di">
+									<c:param name="page" value="${ p }"/>
+								</c:url>
+								<a href="${ pagination }">${ p }</a> &nbsp;
+							</c:if>
+						</c:forEach>
+						
+						<!-- [다음] -->
+						<c:if test="${ pi.currentPage >= pi.maxPage }">
+							[>]
+						</c:if>
+						<c:if test="${ pi.currentPage < pi.maxPage }">
+							<c:url var="after" value="discuss.di">
+								<c:param name="page" value="${ pi.currentPage + 1 }"/>
+							</c:url> 
+							<a href="${ after }">[>]</a>
+						</c:if>
+				</div>
 				<script>
 					//상세페이지이동
 					$(function(){
@@ -339,5 +337,8 @@
 			</div>
 		</div>
 	</section>
+	<div style="clear:both;"><!-- float 명령 초기화시키기 -->
+		<br><br><%@include file="../common/footer.jsp" %>
+	</div>
 </body>
 </html>
