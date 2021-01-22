@@ -13,62 +13,66 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
 section {
-   border: 1px solid rgba(246, 246, 246, 1);
-   background: rgba(246, 246, 246, 1);
-   width: 80%;
-   margin: auto;
-   min-width: 1000px;
+	border: 1px solid rgba(246, 246, 246, 1);
+	background: rgba(246, 246, 246, 1);
+	width: 80%;
+	margin: auto;
+	min-width: 1000px;
 }
 
 .list-info {
-   border-bottom: 1px solid rgb(200, 200, 200);
-   padding-top: 30px;
-   padding-bottom: 10px;
-   width: 80%;
-   margin: auto;
-   max-width: 1000px;
+	border-bottom: 1px solid rgb(200, 200, 200);
+	padding-top: 30px;
+	padding-bottom: 10px;
+	width: 80%;
+	margin: auto;
+	max-width: 1000px;
 }
 
 .list-info img {
-   position: relative;
-   bottom: -10px;
+	position: relative;
+	bottom: -10px;
 }
 
 .list-info p {
-   display: inline-block;
-   color: rgb(100, 100, 100);
-   margin-left: 10px;
+	display: inline-block;
+	color: rgb(100, 100, 100);
+	margin-left: 10px;
 }
 
 .count-p {
-   float: right;
-   margin-right: 10px
+	float: right;
+	margin-right: 10px
 }
 
 .bookreview-div {
-   margin-top: 20px;
-   margin: auto;
-   display: block;
+	margin-top: 20px;
+	margin: auto;
+	display: block;
 }
 
 .infos {
-   width: 80%;
-   margin: auto;
-   max-width: 1000px;
+	width: 80%;
+	margin: auto;
+	max-width: 1000px;
 
 }
 
 .img-div { 
-   display: inline-block;
-   width: 990px;
-   line-height: 600px;
-   float: left;
-   /* background: rgba(229, 229, 229, 1); */
-   text-align: center;
-   margin: auto;
+
+	display: inline-block;
+	width: 990px;
+	line-height: 600px;
+	float: left;
+	/* background: rgba(229, 229, 229, 1); */
+	text-align: center;
+	margin: auto;
+
+
 }
 
 .img-div img {
+
    clear: both;
    max-width: 990px;
    max-height: 630px;
@@ -76,12 +80,11 @@ section {
    vertical-align: middle;
    text-align: center;
    overflow: hidden;
+
 } 
 
-
-
  
-<!-----------책제목 ------------>
+/* 책제목  */
 .info-box {
    width: 80%;
 }
@@ -460,16 +463,16 @@ body {
    position:relative;
    top:1px;
 }
-/* .slidelist img{
+ .slidelist img{
    width:500px;
    height:300px;
 }
 .slidelist{
    display: inline-block;
-} */
-<%-- input[id*="slide"] {display:none;}
+} 
+ input[id*="slide"] {display:none;}
  
-   .slide {float : left;height : 400px;width : 45%;margin-left : 18%;border: 1px solid #000000;box-sizing: border-box;border-radius: 50px;}
+   <%-- .slide {float : left;height : 400px;width : 45%;margin-left : 18%;border: 1px solid #000000;box-sizing: border-box;border-radius: 50px;}
    .slide ul  {white-space:nowrap;font-size:0;overflow:hidden;box-sizing: border-box;border-radius: 50px;}
    .slide ul li {display:inline-block;vertical-align:middle;width:100%;transition:all .5s;}
    .slidelist > li > a {display:block;position:relative;}
@@ -484,8 +487,8 @@ body {
    input[id="slide01"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(0%);}
    input[id="slide02"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-100%);}
    input[id="slide03"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-200%);}
-
  --%>
+
 
 
 <!--============================여기서부터  ============================-->
@@ -536,107 +539,109 @@ body {
 </style>
 </head>
 <body>
-   <%@include file="../common/menubar.jsp" %>
-   <!-- 에러 모달창 -->
-   <div class="modal-back" id="del-modal">
-      <div class="modal">
-         <div class="modal-content">
-            <img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-            <p>정말로 삭제하시겠습니까?</p>
-            <br>
-            <button class="modal-accept" value="accept">확인</button>
-            <button class="modal-close" value="Close">취소</button>
-         </div>
-      </div>
-   </div>
-   <div class="modal-back" id="login-modal">
-      <div class="modal">
-         <div class="modal-content">
-            <img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-            <p>로그인이 필요한 서비스입니다.</p>
-            <br>
-            <button class="modal-accept" value="accept">로그인하기</button>
-            <button class="modal-close" value="Close">취소</button>
-         </div>
-      </div>
-   </div>
-   <div class="modal-back" id="check-modal">
-      <div class="modal">
-         <div class="modal-content">
-            <img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
-            <p>댓글이 작성되었습니다.</p>
-            <br>
-            <button class="modal-close" value="Close" id="modal-ok">확인</button>
-         </div>
-      </div>
-   </div>
-   <div class="modal-back" id="content-modal">
-      <div class="modal">
-         <div class="modal-content">
-            <img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-            <p>내용을 입력해주세요</p>
-            <br>
-            <button class="modal-close" value="Close">확인</button>
-         </div>
-      </div>
-   </div>
+	<%@include file="../common/menubar.jsp" %>
+	<!-- 에러 모달창 -->
+	<div class="modal-back" id="del-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>정말로 삭제하시겠습니까?</p>
+				<br>
+				<button class="modal-accept" value="accept">확인</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="login-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>로그인이 필요한 서비스입니다.</p>
+				<br>
+				<button class="modal-accept" value="accept">로그인하기</button>
+				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="check-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>댓글이 작성되었습니다.</p>
+				<br>
+				<button class="modal-close" value="Close" id="modal-ok">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="content-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>내용을 입력해주세요</p>
+				<br>
+				<button class="modal-close" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
 
-   <script>
-      $(function(){
-         $('.modal-close').click(function(){
-            $('.modal').hide();
-            $('.modal-back').hide();
-         });
-      });
-   </script>
+	<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+		});
+	</script>
 <!-- ================================================================ -->
-   <section>
-      <div class="list-info">
-         <a class="heart"><!-- <img id="heart-img" src="resources/images/bookreview/heart1.png"/> --></a>
-         <p>${ board.userId } ${board.updateDay }</p>
-         <p class="count-p">조회수 : ${ board.bCount } </p>
-      </div>
-      <script>
-         $(function(){
-            var heartval = ${heart};
-            if(heartval > 0){
-               $('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
-               $(".heart").prop('name',heartval)
-            }else{
-               $(".heart").prop('name',heartval)
-               $('#heart-img').mouseenter(function(){
-                  $(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
-               }).mouseout(function(){
-                  $(this).prop('src', 'resources/images/bookreview/heart1.png');
-               });
-            }
-            $('.heart').click(function(){
-               if('${loginUser}' != ''){
-                  var heartC = $('.heart');
-                  $.ajax({
-                     url: 'heart.to',
-                     data:{boardNo:'${board.boardNo}', heart:'${heart}'},
-                     success:function(data){
-                        heartC.prop('name', data);
-                        console.log(data);
-                        if(data == 1){
-                           $('#heart-img').prop('src','resources/images/bookreview/heart2.png');
-                           location.reload();
-                        }else{
-                           $('#heart-img').prop('src','resources/images/bookreview/heart1.png');
-                           location.reload();
-                        }
-                     }
-                  });
-               }else{
-                  $('#login-modal').show();
-                  $('#login-modal .modal').show();
-               }
-            });
-         });
-      </script>
+	<section>
+		<div class="list-info">
+			<a class="heart"><!-- <img id="heart-img" src="resources/images/bookreview/heart1.png"/> --></a>
+			<p>${ board.userId } ${board.updateDay }</p>
+			<p class="count-p">조회수 : ${ board.bCount } </p>
+		</div>
+		<script>
+			$(function(){
+				var heartval = ${heart};
+				if(heartval > 0){
+					$('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
+					$(".heart").prop('name',heartval)
+				}else{
+					$(".heart").prop('name',heartval)
+					$('#heart-img').mouseenter(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
+					}).mouseout(function(){
+						$(this).prop('src', 'resources/images/bookreview/heart1.png');
+					});
+				}
+				$('.heart').click(function(){
+					if('${loginUser}' != ''){
+						var heartC = $('.heart');
+						$.ajax({
+							url: 'heart.to',
+							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
+							success:function(data){
+								heartC.prop('name', data);
+								console.log(data);
+								if(data == 1){
+									$('#heart-img').prop('src','resources/images/bookreview/heart2.png');
+									location.reload();
+								}else{
+									$('#heart-img').prop('src','resources/images/bookreview/heart1.png');
+									location.reload();
+								}
+							}
+						});
+					}else{
+						$('#login-modal').show();
+						$('#login-modal .modal').show();
+					}
+				});
+			});
+		</script>
 
-      <!---------------------------------- 작성자 이미지 ------------------------------------>
+
+		<!---------------------------------- 작성자 이미지 ------------------------------------>
+	
    
 
       <%-- <div class="bookreview-div">
@@ -689,6 +694,19 @@ body {
 
 
 
+		<%-- <div class="bookreview-div">
+			<div class="infos">
+				<div class="img-div">
+					<c:if test="${atlist ne null}">
+						<c:forEach items="${ atlist }" var="at">
+							<img src="resources/buploadFiles/${at.atcName}" />
+							<!-- ${at.atcName} at에 있는 atcName 이라는 필드명의 값을 담아온다  ${at.atcName}으로 설정이 된 이미지를 가져온다-->
+						</c:forEach>
+					</c:if>
+				</div>
+				<c:if test="${atlist eq null }" />
+			</div> --%>
+			
       <div class="bookreview-div">
          <div class="infos">
             <div class="img-div">
@@ -714,8 +732,10 @@ body {
 
          <div class="purchase-btn">
             <div class="a">
-               <span class="pcs-btn">구매하기</span> 
-               <span class="cart-btn">장바구니</span>
+<!--                <span class="pcs-btn">구매하기</span>  -->
+<!--                <span class="cart-btn">장바구니</span> -->
+               <a href="pcs.bo" class="pcs-btn">구매하기</a> 
+               <a href="cart.bo"class="cart-btn">장바구니</a>
                   
             </div>
          </div>
@@ -799,130 +819,149 @@ body {
       <div class="rectangle-box"> 
          <div class="contents">${board.bContent}</div>
       </div>
-      
-      
+	
+		
+		<!---------------------------------- 리뷰 ------------------------------------>
+		<div class="comment-box">
+			<div class="commentList">
+			</div>
+			<div class="paging-btn" id="co-paging">
+			</div>
+			<div class="comment-write">
+				<div class="user-div">
+					<c:if test="${loginUser eq null }">
+						로그인 시 댓글 등록이 가능합니다.
+					</c:if>
+					<c:if test="${loginUser ne null }">
+						${loginUser.id}
+					</c:if>
+					<span class="text-count" id="counter">0/500</span>
+				</div>
+				<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
+			</div>
+			<button id="comment-add">댓글 등록</button>
+		</div>
+		<script>
+		 $(function(){
+			 getComments(1);
+			 $('#comment-input').keyup(function(){
+				 var content = $(this).val();
+				 $('#counter').html(content.length +'/500');
+			 });
+			 $('#comment-add').click(function(){
+				if('${loginUser}' == ''){
+					$('#login-modal').show();
+					$('#login-modal .modal').show();
+				}else{
+					addComments();
+				}
+			 });
+			 setInterval(function(){
+				 var page0 = $('.page0-no').text();
+				getComments(page0);
+			 }, 1000); 
+		 });
+		 function addComments(){
+			 var boardNo = ${board.boardNo};
+			 var comment = $('#comment-input').val();
+			 if(comment != ''){
+				 $.ajax({
+					url:  "addComments.to",
+					data:{boardNo:boardNo,comment:comment},
+					success: function(data){
+						$('#comment-input').val('');
+						if(data == 'success'){
+							$('#check-modal').show();
+							$('#check-modal .modal').show();
+						}
+						getComments(1);
+					}
+				});
+			 }else{
+				 $('#content-modal').show();
+				 $('#content-modal .modal').show();
+			 }
+		 }
+		 function getComments(value){
+			 var boardNo = ${board.boardNo};
+			 var page0 = value;
+			 $.ajax({
+				 url:'comments.re',
+				 data:{boardNo:boardNo,page0:page0},
+				 success: function(data){
+					//1) 페이징 버튼 넣기
+					pi0 = data.pi0;
+					$copaging = $('#co-paging');
+					$copaging.html('');
+					if(pi0.currentPage <= 1){
+						$before = $('<p>').text('<');
+					}else{
+						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
+					}
+					$copaging.append($before);
 
-
-
-      <!---------------------------------- 리뷰 ------------------------------------>
-      <div class="comment-box">
-         <div class="commentList">
-         </div>
-         <div class="paging-btn" id="co-paging">
-         </div>
-         <div class="comment-write">
-            <div class="user-div">
-               <c:if test="${loginUser eq null }">
-                  로그인 시 댓글 등록이 가능합니다.
-               </c:if>
-               <c:if test="${loginUser ne null }">
-                  ${loginUser.id}
-               </c:if>
-               <span class="text-count" id="counter">0/500</span>
-            </div>
-            <textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
-         </div>
-         <button id="comment-add">댓글 등록</button>
-      </div>
-      <script>
-       $(function(){
-          getComments(1);
-          $('#comment-input').keyup(function(){
-             var content = $(this).val();
-             $('#counter').html(content.length +'/500');
-          });
-          $('#comment-add').click(function(){
-            if('${loginUser}' == ''){
-               $('#login-modal').show();
-               $('#login-modal .modal').show();
-            }else{
-               addComments();
-            }
-          });
-          setInterval(function(){
-             var page0 = $('.page0-no').text();
-            getComments(page0);
-          }, 1000); 
-       });
-       function addComments(){
-          var boardNo = ${board.boardNo};
-          var comment = $('#comment-input').val();
-          if(comment != ''){
-             $.ajax({
-               url:  "addComments.to",
-               data:{boardNo:boardNo,comment:comment},
-               success: function(data){
-                  $('#comment-input').val('');
-                  if(data == 'success'){
-                     $('#check-modal').show();
-                     $('#check-modal .modal').show();
-                  }
-                  getComments(1);
-               }
-            });
-          }else{
-             $('#content-modal').show();
-             $('#content-modal .modal').show();
-          }
-       }
-       function getComments(value){
-          var boardNo = ${board.boardNo};
-          var page0 = value;
-          $.ajax({
-             url:'comments.re',
-             data:{boardNo:boardNo,page0:page0},
-             success: function(data){
-               //1) 페이징 버튼 넣기
-               pi0 = data.pi0;
-               $copaging = $('#co-paging');
-               $copaging.html('');
-               if(pi0.currentPage <= 1){
-                  $before = $('<p>').text('<');
-               }else{
-                  $before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
-               }
-               $copaging.append($before);
-
-               for(var i = pi0.startPage; i <= pi0.endPage; i++){
-                  if(pi0.currentPage == i){
-                     $pNo = $('<p class="page0-no">').text(i);
-                  }else{
-                     $pNo = $('<a>').on('click', function(){
-                        getComments($(this).text());
-                     }).text(i);
-                  }
-                  $copaging.append($pNo);
-               }
-               if(pi0.currentPage >= pi0.endPage){
-                  $next = $('<p>').text(">");
-               }else{
-                  $next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
-               }
-               $copaging.append($next);
-               //2)값넣기
-               cList = data.cList;
-               $comments = $('.commentList');
-               $comments.html('');
-               
-               for(var i in cList){
-                  $comment = $('<div class="comment">');
-                  $top = $('<div class="comment-top">')
-                  $idspan = $('<span class="comment-user">').text(cList[i].userId);
-                  $datespan = $('<span class="comment-date">').text(cList[i].comDate);
-                  $commentDiv = $('<div class="comment-content">').text(cList[i].comment);
-                  
-                  $top.append($idspan);
-                  $top.append($datespan);
-                  $comment.append($top);
-                  $comment.append($commentDiv);
-                  $comments.append($comment);
-               }
-             }
-          });
-       }
-      </script>
-      
-      
+					for(var i = pi0.startPage; i <= pi0.endPage; i++){
+						if(pi0.currentPage == i){
+							$pNo = $('<p class="page0-no">').text(i);
+						}else{
+							$pNo = $('<a>').on('click', function(){
+								getComments($(this).text());
+							}).text(i);
+						}
+						$copaging.append($pNo);
+					}
+					if(pi0.currentPage >= pi0.endPage){
+						$next = $('<p>').text(">");
+					}else{
+						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
+					}
+					$copaging.append($next);
+					//2)값넣기
+					cList = data.cList;
+					$comments = $('.commentList');
+					$comments.html('');
+					
+					for(var i in cList){
+						$comment = $('<div class="comment">');
+						$top = $('<div class="comment-top">')
+						$idspan = $('<span class="comment-user">').text(cList[i].userId);
+						$datespan = $('<span class="comment-date">').text(cList[i].comDate);
+						$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
+						
+						$top.append($idspan);
+						$top.append($datespan);
+						$comment.append($top);
+						$comment.append($commentDiv);
+						$comments.append($comment);
+					}
+				 }
+			 });
+		 }
+		</script>
+		
+		
+		<div class="btns-div">
+		<c:if test="${loginUser ne null }">
+			<c:if test="${ loginUser.id eq board.userId }">
+				<button class="modify-btn" onclick="location.href='modify.bo?boardNo='+${board.boardNo}+'&page='+${page}">수정하기</button>
+				<button class="delete-btn" onclick="deleteReview();">삭제하기</button>
+			</c:if>
+			<c:if test="${loginUser.id ne board.userId }">
+				<button class="write-btn" onclick='location.href="write.re"'>리뷰쓰기</button>
+			</c:if>
+		</c:if>
+		<button class="list-btn" onclick='location.href="book.bo?page="+${page}'>목록보기</button>
+		</div>
+		<script>
+			function deleteReview(){
+				$('#del-modal').show();
+				 $('#del-modal .modal').show();
+				 $('#del-modal .modal-accept').click(function(){
+					location.href='delete.bo?boardNo='+${board.boardNo};
+				});
+			}
+		</script>
+		
       <div class="btns-div">
       <c:if test="${loginUser ne null }">
          <c:if test="${ loginUser.id eq board.userId }">
@@ -947,5 +986,6 @@ body {
       
       
    </section>
+
 </body>
 </html>

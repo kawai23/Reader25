@@ -131,6 +131,10 @@
 		position:relative;
 		top: 10px;
 	}
+	#mem-ad{
+		font-weight: bolder;
+		background: black;
+	}
 </style>
 </head>
 <body>

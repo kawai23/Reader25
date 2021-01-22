@@ -5,8 +5,8 @@
 	<select id="selectList" resultMap="bookResultSet">
 		select *
 		from book
-		where code = #{code} and b_status = 'Y'
-		order by board_no desc
+		where status = 'Y'
+		order by BOOK_NO desc
 	</select>
 	
 	<resultMap type="Book" id="bookResultSet">
@@ -17,7 +17,7 @@
 		<result property="b_Q2" column="BOOK_Q2"/>
 		<result property="b_Q3" column="BOOK_Q2"/>
 		<result property="author" column="AUTHOR"/>
-		<result property="b_Stauts" column="STATUS"/>
+		<result property="b_Status" column="STATUS"/>
 	</resultMap>
 	
 	<select id="getPayList" resultType="_int">
@@ -43,6 +43,18 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="book_no" column="BOOK_NO"/>
 	</resultMap>
+	
+	<select id="selectBookList" resultMap="bookResultSet">
+		select *
+		from book
+		where status = 'Y'
+	</select>
+	
+	<select id="selectBook" resultMap="bookResultSet">
+		select *
+		from book
+		where status = 'Y' and book_no = #{b_no}
+	</select>
 	<insert id="insertBook">
 		insert into book
 		values(book_seq.nextval, book_name=#{book_name}, price=#{price}, book_q1 = #{book_q1}, book_q2 = #{book_q2}, null,

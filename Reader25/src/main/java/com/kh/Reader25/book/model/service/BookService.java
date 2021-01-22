@@ -16,6 +16,10 @@ public interface BookService {
 
 	ArrayList<Pay> selectPayList(PageInfo pi);
 
+	ArrayList<Book> selectBookList(PageInfo pi);
+
+	Book selectBook(int b_no);
+
 	int insertBook(Book book);
 
 }

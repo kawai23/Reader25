@@ -92,11 +92,15 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
+	#st-ad{
+		font-weight: bolder;
+		background: black;
+	}
 </style>
 </head>
 <body>
 	<header>
-		<img src="#logo"/>
+		<img src="#logo" id="logo-img" onclick="goHome();"/>
 		<h3 id="header-h2">통계 자료</h3>
 	</header>
 	<%@ include file="header.jsp" %>
@@ -114,12 +118,12 @@
 			<h4 class="graphs-title">사이트 방문자 현황 그래프</h4>
 			<div class="graphs">
 				<div class="graph">
-					<input type="date" name="dayStart" id="dayStart">
+					<input type="date" name="dayStart" id="dayStart" min="2021-01-19">
 					<div class="day-graph" id="chart_div">
 					</div>
 				</div>
 				<div class="graph">
-					<input type="month" name="monthStart" id="monthStart" >
+					<input type="month" name="monthStart" id="monthStart" min="2021-01">
 					<div id="chart_month">
 					</div>
 				</div>
@@ -133,6 +137,23 @@
      		month = [${monthStr}];
      		
 			$(function(){
+				var today = new Date();
+	     		var dd = today.getDate();
+	     		var mm = today.getMonth() + 1;
+	     		var yyyy = today.getFullYear();
+	     		if(dd < 10){
+	     			dd = '0' + dd;
+	     		}
+	     		if(mm < 10){
+	     			mm = '0' + mm;
+	     		}
+	     		today = yyyy +'-' + mm + '-' +dd;
+	     		today2 = yyyy +'-' + mm;
+	     		
+	     		$('#dayStart').attr('max', today);
+	     		$('#monthStart').attr('max', today2);
+				
+				
 				$('#dayStart').change(function(){
 					var value = $(this).val();
 					day = [];

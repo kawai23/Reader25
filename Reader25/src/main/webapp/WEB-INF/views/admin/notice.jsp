@@ -92,6 +92,10 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
+	#no-ad{
+		font-weight: bolder;
+		background: black;
+	}
 </style>
 </head>
 <body>

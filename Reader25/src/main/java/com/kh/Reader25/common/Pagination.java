@@ -28,7 +28,7 @@ public class Pagination {
 		int maxPage;
 		int startPage;
 		int endPage;
-		int boardLimit = 18;
+		int boardLimit = 12;
 		
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		startPage = (currentPage - 1)/pageLimit * pageLimit  + 1;
