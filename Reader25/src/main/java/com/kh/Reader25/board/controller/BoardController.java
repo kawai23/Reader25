@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -1933,12 +1934,27 @@ public class BoardController {
 	
 	
 	@RequestMapping("myPointList.me")
-	public ModelAndView myPointList(@RequestParam(value = "searchCondition", required = false) String searchCondition, @RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv  , @RequestParam(value = "page", required = false) Integer page, HttpSession session) {
+	public ModelAndView myPointList(Model model,@RequestParam(value = "searchCondition", required = false) String searchCondition, @RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv  , @RequestParam(value = "page", required = false) Integer page, HttpSession session) {
 		
 		
 		
 		
-		Member loginUser = (Member)session.getAttribute("loginUser");
+		 Member loginUser = mService.memberLogin((Member)session.getAttribute("loginUser"));
+		
+		
+		System.out.println(loginUser);
+		
+		
+		
+		
+		model.addAttribute("loginUser", loginUser);
+		
+		
+		
+		
+		
+		
+		
 	 	
 	 	String mId = loginUser.getId();
 		
@@ -2089,7 +2105,7 @@ public class BoardController {
 			mv.setViewName("redirect:myPointList.me");
 		} else {
 
-			throw new BoardException("구매 리스트 삭제 실패");
+			throw new BoardException("포인트 리스트 삭제 실패");
 		}
 
 		return mv;

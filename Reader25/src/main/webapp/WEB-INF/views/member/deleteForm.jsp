@@ -85,10 +85,14 @@ td{ margin: 5px; padding: 5px }
 		<hr><br>
 		
 		
-		<h3 style="color: red;"> <b>정말로 탈퇴를 진행하시겠습니까 ?  </b></h3><br><br>
+		<div style="text-align: center;" >	
 		
-		<small>탈퇴를 진행할 시 포인트와 그 밖의 정보들은 모두 폐기 처리됩니다.<br>
+			<h2 style="color: red; "> <b>정말로 탈퇴를 진행하시겠습니까 ?  </b></h2><br><br>
+		
+		
+			<small>탈퇴를 진행할 시 포인트와 그 밖의 정보들은 모두 폐기 처리됩니다.<br>
 				이것에 동의하시면 탈퇴를 진행해주시길 바랍니다.</small><br><br><br><br>
+		</div>
 				
 				
 				

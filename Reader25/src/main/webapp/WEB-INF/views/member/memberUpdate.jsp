@@ -77,14 +77,16 @@ td{ margin: 5px; padding: 5px }
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
+	   <br>
+			<h2 class="txt_signup">내 정보 수정</h2>
+			<hr><br>
+	   
 				
 
 		
 		
-		<form action="myUpdate.me" method="post" id="joinForm" name="joinForm" >
-			<br>
-			<h2 class="txt_signup">내 정보 수정</h2>
-			<hr><br>
+		<form action="myUpdate.me" method="post" id="joinForm" name="joinForm" style="margin-left: 10%">
+			
 			<table style="text-align: center; width: 500px " >
 			
 				<tr>
