@@ -54,85 +54,37 @@ section {
 .infos {
    width: 80%;
    margin: auto;
-   max-width: 300px;
+   max-width: 1000px;
 
 }
 
 .img-div { 
    display: inline-block;
-   width: 300px;
-   line-height:200px;
+   width: 990px;
+   line-height: 600px;
    float: left;
    /* background: rgba(229, 229, 229, 1); */
    text-align: center;
    margin: auto;
-   
 }
 
-.img-div > ul > img {
-/*    clear: both; */
-/*    max-width: 990px; */
-   max-height: 200px; 
-/*    margin: auto; */
-/*    vertical-align: middle; */
-/*    text-align: center; */
-/*    overflow: hidden; */
-	width:100%; 
-	object-fit : fill;
+.img-div img {
+   clear: both;
+   max-width: 990px;
+   max-height: 630px;
+   margin: auto;
+   vertical-align: middle;
+   text-align: center;
+   overflow: hidden;
 } 
-<!--============================여기서부터  ============================-->
-<<<<<<< HEAD
-	
-      
-       .slide{	
-        width: 1000px;
-      	border-radius: 600px;
-=======
-       .slide{   
-        width: 300px;
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
-        height: 200px;
-        margin: 0 auto;
-        overflow:hidden;
-        position:relative;
-      }  
-      .slide ul{
-       white-space:nowrap;
-       position:absolute;
-       width:900px;
-        top:0;
-        left:0;
-        font-size: 0;
-<<<<<<< HEAD
-        display: inline-block;
-        margin-left
-=======
-/*         display: inline-block; */
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
-      }
-      .slide ul li{
-        display: inline-block;
-      }
-      #back{
-        position: absolute;
-        top: 500px;
-        left: 0;
-        cursor: pointer;
-        z-index: 1;
-      }
-      #next{
-        position: absolute;
-        top: 500px;
-        right: 0;
-        cursor: pointer;
-        z-index: 1;
-      } 
-<!--============================여기까지 슬라이드 배너  ============================-->
 
+
+
+ 
+<!-----------책제목 ------------>
 .info-box {
    width: 80%;
 }
-
 .info-contents {
    width: 80%;
    margin: auto;
@@ -536,6 +488,51 @@ body {
  --%>
 
 
+<!--============================여기서부터  ============================-->
+   
+      
+       .slide{   
+        width: 1000px;
+         border-radius: 600px;
+        height: 200px;
+         font-size:0;
+        margin: left;
+      }  
+
+      .slide ul{
+      white-space:nowrap;
+       overflow:hidden;
+       width: 5000px;
+       position:relative;  
+        top:0;
+        left:10;
+        font-size: 0;
+        display: inline-block;
+        margin-left
+      }
+      .slide ul li{
+        display: inline-block;
+      }
+      #back{
+        position: absolute;
+        top: 500px;
+        left: 0;
+        cursor: pointer;
+        z-index: 1;
+      }
+      #next{
+        position: absolute;
+        top: 500px;
+        right: 0;
+        cursor: pointer;
+        z-index: 1;
+      } 
+   
+
+
+<!--============================여기까지 슬라이드 배너  ============================-->
+
+
 </style>
 </head>
 <body>
@@ -640,22 +637,73 @@ body {
       </script>
 
       <!---------------------------------- 작성자 이미지 ------------------------------------>
+   
+
+      <%-- <div class="bookreview-div">
+         <div class="infos">
+            <div class="img-div">
+               <c:if test="${atlist ne null}">
+                  <c:forEach items="${ atlist }" var="at">
+                     <img src="resources/buploadFiles/${at.atcName}" />
+                     <!-- ${at.atcName} at에 있는 atcName 이라는 필드명의 값을 담아온다  ${at.atcName}으로 설정이 된 이미지를 가져온다-->
+                  </c:forEach>
+               </c:if>
+            </div>
+            <c:if test="${atlist eq null }" />
+         </div> --%>
+
+
+
+      <%--  <div class="bookreview-div">
+         <div class="infos">
+            <div class="img-div">
+               <c:if test="${atlist ne null}">
+                  <div class="news_login">
+                     <!-- 로그인 공지사항 알리미 div -->
+                     <input type="radio" name="slide" id="slide01" checked> 
+                     <input type="radio" name="slide" id="slide02" > 
+                     <input type="radio" name="slide" id="slide03">
+                     <input type="radio" name="slide" id="slide04">
+                     <input type="radio" name="slide" id="slide05">
+                     <input type="radio" name="slide" id="slide06">
+                     <input type="radio" name="slide" id="slide07">
+                     <input type="radio" name="slide" id="slide08">
+                        
+                     <div class="slide-wrap">
+                        <ul class="slidelist">
+                           <c:forEach items="${ atlist }" var="at">
+                              <li><a> <label for="slide01" class="left"></label> 
+                              <img src="resources/buploadFiles/${at.atcName}" /> <!-- ${at.atcName} at에 있는 atcName 이라는 필드명의 값을 담아온다  ${at.atcName}으로 설정이 된 이미지를 가져온다-->
+                                    <label for="slide02" class="right"></label>
+                              </a></li>
+                           </c:forEach>
+                        </ul>
+                     </div>
+                     </div>
+               </c:if>
+            </div>
+            <c:if test="${atlist eq null }"/>
+         </div>  --%>
+
+
+
+
 
       <div class="bookreview-div">
          <div class="infos">
             <div class="img-div">
                <c:if test="${atlist ne null}">
                   <div class="slide">
-                     <img id="back" src="resources/images/bookreview/back.png"
+                     <img id="back" src="resources/images/bookreview/back.png" alt=""
                         width="100">
                      
                         <ul>
                         <c:forEach items="${ atlist }" var="at">
-                           <li><img src="resources/buploadFiles/${at.atcName}" width="300px"height="200px"/></li>
+                           <li><img src="resources/buploadFiles/${at.atcName}" /></li>
                         </c:forEach>
                         </ul>
                      
-                     <img id="next" src="resources/images/bookreview/next.png"
+                     <img id="next" src="resources/images/bookreview/next.png" alt=""
                         width="100" >
                   </div>
                </c:if>
@@ -666,18 +714,20 @@ body {
 
          <div class="purchase-btn">
             <div class="a">
-               <a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> <a href="#"
-                  class="cart-btn">장바구니</a>
+               <a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> 
+               <a href="cart.bo"class="cart-btn">장바구니</a>
+                  
             </div>
          </div>
          <script type="text/javascript">
             $(document).ready(function() {
                var imgs;
                var img_count;
-               var img_position = 1;
+               var img_position = 0;
 
                imgs = $(".slide ul");
                img_count = imgs.children().length;
+
                //버튼을 클릭했을 때 함수 실행
                $('#back').click(function() {
                   back();
@@ -689,16 +739,15 @@ body {
                function back() {
                   if (1 < img_position) {
                      imgs.animate({
-                        left : '+=300px'
+                        left : '+=1000px'
                      });
                      img_position--;
-                     
                   }
                }
                function next() {
                   if (img_count > img_position) {
                      imgs.animate({
-                        left : '-=300px'
+                        left : '-=1000px'
                      });
                      img_position++;
                   }
@@ -711,12 +760,12 @@ body {
             });
          </script>
          <script>
-            function cart() {
-
-            }
-            function purchase() {
-
-            }
+         $('.cart-btn').click(function(){
+            location.href="<%=request.getContextPath()%>/cart.bo";
+         });
+         $('.pcs-btn').click(function(){
+            location.href="<%=request.getContextPath()%>/pcs.bo";
+         });
          </script>
 
 
@@ -732,6 +781,9 @@ body {
          <span class="info" id="sort">${author }</span> <br>
          <p class="tag">거래자</p>
          <span class="info" id="sort">${board.userId }</span>
+         <%-- <p class="tag">금액</p>
+         <span class="info" id="sort">${board.userAmount }</span> --%>
+         
       </div>
       </div>
       <!---------------------------------- 내용박스 ------------------------------------>
@@ -822,261 +874,6 @@ body {
                }
                $copaging.append($before);
 
-<<<<<<< HEAD
-
-
-
-
-		<div class="bookreview-div">
-			<div class="infos">
-				<div class="img-div">
-					<c:if test="${atlist ne null}">
-						<div class="slide">
-							<img id="back" src="resources/images/bookreview/back.png" alt=""
-								width="100">
-							
-								<ul>
-								<c:forEach items="${ atlist }" var="at">
-									<li><img src="resources/buploadFiles/${at.atcName}" /></li>
-								</c:forEach>
-								</ul>
-							
-							<img id="next" src="resources/images/bookreview/next.png" alt=""
-								width="100" >
-						</div>
-					</c:if>
-				</div>
-				<c:if test="${atlist eq null }" />
-			</div>
-
-
-			<div class="purchase-btn">
-				<div class="a">
-					<a href="purchaseCart.jsp" class="pcs-btn">구매하기</a> 
-					<a href="cart.bo"class="cart-btn">장바구니</a>
-						
-				</div>
-			</div>
-			<script type="text/javascript">
-				$(document).ready(function() {
-					var imgs;
-					var img_count;
-					var img_position = 0;
-
-					imgs = $(".slide ul");
-					img_count = imgs.children().length;
-
-					//버튼을 클릭했을 때 함수 실행
-					$('#back').click(function() {
-						back();
-					});
-					$('#next').click(function() {
-						next();
-					});
-
-					function back() {
-						if (1 < img_position) {
-							imgs.animate({
-								left : '+=1000px'
-							});
-							img_position--;
-						}
-					}
-					function next() {
-						if (img_count > img_position) {
-							imgs.animate({
-								left : '-=1000px'
-							});
-							img_position++;
-						}
-					}
-
-					//이미지 끝까지 가면 버튼 사라지기
-
-					//첫 이미지로 돌아오기
-
-				});
-			</script>
-			<script>
-			$('.cart-btn').click(function(){
-				location.href="<%=request.getContextPath()%>/cart.bo";
-			});
-			$('.pcs-btn').click(function(){
-				location.href="<%=request.getContextPath()%>/pcs.bo";
-			});
-			</script>
-
-
-		</div>
-
-		<!---------------------------------- 책제목 ------------------------------------>
-		<div class="info-box">
-		<div class="info-contents">
-			<h3 class="title">책제목: ${ board.bTitle }</h3>
-			<p class="tag">#제목</p>
-			<span class="info" id="author">${booktitle }</span>
-			<p class="tag">#작가</p>
-			<span class="info" id="sort">${author }</span> <br>
-			<p class="tag">거래자</p>
-			<span class="info" id="sort">${board.userId }</span>
-			<%-- <p class="tag">금액</p>
-			<span class="info" id="sort">${board.userAmount }</span> --%>
-			
-		</div>
-		</div>
-		<!---------------------------------- 내용박스 ------------------------------------>
-		<div class="rectangle-box"> 
-			<div class="contents">${board.bContent}</div>
-		</div>
-		
-		
-
-
-
-		<!---------------------------------- 리뷰 ------------------------------------>
-		<div class="comment-box">
-			<div class="commentList">
-			</div>
-			<div class="paging-btn" id="co-paging">
-			</div>
-			<div class="comment-write">
-				<div class="user-div">
-					<c:if test="${loginUser eq null }">
-						로그인 시 댓글 등록이 가능합니다.
-					</c:if>
-					<c:if test="${loginUser ne null }">
-						${loginUser.id}
-					</c:if>
-					<span class="text-count" id="counter">0/500</span>
-				</div>
-				<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
-			</div>
-			<button id="comment-add">댓글 등록</button>
-		</div>
-		<script>
-		 $(function(){
-			 getComments(1);
-			 $('#comment-input').keyup(function(){
-				 var content = $(this).val();
-				 $('#counter').html(content.length +'/500');
-			 });
-			 $('#comment-add').click(function(){
-				if('${loginUser}' == ''){
-					$('#login-modal').show();
-					$('#login-modal .modal').show();
-				}else{
-					addComments();
-				}
-			 });
-			 setInterval(function(){
-				 var page0 = $('.page0-no').text();
-				getComments(page0);
-			 }, 1000); 
-		 });
-		 function addComments(){
-			 var boardNo = ${board.boardNo};
-			 var comment = $('#comment-input').val();
-			 if(comment != ''){
-				 $.ajax({
-					url:  "addComments.to",
-					data:{boardNo:boardNo,comment:comment},
-					success: function(data){
-						$('#comment-input').val('');
-						if(data == 'success'){
-							$('#check-modal').show();
-							$('#check-modal .modal').show();
-						}
-						getComments(1);
-					}
-				});
-			 }else{
-				 $('#content-modal').show();
-				 $('#content-modal .modal').show();
-			 }
-		 }
-		 function getComments(value){
-			 var boardNo = ${board.boardNo};
-			 var page0 = value;
-			 $.ajax({
-				 url:'comments.re',
-				 data:{boardNo:boardNo,page0:page0},
-				 success: function(data){
-					//1) 페이징 버튼 넣기
-					pi0 = data.pi0;
-					$copaging = $('#co-paging');
-					$copaging.html('');
-					if(pi0.currentPage <= 1){
-						$before = $('<p>').text('<');
-					}else{
-						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
-					}
-					$copaging.append($before);
-
-					for(var i = pi0.startPage; i <= pi0.endPage; i++){
-						if(pi0.currentPage == i){
-							$pNo = $('<p class="page0-no">').text(i);
-						}else{
-							$pNo = $('<a>').on('click', function(){
-								getComments($(this).text());
-							}).text(i);
-						}
-						$copaging.append($pNo);
-					}
-					if(pi0.currentPage >= pi0.endPage){
-						$next = $('<p>').text(">");
-					}else{
-						$next = $('<a>').on("click", function(){getComments(pi0.currentPage + 1)}).text('>');
-					}
-					$copaging.append($next);
-					//2)값넣기
-					cList = data.cList;
-					$comments = $('.commentList');
-					$comments.html('');
-					
-					for(var i in cList){
-						$comment = $('<div class="comment">');
-						$top = $('<div class="comment-top">')
-						$idspan = $('<span class="comment-user">').text(cList[i].userId);
-						$datespan = $('<span class="comment-date">').text(cList[i].comDate);
-						$commentDiv = $('<div class="comment-content">').text(cList[i].comment);
-						
-						$top.append($idspan);
-						$top.append($datespan);
-						$comment.append($top);
-						$comment.append($commentDiv);
-						$comments.append($comment);
-					}
-				 }
-			 });
-		 }
-		</script>
-		
-		
-		<div class="btns-div">
-		<c:if test="${loginUser ne null }">
-			<c:if test="${ loginUser.id eq board.userId }">
-				<button class="modify-btn" onclick="location.href='modify.bo?boardNo='+${board.boardNo}+'&page='+${page}">수정하기</button>
-				<button class="delete-btn" onclick="deleteReview();">삭제하기</button>
-			</c:if>
-			<c:if test="${loginUser.id ne board.userId }">
-				<button class="write-btn" onclick='location.href="write.re"'>리뷰쓰기</button>
-			</c:if>
-		</c:if>
-		<button class="list-btn" onclick='location.href="book.bo?page="+${page}'>목록보기</button>
-		</div>
-		<script>
-			function deleteReview(){
-				$('#del-modal').show();
-				 $('#del-modal .modal').show();
-				 $('#del-modal .modal-accept').click(function(){
-					location.href='delete.bo?boardNo='+${board.boardNo};
-				});
-			}
-		</script>
-		
-		
-	</section>
-=======
                for(var i = pi0.startPage; i <= pi0.endPage; i++){
                   if(pi0.currentPage == i){
                      $pNo = $('<p class="page0-no">').text(i);
@@ -1141,6 +938,5 @@ body {
       
       
    </section>
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25.git
 </body>
 </html>
