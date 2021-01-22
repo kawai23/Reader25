@@ -255,7 +255,7 @@ background: #C95F12;
 		<div class = "login_place">
 		<c:if test="${ empty sessionScope.loginUser }">
 		<button class = "loginbtn" onclick="location.href='loginView.me'">로그인하기</button>
-		<button class = "enrollbtn"onclick="location.href='enrollView.me'">회원가입</button>
+		<button class = "enrollbtn"onclick="location.href='signUpForm.me'">회원가입</button>
 		<div style = "margin-top : 40%; text-align : center; width : 100%;cursor : pointer">
 		<span id = "find_pwd" onclick="location.href='searchUserForm.me'"><a>아이디 찾기 | 비밀번호 찾기</a></span>
 		</div>
