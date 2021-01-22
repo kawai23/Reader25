@@ -39,6 +39,16 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
+	public ArrayList<Book> selectBookList(PageInfo pi) {
+		return b_DAO.selectBookList(sqlSession, pi);
+	}
+
+	@Override
+	public Book selectBook(int b_no) {
+		return b_DAO.selectBook(sqlSession, b_no);
+	}
+
+	@Override
 	public int insertBook(Book book) {
 		return b_DAO.insertBook(sqlSession, book);
 	

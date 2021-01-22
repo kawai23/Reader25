@@ -123,7 +123,7 @@
 				</c:if>
 				<c:if test="${ empty loginUser }">
 					<button class = "login_font" onclick="location.href='loginView.me'">로그인하기</button>
-					<button class = "Sign_Up_font" onclick="location.href='enrollView.me'">회원가입</button>
+					<button class = "Sign_Up_font" onclick="location.href='signUpForm.me'">회원가입</button>
 					<br>
 					<br>
 					<span id = "find_id" onclick="location.href='searchUserForm.me'"><a>아이디 찾기</a> </span> | 

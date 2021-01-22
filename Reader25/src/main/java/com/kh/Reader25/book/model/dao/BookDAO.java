@@ -32,6 +32,15 @@ public class BookDAO {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectPayList", null, rowBounds);
 	}
 
+	public ArrayList<Book> selectBookList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectBookList", null, rowBounds);
+	}
+
+	public Book selectBook(SqlSessionTemplate sqlSession, int b_no) {
+		return sqlSession.selectOne("bookMapper.selectBook", b_no);
+	}
 	public int insertBook(SqlSessionTemplate sqlSession, Book book) {
 		
 		return sqlSession.insert("bookMapper.insertBook", book);

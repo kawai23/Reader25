@@ -299,6 +299,7 @@ section {
 				<button id="submit-btn" class="btn">작성완료</button>
 				<input type="reset" class="btn" onclick="location.href='javascript:history.go(-1);'" value="작성취소">
 			</div>
+			<br><br><br>
 		</form>
 			<script>
 			var oEditors = [];
@@ -336,6 +337,6 @@ section {
 				});
 		</script>
 	</section>
-	
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

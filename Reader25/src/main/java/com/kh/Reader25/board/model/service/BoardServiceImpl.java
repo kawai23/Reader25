@@ -271,7 +271,6 @@ public class BoardServiceImpl implements BoardService{
 		int result = bDAO.updateBoard(sqlSession, b);
 		if(result > 0) {
 			result = bDAO.updateAttachment(sqlSession, attachment);
-			System.out.println(result);
 		}
 		return result;
 	}
@@ -530,6 +529,15 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<TWITopWriter> topLikerList() {
 		// TODO Auto-generated method stub
 		return bDAO.topLikerList(sqlSession);
+	}
+
+	@Override
+	public int updateBoardInsertFile(Board b, Attachment attachment) {
+		int result = bDAO.updateBoard(sqlSession, b);
+		if(result > 0) {
+			result = bDAO.insertAttachmentBoardNo(sqlSession, attachment);
+		}
+		return result;
 	}
 
 

@@ -481,6 +481,10 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.topLikerList");
 	}
 
+	public int insertAttachmentBoardNo(SqlSessionTemplate sqlSession, Attachment attachment) {
+		return sqlSession.insert("boardMapper.insertAttachment2", attachment);
+	}
+
 
 
 

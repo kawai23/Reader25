@@ -157,6 +157,9 @@
 			<input type="hidden" name="boardNo" value="${board.boardNo }">
 			<input type="hidden" name="atcName" value="${at.atcName }">
 			<input type="hidden" name="atcOrigin" value="${at.atcOrigin }">
+			<c:if test="${at ne null }">
+				<input type="hidden" name="atcNo" value="${at.atcNo }">
+			</c:if>
 			
 			<div class="title-div">
 				<div class="title">title</div>
