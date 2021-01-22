@@ -416,7 +416,7 @@ background: #C95F12;
 		    	url: "reviewd.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_v();
 
 		    	},
 		    	error: function(){
@@ -439,7 +439,7 @@ background: #C95F12;
 		    	url: "revieww.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_v();
 
 		    	},
 		    	error: function(){
@@ -462,7 +462,7 @@ background: #C95F12;
 		    	url: "reviewm.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_v();
 
 		    	},
 		    	error: function(){
@@ -485,7 +485,7 @@ background: #C95F12;
 		    	url: "discussd.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_d();
 
 		    	},
 		    	error: function(){
@@ -508,7 +508,7 @@ background: #C95F12;
 		    	url: "discussw.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_d();
 
 		    	},
 		    	error: function(){
@@ -531,7 +531,7 @@ background: #C95F12;
 		    	url: "discussm.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_d();
 
 		    	},
 		    	error: function(){
@@ -554,7 +554,7 @@ background: #C95F12;
 		    	url: "tiwd.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_t();
 
 		    	},
 		    	error: function(){
@@ -577,7 +577,7 @@ background: #C95F12;
 		    	url: "tiww.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_t();
 
 		    	},
 		    	error: function(){
@@ -600,7 +600,7 @@ background: #C95F12;
 		    	url: "tiwm.do",
 		    	success : function(data){
 		    		console.log(data);
-		    		Reset_r();
+		    		Reset_t();
 
 		    	},
 		    	error: function(){

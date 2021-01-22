@@ -184,7 +184,7 @@ public interface BoardService {
 
 	int upPoint(HashMap<String, Object> map);
 
-	ArrayList<Board> recd(int value);
+	ArrayList<Board> recod(int value);
 
 	ArrayList<TWITopWriter> topWriterList();
 
