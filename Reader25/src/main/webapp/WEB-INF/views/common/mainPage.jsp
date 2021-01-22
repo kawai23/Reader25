@@ -297,15 +297,11 @@ background: #C95F12;
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton5()">주간</button>
 		<button class = "best_re" id = "button_pink" onclick = "clickbutton6()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-
-			<form name = "REVIEW_T" id = "REVIEW_T">
-				<c:forEach var = "r" items="${ review }" begin = "0" end = "13" varStatus="status">
-					<div class = "review_c" id = "review<c:out value = "${ status.count }"/>" style = "width : 100%">
-						<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
-					</div>					
-				</c:forEach>
-			</form>
-
+			<c:forEach var = "r" items="${ review }" begin = "0" end = "13" varStatus="status">
+				<div class = "review_c" id = "review<c:out value = "${ status.count }"/>" style = "width : 100%">
+					<p class = "ellipsis"><c:out value = "${ r.bTitle }"/></p>
+				</div>					
+			</c:forEach>
 		</div>
 	</div>
 	<div class = "rt_debate">
@@ -327,15 +323,11 @@ background: #C95F12;
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton11()">주간</button>
 		<button class = "TIW" id = "button_pink" onclick = "clickbutton12()">월간</button>
 		<div style = "width : 98%; height : 100%;border: 1px solid #000000;">
-		
-			<form name = "TIW_T" id = "TIW_T">
 				<c:forEach var = "t" items="${ tiw }" begin = "0" end = "13">
 					<div class="tiw_c" id="tiw_t<c:out value="${status.count}"/>"style = "width : 100%">
 						<p class = "ellipsis"><c:out value = "${ b.bTitle }"/></p>
 					</div>
 				</c:forEach>
-			</form>
-
 		</div>
 	</div>
 	</div>
