@@ -837,22 +837,28 @@ public class BoardController {
 	//분류하기
 	@RequestMapping("sort.re")
 	public ModelAndView sortBookReviewList(@RequestParam("sortValue") String sortValue, HttpServletRequest request,
-											ModelAndView mv) {
+											ModelAndView mv,
+											@RequestParam(value="page", required=false) Integer page) {
 		
 		int currentPage = 1;
-		if(request.getParameter("currentPage") != null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		if(page != null) {
+			currentPage = page;
 		}
 		int listCount = bService.getSortListCount(sortValue);
 		
 		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
 		ArrayList<Board> bList = bService.selectSortList(sortValue, pi);
 		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
 		if(bList != null) {
 			String[] wiseArr = new String[bList.size()];
 			String[] contentArr = new String[bList.size()];
+			String[] booktitleArr = new String[bList.size()];
+			String[] authorArr = new String[bList.size()];
 			
 			for(int i = 0; i < bList.size(); i++) {
+				booktitleArr[i] = bList.get(i).getbContent().substring(0,(bList.get(i).getbContent().indexOf("#책제목")));
+				authorArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#책제목") + 4,(bList.get(i).getbContent().indexOf("#작가")));
 				wiseArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#작가") + 3, bList.get(i).getbContent().indexOf("#명언"));
 				contentArr[i] = bList.get(i).getbContent().substring(bList.get(i).getbContent().indexOf("#명언")+3);
 			}
@@ -862,6 +868,8 @@ public class BoardController {
 			  .addObject("contentArr", contentArr)
 			  .addObject("wiseArr", wiseArr)
 			  .addObject("sortValue", sortValue)
+			  .addObject("booktitleArr", booktitleArr)
+			  .addObject("authorArr", authorArr)
 			  .setViewName("BookReview");
 		}else {
 			throw new BoardException("리뷰 게시판 분류하기에 실패하였습니다.");

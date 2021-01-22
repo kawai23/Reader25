@@ -22,7 +22,6 @@ section {
 	height: 50px;
 	margin: auto;
 }
-
 select {
 	font-family: inherit;
 	font-size: 15px;
@@ -93,7 +92,7 @@ select::-ms-expand {
 }
 
 .list-all-div {
-	width: 90%;
+	width: 70%;
 	min-height: 800px;
 	margin: auto;
 	margin-top: 20px;
@@ -105,7 +104,7 @@ select::-ms-expand {
 	width: 200px;
 	height: 300px;
 	display: inline-block;
-	margin-left: 1%;
+	margin-left: 2%;
 	margin-top: 20px;
 }
 
@@ -152,8 +151,17 @@ select::-ms-expand {
 .tag-li {
 	font-size: 13px;
 	color: rgba(245, 113, 92, 1);
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
+	line-height: 110%;
 }
-
+.book-span{
+	color: rgba(85, 83, 83, 1);
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
+}
 .writer-li {
 	font-size: 10px;
 }
@@ -328,20 +336,21 @@ select::-ms-expand {
 							<li class="title-li"><%=bList.get(i).getbTitle()%></li>
 							<li class="tag-li">
 								<% if(!booktitleArr[i].equals("")){ %>
-									#<%=booktitleArr[i] %> 
+									<span class="book-span">#<%=booktitleArr[i] %></span>
+								<%} %>
+								<br>
+								<% if(!authorArr[i].equals("")){ %>
+									#<%=authorArr[i] %> 
 								<%} %>
 								<% if(!bList.get(i).getCate().equals("null")){ %>
 									#<%=bList.get(i).getCate() %>
-								<%} %>
-								<% if(!authorArr[i].equals("")){ %>
-									#<%=authorArr[i] %> 
 								<%} %>
 								 &nbsp;
 							</li>
 							<li class="writer-li"><%=bList.get(i).getUserId() %></li>
 							<li class="wise-li">
 								<%if(wiseArr[i].equals("")){ %>
-									<%=contentArr[i] %>
+									<br>
 								<%}else{ %>
 									<%=wiseArr[i] %>
 								<%} %>
@@ -371,6 +380,9 @@ select::-ms-expand {
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage -1 }"/>
+						<c:if test="${sortValue ne null }">
+							<c:param name="sortValue" value="${sortValue}"/>
+						</c:if>
 					</c:url>
 					<a href="${ before }">&lt;</a>
 				</c:if>
@@ -382,6 +394,9 @@ select::-ms-expand {
 					<c:if test="${ pi.currentPage ne p }">
 						<c:url var="pNo" value="${ loc }">
 							<c:param name="page" value="${ p }"/>
+							<c:if test="${sortValue ne null }">
+								<c:param name="sortValue" value="${sortValue}"/>
+							</c:if>
 						</c:url>
 						<a href="${ pNo }">${ p }</a>
 					</c:if>
@@ -391,6 +406,9 @@ select::-ms-expand {
 				<c:if test="${ pi.currentPage < pi.maxPage }">
 					<c:url var="next" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+						<c:if test="${sortValue ne null }">
+							<c:param name="sortValue" value="${sortValue}"/>
+						</c:if>
 					</c:url>
 					<a href="${next}">&gt;</a>
 				</c:if>

@@ -57,11 +57,11 @@
 <body>
 	<nav>
 		<ul class="nav-ul">
-			<li><a href="admin.ad" class="nav-a">회원 관리</a></li>
-			<li><a href="paylist.ad" class="nav-a">결제 내역 조회</a></li>
-			<li><a href="inquiry.ad" class="nav-a">문의 사항</a></li>
-			<li><a href="notice.ad" class="nav-a">공지 사항</a></li>
-			<li><a href="statistic.ad" class="nav-a">통계자료</a></li>
+			<li id="mem-ad"><a href="admin.ad" class="nav-a" >회원 관리</a></li>
+			<li id="pay-ad"><a href="paylist.ad" class="nav-a" id="pay-ad">결제 내역 조회</a></li>
+			<li id="in-ad"><a href="inquiry.ad" class="nav-a" >문의 사항</a></li>
+			<li  id="no-ad"><a href="notice.ad" class="nav-a">공지 사항</a></li>
+			<li id="st-ad"><a href="statistic.ad" class="nav-a" >통계자료</a></li>
 		</ul>
 	</nav>
 </body>

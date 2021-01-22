@@ -43,6 +43,7 @@
 		width: 80%;
 		margin:auto;
 		max-width: 1000px;
+		line-height: 120%;
 	}
 	.img-div{
 		display:inline-block;
@@ -101,7 +102,7 @@
 	#quote1{float:left;}
 	#quote2{float:right;}
 	.wise-content{display:inline-block; margin-top: 10px;}
-	.contents{width: 80%;margin:auto; margin-top: 10px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);}
+	.contents{width: 80%;margin:auto; margin-top: 70px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);line-height: 120%;}
 	.contents>p{margin:15px;}
 	.comment-box{
 		width: 80%;
@@ -167,7 +168,7 @@
 		border-collapse: collapse;
 		margin:auto;
 	}
-	.list-table tr{border-bottom: 1px solid rgb(240, 240, 240);}
+	.list-table tr{border-bottom: 1px solid rgb(240, 240, 240);font-size:14px; height: 25px;}
 	.list-table tr:hover{
 		cursor: pointer;
 		background: rgb(240, 240, 240);
@@ -207,6 +208,7 @@
 		max-width: 1000px;
 	}
 	.btns-div button{float: right; margin-left: 10px; margin-top: 20px;}
+	.btns-div button:hover{cursor: pointer; font-weight: bolder;}
 	.write-btn{
 		background:rgba(255, 195, 152, 1);
 		width: 80px;
@@ -472,10 +474,12 @@
 						<p class="tag">#책제목</p>
 						<span class="info-span" id="booktitle">${booktitle }</span>
 					</c:if>
+					<br>
 					<c:if test="${author ne ''}">
 						<p class="tag">#작가</p>
 						<span class="info-span" id="author">${author }</span>
 					</c:if>
+					
 					<c:if test="${board.cate ne 'null'}">
 						<p class="tag">#분야</p>
 						<span class="info-span" id="cate">${board.cate }</span>

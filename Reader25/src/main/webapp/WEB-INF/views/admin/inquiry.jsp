@@ -75,6 +75,10 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
+	#in-ad{
+		font-weight: bolder;
+		background: black;
+	}
 </style>
 </head>
 <body>
