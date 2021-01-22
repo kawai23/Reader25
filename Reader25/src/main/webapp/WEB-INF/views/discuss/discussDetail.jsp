@@ -60,14 +60,22 @@
 		<div id="title">
 			<b>${d.getdTitle()}</b>
 		</div>
-		<div class="head" id="info">
-			의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
-		</div>
-		<div class="head">
-			<input type="radio"  name="discuss" value="찬성"> 찬성
-			<input type="radio" class="dradio" name="discuss" value="중립" checked> 중립
-			<input type="radio" class="dradio" name="discuss" value="반대"> 반대
-		</div><br>
+		<c:if test="${d.dStatus=='N' }"><br>
+			<div class="head" id="info">
+				토론이 끝난 주제로 댓글을 작성할수 없습니다.
+			</div>
+		</c:if>
+		<c:if test="${d.dStatus=='Y' }"><br>
+			<div class="head" id="info">
+				의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
+			</div>
+			<div class="head">
+				<input type="radio"  name="discuss" value="찬성"> 찬성
+				<input type="radio" class="dradio" name="discuss" value="중립" checked> 중립
+				<input type="radio" class="dradio" name="discuss" value="반대"> 반대
+			</div>
+		</c:if>
+		<br>
 		<div class="head">
 			<c:if test="${ d.atcNo == at.atcNo }">
 				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/>
@@ -110,20 +118,21 @@
 			<ol id="rol"><!-- 댓글달릴부분 -->
 			</ol>
 		</div>
+		<c:if test="${d.dStatus == 'Y' }">
 		<select class="wid" id="dis">
 			<option selected value="P">찬성</option>
 			<option value="N">중립</option>
 			<option value="C">반대</option>
 		</select><br>
-		<c:if test="${ !empty loginUser }">
-			<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+			<c:if test="${ !empty loginUser }">
+				<input type="text" class="wid" id="id"  readonly value="${loginUser.id }"><br>
+			</c:if>
+			<c:if test="${ empty loginUser }">
+				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+			</c:if>
+			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
+			<button class="btn" id="btn3">작성하기</button>
 		</c:if>
-		<c:if test="${ empty loginUser }">
-			<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
-		</c:if>
-		<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
-		<button class="btn" id="btn3">작성하기</button>
-		
 		<script>	
 			// 라디오버튼으로 댓글작성시 찬성,중립,반대 자동으로 체크
 			$("input:radio[name=discuss]").click(function(){

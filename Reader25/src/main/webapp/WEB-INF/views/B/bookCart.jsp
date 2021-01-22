@@ -1393,7 +1393,9 @@ body{line-height: 1;}
 			<br> 
 		
 		<table class="list-table" style="border-spacing:0px;">
+					<tr>
 						<td align="left" style="text-align:left; font-size:18pt; padding:10px;">일반상품(1)</td>
+					</tr>
 				          <tr class="list-tableth" >
 				         	  <td width="10px;" style="border-top:4px solid orange; border-bottom:2px solid orange;">
 				         	   <label><input type="checkbox" value="alldelete"></label></td>
@@ -1451,9 +1453,9 @@ body{line-height: 1;}
 		
 	
 	
+</section>
 </div>
 	
-</section>
 <br><br><br>
 <%@include file="../common/footer.jsp" %>
 

@@ -53,19 +53,8 @@
 		background:#FFC398;
 	}
 	/*메뉴바 관련*/
-	#subMenuDiv{
-		width: 310px; 
-	    height: 455px;
-		border: 1px solid black;
-		border-radius:50px;
-	}
-	.subMenuLi {
-		display: block;
-		text-align: center;
-		width: 100px;
-	    margin-top:  10px;
-		font-size: 15px;
-		font-weight: bold;
+	.subul {
+		list-style-image: url( "<%=request.getContextPath() %>/resources/images/icon/li_file.png" );
 	}
 	/*토론방 리스트 관련*/
   	.outer{
@@ -142,29 +131,15 @@
 				</c:if>
 			</div>
 			<br><br>
-<!-- 			<div id="subMenuDiv"> -->
-<!-- 				<h2>메뉴바</h2> -->
-<!-- 				<ul> -->
-<!-- 					<li class="subMenuLi"> -->
-<!-- 						<a class="submenuLink" href="book.re">도서리뷰</a> -->
-<!-- 					</li> -->
-<!-- 					<li class="subMenuLi"> -->
-<!-- 						<a class="submenuLink" href="goTIWList.to">책방</a> -->
-<!-- 					</li> -->
-<!-- 					<li class="subMenuLi"> -->
-<!-- 						<a class="submenuLink" href="discuss.di">토론방</a> -->
-<!-- 					</li> -->
-<!-- 				 </ul> -->
-<!-- 			</div> -->
 			<div>
 				<c:set var="count" value="0"/>
 				<h3>현재 열린 토론방</h3>
-				<ul>
+				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
 						<c:if test="${d.dStatus == 'Y'}">
 						<c:set var="count" value="${count + 1}"/>
-							<li>${d.dTitle}</li>
+							<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
 						</c:if>
 					</c:if>
 					</c:forEach>
@@ -174,12 +149,12 @@
 			<hr><br>
 			<div>
 				<h3>현재 닫힌 토론방</h3>
-				<ul>
+				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
 						<c:if test="${d.dStatus == 'N'}">
 						<c:set var="count" value="${count + 1}"/>
-							<li>${d.dTitle}</li>
+							<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
 						</c:if>
 					</c:if>
 					</c:forEach>
@@ -190,12 +165,12 @@
 			<hr><br>
 				<div>
 					<h3>내가 연 토론방</h3>
-					<ul>
+					<ul class="subul">
 						<c:forEach var="d" items="${ dAllList }">
 						<c:if test="${count < 5 }">
 							<c:if test="${(d.dWriter == loginUser.id) && d.dStatus == 'Y'}">
 								<c:set var="count" value="${count + 1}"/>
-								<li>${d.dTitle}</li>
+								<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
 							</c:if>
 						</c:if>
 						</c:forEach>
@@ -222,6 +197,11 @@
 			</div>
 			<div id="body">
 				<table id="orderTable">
+				<c:if test="${empty dList }">
+					<tr>
+						<td>등록된 토론방이 없습니다.</td>
+					</tr>
+				</c:if>
 				<c:forEach var="d" items="${ dList }">
 					<tr class="dtr2">
 						<c:forEach var="at" items="${ atList }">
@@ -311,11 +291,19 @@
 							$(this).css({'cursor':'pointer'});
 						}).click(function(){
 							var dNo = $(this).children().children().val();
+							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
+						});
+
+						$('.subli').mouseenter(function(){
+							$(this).css({'cursor':'pointer', 'border-bottom':'1px solid black'});
+						}).mouseout(function(){
+							$(this).css({'border-bottom':'none'});
+						}).click(function(){
+							var dNo = $(this).children().val();
 							console.log(dNo);
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
 						});
 					});
-
 					// 검색 기능
 					$('#search-icon').click(function(){
 						search();
