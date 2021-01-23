@@ -599,46 +599,6 @@ body {
 			<p>${ board.userId } ${board.updateDay }</p>
 			<p class="count-p">조회수 : ${ board.bCount } </p>
 		</div>
-		<script>
-			$(function(){
-				var heartval = ${heart};
-				if(heartval > 0){
-					$('#heart-img').prop('src', 'resources/images/bookreview/heart2.png');
-					$(".heart").prop('name',heartval)
-				}else{
-					$(".heart").prop('name',heartval)
-					$('#heart-img').mouseenter(function(){
-						$(this).prop('src', 'resources/images/bookreview/heart2.png').css('cursor','pointer');
-					}).mouseout(function(){
-						$(this).prop('src', 'resources/images/bookreview/heart1.png');
-					});
-				}
-				$('.heart').click(function(){
-					if('${loginUser}' != ''){
-						var heartC = $('.heart');
-						$.ajax({
-							url: 'heart.to',
-							data:{boardNo:'${board.boardNo}', heart:'${heart}'},
-							success:function(data){
-								heartC.prop('name', data);
-								console.log(data);
-								if(data == 1){
-									$('#heart-img').prop('src','resources/images/bookreview/heart2.png');
-									location.reload();
-								}else{
-									$('#heart-img').prop('src','resources/images/bookreview/heart1.png');
-									location.reload();
-								}
-							}
-						});
-					}else{
-						$('#login-modal').show();
-						$('#login-modal .modal').show();
-					}
-				});
-			});
-		</script>
-
 
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
 	
@@ -732,10 +692,10 @@ body {
 
          <div class="purchase-btn">
             <div class="a">
-<!--                <span class="pcs-btn">구매하기</span>  -->
-<!--                <span class="cart-btn">장바구니</span> -->
-               <a href="pcs.bo" class="pcs-btn">구매하기</a> 
-               <a href="cart.bo"class="cart-btn">장바구니</a>
+               <span class="pcs-btn">구매하기</span> 
+               <span class="cart-btn">장바구니</span>
+<!--                <a href="pcs.bo" class="pcs-btn">구매하기</a>  -->
+<!--                <a href="cart.bo"class="cart-btn">장바구니</a> -->
                   
             </div>
          </div>
@@ -781,13 +741,15 @@ body {
          </script>
          <script>
          $('.cart-btn').click(function(){
-             var SB_V;
-             var book_no;
-             var b_price;
+             var sb_v = 1;
+             var user_id = '${loginUser.id}';
+             var book_no = 1;
+             var price = 10000;
              $.ajax({
-                url: 'insertCart.bo',
-                data:{b_price:b_price, book_no:book_no, SB_V:SB_V}.
+                url: 'insertCart.tr',
+                data:{price:price, book_no:book_no, sb_v:sb_v, user_id:user_id},
                 success: function(data){
+                	console.log(data);
 		        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 					if(check){
 						location.href="<%=request.getContextPath()%>/cart.bo";
@@ -795,6 +757,7 @@ body {
                 }
              });
          });
+         
          $('.pcs-btn').click(function(){
             location.href="<%=request.getContextPath()%>/pcs.bo";
          });

@@ -22,14 +22,16 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopComment" alias="TWITopComment"/>
 
 		<typeAlias type="com.kh.Reader25.book.model.vo.Book" alias="Book"/>
-
+		<typeAlias type="com.kh.Reader25.book.model.vo.ShoppingBasket" alias="SB"/>
 
 		<typeAlias type="com.kh.Reader25.board.model.vo.SearchCondition" alias="SearchCondition"/>
 
 		<typeAlias type="com.kh.Reader25.board.model.vo.Pay" alias="Pay"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.SearchCate" alias="SearchCate"/>
+		
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Discuss" alias="Discuss"/>
 		<typeAlias type="com.kh.Reader25.discuss.model.vo.Reply" alias="Reply"/>
+		
 		
 		<typeAlias type="com.kh.Reader25.visit.model.vo.Visitor" alias="Visitor"/>
 	</typeAliases>

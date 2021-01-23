@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.book.model.vo.Book;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
 @Repository("b_DAO")
 public class BookDAO {
@@ -44,5 +45,9 @@ public class BookDAO {
 	public int insertBook(SqlSessionTemplate sqlSession, Book book) {
 		
 		return sqlSession.insert("bookMapper.insertBook", book);
+	}
+
+	public int insertSB(SqlSessionTemplate sqlSession, ShoppingBasket sb) {
+		return sqlSession.insert("bookMapper.insertsb", sb);
 	}
 }
