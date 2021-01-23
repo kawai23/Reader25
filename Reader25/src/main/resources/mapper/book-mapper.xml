@@ -60,4 +60,9 @@
 		values(book_seq.nextval, book_name=#{book_name}, price=#{price}, book_q1 = #{book_q1}, book_q2 = #{book_q2}, null,
 			author=#{author}, default)
 	</insert>
+	
+	<insert id="insertsb">
+		INSERT INTO SHOPPINGBASKET
+		VALUES(SEQ_SBNO.nextval, #{sb_v}, #{price}, default, #{user_id}, #{book_no})
+	</insert>
 </mapper>
