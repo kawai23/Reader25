@@ -1082,6 +1082,7 @@ public class BoardController {
 		}
 	}
 	
+	//글 작성 후 포인트 변화
 	public int pointChangeTIW(HttpSession session) {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
@@ -1368,50 +1369,48 @@ public class BoardController {
 	}
 	
 	//오늘은 나도 작가 = 5 게시글 검색
-	@RequestMapping("searchTIW.to")
-	public ModelAndView searchTIW(@ModelAttribute SearchCondition serchC,
-									HttpServletRequest request, HttpServletResponse response, 
-									ModelAndView mv) {
-		String condition = request.getParameter("searchCondition");
-		String value = request.getParameter("searchValue");
-		
-		if(condition.equals("writer")) {
-			serchC.setWriter(value);
-		} else if(condition.equals("title")) {
-			serchC.setTitle(value);
-		} else if(condition.contentEquals("content")) {
-			serchC.setContent(value);
+		@RequestMapping("searchTIW.to")
+		public ModelAndView searchTIW(@ModelAttribute SearchCondition serchC,
+										HttpServletRequest request, HttpServletResponse response, 
+										ModelAndView mv) {
+			
+			String condition = request.getParameter("searchCondition");
+			String value = request.getParameter("searchValue");
+			
+			if(condition.equals("writer")) {
+				serchC.setWriter(value);
+			} else if(condition.equals("title")) {
+				serchC.setTitle(value);
+			} else if(condition.contentEquals("content")) {
+				serchC.setContent(value);
+			}
+			//currentPage 설정
+			int currentPage = 1; //기본
+			if(request.getParameter("currentPage") != null) { //currentPage가 들어 왔다면
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				//넘어온 currentPage 값을 넣어준다
+			}
+			int listCount = bService.getSearchTIWResultListCount(serchC);
+			//검색을 어떤걸로 할지에 따라 세팅된 sc를 매개변수로 넣어줘야한다
+			
+			PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
+			//System.out.println("pi"+pi);
+			ArrayList<Board> list = bService.selectSerchTIWResultList(serchC, pi);
+			
+			if(list != null) {
+				mv.addObject("list", list)
+				.addObject("pi", pi)
+				.addObject("searchCondition", condition)
+				.addObject("searchValue", value)
+				.setViewName("TIWSearchListForm");
+			} else {
+				throw new BoardException("오늘은 나도 작가 게시글 검색 조회에 실패했습니다.");
+			}
+			
+			return mv;
+			
 		}
 		
-		//currentPage 설정
-		int currentPage = 1; //기본
-		if(request.getParameter("currentPage") != null) { //currentPage가 들어 왔다면
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			//넘어온 currentPage 값을 넣어준다
-		}
-		
-		int listCount = bService.getSearchTIWResultListCount(serchC);
-		//검색을 어떤걸로 할지에 따라 세팅된 sc를 매개변수로 넣어줘야한다
-		
-		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
-		
-		ArrayList<Board> list = bService.selectSerchTIWResultList(serchC, pi);
-		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.addObject("searchCondition", condition);
-			mv.addObject("searchValue", value);
-			mv.addObject("searchValue", value);
-			mv.setViewName("TIWListForm");
-		} else {
-			throw new BoardException("오늘은 나도 작가 게시글 검색 조회에 실패했습니다.");
-		}
-		
-		return mv;
-		
-	}
-	
 	//오늘은 나도 작가 = 5 게시글 카테고리 통한 동일 작품 검색
 	@RequestMapping("searchTIWCate.to")
 	public ModelAndView searchTIWCate(@ModelAttribute SearchCate serCa,
@@ -1435,7 +1434,7 @@ public class BoardController {
 			if(list != null) {
 				mv.addObject("list", list);
 				mv.addObject("pi", pi);
-				mv.setViewName("TIWListForm");
+				mv.setViewName("TIWSearchListForm");
 			} else {
 				throw new BoardException("오늘은 나도 작가 게시글 카테고리 검색 조회에 실패했습니다.");
 			}
