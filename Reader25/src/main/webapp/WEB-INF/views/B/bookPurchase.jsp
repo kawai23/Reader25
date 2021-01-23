@@ -184,9 +184,7 @@
 <%@include file="../common/menubar.jsp" %>
 <div class="outer">
     <form action="<%= request.getContextPath() %>/importBuy" method="post" id="buyForm" name="buyForm">
-    
     <h2 class="txt_pack">주문하기</h2>
-    
       <div id="listArea" class="list-A">
         <table class="table1" align="center">
           <tr>
@@ -212,7 +210,6 @@
         </div>
       </div>
       <br><br>
-      
       <div class="sum">
       	<h2 class="bea-title">배송받을 정보</h2><p class="bea-sub">(기본으로 회원가입 시 입력한 정보를 가져옵니다)</p>
 	      <div id="loginUserTable" class="lu-table">
@@ -257,18 +254,15 @@
 	        <br>
 	      </div>
       </div>
-      
       <br><br>
       <div align="center">
         <input type="submit" onclick="buy(); " value="주문하기" id="btn1">
         <input type="button" onclick="location.href='javascript:history.back();'" value="장바구니 수정하기" id="btn3">
       </div>
-      
       <br><br>
     </form>
   </div>
 	<script>
-	
 		//우편번호 검색
 		function ifindPostal() {
 	        new daum.Postcode({
