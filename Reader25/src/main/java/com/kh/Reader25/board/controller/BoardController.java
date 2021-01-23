@@ -1923,16 +1923,20 @@ public class BoardController {
 			int listCount = bService.getListCount(code);// 총 게시물 갯수
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);// PageInfo는 게시물 페이징을 설정 하는 객체
-			// Pagination는 getPageInfo2 1에서 5까지 있는데 페이징을 자동으로 계산할수 있게끔 도와주는 객체
 			ArrayList<Board> bList = bService.selectList(pi, code); // selectList 총 게시물을 불러오는 함수 // 총 게시물 리스트를 받아오는 객체
 			// 객체를 여러개 담을수 있는 객체
 			/* ArrayList<Attachment> atList = bService.gobookr("Code"); */
 			/* bService.selectAttachmentTList(code); */
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
+			System.out.println(atList);
+			System.out.println(bookList);
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
-						.addObject("pi", pi).addObject("atList", atList).addObject("bookList", bookList).setViewName("gobookr");// setViewName view 이름을
+						.addObject("pi", pi)
+						.addObject("atList", atList)
+						.addObject("bookList", bookList)
+						.setViewName("gobookr");// setViewName view 이름을
 																								// 지정해준다
 			} else {
 				throw new BoardException("책방 게시글 전체 조회에 실패하였습니다."); // 사용자 예외를 발생시켰을때 "게시글 전체 조회에 실패하였습니다." 라고 오류 메시지를 띄움
@@ -1940,41 +1944,27 @@ public class BoardController {
 			return mv; // 최종 반환값을 mv로 반환해준다.
 		}
 
-		@RequestMapping("write.bo") // ****-------------------이거랑
+		@RequestMapping("write.bo") 
 		public String bookD() {
 			return "bookD";
 		}
 
-		@RequestMapping("insert.bo") // *------------------------------------------이거
+		@RequestMapping("insert.bo") // 
 		public String bookReviewInsert1(@ModelAttribute Board b, // @ModelAttribute 가 Board 라는 객체를 생성해준다
-				@RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, // MultipartFile[] 여러개의 값을
-																									// 가져올때 이걸루 바꾸고 //
-																									// required = false 이거를
-																									// 넣으면 파일을 넣지 않아도 된다
-																									// 파라미터 값이 필요하지 않다
-				HttpServletRequest request, // request 뷰에서 컨트롤러로 보낼때 값을 보내주는 역활 //서블릿 컨테이너는 HttpServletRequest 개체를 만들어 서블릿의
-											// 서비스 방법(doGet, doPost 등)에 인수로서 전달합니다.
-				@RequestParam("booktitle") String booktitle, @RequestParam("author") String author) {
-			String contentAddTag = booktitle + "#책제목" + author + "#작가" + b.getbContent();// contentAddTag 라는 변수를 하나 만들어주고
-																							// (String 타입의 변수에 책제목이랑 작가를
-																							// 넣어준다)
-			b.setbContent(contentAddTag);// contentAddTag 의 값을 board Content라는 값에 setbContent를 이용하여 값을 넣어준다
+				@RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletRequest request,
+				@ModelAttribute Book book) {
 
-			Member member = (Member) (request.getSession().getAttribute("loginUser")); // getSession() 안에 loginUser 라는 값을
-																						// 가져온다 loginUser 를 Member member =
-																						// (Member) : 맴버값으로 담아준다
+			Member member = (Member)(request.getSession().getAttribute("loginUser")); 
 			String userId = member.getId(); // 맴버 객체 안에서 userId 라는 값을 가져온다.
 			b.setUserId(userId); // userId 를 b에 담는다
 			b.setCode(3); // 해당 게시판을 식별할수있는 코드를 b에 담는다.
 
 			ArrayList<Attachment> atList = new ArrayList<Attachment>(); // ArrayList<Attachment>() ArrayList안에
-																		// Attachment(여러개를) 담는 객체이다
+			
 			if (uploadFile.length != 0) { // 업로드파일이 !=0 (없을시)
 				b.setCode(3); // 공지사항 코드
 				for (int i = 0; i < uploadFile.length; i++) {// 업르드 파일의 수만큼 돌린다
 					Attachment at = saveFile(uploadFile[i], request, 3); // 업로드 파일 저장하기 위해 파일이름 구별하여 저장하기 위해 사용하고 saveFile에
-																			// uploadFile[i], request, 3 의 값을 받아와 Attachment
-																			// at 에 담아준다.
 					if (i == uploadFile.length -1) {
 						at.setAtcLevel(0); // setAtcLevel() 썸내일 을 설정해주는 메소드
 					} else {
@@ -1984,7 +1974,9 @@ public class BoardController {
 				}
 			}
 			int result = bService.insertBoardAndFiles(b, atList);
-			if (result > 0) {
+			int result2 = b_Service.insertBook(book);
+			
+			if (result > 0 && result2 > 0) {
 				return "redirect:book.bo";
 			} else {
 				throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
@@ -1993,24 +1985,15 @@ public class BoardController {
 
 		@RequestMapping("redetail.bo")
 		public ModelAndView bookroomD(@RequestParam("boardNo") int boardNo,
-
 				@RequestParam("page") int page, ModelAndView mv) {
 			Board board = bService.selectBoard(boardNo);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
+			
 			if (board != null) {
-
-				String booktitle = board.getbContent().substring(0, (board.getbContent()).indexOf("#책제목"));
-				String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목") + 4);
-				String author = exbook.substring(0, exbook.indexOf("#작가"));
-				String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
-				String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
-
-				board.setbContent(content);
+				
 
 				mv.addObject("board", board);
 				mv.addObject("atlist", atlist);
-				mv.addObject("booktitle", booktitle);
-				mv.addObject("author", author);
 				mv.addObject("page", page);
 				mv.setViewName("bookRD");// 북 상세페이지
 			}

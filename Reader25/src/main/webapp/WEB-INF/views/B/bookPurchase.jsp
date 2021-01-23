@@ -149,6 +149,7 @@
 	font-size:20px;
 	font-family: 카페24 아네모네에어;
 	text-align: center;
+	width: 50%
 }
 .btn_sign_input{
 	width:100px;
@@ -211,6 +212,7 @@
         </div>
       </div>
       <br><br>
+      
       <div class="sum">
       	<h2 class="bea-title">배송받을 정보</h2><p class="bea-sub">(기본으로 회원가입 시 입력한 정보를 가져옵니다)</p>
 	      <div id="loginUserTable" class="lu-table">

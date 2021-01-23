@@ -60,6 +60,7 @@ public class HomeController {
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
+		System.out.println(review);
 		model.addAttribute("review", review);
 		model.addAttribute("discuss", discuss);
 		model.addAttribute("tiw", tiw);
@@ -134,8 +135,8 @@ public class HomeController {
 			currentPage = page;
 		}
 		// 오늘 날짜
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM");
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yy/MM");
 		Date time = new Date();
 		String today = sdf.format(time);
 		String month = sdf2.format(time);
@@ -168,7 +169,6 @@ public class HomeController {
 		}
 		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
 		ArrayList<Visitor> visitList = vService.selectListVisitor(pi);
-		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy.MM.dd. HH:mm");
 		
 		
 		mv.addObject("dayStr", dayStr);
@@ -189,7 +189,8 @@ public class HomeController {
 		// 값 가공
 		String[] dayArr = dayStart.split("-");
 		String day = "";
-		for(int i = 0; i < dayArr.length; i++) {
+		day += dayArr[0].substring(2);
+		for(int i = 1; i < dayArr.length; i++) {
 			day += dayArr[i];
 			if(i != dayArr.length-1) {
 				day += "/";
@@ -199,6 +200,11 @@ public class HomeController {
 		
 		List<Map<String,String>> dayList = vService.getDayVisitor(day);
 		List<Map<String,String>> enrollList = mService.getEnrollList(day);
+		
+		for(int i = 0; i < enrollList.size(); i++) {
+			
+			System.out.println(enrollList.get(i));
+		}
 		
 		map.put("dayList", dayList);
 		map.put("enrollList", enrollList);
@@ -220,7 +226,8 @@ public class HomeController {
 		// 값 가공
 		String[] monthArr = monthStart.split("-");
 		String month = "";
-		for(int i = 0; i < monthArr.length; i++) {
+		month += monthArr[0].substring(2);
+		for(int i = 1; i < monthArr.length; i++) {
 			month += monthArr[i];
 			if(i != monthArr.length-1) {
 				month += "/";

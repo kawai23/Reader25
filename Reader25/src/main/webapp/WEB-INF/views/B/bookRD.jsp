@@ -19,7 +19,6 @@ section {
 	margin: auto;
 	min-width: 1000px;
 }
-
 .list-info {
 	border-bottom: 1px solid rgb(200, 200, 200);
 	padding-top: 30px;
@@ -28,38 +27,30 @@ section {
 	margin: auto;
 	max-width: 1000px;
 }
-
 .list-info img {
 	position: relative;
 	bottom: -10px;
 }
-
 .list-info p {
 	display: inline-block;
 	color: rgb(100, 100, 100);
 	margin-left: 10px;
 }
-
 .count-p {
 	float: right;
 	margin-right: 10px
 }
-
 .bookreview-div {
 	margin-top: 20px;
 	margin: auto;
 	display: block;
 }
-
 .infos {
 	width: 80%;
 	margin: auto;
 	max-width: 1000px;
-
 }
-
 .img-div { 
-
 	display: inline-block;
 	width: 990px;
 	line-height: 600px;
@@ -67,12 +58,8 @@ section {
 	/* background: rgba(229, 229, 229, 1); */
 	text-align: center;
 	margin: auto;
-
-
 }
-
 .img-div img {
-
    clear: both;
    max-width: 990px;
    max-height: 630px;
@@ -80,9 +67,7 @@ section {
    vertical-align: middle;
    text-align: center;
    overflow: hidden;
-
 } 
-
  
 /* 책제목  */
 .info-box {
@@ -93,7 +78,6 @@ section {
    margin: auto;
    max-width: 1000px;
 }
-
 .title {
    display: inline-block;
    margin: auto;
@@ -101,7 +85,6 @@ section {
    width: 100%;
    font-size: 30px;
 }
-
 .tag {
    display: inline;
    margin: 10px;
@@ -109,20 +92,16 @@ section {
    color: gray;
    font-size: 13px;
 }
-
 #quote1 {
    float: left;
 }
-
 #quote2 {
    float: right;
 }
-
 .wise-content {
    display: inline-block;
    margin-top: 10px;
 }
-
 /* 내용박스*/
  .rectangle-box {
    margin: auto;
@@ -147,11 +126,9 @@ section {
    color: #000000;
    border-bottom: 1px solid rgb(200, 200, 200);
 }
-
 .contents>p {
    margin: 15px;
 }
-
 .list {
    top: 100px;
    width: 80%;
@@ -159,59 +136,48 @@ section {
    margin-top: 10px;
    max-width: 1000px;
 }
-
 .list-header {
    background: rgba(247, 180, 94, 1);
    padding-left: 20px;
    height: 35px;
    line-height: 35px;
 }
-
 .list-header p {
    display: inline;
 }
-
 .list-contents {
    background: rgba(229, 229, 229, 1);
    padding: 10px;
 }
-
 .list-table {
    width: 95%;
    border-collapse: collapse;
    margin: auto;
 }
-
 .list-table tr:hover {
    background: white;
    cursor: pointer;
 }
-
 .list-table td {
    text-align: center;
 }
-
 .list-table td[class=td-left] {
    text-align: left;
 }
-
 .paging-btn {
    width: 200px;
    margin: auto;
    margin-top: 10px;
    text-align: center;
 }
-
 .paging-btn a, .paging-btn p {
    display: inline-block;
    margin-left: 6px;
 }
-
 .paging-btn a:hover {
    font-weight: bolder;
    cursor: pointer;
 }
-
 .btns-div {
    font-size: 18px;
    height: 25px;
@@ -220,7 +186,6 @@ section {
    margin-right: 10%;
    top: -30px;
 }
-
 .write-btn {
    background: rgba(255, 195, 152, 1);
    width: 80px;
@@ -228,7 +193,6 @@ section {
    height: 25px;
    color: white;
 }
-
 .delete-btn {
    background: rgba(103, 73, 44, 1);
    width: 80px;
@@ -236,7 +200,6 @@ section {
    height: 25px;
    color: white;
 }
-
 .modify-btn {
    background: rgba(201, 95, 18, 1);
    width: 80px;
@@ -244,7 +207,6 @@ section {
    height: 25px;
    color: white;
 }
-
 .list-btn {
    background: rgba(196, 196, 196, 1);
    width: 80px;
@@ -252,22 +214,18 @@ section {
    height: 25px;
    color: white;
 }
-
 .write-btn:hover {
    background: rgba(245, 185, 142, 1);
    cursor: pointer;
 }
-
 .jquery-modal blocker current {
    visibility: none;
 }
-
 .modal {
    margin: 40% auto;
    padding: 20px;
    text-align: center;
 }
-
 .modal-back {
    display: none;
    position: fixed;
@@ -279,7 +237,6 @@ section {
    overflow: auto;
    background: rgba(0, 0, 0, 0.4);
 }
-
 .modal-close, .modal-accept {
    background-color: rgba(137, 18, 18, 1);
    color: white;
@@ -289,25 +246,20 @@ section {
    display: inline-block;
    left: 40%;
 }
-
 .modal-accept {
    background-color: rgba(85, 83, 83, 1);
 }
-
 .modal p {
    display: inline-block;
 }
-
 .modal img {
    position: relative;
    top: 10px;
 }
-
 html, body {
    position: relative;
    height: 100%;
 }
-
 body {
    background: #eee;
    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -316,26 +268,21 @@ body {
    margin: 0;
    padding: 0;
 }
-
 .list-table td[class=td-left] {
    text-align: left;
 }
-
 #none-reList:hover {
    background: white;
    cursor: default;
 }
-
 #none-wiseList:hover {
    background: white;
    cursor: default;
 }
-
 .list-table td[class=td-right] {
    text-align: right;
    color: rgb(180, 180, 180);
 }
-
 /*---------------------- 리뷰 -------------------------*/
 .comment-box {
    width: 80%;
@@ -345,20 +292,17 @@ body {
    border-bottom: 1px solid rgb(200, 200, 200);
    padding-bottom: 40px;
 }
-
 .comment-date {
    color: rgb(180, 180, 180);
    display: inline-block;
    margin-left: 10px;
    font-size: 12px;
 }
-
 .comment-write {
    border: 1px solid rgb(200, 200, 200);
    background: white;
    height: 100px;
 }
-
 .comment-box button {
    font-size: 13px;
    height: 25px;
@@ -368,28 +312,23 @@ body {
    margin: 5px;
    color: white;
 }
-
 .comment {
    border-bottom: 1px solid rgb(230, 230, 230);
    margin: 5px;
 }
-
 .comment-content {
    margin: 6px;
    font-size: 13px;
    color: rgba(85, 83, 83, 1);
 }
-
 .user-div {
    width: 97%;
    margin: auto;
 }
-
 .text-count {
    float: right;
    color: rgb(200, 200, 200);
 }
-
 .comment-box textarea {
    clear: both;
    margin: 8px;
@@ -398,7 +337,6 @@ body {
    resize: none;
    border: none;
 }
-
 .purchase-btn {
    width: 80%;
    margin: auto;
@@ -414,8 +352,6 @@ body {
    max-width: 750px;
    /* border-bottom: 1px solid rgb(200, 200, 200); */
    padding-bottom: 40px;
-
-
 }
 .pcs-btn {
    box-shadow:inset 0px 1px 0px 0px #cf866c;
@@ -488,9 +424,6 @@ body {
    input[id="slide02"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-100%);}
    input[id="slide03"]:checked ~ .slide-wrap .slidelist > li {transform:translateX(-200%);}
  --%>
-
-
-
 <!--============================여기서부터  ============================-->
    
       
@@ -501,7 +434,6 @@ body {
          font-size:0;
         margin: left;
       }  
-
       .slide ul{
       white-space:nowrap;
        overflow:hidden;
@@ -531,11 +463,7 @@ body {
         z-index: 1;
       } 
    
-
-
 <!--============================여기까지 슬라이드 배너  ============================-->
-
-
 </style>
 </head>
 <body>
@@ -583,7 +511,6 @@ body {
 			</div>
 		</div>
 	</div>
-
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -599,11 +526,9 @@ body {
 			<p>${ board.userId } ${board.updateDay }</p>
 			<p class="count-p">조회수 : ${ board.bCount } </p>
 		</div>
-
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
 	
    
-
       <%-- <div class="bookreview-div">
          <div class="infos">
             <div class="img-div">
@@ -616,9 +541,6 @@ body {
             </div>
             <c:if test="${atlist eq null }" />
          </div> --%>
-
-
-
       <%--  <div class="bookreview-div">
          <div class="infos">
             <div class="img-div">
@@ -649,11 +571,6 @@ body {
             </div>
             <c:if test="${atlist eq null }"/>
          </div>  --%>
-
-
-
-
-
 		<%-- <div class="bookreview-div">
 			<div class="infos">
 				<div class="img-div">
@@ -688,8 +605,6 @@ body {
             </div>
             <c:if test="${atlist eq null }" />
          </div>
-
-
          <div class="purchase-btn">
             <div class="a">
                <span class="pcs-btn">구매하기</span> 
@@ -704,10 +619,8 @@ body {
                var imgs;
                var img_count;
                var img_position = 0;
-
                imgs = $(".slide ul");
                img_count = imgs.children().length;
-
                //버튼을 클릭했을 때 함수 실행
                $('#back').click(function() {
                   back();
@@ -715,7 +628,6 @@ body {
                $('#next').click(function() {
                   next();
                });
-
                function back() {
                   if (1 < img_position) {
                      imgs.animate({
@@ -732,11 +644,8 @@ body {
                      img_position++;
                   }
                }
-
                //이미지 끝까지 가면 버튼 사라지기
-
                //첫 이미지로 돌아오기
-
             });
          </script>
          <script>
@@ -757,14 +666,12 @@ body {
                 }
              });
          });
+         
          $('.pcs-btn').click(function(){
             location.href="<%=request.getContextPath()%>/pcs.bo";
          });
          </script>
-
-
       </div>
-
       <!---------------------------------- 책제목 ------------------------------------>
       <div class="info-box">
       <div class="info-contents">
@@ -864,7 +771,6 @@ body {
 						$before = $('<a>').on('click',function(){getComments(pi0.currentPage - 1)}).text('<');
 					}
 					$copaging.append($before);
-
 					for(var i = pi0.startPage; i <= pi0.endPage; i++){
 						if(pi0.currentPage == i){
 							$pNo = $('<p class="page0-no">').text(i);
@@ -951,6 +857,5 @@ body {
       
       
    </section>
-
 </body>
 </html>
