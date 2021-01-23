@@ -15,7 +15,7 @@
 		<result property="b_price" column="PRICE"/>
 		<result property="b_Q1" column="BOOK_Q1"/>
 		<result property="b_Q2" column="BOOK_Q2"/>
-		<result property="b_Q3" column="BOOK_Q2"/>
+		<result property="b_Q3" column="BOOK_Q3"/>
 		<result property="author" column="AUTHOR"/>
 		<result property="b_Status" column="STATUS"/>
 	</resultMap>
@@ -57,7 +57,7 @@
 	</select>
 	<insert id="insertBook">
 		insert into book
-		values(book_seq.nextval, book_name=#{book_name}, price=#{price}, book_q1 = #{book_q1}, book_q2 = #{book_q2}, null,
-			author=#{author}, default)
+		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, null,
+			#{author}, default)
 	</insert>
 </mapper>
