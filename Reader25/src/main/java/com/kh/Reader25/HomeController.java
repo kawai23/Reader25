@@ -60,6 +60,7 @@ public class HomeController {
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
+		System.out.println(review);
 		model.addAttribute("review", review);
 		model.addAttribute("discuss", discuss);
 		model.addAttribute("tiw", tiw);
@@ -69,9 +70,45 @@ public class HomeController {
 	
 	@RequestMapping( value = "/recod.do")
 	@ResponseBody
-	public void recd(HttpServletResponse response) {
+	public void recod(HttpServletResponse response) {
 		int value = 30;
-		ArrayList<Board> result = bService.recd(value);
+		ArrayList<Board> result = bService.recod(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/recow.do")
+	@ResponseBody
+	public void recow(HttpServletResponse response) {
+		int value = 30;
+		ArrayList<Board> result = bService.recod(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/recom.do")
+	@ResponseBody
+	public void recom(HttpServletResponse response) {
+		int value = 30;
+		ArrayList<Board> result = bService.recod(value);
 		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

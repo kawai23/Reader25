@@ -144,7 +144,7 @@ a:active {
 }
 
 .mouse:hover{
-	background-color:#fef5da;
+	background-color:#B3B2AF;
 }
 
 .line{
@@ -162,7 +162,7 @@ a:active {
 .listcolor{
 	border-top:3px solid #B3B2AF;
 	border-bottom:1.5px solid #B3B2AF;
-	background-color:#ffd668;
+	background-color:#B3B2AF;
 }
 
 .listspace{
@@ -678,12 +678,12 @@ padding: 0;
   font-size: 18pt;
   color: black;
   display: block;
-  border: 2px solid orange;
+  border: 2px solid #D0D0D0;
   
 }
 
 .sidebar a:hover {
-  color: orange;
+  color: #F5715C;
 }
 
 
@@ -712,10 +712,10 @@ padding: 0;
 	margin:auto
 }
 .longbt1{
-		background-color:#ffbb00; 
+		background-color:#F5715C; 
 		font-size:17px;
 		color:white;
-		border-color:#ffbb00;
+		border-color:#F5715C;
 		height:50px;
 		margin: 5px;
 		border-width:0.5px;
@@ -1403,32 +1403,32 @@ body{line-height: 1;}
 						<td align="left" style="text-align:left; font-size:18pt; padding:10px;">일반상품(1)</td>
 					</tr>
 				          <tr class="list-tableth" >
-				         	  <td width="10px;" style="border-top:4px solid orange; border-bottom:2px solid orange;">
+				         	  <td width="10px;" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">
 				         	   <label><input type="checkbox" value="alldelete"></label></td>
-				              <td width="200" style="border-top:4px solid orange; border-bottom:2px solid orange;">이미지</td>
-				              <td width="300" style="border-top:4px solid orange; border-bottom:2px solid orange;">상품정보</td>	
-				              <td width="120" style="border-top:4px solid orange; border-bottom:2px solid orange;">판매가</td>
-				              <td width="180" style="border-top:4px solid orange; border-bottom:2px solid orange;">수량</td>
-				              <td width="100" style="border-top:4px solid orange; border-bottom:2px solid orange;">포인트</td>
-				              <td width="100" style="border-top:4px solid orange; border-bottom:2px solid orange;">배송비</td>
-				              <td width="100" style="border-top:4px solid orange; border-bottom:2px solid orange;">합계</td>
-				              <td width="100" style="border-top:4px solid orange; border-bottom:2px solid orange;"></td>
+				              <td width="200" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">이미지</td>
+				              <td width="300" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">상품정보</td>	
+				              <td width="120" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">판매가</td>
+				              <td width="180" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">수량</td>
+				              <td width="100" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">포인트</td>
+				              <td width="100" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">배송비</td>
+				              <td width="100" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;">합계</td>
+				              <td width="100" style="border-top:4px solid #D0D0D0; border-bottom:2px solid #D0D0D0;"></td>
 				           </tr> 
 				        
 				      
 				        <tbody class="list-tabletd">
 				        <tr>
-				          <td width="10"  style="border-bottom:4px solid orange;">
+				          <td width="10"  style="border-bottom:4px solid #D0D0D0;">
 				          		<label><input type="checkbox" value="prodelete1"></label></td> 
-				          <td width="150" style="border-bottom:4px solid orange;">
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">
 					          	<div class="bak_item">
 									<div class="pro_img"></div>
 									<div class="pro_nt"></div>
 					          		<img src="../img/pizza-3007395_420.jpg" width="200" height="150">
 				          		</div></td>
-				          <td width="150" style="border-bottom:4px solid orange;">책제목</td>
-				          <td width="150" style="border-bottom:4px solid orange;">19,900원</td>
-				          <td width="150" style="border-bottom:4px solid orange;">	
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">책제목</td>
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">19,900원</td>
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">	
 				          		<div>
 				          			<input type="number" value="1" name="ea" size="2" min="0" max="100" class="proquantity"  
 				          			>
@@ -1438,10 +1438,10 @@ body{line-height: 1;}
 				          		</span> -->
 				          		</div>
 				          </td>
-				          <td width="100" style="border-bottom:4px solid orange;" img src="../img/fork.jpg">20</td>
-				          <td width="150" style="border-bottom:4px solid orange;">2500원</td>
-				          <td width="150" style="border-bottom:4px solid orange;">22,400원</td>
-					          <td width="50" style="border-bottom:4px solid orange;">
+				          <td width="100" style="border-bottom:4px solid #D0D0D0;" img src="../img/fork.jpg">20</td>
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">2500원</td>
+				          <td width="150" style="border-bottom:4px solid #D0D0D0;">22,400원</td>
+					          <td width="50" style="border-bottom:4px solid #D0D0D0;">
 					           		<input type="button" class="img-button" >
 							  </td>
 				        </tr>

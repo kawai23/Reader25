@@ -2,6 +2,7 @@ package com.kh.Reader25.book.model.service;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.book.model.dao.BookDAO;
 import com.kh.Reader25.book.model.vo.Book;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
 @Service("b_Service")
 public class BookServiceImpl implements BookService{
@@ -52,5 +54,10 @@ public class BookServiceImpl implements BookService{
 	public int insertBook(Book book) {
 		return b_DAO.insertBook(sqlSession, book);
 	
+	}
+
+	@Override
+	public int insertSB(ShoppingBasket sb) {
+		return b_DAO.insertSB(sqlSession, sb);
 	}
 }

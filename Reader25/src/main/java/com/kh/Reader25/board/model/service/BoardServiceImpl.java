@@ -508,9 +508,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public ArrayList<Board> recd(int value) {
+	public ArrayList<Board> recod(int value) {
 		// TODO Auto-generated method stub
-		return bDAO.recd(sqlSession, value);
+		return bDAO.recod(sqlSession, value);
 	}
 
 	@Override
