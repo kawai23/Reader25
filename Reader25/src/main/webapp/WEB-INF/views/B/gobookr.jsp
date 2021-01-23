@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*,com.kh.Reader25.book.model.vo.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -244,37 +244,44 @@ select::-ms-expand {
 				<h4 class="sort-h4">북마크</h4>
 			</div>
 		</div>
+		<%
+			ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
+			ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
+		%>
 		<div class="list-all-div">
-			<%	ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
-				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
-			%>
-			<% for(Board b : bList){ %>
+			<%for(int i = 0; i < bList.size(); i++){ %>
 				<div class="list-div">
 					<div class="img-div">
-						<%for(Attachment at: atList){%>
-							<%if(b.getBoardNo() == at.getBoardNo()){ %>
-								<img class="list-img" src="resources/buploadFiles/<%=at.getAtcName()%>">
+						<%for(int j = 0; j < atList.size(); j++){ %>
+							<%if(bList.get(i).getBoardNo() == atList.get(j).getBoardNo()) {%>
+								<img class="list-img" src="resources/buploadFiles/<%=atList.get(j).getAtcName()%>">
 							<%}else{ %>
 								<img class="list-img">
 							<%} %>
 						<%} %>
 					</div>
-					<input type="hidden" id="boardNo" value="<%=b.getBoardNo()%>">
+					<input type="hidden" id="boardNo" value="<%= bList.get(i).getBoardNo()%>">
+					<input type="hidden" id="b_no" value="<%=bookList.get(i).getB_no()%>">
 					<div class="content-div">
 						<ul class="content-ul">
-							<li class="title-li"><%=b.getbTitle()%></li>
-							<li class="tag-li">#작가 #분야</li>
-							<li class="writer-li"><%=b.getUserId() %></li>
-							<%-- <li class="bookAmount-li"><%=b_price() %></li> --%>
+							<li class="title-li"><%=bList.get(i).getbTitle() %></li>
+							<li class="tag-li">
+								#<%=bookList.get(i).getAuthor() %>
+								#<%= bookList.get(i).getB_name() %>
+							</li>
+							<li class="writer-li"><%= bList.get(i).getUserId() %></li>
+							<!-- <li class="wise-li">명언</li> -->
 						</ul>
 					</div>
 				</div>
-			<%} %>
+				<%} %>
 		</div>
       <script>
   			$('.list-div').on('click',function(){
 				var boardNo = $(this).children('#boardNo').val();
-				location.href = "redetail.bo?boardNo="+boardNo+"&page="+${pi.currentPage};
+				var b_no = $(this).find('#b_no').val();
+				location.href = "redetail.bo?boardNo="+boardNo+"&page="+${pi.currentPage} + "&b_no=" + b_no;
 			}).mouseenter(function(){
 				$(this).css({'cursor':'pointer','box-shadow':'2px 2px 2px 2px lightgray', });
 			}).mouseout(function(){

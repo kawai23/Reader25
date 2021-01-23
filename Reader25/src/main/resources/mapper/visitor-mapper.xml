@@ -37,11 +37,11 @@
 	<select id="getDayVisitor" resultMap="dayCount">
 		<![CDATA[
 			select * from(
-			select to_char(visit_time,'yyyy/MM/dd') as day,count(*) count
+			select to_char(visit_time,'yy/MM/dd') as day,count(*) count
 			from visitor
-			where to_char(visit_time,'yyyy/MM/dd') <= #{today}
-			group by to_char(visit_time,'yyyy/MM/dd')
-			order by to_char(visit_time,'yyyy/MM/dd')  desc) where rownum <= 5
+			where to_char(visit_time,'yy/MM/dd') <= #{today}
+			group by to_char(visit_time,'yy/MM/dd')
+			order by to_char(visit_time,'yy/MM/dd')  desc) where rownum <= 5
 		]]>
 	</select>
 	
@@ -53,11 +53,11 @@
 	<select id="getMonthVisitor" resultMap="monthCount">
 		<![CDATA[
 			select * from(
-			select to_char(visit_time,'yyyy/MM') as month,count(*) as count
+			select to_char(visit_time,'yy/MM') as month,count(*) as count
 			from visitor
-			where to_char(visit_time, 'yyyy/MM') <= #{month}
-			group by to_char(visit_time,'yyyy/MM')
-			order by to_char(visit_time,'yyyy/MM') desc) where rownum <= 5
+			where to_char(visit_time, 'yy/MM') <= #{month}
+			group by to_char(visit_time,'yy/MM')
+			order by to_char(visit_time,'yy/MM') desc) where rownum <= 5
 		]]>
 	</select>
 	

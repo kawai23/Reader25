@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+body{background:rgba(246, 246, 246, 1);}
 	section{
 		display:inline-block;
 		min-height: 700px;
@@ -71,6 +72,8 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
+	#pay-ad{font-weight: bolder;
+		background: black;}
 </style>
 </head>
 <body>

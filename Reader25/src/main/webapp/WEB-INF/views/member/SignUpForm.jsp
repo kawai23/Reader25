@@ -10,11 +10,10 @@
 <style>
 /*화면*/
 .outer{
-		width: 900px; height: 900px; font-size: 13px;
-		margin-left: auto; margin-right: auto; margin-top: 2%; 
-		margin-bottom: 50px;
-		font-size:18px;
-		font-family: 카페24 아네모네에어;
+		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
+		 min-width: 1000px;
+		padding-top: 15px; display: inline-block;
+		font-family: 카페24 아네모네에어; font-size:18px;
 		}
 		
 span.guide{display: none; top: 12px; right: 10px;}
@@ -29,7 +28,9 @@ td{
 	height: 45px;
 }
 /*글자*/
-textarea{font-size:15px;
+#blabla{color: #DB0000;}
+.massage {
+		font-size:15px; border:0.5px solid #aaa;
 		font-family: 카페24 아네모네에어;
 		}
 input{font-size:18px;
@@ -45,7 +46,9 @@ span.email{font-size:18px;
 	display: inline-block;
 	font-size:55px;
 	font-family: 카페24 아네모네;
+	margin-left: 20%;
 }
+
 .txt_signup_tb{
 	height: 35px;
 	display: inline-block;
@@ -86,6 +89,16 @@ span.email{font-size:18px;
     background-color:  #C4C4C4;
     font-family: 카페24 아네모네에어;
 }
+
+#dirrhks{background: white;
+	margin: auto;
+	margin-top: 20px;
+	border-radius: 2px;
+	box-shadow: 0px 2px 2px 3px lightgray;
+	padding: 20px;
+	width: 70%}
+	
+
 </style>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -184,7 +197,7 @@ span.email{font-size:18px;
 			<table align="center">
 				<tr>
 					<td align="center" colspan="3">
-						<input type="checkbox" class=" terms" id="terms" name="terms" value="약관동의" onclick="allCheck();">필수 약관 동의 (필수)
+						<input type="checkbox" class="terms" id="terms" name="terms" value="약관동의" onclick="allCheck();">필수 약관 동의 (필수)
 					</td>
 				</tr>
 				<tr height="30px">
@@ -208,18 +221,25 @@ span.email{font-size:18px;
 						<input type="checkbox" id="adult" name="adult" value="adult">본인은 만 14세 이상 입니다.(필수)	
 					</td>
 				</tr>
-				<tr>
-					<td class="txt_signup_tb">이용약관 동의</td>
-					<td width="500px" colspan="2">
-						<textarea name="message" rows="10" cols="50" readonly>Reader25는 Reader들의 활동을 응원합니다.
-						Reader25의 서비스 및 제품(이하 '서비스')을 이용하실 수 있으시며 서비스의 발전의 위한 제안도 가능합니다.
-						본 약관은 다양한 Reader25 서비스의 이용과 관련하여 Reader25 서비스를 제공하는 Reader25와 이를 이용하는 Reader25 서비스 회원(이하 '회원') 또는 비회원과의 관계를 설명하며, 아울러 여러분의 Reader25 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
-						</textarea>
-					</td>
-				</tr>
 			</table>
 			
-			
+			<div id="dirrhks">
+				<table>
+					<tr>
+						<td class="txt_signup_tb">이용약관 동의</td>
+						<td width="500px" colspan="2">
+							<div class="message">
+							Reader25는 Reader들의 활동을 응원합니다.<br>
+							Reader25의 서비스 및 제품(이하 '서비스')을 이용하실 수 있으시며<br> 서비스의 발전의 위한 제안도 가능합니다.<br>
+							본 약관은 다양한 Reader25 서비스의 이용과 관련하여<br> Reader25 서비스를 제공하는 Reader25와 <br>
+							이를 이용하는 Reader25 서비스 회원(이하 '회원') 또는 <br>비회원과의 관계를 설명하며, <br>
+							아울러 여러분의 Reader25 서비스 이용에<br> 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<br>
 			<table align="center">
 				<tr>
 					<td align="center">
@@ -245,7 +265,7 @@ span.email{font-size:18px;
 						</td>
 					</tr>
 				</table>
-				
+				<br><br>
 			</div>
 			
 		</form>
@@ -554,7 +574,7 @@ span.email{font-size:18px;
 </script>
 	
 	
-	<%-- <%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="../common/footer.jsp" %>
 
 
 </body>

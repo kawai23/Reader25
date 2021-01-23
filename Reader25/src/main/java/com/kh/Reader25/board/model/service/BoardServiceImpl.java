@@ -269,7 +269,6 @@ public class BoardServiceImpl implements BoardService {
 		int result = bDAO.updateBoard(sqlSession, b);
 		if (result > 0) {
 			result = bDAO.updateAttachment(sqlSession, attachment);
-			System.out.println(result);
 		}
 		return result;
 	}
@@ -533,15 +532,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public ArrayList<Board> recd(int value) {
+	public ArrayList<Board> recod(int value) {
 		// TODO Auto-generated method stub
-		return bDAO.recd(sqlSession, value);
+		return bDAO.recod(sqlSession, value);
 	}
 
 	@Override
 	public ArrayList<String> searchLikeList(SearchCondition sc) {
 		return bDAO.searchLikeList(sqlSession, sc);
 	}
+	
+	@Override
 	public ArrayList<TWITopWriter> topWriterList() {
 		// TODO Auto-generated method stub
 		return bDAO.topWriterList(sqlSession);
@@ -559,9 +560,22 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.topLikerList(sqlSession);
 
 	}
+	
+	@Override
+	public int updateBoardInsertFile(Board b, Attachment attachment) {
+		int result = bDAO.updateBoard(sqlSession, b);
+		if(result > 0) {
+			result = bDAO.insertAttachmentBoardNo(sqlSession, attachment);
+		}
+		return result;
+	}
 
 	@Override
 	public int MyPointListCount(SearchCondition sc) {
+
+
+
+
 
 		return bDAO.MyPointListCount(sqlSession, sc);
 	}
@@ -589,6 +603,12 @@ public class BoardServiceImpl implements BoardService {
 			throw new BoardException("좋아요  삭제 실패");
 		}
 		return result;
+	}
+
+	@Override
+	public ArrayList<Board> recd(int value) {
+		
+		return null;
 	}
 	
 	

@@ -19,7 +19,7 @@
   		min-width: 1000px;
   	}
 	.title-div{
-		width: 80%;
+		width: 60%;
 		margin: auto;
 		margin-top: 10px;
 		padding: 0;
@@ -29,7 +29,7 @@
 		background: rgba(235, 235, 235, 1);
 		text-align: center;
 		vertical-align:middle;
-		width: 50px;
+		width: 60px;
 		height: 27px;
 		border: 1px solid rgba(235, 235, 235, 1);
 		border-radius: 3px 0px 0px 3px;
@@ -38,40 +38,46 @@
 	.title-div>input{
 		height: 25px;
 		margin-left: -7px;
-		width: 75%;
+		width: 85%;
 		border:  1px solid rgba(235, 235, 235, 1);
-	}
-	.title-div>select{
-		height: 29px;
-		border:  1px solid rgba(235, 235, 235, 1);
-		margin-left: -6px;
-		color: rgba(85, 83, 83, 1);		
 	}
 	.content{
 		margin-top: 30px;
 	}
 	.file-div{
-		width: 300px;
+		min-width: 300px;
 		margin:auto;
 	}
-	.file-img{
+	.file-upload{
 		height: 250px;
 		line-height:250px;
 		margin-top: 20px;
-		background: lightgray;
 		text-align: center;
+		width: 80%;
+		margin:auto;
+	} 
+	.image-box {
+		border: 3px solid rgba(246, 246, 246, 1);
+		display: inline-block;
+		text-align: center;
+		width: 200px;
+		height: 200px;
+		line-height: 200px;
+		background: rgba(235, 235, 235, 1);
 	}
-	.file-img>img{
-		max-height:100%;
-		max-width: 100%;
-		object-fit: cover;
+	
+	.image-box img {
+		display:inline-block;
+		max-height: 200px;
+		max-width: 200px;
 		vertical-align: middle;
+		text-align: center;
 	}
 	#input-file{
 		border: 1px solid lightgray;
 	}
-	#file-img:hover{
-		background: LightSalmon;
+	.file-upload:hover{
+		background: lightgray;
 	}
 	.tag{display:inline; color:rgba(245, 113, 92, 1);}
 	.bookInfo{
@@ -164,7 +170,7 @@
 		position:relative;
 		top: 10px;
 	}
-	
+	*{border: 1px solid pink;}
 </style>
 </head>
 <body>
@@ -217,34 +223,20 @@
 			<div class="title-div">
 				<div class="title">title</div>
 				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
-				<select name="cate">
-					<option selected="selected" value="null">분류</option>
-					<option value="총류">총류</option>
-					<option value="철학">철학</option>
-					<option value="종교">종교</option>
-					<option value="사회과학">사회 과학</option>
-					<option value="자연과학">자연 과학</option>
-					<option value="기술과학">기술 과학</option>
-					<option value="예술">예술</option>
-					<option value="언어">언어</option>
-					<option value="문학">문학</option>
-					<option value="역사">역사</option>
-				</select>
 			</div>
 			<div class="content">
 				<div class="file-div">
 					<input type="file" id="input-file" name="uploadFile" onchange="loadImg(this);" accept="image/jpg, image/jpeg, image/png" multiple="multiple">
-					<div class="file-img" id="file-img">
-						<img id="load-img" >
+					<div class="file-upload">
 					</div>
 				</div>
 				
 				<div class="tag-div">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="book_name" id="booktitle" placeholder="책제목">
+					<p class="tag">#</p><input type="text" class="bookInfo" name="b_name" id="booktitle" placeholder="책제목">
 					<p class="tag">#</p><input type="text" class="bookInfo" name="author" id="author" placeholder="작가">
-					<p class="tag">#</p><input type="text" class="bookAmount" name="price" id="amount" placeholder="금액">
-					<p class="tag">#</p><input type="text" class="bookAmount" name="book_q1"  placeholder="표지상태">
-					<p class="tag">#</p><input type="text" class="bookAmount" name="book_q2"  placeholder="내지상태">
+					<br>
+					<p class="tag">#</p><input type="text" class="bookAmount" name="b_price" id="amount" placeholder="금액">
+					<p class="tag">#</p><input type="text" class="bookAmount" name="b_Q1"  placeholder="수량">
 				</div>
 				<div class="content-edit" style="text-align:center;">
 					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
@@ -292,17 +284,23 @@
 					$('#write-book').submit();
 				}
 			});
-			$('#file-img').click(function(){
-				$('#input-file')[0].click();
+			$('.file-upload').click(function(){
+				$('#input-file').click();
 			});
 			function loadImg(value) {
-				if (value.files[0]) {
-					var reader = new FileReader();
-					fileCheck = true;
-					reader.onload = function(e) {
- 						$('#load-img').attr('src', e.target.result);
+				if (value.files) {
+					$uploadImage = $('.file-upload')
+					$uploadImage.html('')
+					for(var i = 0; i < value.files.length; i++){
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$imgBox = $('<div class="image-box">');
+							$img = $('<img>').attr('src', e.target.result);
+							$imgBox.append($img);
+							$uploadImage.append($imgBox);
+						}
+						reader.readAsDataURL(value.files[i]);
 					}
-					reader.readAsDataURL(value.files[0]);
 				}
 			}
 		</script>

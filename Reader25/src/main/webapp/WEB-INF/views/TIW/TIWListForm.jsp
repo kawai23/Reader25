@@ -269,7 +269,7 @@ img{
 	<img id="line" src="resources/images/icon/line2.png" width="500px" height="20px">
 	<br>
 	
-	<h3 align="center">총 게시글 갯수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
+	<h3 align="center">작품 수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
 	
 		<table id="TIWTable" align="center">
 			<tr>
@@ -316,6 +316,12 @@ img{
 		<!-- 오늘은 나도 작가 리스트 페이징 부분 -->
 		<!-- 페이징 버튼 -->
 		<div class="paging-div">
+			<c:if test="${ searchValue eq null }">
+				<c:set var="loc" value="goTIWList.to" scope="page"/>
+			</c:if>
+			<c:if test="${ searchValue ne null }">
+				<c:set var="loc" value="searchTIW.to" scope="page"/>
+			</c:if>
 			<!------ 이전 --------->
 			<c:if test="${ pi.currentPage <= 1 }">
 				<p>&lt;</p>
@@ -328,14 +334,14 @@ img{
 			</c:if>
 			<!------ 버튼 --------->
 			<c:forEach  var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<c:if test="${ pi.currentPage eq p }">
+					<p>${ p }</p>
+				</c:if>
 				<c:if test="${pi.currentPage ne p }">
-					<c:url var="pNo" value="goTIWList.to">
+					<c:url var="pNo" value="${ loc }">
 						<c:param name="page" value="${ p }"/>
 					</c:url>
 					<a href="${ pNo }">${ p }</a>
-				</c:if>
-				<c:if test="${ pi.currentPage eq p }">
-					<p>${ p }</p>
 				</c:if>
 			</c:forEach>
 			

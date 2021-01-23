@@ -14,7 +14,7 @@
 /*화면*/
 .outer{
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
-		margin-bottom: 5%; min-width: 1000px;
+		min-width: 1000px;
 		padding-top: 15px;
 		background-color:  #F6F6F6; display: inline-block;
 		font-family: 카페24 아네모네에어; font-size:17px;
@@ -485,7 +485,6 @@ textarea{
 				<button id="comment-add">댓글 등록</button>
 				<br><br>
 			</div>
-			<br><br><br>
 			
 			<script>
 			 $(function(){
@@ -618,7 +617,7 @@ textarea{
 			 
 			</script>
 	</div>
-	
+	<%@ include file="../common/footer.jsp" %>
 </body>
 
 <script>

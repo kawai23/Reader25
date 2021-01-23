@@ -18,7 +18,7 @@
 	}
 	
 	.logo{
-        padding: 10px; left: 20%; position: relative; z-index: 3;
+        padding: 10px;  margin:auto;z-index: 3;
     }
 	#myImg{
 		width: 700px; height: 460px;  opacity: 0.47; 
@@ -154,9 +154,12 @@
                 
             }
         }
-    
-    
-
+        .chart{width: 80%;min-width: 1000px; min-height: 500px; margin:auto; }
+        .chart .img-div{width:800px; margin:auto;}
+        .chart-title{margin-top: 50px; margin-bottom: 20px;font-size: 35px; 
+        	padding-bottom: 10px;color:rgb(100, 100, 100); font-weight: bolder;
+        }
+        
 </style>
 </head>
 <body>
@@ -182,7 +185,10 @@
 	    <div class="circle3"> </div>
 	    <div class="circle4"></div> 
 	</section>
-	
+	<div class="chart">
+		<div class="chart-title">Reader25 사이트만의 특징</div>
+		<div class="img-div"><img src="resources/images/about/chart.png"/></div>
+	</div>
 	 <%@ include file="footer.jsp" %>
 </body>
 </html>

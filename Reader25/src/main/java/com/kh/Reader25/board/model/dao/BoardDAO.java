@@ -493,6 +493,7 @@ public class BoardDAO {
 	}
 
 
+
 	public int MyPointListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		return sqlSession.selectOne("boardMapper.MyPointListCount", sc);
 	}
@@ -508,7 +509,10 @@ public class BoardDAO {
 		return  (ArrayList)sqlSession.selectList("boardMapper.MyPointList",sc , rowBounds);
 	}
 
-	public ArrayList<Board> recd(SqlSessionTemplate sqlSession, int value) {
+
+
+	public ArrayList<Board> recod(SqlSessionTemplate sqlSession, int value) {
+
 
 		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
 	}
@@ -532,6 +536,10 @@ public class BoardDAO {
 	public int myPointDelete(SqlSessionTemplate sqlSession, String s) {
 		
 		return sqlSession.delete("boardMapper.myPointDelete",s);
+	}
+
+	public int insertAttachmentBoardNo(SqlSessionTemplate sqlSession, Attachment attachment) {
+		return sqlSession.insert("boardMapper.insertAttachment2", attachment);
 	}
 
 

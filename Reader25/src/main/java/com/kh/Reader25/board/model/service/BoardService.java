@@ -193,6 +193,7 @@ public interface BoardService {
 	int upPoint(HashMap<String, Object> map);
 
 
+
 	ArrayList<String> searchLikeList(SearchCondition sc);
 
 	int MyPointListCount(SearchCondition sc);
@@ -201,13 +202,20 @@ public interface BoardService {
 
 	ArrayList<Board> recd(int value);
 
+	ArrayList<Board> recod(int value);
+
+
 	ArrayList<TWITopWriter> topWriterList();
 
 	ArrayList<TWITopWriter> topCommenterList();
 
 	ArrayList<TWITopWriter> topLikerList();
 
+
 	int myPointDelete(String[] lists);
+
+	int updateBoardInsertFile(Board b, Attachment attachment);
+
 
 
 
