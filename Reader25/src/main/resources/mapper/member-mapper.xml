@@ -146,11 +146,11 @@
 	<select id="getEnrollList" resultMap="enrollCount">
 		<![CDATA[
 			select * from(
-			select to_char(enroll_date,'yyyy/MM') as day,count(*) as count
+			select to_char(enroll_date,'yy/MM/dd') as day,count(*) count
 			from member
-			where to_char(enroll_date, 'yyyy/MM') <= #{day}
-			group by to_char(enroll_date,'yyyy/MM')
-			order by to_char(enroll_date,'yyyy/MM') desc) where rownum <= 5
+			where to_char(enroll_date,'yy/MM/dd') <= #{today}
+			group by to_char(enroll_date,'yy/MM/dd')
+			order by to_char(enroll_date,'yy/MM/dd')  desc) where rownum <= 5
 		]]>
 	</select>
 	<resultMap id="enrollCount" type="java.util.HashMap">

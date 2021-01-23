@@ -162,6 +162,9 @@
 						data:{dayStart:value},
 						success:function(data){
 							day[0] = ['Day','방문자수','회원가입수'];
+							
+							console.log(data.enrollList[0].count);
+							console.log(data.enrollList[1].count);
 							for(var i = 0; i < data.dayList.length; i++){
 								day[i+1] = [data.dayList[i].day, Number(data.dayList[i].count),Number(data.enrollList[i].count)];
 							}
