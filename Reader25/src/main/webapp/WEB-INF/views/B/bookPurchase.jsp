@@ -76,6 +76,8 @@
   
   </style>
 
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
@@ -173,6 +175,9 @@
     background-color:  #C4C4C4;
     font-family: 카페24 아네모네에어;
 }
+#sumTable{
+	min-width: 400px; margin-left: 10%
+}
 </style>
 </head>
 <body>
@@ -210,13 +215,13 @@
       
       <div class="sum">
       	<h2 class="bea-title">배송받을 정보</h2><p class="bea-sub">(기본으로 회원가입 시 입력한 정보를 가져옵니다)</p>
-	      <div id="loginUserTable" class="lu-table" >
+	      <div id="loginUserTable" class="lu-table">
 	        <br>
-	        <table align="center">
+	        <table id="sumTable" align="center">
 	          <tr>
-					<td class="txt_sum_tb">이름</td> 
-					<td><input type="text" name="name" required></td>
-					<td></td>
+					<td class="txt_sum_tb" width="100px">이름</td> 
+					<td width="200px"><input type="text" name="name" required></td>
+					<td width="100px"></td>
 			  </tr>
 	          <tr>
 					<td class="txt_sum_tb">연락처</td>
@@ -245,7 +250,7 @@
 			  </tr>
 			  <tr>
 	         	 <td class="txt_sum_tb">배송메모</td>
-	          	<td><input type="text" id="orderRequire" name="orderRequire" placeholder="요청사항을 입력해주세요."></td>
+	          	<td><input type="text" id="orderRequire" name="orderRequire" placeholder="요청사항을 입력해주세요." maxlength="30"></td>
 	          	<td></td>
 	          </tr>
 	        </table>
