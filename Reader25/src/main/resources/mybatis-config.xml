@@ -18,6 +18,8 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.Comments" alias="Comments"/>
 		
+		<typeAlias type="com.kh.Reader25.board.model.vo.Support" alias="Support"/>
+		
 		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopWriter" alias="TWITopWriter"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopComment" alias="TWITopComment"/>
 

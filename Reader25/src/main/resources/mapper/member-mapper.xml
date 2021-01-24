@@ -157,4 +157,11 @@
 		<result javaType="java.lang.String" column="day" property="day"/>
 		<result javaType="java.lang.String" column="count" property="count"/>
 	</resultMap>
+	
+	<update id="downPointUser">
+		UPDATE member 
+		SET MPOINT = MPOINT - #{point} 
+		WHERE user_id = #{id}
+	</update>
+	
 </mapper>

@@ -17,6 +17,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 
 @Repository("bDAO")
@@ -540,6 +541,16 @@ public class BoardDAO {
 
 	public int insertAttachmentBoardNo(SqlSessionTemplate sqlSession, Attachment attachment) {
 		return sqlSession.insert("boardMapper.insertAttachment2", attachment);
+	}
+
+	public int findsupport(SqlSessionTemplate sqlSession, HashMap<String, Object> sap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.findsupport", sap);
+	}
+
+	public int updateSupport(SqlSessionTemplate sqlSession, Support suppoint) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.updateSupport", suppoint);
 	}
 
 

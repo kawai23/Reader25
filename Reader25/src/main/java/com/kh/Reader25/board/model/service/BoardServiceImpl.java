@@ -21,6 +21,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 
 @Service("bService")
@@ -610,6 +611,19 @@ public class BoardServiceImpl implements BoardService {
 		
 		return null;
 	}
+
+	@Override
+	public int findsupport(HashMap<String, Object> sap) {
+		// TODO Auto-generated method stub
+		return bDAO.findsupport(sqlSession, sap);
+	}
+
+	@Override
+	public int updateSupport(Support suppoint) {
+		// TODO Auto-generated method stub
+		return bDAO.updateSupport(sqlSession, suppoint);
+	}
+
 	
 	
 

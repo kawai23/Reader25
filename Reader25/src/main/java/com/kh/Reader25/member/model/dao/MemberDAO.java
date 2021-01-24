@@ -151,6 +151,11 @@ public class MemberDAO {
 	public List<Map<String, String>> getEnrollList(SqlSessionTemplate sqlSession, String today) {
 		return sqlSession.selectList("memberMapper.getEnrollList", today);
 	}
+
+	public int downPointUser(SqlSessionTemplate sqlSession, HashMap<String, Object> cap) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.downPointUser", cap);
+	}
 	
 
 

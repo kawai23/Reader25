@@ -13,6 +13,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 
@@ -215,6 +216,12 @@ public interface BoardService {
 	int myPointDelete(String[] lists);
 
 	int updateBoardInsertFile(Board b, Attachment attachment);
+
+	int findsupport(HashMap<String, Object> sap);
+
+	int updateSupport(Support suppoint);
+
+
 
 
 

@@ -91,7 +91,8 @@ textarea{
 		}
 /*사진*/
 #img_td{width:40%}
-#heart, #unheart{max-width: 100px;}
+#heart, #unheart {max-width: 100px;}
+#support, #support-d{max-width: 80px;}
 #myimg{
 		max-width: 300px;
 		margin-left: 5%;
@@ -450,13 +451,23 @@ textarea{
 					</script>
 					
 					<tr>
-						<td colspan="9" align="center">
+						<td colspan="5" align="right">
 							<c:choose>
 							  <c:when test="${heart eq '1'}">
 							    <a class="heart"><img id="heart" src="resources/images/like/like.png"></a>
 							  </c:when>
 							  <c:otherwise>
 							    <a class="heart"><img id="heart" src="resources/images/like/unlike.png"></a>
+							  </c:otherwise>
+							</c:choose>
+						</td>
+						<td colspan="4" align="left">
+							<c:choose>
+							  <c:when test="${support > 0}">
+							    <a class="support"><img id="support" src="resources/images/icon/support.png"></a>
+							  </c:when>
+							  <c:otherwise>
+							    <a class="support"><img id="support" src="resources/images/icon/support-d.png"></a>
 							  </c:otherwise>
 							</c:choose>
 						</td>
@@ -624,22 +635,6 @@ textarea{
 
 	//좋아요 클릭 ajax
 	$(document).ready(function () {
-	
-		
-		
-// 	    var heartval = ${heart};
-	
-// 	    if(heartval>0) {
-// 	        console.log(heartval);
-// 	        $("#heart").prop("src", "resources/images/like/like.png");
-// 	        $(".heart").prop('name',heartval)
-// 	    }
-// 	    else {
-// 	        console.log(heartval);
-// 	        $("#heart").prop("src", "resources/images/like/unlike.png");
-// 	        $(".heart").prop('name',heartval)
-// 	    }
-	    
 
 		var heartval = ${heart};
 		
@@ -653,15 +648,9 @@ textarea{
 	        $("#heart").prop("src", "resources/images/like/unlike.png");
 	        $(".heart").prop('name',heartval)
 	    }
-	
-	    
-	    
 	    
 	    $(".heart").on("click", function () {
 	    	
-	    	
-	    	console.log('?');
-	
 	        var that = $(".heart");
 	        console.log("클릭");
 	        
@@ -679,8 +668,46 @@ textarea{
 	                    $('#heart').prop("src","resources/images/like/unlike.png");
 	                    location.reload();
 	                }
+	            }
+	        });
+	    });
+	});
 	
-	
+	//후원하기 클릭 ajax
+	$(document).ready(function () {
+
+		var supportval = ${support};
+		var userId = ${ board.userId };
+		
+	    if(supportval>0) {
+	        console.log(supportval);
+	        $("#support").prop("src", "resources/images/icon/support.png");
+	        $(".support").prop('name',supportval)
+	    }
+	    else {
+	        console.log(supportval);
+	        $("#support").prop("src", "resources/images/icon/support-d.png");
+	        $(".support").prop('name',supportval)
+	    }
+	    
+	    $(".support").on("click", function () {
+	    	
+	        var that = $(".support");
+	        console.log("클릭");
+	        
+	        $.ajax({
+	            url :'support.to',
+	            type :'POST',
+	            data : {'boardNo' : '${ board.boardNo }','user':'${ loginUser.id }','support':'${support}', 'userId':'${ board.userId }'},
+	            success : function(data){
+	            	console.log(data);
+	                that.prop('name',data);
+	                if(data>0) {
+	                    $('#support').prop("src","resources/images/icon/support.png");
+	                }
+	                else{
+	                    $('#support').prop("src","resources/images/icon/support-d.png");
+	                }
 	            }
 	        });
 	    });

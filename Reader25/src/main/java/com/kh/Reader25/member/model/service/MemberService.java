@@ -57,6 +57,10 @@ public interface MemberService {
 
 	List<Map<String, String>> getEnrollList(String today);
 
+	int downPointUser(HashMap<String, Object> cap);
+
+	
+
 
 
 

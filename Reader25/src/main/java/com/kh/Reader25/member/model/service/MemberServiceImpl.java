@@ -153,6 +153,13 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.getEnrollList(sqlSession, today);
 	}
 
+	@Override
+	public int downPointUser(HashMap<String, Object> cap) {
+		// TODO Auto-generated method stub
+		return mDAO.downPointUser(sqlSession, cap);
+	}
+
+
 
 	
 

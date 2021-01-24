@@ -38,6 +38,7 @@ import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
+import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
@@ -1171,6 +1172,12 @@ public class BoardController {
 				
 		int heart = bService.findLike(map) == 1? 1:0;
 		
+		HashMap<String, Object> sap = new HashMap<String, Object>();
+		sap.put("sendId", loginUser);
+		sap.put("bNo", boardNo);
+		
+		int support = bService.findsupport(sap);
+		//System.out.println("support"+support);
 		String cate = board.getCate();
 		
 		String[] cates = cate.split("/");
@@ -1183,12 +1190,8 @@ public class BoardController {
 				.addObject("categori", categori)
 				.addObject("bookname", bookname)
 				.setViewName("TIWDetailView");
-			
-			if(heart > 0) {
-				mv.addObject("heart", heart);
-			} else {
-				mv.addObject("heart", heart);
-			}
+			mv.addObject("heart", heart);
+			mv.addObject("support", support);
 		} else {
 			throw new BoardException("오늘은 나도 작가 게시글 상세보기를 실패하였습니다.");
 		}
@@ -1222,6 +1225,178 @@ public class BoardController {
         return heart;
 
     }
+	
+	// 오늘은 나도 작가 = 5후원하기 클릭 컨트롤러
+	@ResponseBody
+	@RequestMapping("support.to")
+	public int support(HttpServletRequest httpRequest, HttpSession session) {
+		int support = Integer.parseInt(httpRequest.getParameter("support"));
+		int sPoint = 50;
+		int bNo = Integer.parseInt(httpRequest.getParameter("boardNo"));
+		String sendId = ((Member) httpRequest.getSession().getAttribute("loginUser")).getId();
+		String userId = httpRequest.getParameter("userId");
+		
+		Support suppoint = new Support();
+
+		suppoint.setsPoint(sPoint);
+		suppoint.setSendId(sendId);
+		suppoint.setbNo(bNo);
+		suppoint.setUserId(userId);
+	    
+		int upSup = bService.updateSupport(suppoint);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", userId);
+		map.put("point", sPoint);
+		
+		HashMap<String, Object> cap = new HashMap<String, Object>();
+		map.put("id", sendId);
+		map.put("point", sPoint);
+		
+		if(upSup > 0) {
+			support=support+1;
+			mService.upPointUser(map);//받은 사람 포인트 상승
+			mService.downPointUser(cap);//준 사람 포인트 하락
+			int pointD = pointChangeSupD(session);//준사람 포인트 변화
+			int pointU = pointChangeSupU(session,userId);//받은사람 포인트 변화
+			System.out.println("pointD"+pointD);
+			System.out.println("pointU"+pointU);
+		}
+		
+		return support;
+
+	}
+	
+	private int pointChangeSupU(HttpSession session, String userId) {
+		String id = userId;	
+		int point = 50;
+		String message = "후원받았습니다!";
+			
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+						
+		int rankCheck = mService.muchPoint(id);
+		int pointUp = bService.upPoint(map);
+			
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+					
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else {
+			int rank = 0;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}
+	}
+	//후원 후 포인트 변화-준 사람
+	public int pointChangeSupD(HttpSession session) {
+		Member login = (Member)session.getAttribute("loginUser");
+		String id = login.getId();	
+		int point = 50;
+		String message = "후원하였습니다!";
+			
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("point", point);
+		map.put("pCon", message);
+						
+		int rankCheck = mService.muchPoint(id);
+		int pointUp = bService.upPoint(map);
+			
+		if(rankCheck>=0 && rankCheck<=1000) {
+			int rank = 1;
+					
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+				
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else if(rankCheck>1000 && rankCheck<=3000) {
+			int rank = 2;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+			
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else if(rankCheck>3000 && rankCheck<=7000) {
+			int rank = 3;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+			return rankChange;
+		} else if(rankCheck>7000 && rankCheck<=10000) {
+			int rank = 4;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else {
+			int rank = 0;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}
+	}
 	
 	//댓글 작성
 	@RequestMapping("addComments.to")

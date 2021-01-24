@@ -960,5 +960,23 @@
 		]]>
 	</select>
 	
+	<resultMap type="Support" id="SupportResultSet">
+		<id property="sKey" column="KEY"></id>
+		<result property="sPoint" column="POINT"></result>
+		<result property="userId" column="USER_ID"></result>
+		<result property="sendId" column="SEND_ID"></result>
+		<result property="bNo" column="BOARD_NO"></result>
+	</resultMap>
+	
+	<select id="findsupport" resultType="_int">
+		select count(*)
+		from support
+		where BOARD_NO = #{bNo} and SEND_ID = #{sendId}
+	</select>
+	
+	<insert id="updateSupport" parameterType="Support">
+		insert into support
+		values (SUP_SEQ.nextval, #{sPoint}, #{userId}, #{sendId}, #{bNo})
+	</insert>
 	
 </mapper>
