@@ -78,6 +78,7 @@
 
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
@@ -260,7 +261,7 @@
       
       <br><br>
       <div align="center">
-        <input type="submit" onclick="buy(); " value="주문하기" id="btn1">
+        <input type="button" onclick="buy(this);" value="주문하기" id="btn1">
         <input type="button" onclick="location.href='javascript:history.back();'" value="장바구니 수정하기" id="btn3">
       </div>
       
@@ -268,7 +269,36 @@
     </form>
   </div>
 	<script>
-	
+		// 결제 api
+		function buy(frm){
+			var name = '강병현';
+			var price = '1000';
+			var orderemail = 'bbgh@naver.com';
+			var orderName = '강병현';
+			var orderphone = '01045901429';
+			var orderaddress = '경기도 광주시';
+			var orderPost = '12777';
+			
+			IMP.init('imp09501430');//내가맹점고유번호
+			IMP.request_pay({
+			pg : 'html5_inicis', // version 1.1.0부터 지원.
+			pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : name,
+			amount : price, //판매 가격
+			buyer_email : orderemail,
+			buyer_name : orderName,
+			buyer_tel : orderphone,
+			buyer_addr : orderaddress,
+			buyer_postcode : orderPost
+			}, function(rsp) {
+				if ( rsp.success ) {
+					$('#buyForm').submit();
+			     } else {
+			        alert('결재에 실패하였습니다.');
+			     }
+			 });
+		}
 		//우편번호 검색
 		function ifindPostal() {
 	        new daum.Postcode({
