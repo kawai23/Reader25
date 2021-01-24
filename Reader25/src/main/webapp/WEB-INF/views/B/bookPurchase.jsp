@@ -264,7 +264,6 @@
     </form>
   </div>
 	<script>
-<<<<<<< HEAD
 		// 결제 api
 		function buy(frm){
 			var name = '강병현';
@@ -295,8 +294,6 @@
 			     }
 			 });
 		}
-=======
->>>>>>> branch 'master' of https://github.com/kawai23/Reader25
 		//우편번호 검색
 		function ifindPostal() {
 	        new daum.Postcode({
