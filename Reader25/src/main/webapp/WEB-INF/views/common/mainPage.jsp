@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -200,6 +201,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	height: 30px;
 	margin-left: auto;
 	background: #A84E19;
+	outline : 0;
 	border: 1px solid #000000;
 	box-sizing: border-box;
 	font-family: Roboto;
@@ -214,9 +216,10 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 #button_pink {
 	float: left;
 	width: 33%;
-	height: 8%;
+	height: 30px;
 	margin-left: auto;
 	background: #F5715C;
+	outline : 0;
 	border: 1px solid #000000;
 	box-sizing: border-box;
 	font-family: Roboto;
@@ -367,8 +370,8 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				<div id="Userpagelogout">
 					<c:url var="mypage" value="myList.me?code=2" />
 					<c:url var="logout" value="logout.me" />
-					<span id="mypage" onclick="location.href='${mypage}'"><a>마이페이지</a>
-					</span>| <span id="logout" onclick="location.href='${logout}'"><a>로그아웃</a></span>
+					<span id="mypage" onclick="location.href='${mypage}'"><a>마이페이지</a></span>|
+					<span id="logout" onclick="location.href='${logout}'"><a>로그아웃</a></span>
 				</div>
 			</c:if>
 		</div>
@@ -381,12 +384,11 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_brown" onclick="clickbutton1()">일간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
-			<div style="width: 98%; height: 100%; border: 1px solid #000000;">
-				<c:forEach var="r" items="${ views }" begin="0" end="13"
-					varStatus="status">
+			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+				<c:forEach var="r" items="${ views }" begin="0" end="13" varStatus="status">
 					<div class="reco_c" id="reco<c:out value="${status.count}"/>"
 						style="width: 100%">
-						<a class="ellipsis"><c:out value="${ r.bTitle }" /></a>
+						<p class="ellipsis"><c:out value="${ r.bTitle }" /></p>
 					</div>
 				</c:forEach>
 			</div>
@@ -397,15 +399,14 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_brown" onclick="clickbutton4()">일간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
-			<div style="width: 98%; height: 100%; border: 1px solid #000000;">
+			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ review }" begin="0" end="13"
 					varStatus="status">
-					<div class="review_c"
-						id="review<c:out value = "${ status.count }"/>"
+					<div class="review_c" id="review<c:out value = "${ status.count }"/>"
 						style="width: 100%">
-						<a class="ellipsis">
+						<p class="ellipsis">
 							<c:out value="${ r.bTitle }" />
-						</a>
+						</p>
 					</div>
 				</c:forEach>
 			</div>
@@ -415,14 +416,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_brown" onclick="clickbutton7()">일간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
-			<div style="width: 98%; height: 100%; border: 1px solid #000000;">
+			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="d" items="${ discuss }" begin="0" end="13"
 					varStatus="status">
-					<div class="discuss_c"
-						id="discuss_t<c:out value="${status.count}"/>" style="width: 100%">
-						<a class="ellipsis">
+					<div class="discuss_c"id="discuss_t<c:out value="${status.count}"/>" style="width: 100%">
+						<p class="ellipsis">
 							<c:out value="${ d.dTitle }" />
-						</a>
+						</p>
 					</div>
 				</c:forEach>
 			</div>
@@ -432,13 +432,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
-			<div style="width: 98%; height: 100%; border: 1px solid #000000;">
+			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
 					<div class="tiw_c" id="tiw_t<c:out value="${status.count}"/>"
 						style="width: 100%">
-						<a class="ellipsis">
+						<p class="ellipsis">
 							<c:out value="${ b.bTitle }" />
-						</a>
+						</p>
 					</div>
 				</c:forEach>
 			</div>
@@ -734,7 +734,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			$('.tiw_c').remove();
 		}
 	</script>
-
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>
 
