@@ -13,6 +13,7 @@ import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -373,6 +374,24 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectuserComments", smap, rowBounds);
 	}
 
+
+	public int MyLikeCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		
+		return sqlSession.selectOne("boardMapper.MyLikeCount", sc);
+	}
+
+	public ArrayList<Board> MyLikeList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.MyLikeList",sc , rowBounds);
+	}
 	public ArrayList<Board> selectSearchTTitleListWriter(SqlSessionTemplate sqlSession, String userId) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchTTitleListWriter", userId);
@@ -411,6 +430,14 @@ public class BoardDAO {
 
 	public int deleteAttachmentList(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.deleteAttachment", boardNo);
+
+	}
+
+	public int myLikeDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		
+		
+		return sqlSession.delete("boardMapper.myLikeDelete",s);
 	}
 
 	public int todayListCount(SqlSessionTemplate sqlSession, String enrollDay) {
@@ -430,6 +457,10 @@ public class BoardDAO {
 
 	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+	}
+
+	public ArrayList<String> searchLikeList(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchLikeList", sc);
 	}
 
 
@@ -461,7 +492,27 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.upPoint", map);
 	}
 
+
+
+	public int MyPointListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		return sqlSession.selectOne("boardMapper.MyPointListCount", sc);
+	}
+
+	public ArrayList<Point> MyPointList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.MyPointList",sc , rowBounds);
+	}
+
+
+
 	public ArrayList<Board> recod(SqlSessionTemplate sqlSession, int value) {
+
 
 		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
 	}
@@ -479,6 +530,12 @@ public class BoardDAO {
 	public ArrayList<TWITopWriter> topLikerList(SqlSessionTemplate sqlSession) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("boardMapper.topLikerList");
+
+	}
+
+	public int myPointDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		return sqlSession.delete("boardMapper.myPointDelete",s);
 	}
 
 	public int insertAttachmentBoardNo(SqlSessionTemplate sqlSession, Attachment attachment) {

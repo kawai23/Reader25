@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,7 @@ import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.Point;
 import com.kh.Reader25.board.model.vo.SearchCate;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
@@ -1082,6 +1084,7 @@ public class BoardController {
 		}
 	}
 	
+	//글 작성 후 포인트 변화
 	public int pointChangeTIW(HttpSession session) {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
@@ -1368,50 +1371,48 @@ public class BoardController {
 	}
 	
 	//오늘은 나도 작가 = 5 게시글 검색
-	@RequestMapping("searchTIW.to")
-	public ModelAndView searchTIW(@ModelAttribute SearchCondition serchC,
-									HttpServletRequest request, HttpServletResponse response, 
-									ModelAndView mv) {
-		String condition = request.getParameter("searchCondition");
-		String value = request.getParameter("searchValue");
-		
-		if(condition.equals("writer")) {
-			serchC.setWriter(value);
-		} else if(condition.equals("title")) {
-			serchC.setTitle(value);
-		} else if(condition.contentEquals("content")) {
-			serchC.setContent(value);
+		@RequestMapping("searchTIW.to")
+		public ModelAndView searchTIW(@ModelAttribute SearchCondition serchC,
+										HttpServletRequest request, HttpServletResponse response, 
+										ModelAndView mv) {
+			
+			String condition = request.getParameter("searchCondition");
+			String value = request.getParameter("searchValue");
+			
+			if(condition.equals("writer")) {
+				serchC.setWriter(value);
+			} else if(condition.equals("title")) {
+				serchC.setTitle(value);
+			} else if(condition.contentEquals("content")) {
+				serchC.setContent(value);
+			}
+			//currentPage 설정
+			int currentPage = 1; //기본
+			if(request.getParameter("currentPage") != null) { //currentPage가 들어 왔다면
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				//넘어온 currentPage 값을 넣어준다
+			}
+			int listCount = bService.getSearchTIWResultListCount(serchC);
+			//검색을 어떤걸로 할지에 따라 세팅된 sc를 매개변수로 넣어줘야한다
+			
+			PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
+			//System.out.println("pi"+pi);
+			ArrayList<Board> list = bService.selectSerchTIWResultList(serchC, pi);
+			
+			if(list != null) {
+				mv.addObject("list", list)
+				.addObject("pi", pi)
+				.addObject("searchCondition", condition)
+				.addObject("searchValue", value)
+				.setViewName("TIWSearchListForm");
+			} else {
+				throw new BoardException("오늘은 나도 작가 게시글 검색 조회에 실패했습니다.");
+			}
+			
+			return mv;
+			
 		}
 		
-		//currentPage 설정
-		int currentPage = 1; //기본
-		if(request.getParameter("currentPage") != null) { //currentPage가 들어 왔다면
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			//넘어온 currentPage 값을 넣어준다
-		}
-		
-		int listCount = bService.getSearchTIWResultListCount(serchC);
-		//검색을 어떤걸로 할지에 따라 세팅된 sc를 매개변수로 넣어줘야한다
-		
-		PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
-		
-		ArrayList<Board> list = bService.selectSerchTIWResultList(serchC, pi);
-		
-		if(list != null) {
-			mv.addObject("list", list);
-			mv.addObject("pi", pi);
-			mv.addObject("searchCondition", condition);
-			mv.addObject("searchValue", value);
-			mv.addObject("searchValue", value);
-			mv.setViewName("TIWListForm");
-		} else {
-			throw new BoardException("오늘은 나도 작가 게시글 검색 조회에 실패했습니다.");
-		}
-		
-		return mv;
-		
-	}
-	
 	//오늘은 나도 작가 = 5 게시글 카테고리 통한 동일 작품 검색
 	@RequestMapping("searchTIWCate.to")
 	public ModelAndView searchTIWCate(@ModelAttribute SearchCate serCa,
@@ -1435,7 +1436,7 @@ public class BoardController {
 			if(list != null) {
 				mv.addObject("list", list);
 				mv.addObject("pi", pi);
-				mv.setViewName("TIWListForm");
+				mv.setViewName("TIWSearchListForm");
 			} else {
 				throw new BoardException("오늘은 나도 작가 게시글 카테고리 검색 조회에 실패했습니다.");
 			}
@@ -1798,10 +1799,66 @@ public class BoardController {
 
 
 	
+	@RequestMapping("myLikeDelete.me")
+	public ModelAndView myLikeDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		
+		
+		int result = bService.myLikeDelete(lists);
+		
+		
+
 	
-	
-	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myLikeList.me");
+		} else {
+
+			throw new BoardException("좋아요 리스트 삭제 실패");
+		}
+
+		return mv;
+
+	}
+
+
+
 	@RequestMapping("myList.me")
 	public ModelAndView mSearchList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv ,@RequestParam("code") Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 		// 마이페이지에서 검색
@@ -1905,6 +1962,377 @@ public class BoardController {
 		return mv;
 
 	}
+	
+	
+	
+	
+	@RequestMapping("myLikeList.me")
+	public ModelAndView myLikeList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+		// 마이페이지에서 검색
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			if (condition.equals("Title")) {
+				
+				sc.setTitle(value);
+			}else if (condition.equals("내용")) {
+				
+				sc.setContent(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = bService.MyLikeCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<Board> list = bService.MyLikeList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+		
+			
+			
+			
+			mv.setViewName("myLikeList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BoardException("마이페이지 좋아요 리스트 실패");
+			
+		}
+
+		
+
+		return mv;
+
+	}
+	
+	
+
+	
+	
+	@RequestMapping("myPointList.me")
+	public ModelAndView myPointList(Model model,@RequestParam(value = "searchCondition", required = false) String searchCondition, @RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv  , @RequestParam(value = "page", required = false) Integer page, HttpSession session) {
+		
+		
+		
+		
+		 Member loginUser = mService.memberLogin((Member)session.getAttribute("loginUser"));
+		
+		
+		System.out.println(loginUser);
+		
+		
+		
+		
+		model.addAttribute("loginUser", loginUser);
+		
+		
+		
+		
+		
+		
+		
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+	
+		
+		
+
+		
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			
+			if (condition.equals("번호")) {
+				
+				sc.setNo(value);
+				
+			}else if (condition.equals("적립내역")) {
+				
+				sc.setContent(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = bService.MyPointListCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<Point> list = bService.MyPointList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+			
+			
+			
+			
+			mv.setViewName("myPointList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BoardException("포인트 리스트 조회 실패");
+			
+		}
+		
+		
+		
+		
+		
+		return mv; 
+	}
+	
+	@RequestMapping("myPointDelete.me")
+	public ModelAndView myPointDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		int result = bService.myPointDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myPointList.me");
+		} else {
+
+			throw new BoardException("포인트 리스트 삭제 실패");
+		}
+
+		return mv;
+
+	}
+	
+	
+	@RequestMapping("searchComplete.me")
+	@ResponseBody
+	public String searchLike(@RequestParam("tTitle") String bTitle,@RequestParam("searchCondition") String condition,
+			HttpServletRequest request, HttpServletResponse response
+			, ModelAndView mv , HttpSession session) {
+		
+		response.setContentType("application/json; charset=UTF-8");	
+		System.out.println(bTitle+"검색단어");
+		System.out.println("condition" + condition + "?");
+		ArrayList<String> tlist = null;
+		
+		
+		
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		
+		
+		
+		if (condition.equals("Title")) {
+			
+			sc.setTitle(bTitle);
+			
+		}else if (condition.equals("내용")) {
+			
+			sc.setContent(bTitle);
+		}
+		
+		
+		System.out.println("sc = " + sc);
+		
+		tlist = bService.searchLikeList(sc);
+		
+		System.out.println(tlist);
+		
+
+		
+		//return tlist;
+		
+		String [] array= tlist.toArray(new String[tlist.size()]);
+		
+		
+		
+		
+		Gson gson = new Gson();
+
+	    return gson.toJson(array);
+	    
+	    
+		
+
+
+
+
+}
+	
+	
+	
+	
+	
+	
+	@RequestMapping("test.me")
+	public String test() {
+		return "test"; //수정한 jsp파일 이름 집어넣기 !
+	}
+	
+	
+	
+	// ====================================================================================================================
 
 
 	// ------------------------------------------------------------------------ 책방

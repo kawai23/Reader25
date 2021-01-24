@@ -42,9 +42,11 @@
  	  
  	   <%@ include file="../common/mySideMenubar.jsp"%> 
 
-
-
-
+	  
+	  
+	  
+	  
+	  
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
@@ -54,12 +56,12 @@
 
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
-							<th>구매번호</th>
-							<th>책이름</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>결제일</th>
-							<th>결제상태</th>
+							
+							<th>번호</th>
+							<th>적립내역</th>
+							<th>적립 포인트</th>
+						
+							
 							
 							
 						 </tr>
@@ -79,17 +81,14 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.pNo }" ></td>
+								
+								<td >${  b.pNo }</td>
+								<td >${ b.pCon }</td>
+								<td >${ b.point }</td>
 								
 								
-								<td >${ b.pay_no }</td>
-								<td >${ b.book_name }</td>
 								
-								
-								<td >${ b.book_v }</td>
-								<td >${ b.price }</td>
-								<td >${ b.PAY_DATE }</td>
-								<td >${ b.pay_status }</td>
 								
 								
 								<td>
@@ -127,7 +126,7 @@
 								<ul class="dropdown-menu" role="menu" id="search1" style="overflow: visible;">
 									
 									<li value="Title"><a href="#">번호</a></li>
-									<li value="내용"><a href="#">책이름</a></li>
+									<li value="내용"><a href="#">적립내역</a></li>
 								</ul>
 							</div>
 							<!-- /btn-group -->
@@ -163,12 +162,12 @@
 				
 				$(function(){
 					
-					
-					$('#pay').addClass('active');
-					
+		
+						$('#point').addClass('active');
+						
 
-				
-				});
+					
+					});
 				
 
 
@@ -197,7 +196,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myPayList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
+ 		    	location.href='myPointList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -233,7 +232,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myPayList.me"></c:set>
+						<c:set var="loc" value="myPointList.me"></c:set>
 						
  
 				    
@@ -529,7 +528,7 @@
 							  
 							    	
 				 			   
-							 location.href='myPayDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
+							 location.href='myPointDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
 							    	
 				 			   
 							    

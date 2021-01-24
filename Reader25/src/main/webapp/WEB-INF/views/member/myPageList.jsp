@@ -11,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 
@@ -22,7 +24,11 @@
 
 
 
+
+
 <style>
+
+	th{width: 25%}
 
 
 </style>
@@ -39,40 +45,15 @@
  
  
  	  <div class="col-sm-2"></div>
-	  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
-	  
-<!-- 	  <img src=""> -->
-	  
-	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
-	  
-	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
-	  
-	  
-	 
-			
+ 	  
+ 	  
+ 	  
+ 	  
+ 	   <%@ include file="../common/mySideMenubar.jsp"%> 
 
-
-
-				
-						<a href="myUpdateForm.me" class="list-group-item">내 정보 수정</a> 
-						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a> 
-						<hr>
-						
-						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
-						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
-						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
-						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
-						<a href="#" class="list-group-item">좋아요/북마크</a>
-						
-						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a>
-
-				
-				<br>
-				<br>
-				<br>
 			
 	  
-	  </div>
+
 	  
 	  
 	  
@@ -81,7 +62,7 @@
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
-	   <table id="mytable" class="table table-bordred table-striped" >
+	   <table id="mytable"  class="table table-bordred table-striped" >
 
 					<thead>
 
@@ -108,16 +89,16 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr>
+							<tr >
 								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
 								
 								
-								<td >${ b.boardNo }</td>
-								<td >${ b.bTitle }</td>
+								<td class="contentTR">${ b.boardNo }</td>
+								<td class="contentTR">${ b.bTitle }</td>
 								
 								
-								<td >${ b.bCount }</td>
-								<td>
+								<td class="contentTR">${ b.bCount }</td>
+								
 								
 							</tr>
 							
@@ -196,6 +177,8 @@
 					
 					var code = ${code};
 					
+					var path = "";
+					
 					
 					switch (code) {
 					
@@ -203,25 +186,66 @@
 						
 						
 						$('#c1').addClass('active');
+						path="idetail.in";
 						break;
 						
 					case 2:
 						$('#c2').addClass('active');
+						path="redetail.re";
 						break;
 						
-					case 4:
-						$('#c4').addClass('active');
+					case 3:
+						$('#c3').addClass('active');
+						path="redetail.bo";
 						break;
 						
 					case 5:
 						$('#c5').addClass('active');
+						path="TIWdetail.to";
 						break;
 
 					
 					}
 					
 					
+					$('.contentTR').mouseenter(function(){
+						
+						$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+						
+						
+						console.log(boardNo);
+					}).mouseout(function(){
+						
+						$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
+						
+						
+					}).click(function(){
+						
+						var boardNo = $(this).parent().children('td').eq(1).text();
+						
+						
+						
+						location.href= path +'?boardNo='+boardNo+'&page=1';
+						
+					});
+					
+					
 				});
+				
+				
+				
+				
+					
+					
+					
+				
+					
+					
+			
+			
+			
+			
+			
 				
 				$('#search1 li > a').on('click', function() {
 			    	
@@ -333,7 +357,7 @@
 				<c:if test="${ pi.currentPage <= 1 }">
 					 <li  class="disabled">
 						 <a  aria-label="Previous" >
-					        <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"><!--  &laquo; --></span>
+					        <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
 					      </a>
 				      </li>
 				</c:if>
@@ -398,7 +422,7 @@
 						<c:if test="${ pi.currentPage >= pi.maxPage }">
 						<li class="disabled">
 							<a  aria-label="Next">
-				       				 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true">        <!-- &raquo--></span>
+				       				 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 				      			</a>
 				      			</li>
 						</c:if>
@@ -555,21 +579,11 @@
 							    
 							    
 							    
-				 			    if(select_obj == '' || select_obj.length == 0){
-							    	
-				 			    	
-				 			    	//console.log(select_obj);
-							    	 location.href='mBlistDelete.me?inFo='+Id + "&code=" + code+'&page='+ ${pi.currentPage}+path;
-							    	
-				 			    }else{
-							    	
-				 			    	//console.log("데이터 : "+select_obj);
-				 			    	
-				 			    	
+				 			 
 								    
 								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
 							    	
-				 			    }
+				 			 
 							    
 
 						});
@@ -581,6 +595,14 @@
 						
 						
 						</script>
+						
+						
+		
+	
+		
+		
+		
+	
 
 
 </body>

@@ -495,6 +495,8 @@ public class MemberController {
 		}
 	}
 	
+
+	
 	@RequestMapping("myUpdateForm.me")
 	public String myUpdateForm() {
 	
@@ -516,6 +518,17 @@ public class MemberController {
 		
 		
 		return "deleteForm";
+		
+
+	}
+	
+	@RequestMapping("myLikeForm.me")
+	public String myLikeForm() {
+	
+
+		
+		
+		return "myLikeList";
 		
 
 	}

@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -20,9 +19,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
 
 
 <style>
+
+	th{width: 16%}
 
 
 </style>
@@ -40,13 +45,51 @@
  
  	  <div class="col-sm-2"></div>
  	  
- 	   <%@ include file="../common/mySideMenubar.jsp"%> 
+ 	  
+ 	  <%@ include file="../common/mySideMenubar.jsp"%> 
+	 <%--  <div class="col-sm-2" style="background:rgba(0, 0, 0, 0.5);border: 1px solid black" >
+	  
+<!-- 	  <img src=""> -->
+	  
+	  <a  style="margin-left: 70px; color: white;">${loginUser.name }</a> <br><br>
+	  
+	  <a style="margin-left: 70px; color: white;">포인트 : ${loginUser.point }</a> <hr>
+	  
+	  
+	 
+			
 
 
 
+				
+						<a href="myUpdateForm.me" class="list-group-item">내 정보 수정</a> 
+						<a href="myDeleteForm.me" class="list-group-item">회원 탈퇴 </a> 
+						<hr>
+						
+						<a href="myList.me?code=2" class="list-group-item"	 id="c2">내가 쓴 리뷰</a>
+						<a href="myList.me?code=4" class="list-group-item"  id="c4">책방 리스트</a>
+						<a href="myPayList.me" class="list-group-item"  >주문 리스트</a>
+						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
+						<a href="myLikeList.me" class="list-group-item active">좋아요/북마크</a>
+						
+						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a>
 
+				
+				<br>
+				<br>
+				<br>
+			
+	  
+	  </div> --%>
+	  
+	  
+	  
+	  
+	  
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
+	   
+	   
 	   
 	   <table id="mytable" class="table table-bordred table-striped" >
 
@@ -54,12 +97,11 @@
 
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
-							<th>구매번호</th>
-							<th>책이름</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>결제일</th>
-							<th>결제상태</th>
+							<th>번호</th>
+							<th>제목</th>
+							<th>글쓴이</th>
+							<th>좋아요</th>
+							<th>조회수</th>
 							
 							
 						 </tr>
@@ -78,23 +120,27 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
+							<tr >
+								<td><input type="checkbox"  name="mInfo" value="${ b.likeNo }" ></td>
 								
 								
-								<td >${ b.pay_no }</td>
-								<td >${ b.book_name }</td>
+								<td class="contentTR">${ b.boardNo }</td>
+								<td style="display: none;" class="contentTR">${ b.code }</td>
+								<td class="contentTR">${ b.bTitle }</td>
 								
+								<td class="contentTR">${ b.userId }</td>
 								
-								<td >${ b.book_v }</td>
-								<td >${ b.price }</td>
-								<td >${ b.PAY_DATE }</td>
-								<td >${ b.pay_status }</td>
+								<td class="contentTR">${ b.bLike }</td>
+								<td class="contentTR">${ b.bCount }</td>
+					
 								
-								
-								<td>
+
+									
+									
 								
 							</tr>
+							
+							
 							
 							
 							</c:forEach>
@@ -106,6 +152,10 @@
 					</tbody>
 
 				</table>
+				
+				
+				
+				
 				
 				<div style="text-align: left ; ">
 				
@@ -121,13 +171,13 @@
 
 							<div class="input-group-btn" >
 								<button type="button" class="btn btn-default dropdown-toggle"
-									id="Search1" data-toggle="dropdown" aria-expanded="false">번호
+									id="Search1" data-toggle="dropdown" aria-expanded="false">Title
 									<span class="caret" style="margin-left: 10px"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu" id="search1" style="overflow: visible;">
 									
-									<li value="Title"><a href="#">번호</a></li>
-									<li value="내용"><a href="#">책이름</a></li>
+									<li value="Title"><a href="#">Title</a></li>
+									<li value="내용"><a href="#">내용</a></li>
 								</ul>
 							</div>
 							<!-- /btn-group -->
@@ -147,27 +197,132 @@
 						
 			
 				
+			
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+		<script type="text/javascript">
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				<script >
-				
-				
+	
 				
 				$(function(){
 					
-					
-					$('#pay').addClass('active');
-					
+
+
+					$('#seachDate').keyup(function(){
+						var searchCondition =  $.trim($("#Search1").text());
+						var tTitle = $.trim($(this).val());				
+						
+						if(tTitle.length>0){
+							
+							$.ajax({
+								type: 'POST',
+								url: "searchComplete.me",
+								data: {tTitle:tTitle,searchCondition:searchCondition},
+								dataType: 'json',
+								success:function(data){		
+									console.log(data);
+									
+									
+									$("#seachDate").autocomplete({ 
+										source : data,	
+										select : function(event, ui) {	
+											console.log(ui.item);
+										},
+										focus : function(event, ui) {	
+											return false;
+										},
+										minLength: 1,
+										autoFocus: true, 
+									
+										delay: 300,	
+
+										
+										close : function(event){	
+											console.log(event);
+										}
+									});
+							
+
+
+								}
+							});
+							
+						}
+						
+					});
+
+
+
+	})
+	
+	
+	
+
 
 				
+				
+				</script>
+				
+				
+				
+				
+				
+		<script>
+		
+
+		$(function(){
+			
+
+				$('#like').addClass('active');
+				
+
+			
+			});
+		
+		
+			
+
+
+
+			
+
+
+
+				
+				
+
+				
+				
+				$('.contentTR').mouseenter(function(){
+					
+					$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+					
+					
+					
+				}).mouseout(function(){
+					
+					$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
+					
+					
+				}).click(function(){
+					
+					
+					
+					var boardNo = $(this).parent().children('td').eq(1).text();
+					var code =$(this).parent().children('td').eq(2).text();
+					var path = "";
+					
+					if(code == 5){
+						path = "TIWdetail.to?code="+code+"&"
+					}else if(code == 2){
+						path = "redetail.re?"
+					}
+					
+					
+					location.href= path +'boardNo='+boardNo+'&page=1';
+					
 				});
 				
 
@@ -176,10 +331,20 @@
 				
 				
 				
-				
-				
-				
 			
+				
+				$('#search1 li > a').on('click', function() {
+			    	
+			    	
+					   
+				    $('#Search1').text($(this).text());
+				    
+				    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
+				    // 선택된 항목 값(value) 얻기
+				    
+				    
+				    
+				});
 				
 				 $('#searchList').click(function() {
 			    	
@@ -197,7 +362,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myPayList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
+ 		    	location.href='myLikeList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -233,7 +398,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myPayList.me"></c:set>
+						<c:set var="loc" value="myLikeList.me"></c:set>
 						
  
 				    
@@ -252,7 +417,7 @@
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -285,7 +450,7 @@
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -320,7 +485,7 @@
 						<c:url var="pagination" value="${ loc }">
 						
 							<c:param name="page" value="${ p }"/>
-							<c:param name="code" value="${code }"></c:param>
+							
 					
 						
 						
@@ -351,7 +516,7 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage + 1 }"/>
-								<c:param name="code" value="${code }"></c:param>
+								
 								
 								<c:if test="${searchValue ne null }">
 						
@@ -381,7 +546,6 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.maxPage }"/>
-								<c:param name="code" value="${code }"></c:param>
 								
 								<c:if test="${searchValue ne null }">
 						
@@ -448,49 +612,16 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
-						
-						
-						
-						
-						<c:if test="${ !empty searchValue}">
-					
-							<c:set var="check" value="true"></c:set>
-					
-					   </c:if>
-					   
-					   <c:if test="${ empty searchValue}">
-					
-							<c:set var="check" value="false"></c:set>
-					
-					   </c:if>
-						
 
 	<script>
-	
-	
-	$('#search1 li > a').on('click', function() {
-    	
-    	
-		   
-	    $('#Search1').text($(this).text());
-	    
-	    $('#Search1').append('<span class="caret" style="margin-left: 10px"></span>'); 
-	    // 선택된 항목 값(value) 얻기
-	    
-	    
-	    
-	});
 						
 						
 						
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	
-								
-					        	
-					        	
-					        	var check = ${ check } ; 
+					      
+					        	var check = ${ !empty searchValue   } ; 
 					        	
 					        	var searchCondition = null;
 					        	
@@ -526,12 +657,13 @@
 							    
 							    
 							    
-							  
+					
+				 			    	
+				 			    	
+								    
+								    location.href='myLikeDelete.me?inFo='+select_obj+'&page='+ ${pi.currentPage}+path;
 							    	
-				 			   
-							 location.href='myPayDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
-							    	
-				 			   
+				 			    
 							    
 
 						});

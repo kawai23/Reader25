@@ -206,7 +206,7 @@
  	
  	
  		select *
- 		from board join member using( user_id)
+ 		from board
  		where b_status = 'Y' and code=#{code}
  
  		
@@ -241,7 +241,196 @@
  	</update>
  	
  	
+ 	
+ 	
+ 	<select id="MyLikeCount"   resultType="_int">
+ 	
+ 	
+ 		select count(*)
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y' 		
+		
+		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		 </if>
 
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 	</select>
+ 	
+ 	
+ 	<select id="MyLikeList" parameterType="SearchCondition" resultMap="boardResultSet2">
+ 	
+ 	
+ 		select *
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y' 		
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		
+ 		</if>
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		order by BOARD_NO desc
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	<delete id="myLikeDelete">
+		DELETE FROM liketo
+		WHERE LIKENO=#{s} 
+    </delete>
+    
+    
+    <select id="searchLikeList" resultType="string">
+ 	
+ 	
+ 		select 
+ 		
+ 		<if test="title != null">
+ 		
+ 			DISTINCT board.b_title
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			DISTINCT board.B_CONTENT
+ 		
+ 		</if>
+ 			
+ 			 
+		from liketo  LEFT OUTER join board on(boardno =BOARD_NO) 
+		where  b_status ='Y'		
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and mno = #{mId}
+ 		
+ 		</if>
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		
+ 	
+ 	</select>
+    
+    <resultMap type="Board" id="boardResultSet2">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="likeNo" column="LIKENO"/>
+		<result property="bTitle" column="B_TITLE"/>
+		<result property="bContent" column="B_CONTENT"/>
+		<result property="bCount" column="B_COUNT"/>
+		<result property="bLike" column="B_LIKE"/>
+		<result property="comCount" column="COM_COUNT"/>
+		<result property="bStatus" column="B_STATUS"/>
+		<result property="enrollDay" column="ENROLL_DAY"/>
+		<result property="updateDay" column="UPDATE_DAY"/>
+		<result property="cate" column="CATE"/>
+		<result property="code" column="CODE"/>
+		<result property="userId" column="USER_ID"/>
+	</resultMap>
+    
+    
+    
+    
+ 	
+	<select id="MyPointListCount"   resultType="_int">
+ 	
+ 	
+ 		
+ 		
+ 		select count(*)
+		from point  
+		where  MID =  #{mId}
+
+ 		
+ 		<if test="no != null">
+ 		
+ 			and POINTNO=  #{no} 
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and P_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 	</select>
+ 	
+ 	<select id="MyPointList" resultMap="pointResultSet">
+ 	
+ 	
+ 		select *
+		from point  
+		where  MID =  #{mId}
+
+ 		
+ 		<if test="no != null">
+ 		
+ 			and POINTNO =  #{no} 
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and P_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		order by POINTNO desc
+ 	
+ 	</select>
+ 	
+ 	
+ 	<delete id="myPointDelete">
+		DELETE FROM point
+		WHERE POINTNO=#{s} 
+    </delete>
+ 	
+ 	
+ 	
 	
 	
 
