@@ -247,6 +247,18 @@ textarea{
 			</div>
 		</div>
 	</div>
+	<!-- 후원 관련 -->
+	<div class="modal-back" id="support-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글의 작가를 후원 했습니다.</p>
+				<p>50포인트 차감!</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
 	<!-- 좋아요 관련 -->
 	<div class="modal-back" id="like-modal">
 		<div class="modal">
