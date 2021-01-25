@@ -22,7 +22,7 @@
     }
 	#myImg{
 		width: 700px; height: 460px;  opacity: 0.47; 
-		position: absolute; z-index: "3";position:absolute;
+		position: absolute; z-index: "3";
 	}
 	.out{
 		z-index: "4";position:absolute; width: 700px; height: 460px;

@@ -979,4 +979,26 @@
 		values (SUP_SEQ.nextval, #{sPoint}, #{userId}, #{sendId}, #{bNo})
 	</insert>
 	
+	<resultMap type="Bookmarkto" id="BookmarkResultSet">
+		<id property="bmkNo" column="BMK_NO"></id>
+		<result property="boardNo" column="BOARD_NO"></result>
+		<result property="userId" column="USER_ID"></result>
+	</resultMap>
+	
+	<select id="findbookmark" resultType="_int">
+		select count(*)
+		from bookmark
+		where BOARD_NO = #{boardNo} and USER_ID = #{userId}
+	</select>
+	
+	<insert id="insertMark" parameterType="Bookmarkto">
+		insert into bookmark
+		values (BMK_SEQ.nextval, #{boardNo}, #{userId})
+	</insert>
+	
+	<delete id="deleteMark">
+		DELETE FROM bookmark
+		WHERE BOARD_NO=#{boardNo} and USER_ID=#{userId}
+    </delete>
+	
 </mapper>

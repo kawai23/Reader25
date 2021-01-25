@@ -30,6 +30,7 @@ import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Bookmarkto;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -1179,6 +1180,11 @@ public class BoardController {
 		
 		int support = bService.findsupport(sap);
 		//System.out.println("support"+support);
+		HashMap<String, Object> bap = new HashMap<String, Object>();
+		bap.put("userId", loginUser);
+		bap.put("boardNo", boardNo);
+		int bookmark = bService.findbookmark(bap);
+		
 		String cate = board.getCate();
 		
 		String[] cates = cate.split("/");
@@ -1193,11 +1199,37 @@ public class BoardController {
 				.setViewName("TIWDetailView");
 			mv.addObject("heart", heart);
 			mv.addObject("support", support);
+			mv.addObject("bookmark", bookmark);
 		} else {
 			throw new BoardException("오늘은 나도 작가 게시글 상세보기를 실패하였습니다.");
 		}
 		
 		return mv;
+	}
+	
+	// 오늘은 나도 작가 = 5 북마크 클릭 컨트롤러
+	@ResponseBody
+	@RequestMapping("bookmark.to")
+	public int bookmark(HttpServletRequest httpRequest) {
+
+		int bookmark = Integer.parseInt(httpRequest.getParameter("bookmark"));
+		int boardNo = Integer.parseInt(httpRequest.getParameter("boardNo"));
+		String userId = ((Member) httpRequest.getSession().getAttribute("loginUser")).getId();
+		Bookmarkto mark = new Bookmarkto();
+		
+		mark.setBoardNo(boardNo);
+		mark.setUserId(userId);
+	        
+		if(bookmark >= 1) {
+			bService.deleteMark(mark);
+			bookmark=0;
+		} else {
+			bService.insertMark(mark);
+			bookmark=1;
+		}
+
+		return bookmark;
+
 	}
 	
 	// 오늘은 나도 작가 = 5 좋아요 클릭 컨트롤러
@@ -2544,6 +2576,7 @@ public class BoardController {
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			System.out.println(atList);
 			System.out.println(bookList);
+			System.out.println(bList.size());
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
 						.addObject("pi", pi)

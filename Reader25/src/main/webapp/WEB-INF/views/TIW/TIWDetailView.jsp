@@ -15,7 +15,7 @@
 .outer{
 		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
 		min-width: 1000px;
-		padding-top: 15px;
+		padding-top: 1%;
 		background-color:  #F6F6F6; display: inline-block;
 		font-family: 카페24 아네모네에어; font-size:17px;
 	}
@@ -90,9 +90,11 @@ textarea{
 			width: 80%;
 		}
 /*사진*/
+#bookmark-div{position: absolute; margin-right: 10%;}
 #img_td{width:40%}
 #heart, #unheart {max-width: 100px;}
 #support, #support-d{max-width: 80px;}
+#bookmark{max-width: 70px;}
 #myimg{
 		max-width: 300px;
 		margin-left: 5%;
@@ -183,7 +185,7 @@ textarea{
 		background: rgba(0, 0, 0, 0.3); 
 		font-family: 카페24 아네모네에어; font-size:17px;
 }
-.modal-close{
+.modal-close, .modal-close-r{
 	background-color: #C4C4C4;
 	color:white; width: 80px;
 	height: 30px; border:none;
@@ -242,6 +244,60 @@ textarea{
 				<br>
 				<button class="modal-accept" value="accept">확인</button>
 				<button class="modal-close" value="Close">취소</button>
+			</div>
+		</div>
+	</div>
+	<!-- 후원 관련 -->
+	<div class="modal-back" id="support-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글의 작가를 후원 했습니다.</p>
+				<p>50포인트 차감!</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<!-- 좋아요 관련 -->
+	<div class="modal-back" id="like-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글을 좋아요 했습니다.</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="unlike-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글을 좋아요 취소했습니다.</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<!-- 북마크 관련 -->
+	<div class="modal-back" id="bmkC-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글을 북마크 했습니다.</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="bmkU-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+				<p>해당 게시글을 북마크 취소 했습니다.</p>
+				<br>
+				<button class="modal-close-r" value="Close">확인</button>
 			</div>
 		</div>
 	</div>
@@ -318,6 +374,12 @@ textarea{
 				$('.modal').hide();
 				$('.modal-back').hide();
 			});
+			$('.modal-close-r').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+				location.reload();
+				
+			});
 			$('.modal-update').click(function(){
 				var comNo=$('#comNo').text();
 				var comment = $('#comment-input-up').val();
@@ -366,11 +428,22 @@ textarea{
 	</script>
 	
 	<div class="outer">
+		<!-- 북마크 부분 -->
+		<div id="bookmark-div">
+			<c:choose>
+				<c:when test="${bookmark eq '1'}">
+					<a class="bookmark"><img id="bookmark" src="resources/images/icon/bookmark-check.png"></a>
+				</c:when>
+				<c:otherwise>
+					<a class="bookmark"><img id="bookmark" src="resources/images/icon/bookmark-uncheck.png"></a>
+				</c:otherwise>
+			</c:choose>
+		</div>
 		<input type="hidden" name="user" value="${ loginUser.id }">
 			<div class="page">
 			<br><br><br>
-			<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
-			<input type="hidden" name="user" value="${ board.boardNo }">
+				<h2 class="txt_TIW" align="center">오늘은 나도 작가</h2>
+				<input type="hidden" name="user" value="${ board.boardNo }">
 			</div>
 			<br>
 			<div id ="content">
@@ -662,11 +735,13 @@ textarea{
 	                that.prop('name',data);
 	                if(data==1) {
 	                    $('#heart').prop("src","resources/images/like/like.png");
-	                    location.reload();
+	                    $('#like-modal').show();
+	                    $('#like-modal .modal').show();
 	                }
 	                else{
 	                    $('#heart').prop("src","resources/images/like/unlike.png");
-	                    location.reload();
+	                    $('#unlike-modal').show();
+	                    $('#unlike-modal .modal').show();
 	                }
 	            }
 	        });
@@ -704,9 +779,53 @@ textarea{
 	                that.prop('name',data);
 	                if(data>0) {
 	                    $('#support').prop("src","resources/images/icon/support.png");
+	                    $('#support-modal').show();
+	                    $('#support-modal .modal').show();
 	                }
 	                else{
 	                    $('#support').prop("src","resources/images/icon/support-d.png");
+	                }
+	            }
+	        });
+	    });
+	});
+	
+	//북마크 클릭 ajax
+	$(document).ready(function () {
+
+		var bookmarkval = ${bookmark};
+		
+	    if(bookmarkval>0) {
+	        console.log(bookmarkval);
+	        $("#bookmark").prop("src", "resources/images/icon/bookmark-check.png");
+	        $(".bookmark").prop('name',bookmarkval)
+	    }
+	    else {
+	        console.log(bookmarkval);
+	        $("#bookmark").prop("src", "resources/images/icon/bookmark-uncheck.png");
+	        $(".bookmark").prop('name',bookmarkval)
+	    }
+	    
+	    $(".bookmark").on("click", function () {
+	    	
+	        var that = $(".bookmark");
+	        console.log("클릭");
+	        
+	        $.ajax({
+	            url :'bookmark.to',
+	            type :'POST',
+	            data : {'boardNo' : '${ board.boardNo }','user':'${ loginUser.id }','bookmark':'${bookmark}'},
+	            success : function(data){
+	                that.prop('name',data);
+	                if(data==1) {
+	                    $('#bookmark').prop("src","resources/images/icon/bookmark-check.png");
+	                    $('#bmkC-modal').show();
+	                    $('#bmkC-modal .modal').show();
+	                }
+	                else{
+	                    $('#bookmark').prop("src","resources/images/icon/bookmark-uncheck.png");
+	                    $('#bmkU-modal').show();
+	                    $('#bmkU-modal .modal').show();
 	                }
 	            }
 	        });

@@ -46,22 +46,21 @@ section {
 	max-width: 1000px;
 	width: 80%;
 }
-*{border:1px solid pink;}
 .img-div{
 	height: 250px;
-	width: 300px;
+	width: 400px;
 	box-sizing: border-box;
 	text-align: center;
 	margin:auto;
 	background:lightgray;
 }
 .slide {
-	font-size: 0;
 	white-space: nowrap;
 	overflow: hidden;
 }
 
 .slide ul {
+	position:relative;
 	white-space: nowrap;
 	overflow: hidden;
 	display: inline-block;
@@ -73,10 +72,11 @@ section {
 .slide ul li img{
 	max-height: 250px;
 	max-width: 300px;
+	margin-right: 100px;
 }
 #back {
 	position: absolute;
-	top: 380px;
+	top: 450px;
 	left: 30%;
 	cursor: pointer;
 	z-index: 1;
@@ -84,7 +84,7 @@ section {
 
 #next {
 	position: absolute;
-	top: 380px;
+	top: 450px;
 	right: 30%;
 	cursor: pointer;
 	z-index: 1;
@@ -94,10 +94,6 @@ section {
 .info-box {
 	clear:both;
 	width: 80%;
-}
-
-.info-contents {
-	width: 80%;
 	margin: auto;
 	max-width: 1000px;
 }
@@ -105,11 +101,13 @@ section {
 .title {
 	display: inline-block;
 	margin: auto;
-	margin-top: 80px;
+	margin-top: 20px;
 	width: 100%;
 	font-size: 30px;
+	margin-left: 20px;
+	margin-bottom: 10px;
 }
-
+.tags{margin-left: 10px; margin-bottom: 20px;}
 .tag {
 	display: inline;
 	margin: 10px;
@@ -132,30 +130,17 @@ section {
 }
 /* 내용박스*/
 .rectangle-box {
-	margin: auto;
-	line-height: 600px;
 	max-width: 1000px;
-	height: 364.58px;
-	position: relative;
-	border-bottom: 1px solid rgb(200, 200, 200);
-}
-/*  내용  */
-.contents {
 	width: 80%;
+	border-top: 1px solid rgb(200, 200, 200);
+	border-bottom: 1px solid rgb(200, 200, 200);
+	margin: auto;
+}
+.contents {
 	height: 448px;
-	left: 344px;
-	top: 1633px;
-	font-family: Roboto;
-	font-style: normal;
-	font-weight: normal;
 	font-size: 20px;
-	line-height: 47px;
 	color: #000000;
 	border-bottom: 1px solid rgb(200, 200, 200);
-}
-
-.contents>p {
-	margin: 15px;
 }
 
 .paging-btn {
@@ -174,16 +159,17 @@ section {
 	font-weight: bolder;
 	cursor: pointer;
 }
-
 .btns-div {
 	font-size: 18px;
+	margin-top: 20px;
 	height: 25px;
 	position: relative;
-	float: right;
 	margin-right: 10%;
-	top: -30px;
+	margin-bottom: 50px;
 }
-
+.btns-div button{
+	float: right;
+}
 .write-btn {
 	background: rgba(255, 195, 152, 1);
 	width: 80px;
@@ -273,6 +259,7 @@ section {
 	max-width: 1000px;
 	border-bottom: 1px solid rgb(200, 200, 200);
 	padding-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .comment-date {
@@ -333,6 +320,7 @@ section {
 	width: 80%;
 	margin: auto;
 	margin-top: 50px;
+	margin-bottom: 20px;
 	max-width: 1000px;
 }
 
@@ -393,16 +381,6 @@ section {
 	position: relative;
 	top: 1px;
 }
-<!--
-============================
-여기까지
- 
-슬라이드
- 
-배너
-  
-============================
--->
 </style>
 </head>
 <body>
@@ -464,6 +442,20 @@ section {
 			<p>${ board.userId } ${board.updateDay }</p>
 			<p class="count-p">조회수 : ${ board.bCount } </p>
 		</div>
+		 <!---------------------------------- 책제목 ------------------------------------>
+      <div class="info-box">
+	         <h3 class="title">책제목: ${ board.bTitle }</h3>
+	         <div class="tags">
+		         <p class="tag">#제목</p>
+		         <span class="info" id="author">${book.b_name}</span>
+		         <p class="tag">#작가</p>
+		         <span class="info" id="sort">${book.author }</span> <br>
+		         <p class="tag">거래자</p>
+		         <span class="info" id="sort">${board.userId }</span>
+		         <p class="tag">금액</p>
+		         <span class="info" id="sort">${book.b_Q1 }</span> 
+	         </div>
+      </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
       <div class="book-box">
            <div class="img-div">
@@ -506,7 +498,7 @@ section {
                function back() {
                   if (1 < img_position) {
                      imgs.animate({
-                        left : '+=1000px'
+                        left : '+=400px'
                      });
                      img_position--;
                   }
@@ -514,7 +506,7 @@ section {
                function next() {
                   if (img_count > img_position) {
                      imgs.animate({
-                        left : '-=1000px'
+                        left : '-=400px'
                      });
                      img_position++;
                   }
@@ -543,26 +535,11 @@ section {
          });
          </script>
       </div>
-      <!---------------------------------- 책제목 ------------------------------------>
-      <div class="info-box">
-	      <div class="info-contents">
-	         <h3 class="title">책제목: ${ board.bTitle }</h3>
-	         <p class="tag">#제목</p>
-	         <span class="info" id="author">${booktitle }</span>
-	         <p class="tag">#작가</p>
-	         <span class="info" id="sort">${author }</span> <br>
-	         <p class="tag">거래자</p>
-	         <span class="info" id="sort">${board.userId }</span>
-	         <%-- <p class="tag">금액</p>
-	         <span class="info" id="sort">${board.userAmount }</span> --%>
-	         
-	      </div>
-      </div>
+     
       <!---------------------------------- 내용박스 ------------------------------------>
       <div class="rectangle-box"> 
          <div class="contents">${board.bContent}</div>
       </div>
-	
 		
 		<!---------------------------------- 리뷰 ------------------------------------>
 		<div class="comment-box">
@@ -704,5 +681,6 @@ section {
 			}
 		</script>
    </section>
+   <%@include file="../common/footer.jsp" %>
 </body>
 </html>
