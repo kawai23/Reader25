@@ -3,7 +3,7 @@ package com.kh.Reader25.book.model.vo;
 public class ShoppingBasket {
 	private int sb_no;
 	private String sb_v;
-	private String sb_name;
+	private String book_name;
 	private String price;
 	private String status;
 	private String user_id;
@@ -11,11 +11,11 @@ public class ShoppingBasket {
 	
 	public ShoppingBasket() {}
 
-	public ShoppingBasket(int sb_no, String sb_v, String sb_name, String price, String status, String user_id, int book_no) {
+	public ShoppingBasket(int sb_no, String sb_v, String book_name, String price, String status, String user_id, int book_no) {
 		super();
 		this.sb_no = sb_no;
 		this.sb_v = sb_v;
-		this.sb_name = sb_name;
+		this.book_name = book_name;
 		this.price = price;
 		this.status = status;
 		this.user_id = user_id;
@@ -69,18 +69,18 @@ public class ShoppingBasket {
 	public void setBook_no(int book_no) {
 		this.book_no = book_no;
 	}
-
-	public String getSb_name() {
-		return sb_name;
+	
+	public String getBook_name() {
+		return book_name;
 	}
 
-	public void setSb_name(String sb_name) {
-		this.sb_name = sb_name;
+	public void setBook_name(String book_name) {
+		this.book_name = book_name;
 	}
 
 	@Override
 	public String toString() {
-		return "ShoppingBasket [sb_no=" + sb_no + ", sb_v=" + sb_v + ", sb_name=" + sb_name + ", price=" + price
+		return "ShoppingBasket [sb_no=" + sb_no + ", sb_v=" + sb_v + ", book_name=" + book_name + ", price=" + price
 				+ ", status=" + status + ", user_id=" + user_id + ", book_no=" + book_no + "]";
 	}
 	

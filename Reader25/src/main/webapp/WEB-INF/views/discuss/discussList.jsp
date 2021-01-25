@@ -55,6 +55,10 @@
 	/*메뉴바 관련*/
 	.subul {
 		list-style-image: url( "<%=request.getContextPath() %>/resources/images/icon/li_file.png" );
+		
+	}
+	.subli {
+		max-width: 300px;
 	}
 	/*토론방 리스트 관련*/
   	.outer{
