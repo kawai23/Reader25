@@ -2535,6 +2535,7 @@ public class BoardController {
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			System.out.println(atList);
 			System.out.println(bookList);
+			System.out.println(bList.size());
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
 						.addObject("pi", pi)
