@@ -163,7 +163,7 @@ img{
 	<img id="line" src="resources/images/icon/line2.png" width="500px" height="20px">
 	<br>
 	
-	<h3 align="center">작품 수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
+	<h3 align="center">작품 수 : ${ pi.listCount }</h3>
 	
 		<table id="TIWTable" align="center">
 			<tr>
