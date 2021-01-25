@@ -15,6 +15,7 @@ import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 
 public interface BoardService {
@@ -220,6 +221,8 @@ public interface BoardService {
 	int findsupport(HashMap<String, Object> sap);
 
 	int updateSupport(Support suppoint);
+
+
 
 
 

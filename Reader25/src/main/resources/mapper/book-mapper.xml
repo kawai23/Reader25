@@ -65,4 +65,69 @@
 		INSERT INTO SHOPPINGBASKET
 		VALUES(SEQ_SBNO.nextval, #{sb_v}, #{price}, default, #{user_id}, #{book_no})
 	</insert>
+	
+	
+	
+	
+	<select id="MyBasketListCount"  resultType="_int">
+	
+		SELECT count( * ) 
+		FROM shoppingbasket  LEFT OUTER join book using(BOOK_NO) 
+		where  shoppingbasket.status = 'Y' 
+		
+		
+		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and SB_NO = #{no} 
+ 		
+ 		</if> 
+		
+		
+	
+	
+	</select>
+	
+	<select id="MyBasketList" parameterType="SearchCondition" resultType="SB">
+ 	
+ 	
+ 		SELECT * 
+		FROM shoppingbasket  LEFT OUTER join book using(BOOK_NO) 
+		where  shoppingbasket.status = 'Y' 
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and SB_NO = #{no} 
+ 		
+ 		</if> 
+ 	
+ 		order by SB_NO desc
+ 	
+ 	</select>
+	
 </mapper>

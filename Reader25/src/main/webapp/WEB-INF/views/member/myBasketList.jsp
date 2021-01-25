@@ -81,11 +81,12 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr>
-								<td><input type="checkbox"  name="mInfo" value="${ b.pNo }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.sb_no }" ></td>
 								
-								<td >${  b.pNo }</td>
-								<td >${ b.pCon }</td>
-								<td >${ b.point }</td>
+								<td style="display: none;" class="contentTR">${ b.book_no }</td>
+								<td >${ b.sb_name }</td>
+								<td >${  b.sb_v }</td>
+								<td >${ b.price }</td>
 								
 								
 								

@@ -23,6 +23,7 @@ import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService {
@@ -623,6 +624,9 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return bDAO.updateSupport(sqlSession, suppoint);
 	}
+
+	
+	
 
 	
 	
