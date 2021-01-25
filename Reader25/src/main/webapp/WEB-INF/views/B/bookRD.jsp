@@ -107,6 +107,7 @@ section {
 	margin-left: 20px;
 	margin-bottom: 10px;
 }
+.tags{margin-left: 10px; margin-bottom: 20px;}
 .tag {
 	display: inline;
 	margin: 10px;
@@ -131,6 +132,7 @@ section {
 .rectangle-box {
 	max-width: 1000px;
 	width: 80%;
+	border-top: 1px solid rgb(200, 200, 200);
 	border-bottom: 1px solid rgb(200, 200, 200);
 	margin: auto;
 }
@@ -157,18 +159,17 @@ section {
 	font-weight: bolder;
 	cursor: pointer;
 }
-
 .btns-div {
 	font-size: 18px;
 	margin-top: 20px;
 	height: 25px;
 	position: relative;
-	float: right;
 	margin-right: 10%;
-	top: -30px;
 	margin-bottom: 50px;
 }
-
+.btns-div button{
+	float: right;
+}
 .write-btn {
 	background: rgba(255, 195, 152, 1);
 	width: 80px;
@@ -319,6 +320,7 @@ section {
 	width: 80%;
 	margin: auto;
 	margin-top: 50px;
+	margin-bottom: 20px;
 	max-width: 1000px;
 }
 
@@ -443,14 +445,16 @@ section {
 		 <!---------------------------------- 책제목 ------------------------------------>
       <div class="info-box">
 	         <h3 class="title">책제목: ${ board.bTitle }</h3>
-	         <p class="tag">#제목</p>
-	         <span class="info" id="author">${book.b_name}</span>
-	         <p class="tag">#작가</p>
-	         <span class="info" id="sort">${book.author }</span> <br>
-	         <p class="tag">거래자</p>
-	         <span class="info" id="sort">${board.userId }</span>
-	         <p class="tag">금액</p>
-	         <span class="info" id="sort">${book.b_Q1 }</span> 
+	         <div class="tags">
+		         <p class="tag">#제목</p>
+		         <span class="info" id="author">${book.b_name}</span>
+		         <p class="tag">#작가</p>
+		         <span class="info" id="sort">${book.author }</span> <br>
+		         <p class="tag">거래자</p>
+		         <span class="info" id="sort">${board.userId }</span>
+		         <p class="tag">금액</p>
+		         <span class="info" id="sort">${book.b_Q1 }</span> 
+	         </div>
       </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
       <div class="book-box">
