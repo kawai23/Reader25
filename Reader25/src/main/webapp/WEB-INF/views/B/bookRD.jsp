@@ -39,7 +39,6 @@ section {
 	float: right;
 	margin-right: 10px
 }
-
 .book-box {
 	margin-top: 20px;
 	margin: auto;
@@ -47,7 +46,7 @@ section {
 	width: 80%;
 }
 .img-div{
-	height: 250px;
+	min-height: 250px;
 	width: 400px;
 	box-sizing: border-box;
 	text-align: center;
@@ -63,15 +62,29 @@ section {
 	white-space: nowrap;
 	overflow: hidden;
 	display: inline-block;
+	margin:0;
+	padding:0;
 	
 }
-.slide ul li {
+/* .slide ul li {
 	display: inline-block;
-}
-.slide ul li img{
+	width: 400px;
+} */
+/* .slide ul li img{
 	max-height: 250px;
 	max-width: 300px;
 	margin-right: 100px;
+} */
+.slide ul li {
+	display: inline-block;
+	width: 400px;
+	height: 250px; 
+	line-height:250px;
+	text-align:center;
+}
+.slide ul li img{
+	max-height:100%;
+	max-width: 100%;
 }
 #back {
 	position: absolute;
@@ -667,7 +680,7 @@ section {
 				<button class="delete-btn" onclick="deleteReview();">삭제하기</button>
 			</c:if>
 		</c:if>
-		<button class="list-btn" onclick='location.href="book.bo?page="+${page}'>목록보기</button>
+		<button class="list-btn" onclick='location.href="gobookr.bo?page="+${page}'>목록보기</button>
 		</div>
 		<script>
 			function deleteReview(){

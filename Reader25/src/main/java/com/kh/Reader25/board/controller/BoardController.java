@@ -2561,11 +2561,9 @@ public class BoardController {
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);// PageInfo는 게시물 페이징을 설정 하는 객체
 			ArrayList<Board> bList = bService.selectList(pi, code); // selectList 총 게시물을 불러오는 함수 // 총 게시물 리스트를 받아오는 객체
-			// 객체를 여러개 담을수 있는 객체
-			/* ArrayList<Attachment> atList = bService.gobookr("Code"); */
-			/* bService.selectAttachmentTList(code); */
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
+			System.out.println(bookList.get(0));
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
 						.addObject("pi", pi)
@@ -2612,7 +2610,7 @@ public class BoardController {
 			int result2 = b_Service.insertBook(book);
 			
 			if (result > 0 && result2 > 0) {
-				return "redirect:book.bo";
+				return "redirect:gobookr.bo";
 			} else {
 				throw new BoardException("책리뷰 게시물 작성에 실패하였습니다.");
 			}
@@ -2639,34 +2637,12 @@ public class BoardController {
 		public String deleteReviewBoard1(@RequestParam("boardNo") int boardNo) {
 			int result = bService.deleteBoardAndFile(boardNo);
 			if (result > 0) {
-				return "redirect:book.bo";
+				return "redirect:gobookr.bo";
 			} else {
 				throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
 			}
 		}
 
-		@RequestMapping("book.bo")
-		public ModelAndView bookreviewList1(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) {
-			int currentPage = 1;
-			if (page != null) {
-				currentPage = page;
-			}
-			int code = 3;
-			int listCount = bService.getListCount(code);
-
-			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
-			ArrayList<Board> bList = bService.selectList(pi, code);
-			ArrayList<Attachment> atList = bService.selectAttachmentTList(code);
-
-			if (bList != null) {
-				mv.addObject("bList", bList).addObject("pi", pi).addObject("atList", atList)
-
-						.setViewName("gobookr");
-			} else {
-				throw new BoardException("책리뷰 게시글 전체 조회에 실패하였습니다.");
-			}
-			return mv;
-		}
 		@RequestMapping("modify.bo")
 		public ModelAndView bookReviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
 										ModelAndView mv, @RequestParam("b_no") int b_no) {
@@ -2689,7 +2665,7 @@ public class BoardController {
 		// 수정하기
 		@RequestMapping("update.bo")
 		public ModelAndView bookRD(@RequestParam("page") int page, @ModelAttribute Board b,
-										@RequestParam(value="reloadFile", required=false) MultipartFile[] reloadFile,
+										@RequestParam(value="uploadFile", required=false) MultipartFile[] reloadFile,
 										HttpServletRequest request, @RequestParam("nameArr") String[] nameArr,
 										@ModelAttribute Book book,
 										ModelAndView mv) {
@@ -2738,12 +2714,5 @@ public class BoardController {
 		public String bookPurchase() {
 			return "bookPurchase";	
 			}
-		/*
-		 * @RequestMapping("delete.rr") public String
-		 * deletebook(@RequestParam("boardNo") int boardNo) { int result =
-		 * bService.deleteBoardAndFile(boardNo); if(result > 0) { return
-		 * "redirect:book.rr"; }else { throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
-		 * } }
-		 */
 
 	}
