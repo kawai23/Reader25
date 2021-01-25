@@ -168,7 +168,7 @@
 				$(function(){
 					
 		
-						$('#point').addClass('active');
+						$('#bs').addClass('active');
 						
 
 					
@@ -201,7 +201,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myPointList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
+ 		    	location.href='myBasketList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
