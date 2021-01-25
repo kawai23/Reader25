@@ -184,7 +184,7 @@
 <body>
 <%@include file="../common/menubar.jsp" %>
 <div class="outer">
-    <form action="<%= request.getContextPath() %>/importBuy" method="post" id="buyForm" name="buyForm">
+    <form action="home.do" method="post" id="buyForm" name="buyForm">
     <h2 class="txt_pack">주문하기</h2>
       <div id="listArea" class="list-A">
         <table class="table1" align="center">
