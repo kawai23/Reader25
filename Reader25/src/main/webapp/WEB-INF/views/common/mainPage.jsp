@@ -318,7 +318,25 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	cursor: pointer
 }
 
-.ellipsis {
+.ellipsis_r {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+}
+.ellipsis_b {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+}
+.ellipsis_d {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+}
+.ellipsis_t {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -384,12 +402,9 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_brown" onclick="clickbutton1()">일간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
-			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "test1"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ views }" begin="0" end="13" varStatus="status">
-					<div class="reco_c" id="reco<c:out value="${status.count}"/>"
-						style="width: 100%">
-						<p class="ellipsis"><c:out value="${ r.bTitle }" /></p>
-					</div>
+						<p class="ellipsis_r"><c:out value="${ r.bTitle }" /></p>
 				</c:forEach>
 			</div>
 		</div>
@@ -399,15 +414,12 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_brown" onclick="clickbutton4()">일간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
-			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "test12" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ review }" begin="0" end="13"
 					varStatus="status">
-					<div class="review_c" id="review<c:out value = "${ status.count }"/>"
-						style="width: 100%">
-						<p class="ellipsis">
+						<p class="ellipsis_b">
 							<c:out value="${ r.bTitle }" />
 						</p>
-					</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -416,14 +428,12 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_brown" onclick="clickbutton7()">일간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
-			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "test123" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="d" items="${ discuss }" begin="0" end="13"
 					varStatus="status">
-					<div class="discuss_c"id="discuss_t<c:out value="${status.count}"/>" style="width: 100%">
-						<p class="ellipsis">
+						<p class="ellipsis_d">
 							<c:out value="${ d.dTitle }" />
 						</p>
-					</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -432,14 +442,11 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
-			<div style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "test1234" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
-					<div class="tiw_c" id="tiw_t<c:out value="${status.count}"/>"
-						style="width: 100%">
-						<p class="ellipsis">
+						<p class="ellipsis_t">
 							<c:out value="${ b.bTitle }" />
 						</p>
-					</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -459,9 +466,8 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			$.ajax({
 				url : "recod.do",
 				success : function(data) {
-					console.log(data);
 					Reset_r();
-
+					insert_r(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -484,7 +490,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_r();
-
+					insert_r(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -507,7 +513,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_r();
-
+					insert_r(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -530,7 +536,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_v();
-
+					insert_v(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -553,7 +559,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_v();
-
+					insert_v(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -576,7 +582,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_v();
-
+					insert_v(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -599,7 +605,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_d();
-
+					insert_d(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -622,7 +628,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_d();
-
+					insert_d(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -645,7 +651,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_d();
-
+					insert_d(data);
 				},
 				error : function() {
 					alert("정보소환에 실패하였습니다");
@@ -668,6 +674,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_t();
+					insert_t(data);
 
 				},
 				error : function() {
@@ -691,6 +698,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_t();
+					insert_t(data);
 
 				},
 				error : function() {
@@ -714,6 +722,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				success : function(data) {
 					console.log(data);
 					Reset_t();
+					insert_t(data);
 
 				},
 				error : function() {
@@ -722,16 +731,22 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			});
 		}
 		function Reset_r() { // 책추천
-			$('.reco_c').remove();
+			$('.ellipsis_r').remove();
 		}
 		function Reset_v() { // 책 리뷰
-			$('.review_c').remove();
+			$('.ellipsis_b').remove();
 		}
 		function Reset_d() { // 토론
-			$('.discuss_c').remove();
+			$('.ellipsis_d').remove();
 		}
 		function Reset_t() { // 오나작
-			$('.tiw_c').remove();
+			$('.ellipsis_t').remove();
+		}
+		function insert_r(data){
+			for(var i = 0; i < data.length; i ++)
+			{
+				$("#test_r" + i).text(data[i].dTitle);
+			}
 		}
 	</script>
 	<%@ include file="../common/footer.jsp" %>
