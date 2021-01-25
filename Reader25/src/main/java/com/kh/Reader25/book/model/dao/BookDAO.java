@@ -50,4 +50,12 @@ public class BookDAO {
 	public int insertSB(SqlSessionTemplate sqlSession, ShoppingBasket sb) {
 		return sqlSession.insert("bookMapper.insertsb", sb);
 	}
+
+	public int updateBook(SqlSessionTemplate sqlSession, Book book) {
+		return sqlSession.update("bookMapper.updateBook", book);
+	}
+
+	public int deleteBook(SqlSessionTemplate sqlSession, int b_no) {
+		return sqlSession.update("bookMapper.deleteBook", b_no);
+	}
 }

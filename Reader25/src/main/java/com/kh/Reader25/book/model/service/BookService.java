@@ -25,4 +25,8 @@ public interface BookService {
 
 	int insertSB(ShoppingBasket sb);
 
+	int updateBook(Book book);
+
+	int deleteBook(int b_no);
+
 }

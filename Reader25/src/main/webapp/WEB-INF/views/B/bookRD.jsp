@@ -58,7 +58,6 @@ section {
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 .slide ul {
 	position:relative;
 	white-space: nowrap;
@@ -161,14 +160,17 @@ section {
 }
 .btns-div {
 	font-size: 18px;
-	margin-top: 20px;
 	height: 25px;
 	position: relative;
-	margin-right: 10%;
+	width:80%;
+	max-width: 1000px;
+	margin:auto;	
+	margin-top: 20px;
 	margin-bottom: 50px;
 }
 .btns-div button{
 	float: right;
+	margin-right: 10px;
 }
 .write-btn {
 	background: rgba(255, 195, 152, 1);
@@ -317,15 +319,14 @@ section {
 
 .purchase-btn {
 	clear:both;
-	width: 80%;
+	width: 100%;
 	margin: auto;
 	margin-top: 50px;
 	margin-bottom: 20px;
 	max-width: 1000px;
 }
-
 .a {
-	width: 210px;
+	width: 215px;
 	margin: auto;
 	margin-top: 30px;
 }
@@ -662,11 +663,8 @@ section {
 		<div class="btns-div">
 		<c:if test="${loginUser ne null }">
 			<c:if test="${ loginUser.id eq board.userId }">
-				<button class="modify-btn" onclick="location.href='modify.bo?boardNo='+${board.boardNo}+'&page='+${page}">수정하기</button>
+				<button class="modify-btn" onclick="location.href='modify.bo?boardNo='+${board.boardNo}+'&page='+${page}+'&b_no='+${book.b_no}">수정하기</button>
 				<button class="delete-btn" onclick="deleteReview();">삭제하기</button>
-			</c:if>
-			<c:if test="${loginUser.id ne board.userId }">
-				<button class="write-btn" onclick='location.href="write.re"'>리뷰쓰기</button>
 			</c:if>
 		</c:if>
 		<button class="list-btn" onclick='location.href="book.bo?page="+${page}'>목록보기</button>
@@ -676,7 +674,7 @@ section {
 				$('#del-modal').show();
 				 $('#del-modal .modal').show();
 				 $('#del-modal .modal-accept').click(function(){
-					location.href='delete.bo?boardNo='+${board.boardNo};
+					location.href='delete.bo?boardNo='+${board.boardNo} + '&b_no=' + ${book.b_no};
 				});
 			}
 		</script>
