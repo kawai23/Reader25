@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Bookmarkto;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -220,6 +221,12 @@ public interface BoardService {
 	int findsupport(HashMap<String, Object> sap);
 
 	int updateSupport(Support suppoint);
+
+	int findbookmark(HashMap<String, Object> bap);
+
+	void insertMark(Bookmarkto mark);
+
+	void deleteMark(Bookmarkto mark);
 
 
 

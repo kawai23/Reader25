@@ -13,6 +13,7 @@ import com.kh.Reader25.board.model.dao.BoardDAO;
 import com.kh.Reader25.board.model.exception.BoardException;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Bookmarkto;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -622,6 +623,24 @@ public class BoardServiceImpl implements BoardService {
 	public int updateSupport(Support suppoint) {
 		// TODO Auto-generated method stub
 		return bDAO.updateSupport(sqlSession, suppoint);
+	}
+
+	@Override
+	public int findbookmark(HashMap<String, Object> bap) {
+		// TODO Auto-generated method stub
+		return bDAO.findbookmark(sqlSession, bap);
+	}
+
+	@Override
+	public void insertMark(Bookmarkto mark) {
+		// TODO Auto-generated method stub
+		bDAO.insertMark(sqlSession, mark);
+	}
+
+	@Override
+	public void deleteMark(Bookmarkto mark) {
+		// TODO Auto-generated method stub
+		bDAO.deleteMark(sqlSession, mark);
 	}
 
 	

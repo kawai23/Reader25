@@ -19,6 +19,7 @@
 		<typeAlias type="com.kh.Reader25.board.model.vo.Comments" alias="Comments"/>
 		
 		<typeAlias type="com.kh.Reader25.board.model.vo.Support" alias="Support"/>
+		<typeAlias type="com.kh.Reader25.board.model.vo.Bookmarkto" alias="Bookmarkto"/>
 		
 		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopWriter" alias="TWITopWriter"/>
 		<typeAlias type="com.kh.Reader25.board.model.vo.TWITopComment" alias="TWITopComment"/>

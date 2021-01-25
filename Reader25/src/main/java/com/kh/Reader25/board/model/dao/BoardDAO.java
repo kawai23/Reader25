@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
+import com.kh.Reader25.board.model.vo.Bookmarkto;
 import com.kh.Reader25.board.model.vo.Comments;
 import com.kh.Reader25.board.model.vo.Liketo;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -552,6 +553,22 @@ public class BoardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("boardMapper.updateSupport", suppoint);
 	}
+
+	public int findbookmark(SqlSessionTemplate sqlSession, HashMap<String, Object> bap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.findbookmark", bap);
+	}
+
+	public void insertMark(SqlSessionTemplate sqlSession, Bookmarkto mark) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("boardMapper.insertMark", mark);
+	}
+
+	public void deleteMark(SqlSessionTemplate sqlSession, Bookmarkto mark) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("boardMapper.deleteMark",mark);
+	}
+
 
 
 
