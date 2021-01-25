@@ -58,7 +58,7 @@
 	<insert id="insertBook">
 		insert into book
 		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, null,
-			#{author}, default)
+			#{author}, default, sysdate)
 	</insert>
 	
 	<insert id="insertsb">
