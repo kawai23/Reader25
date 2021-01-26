@@ -2706,13 +2706,24 @@ public class BoardController {
 			return mv;
 		}
 		
-		@RequestMapping("cart.bo") // ****-------------------이거랑pcs.bo
-		public String bookCart() {
-			return "bookCart";
+		@RequestMapping("cart.bo") 
+		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo) {
+			Book book = b_Service.selectBook(b.getB_no());
+			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+			Attachment at = new Attachment();
+			for(Attachment a : atList) {
+				
 			}
+			mv.addObject("book", book);
+			mv.setViewName("bookCart");
+			return mv;
+		}
 		@RequestMapping("pcs.bo") 
-		public String bookPurchase() {
-			return "bookPurchase";	
-			}
+		public ModelAndView bookPurchase(@RequestParam("b_no") int b_no, ModelAndView mv) {
+			Book book = b_Service.selectBook(b_no);
+			mv.addObject("book", book);
+			mv.setViewName("bookPurchase");
+			return mv;	
+		}
 
 	}

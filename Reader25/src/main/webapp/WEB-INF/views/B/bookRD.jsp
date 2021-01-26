@@ -526,26 +526,39 @@ section {
                   }
                }
             });
+            var user_id = '${loginUser.id}';
          $('.cart-btn').click(function(){
              var sb_v = 1;
-             var user_id = '${loginUser.id}';
-             var book_no = 1;
-             var price = 10000;
-             $.ajax({
-                url: 'insertCart.tr',
-                data:{price:price, book_no:book_no, sb_v:sb_v, user_id:user_id},
-                success: function(data){
-                	console.log(data);
-		        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
-					if(check){
-						location.href="<%=request.getContextPath()%>/cart.bo";
-					}
-                }
-             });
+             
+             var boardNo = '${board.boardNo}';
+             var book_no = '${book.b_no}';
+             var price = '${book.b_price}';
+             var amount = '${book.b_Q1}';
+             if(user_id == ''){
+            	 $('#login-modal').show();
+             	$('#login-modal .modal').show();
+             }else{
+	             $.ajax({
+	                url: 'insertCart.tr',
+	                data:{b_price:price, b_no:book_no, b_Q1:amount, user_id:user_id,boardNo:boardNo},
+	                success: function(data){
+	                	console.log(data);
+			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
+						if(check){
+							location.href="<%=request.getContextPath()%>/cart.bo";
+						}
+	                }
+	             });
+             }
          });
          
          $('.pcs-btn').click(function(){
-            location.href="<%=request.getContextPath()%>/pcs.bo";
+        	 if(user_id == ''){
+            	 $('#login-modal').show();
+             	$('#login-modal .modal').show();
+             }else{
+            	location.href="<%=request.getContextPath()%>/pcs.bo?b_no=" +${book.b_no};
+             }
          });
          </script>
       </div>
