@@ -10,13 +10,18 @@
 <style>
 	/*세션*/
 	section{
-  		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
+  		min-height: 800px;
   	}
 	/* 회원, 메뉴바 관련*/
-	#infomenu{float:left; margin-left:50px;margin-right:100px;}
+	#infomenu{
+		float:left; 
+		margin-left:50px; 
+		margin-right:100px; 
+		width: 23%;
+	}
   	/* 회원 정보 메뉴*/
   	#subBlue{
 	    width: 300px; 
@@ -65,8 +70,8 @@
 	}
 	/*토론방 리스트 관련*/
   	.outer{
-  		float:left;
-		width: 920px;
+    	float:left;
+		width: 60%;
 		min-height: 320px;
 	}
 	.outerBg {
@@ -86,6 +91,7 @@
 	.img-span:hover{cursor: pointer;}
 	#btn{width: 100px;height: 30px; background:#C95F12;}
 	#btn:hover{cursor: pointer;}
+	
 	/*검색관련*/
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none;}
