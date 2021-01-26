@@ -2586,7 +2586,6 @@ public class BoardController {
 			String userId = member.getId(); 
 			b.setUserId(userId); 
 			b.setCode(3); 
-
 			ArrayList<Attachment> atList = new ArrayList<Attachment>(); 
 			int result = 0;
 			if (uploadFile.length > 1) {
