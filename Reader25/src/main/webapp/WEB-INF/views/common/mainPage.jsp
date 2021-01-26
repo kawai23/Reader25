@@ -324,7 +324,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
-.ellipsis_b {
+.ellipsis_v {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -398,7 +398,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		<!--  실시간 현황 div 알리미 -->
 
 		<div class="bookreco">
-			<h2>이달의 책 추천 List</h2>
+			<h2>이달의 책 추천</h2>
 			<button class="b_reco" id="button_brown" onclick="clickbutton1()">일간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
@@ -417,10 +417,9 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
 			<div class = "review_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="r" items="${ review }" begin="0" end="13"
-					varStatus="status">
+				<c:forEach var="r" items="${ review }" begin="0" end="13" varStatus="status">
 						<div id="reviews<c:out value='${status.count}'/>"style = "text-align : left">
-						<p class="ellipsis_b">
+						<p class="ellipsis_v">
 							<c:out value="${ r.bTitle }" />
 						</p>
 						</div>
@@ -433,8 +432,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
 			<div class = "discuss_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="d" items="${ discuss }" begin="0" end="13"
-					varStatus="status">
+				<c:forEach var="d" items="${ discuss }" begin="0" end="13" varStatus="status">
 						<div id="discuss<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_d">
 						<c:out value="${ d.dTitle }" />
@@ -448,7 +446,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
-			<div class = "tiw_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
@@ -494,7 +492,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				})
 			}
 			$.ajax({
-				url : "recoy.do",
+				url : "recow.do",
 				success : function(data) {
 					console.log(data);
 					Reset_r();
@@ -742,7 +740,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			$('.ellipsis_r').remove();
 		}
 		function Reset_v() { // 책 리뷰
-			$('.ellipsis_b').remove();
+			$('.ellipsis_v').remove();
 		}
 		function Reset_d() { // 토론
 			$('.ellipsis_d').remove();
@@ -753,26 +751,26 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".recommend_t").append("<p class= 'ellipsis_r'>"+data[i].bTitle+"</p>");
+				$(".recommend_t").append("<p class= 'ellipsis_r' style = 'text-align : left'>"+data[i].bTitle+"</p>");
 				
 			}
 		}
 		function insert_v(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<p class= 'ellipsis_v'>"+data[i].bTitle+"</p>");
+				$(".review_t").append("<p class= 'ellipsis_v' style = 'text-align : left'>"+data[i].bTitle+"</p>");
 			}
 		}
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<p class= 'ellipsis_d'>"+data[i].dTitle+"</p>");
+				$(".discuss_t").append("<p class= 'ellipsis_d' style = 'text-align : left'>"+data[i].dTitle+"</p>");
 			}
 		}
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_t").append("<p class= 'ellipsis_t'>"+data[i].bTitle+"</p>");
+				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'>"+data[i].bTitle+"</p>");
 			}
 		}
 	</script>

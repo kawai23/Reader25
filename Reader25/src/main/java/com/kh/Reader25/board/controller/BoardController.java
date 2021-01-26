@@ -95,7 +95,8 @@ public class BoardController {
 							@RequestParam(value="uploadFile", required=false) MultipartFile[] uploadFile,
 							HttpServletRequest request) {
 		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
-		if(uploadFile.length != 0) {
+		int result = 0;
+		if(uploadFile.length != 1) {
 			b.setCode(0); //공지사항 코드
 			for(int i = 0; i < uploadFile.length; i++ ){
 				Attachment at = saveFile(uploadFile[i], request, 0);
@@ -106,8 +107,10 @@ public class BoardController {
 				}
 				atList.add(at);
 			}
+			result = bService.insertBoardAndFiles(b, atList);
+		}else {
+			result = bService.insertBoard(b);
 		}
-		int result = bService.insertBoardAndFiles(b, atList);
 
 		if(result > 0) {
 			return "redirect:notice.no";
@@ -2731,7 +2734,6 @@ public class BoardController {
 			ArrayList<Board> bList = bService.selectList(pi, code); // selectList 총 게시물을 불러오는 함수 // 총 게시물 리스트를 받아오는 객체
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
-			System.out.println(bookList.get(0));
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
 						.addObject("pi", pi)
@@ -2761,8 +2763,8 @@ public class BoardController {
 			b.setCode(3); // 해당 게시판을 식별할수있는 코드를 b에 담는다.
 
 			ArrayList<Attachment> atList = new ArrayList<Attachment>(); // ArrayList<Attachment>() ArrayList안에
-			
-			if (uploadFile.length != 0) { // 업로드파일이 !=0 (없을시)
+			int result = 0;
+			if (uploadFile.length != 1) { // 업로드파일이 !=0 (없을시)
 				b.setCode(3); // 공지사항 코드
 				for (int i = 0; i < uploadFile.length; i++) {// 업르드 파일의 수만큼 돌린다
 					Attachment at = saveFile(uploadFile[i], request, 3); // 업로드 파일 저장하기 위해 파일이름 구별하여 저장하기 위해 사용하고 saveFile에
@@ -2773,8 +2775,11 @@ public class BoardController {
 					}
 					atList.add(at); // 여러개의 파일을 담을수있는 객체를 at라는객체를 add라는 메소드를 통하여 추가로 담아준다.
 				}
+				result = bService.insertBoardAndFiles(b, atList);
+			}else {
+				result = bService.insertBoard(b);
 			}
-			int result = bService.insertBoardAndFiles(b, atList);
+			
 			int result2 = b_Service.insertBook(book);
 			
 			if (result > 0 && result2 > 0) {

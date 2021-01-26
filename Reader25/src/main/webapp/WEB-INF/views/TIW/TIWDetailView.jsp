@@ -55,6 +55,7 @@ textarea{
 	margin-left: auto; margin-right: auto; 
 	padding-left: 50px; padding-right: 50px;
 	padding-top: 100px; padding-bottom: 100px;
+	line-height:270%
 }
 /*버튼*/
 #btn1 {
@@ -94,7 +95,7 @@ textarea{
 #img_td{width:40%}
 #heart, #unheart {max-width: 100px;}
 #support, #support-d{max-width: 80px;}
-#bookmark{max-width: 70px;}
+#bookmark{max-width: 100px; min-height: 120px;}
 #myimg{
 		max-width: 300px;
 		margin-left: 5%;

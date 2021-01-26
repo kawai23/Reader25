@@ -596,15 +596,15 @@ public class BoardDAO {
 	}
 
 	public ArrayList<Board> reviewd(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.reviewd", value);
 	}
 
 	public ArrayList<Board> revieww(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.recw", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.revieww", value);
 	}
 
 	public ArrayList<Board> reviewm(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.revicwm", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.reviewm", value);
 	}
 
 	public ArrayList<Board> tiwd(SqlSessionTemplate sqlSession, int value) {

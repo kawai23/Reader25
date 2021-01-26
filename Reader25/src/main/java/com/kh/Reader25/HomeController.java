@@ -107,7 +107,6 @@ public class HomeController {
 	public void recom(HttpServletResponse response) {
 		int value = 30;
 		ArrayList<Board> result = bService.recom(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -125,7 +124,6 @@ public class HomeController {
 	public void reviewd(HttpServletResponse response) {
 		int value = 1;
 		ArrayList<Board> result = bService.reviewd(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -143,7 +141,6 @@ public class HomeController {
 	public void revieww(HttpServletResponse response) {
 		int value = 7;
 		ArrayList<Board> result = bService.revieww(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -161,7 +158,6 @@ public class HomeController {
 	public void reviewm(HttpServletResponse response) {
 		int value = 30;
 		ArrayList<Board> result = bService.reviewm(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -179,7 +175,6 @@ public class HomeController {
 	public void tiwd(HttpServletResponse response) {
 		int value = 1;
 		ArrayList<Board> result = bService.tiwd(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -197,7 +192,6 @@ public class HomeController {
 	public void tiwm(HttpServletResponse response) {
 		int value = 30;
 		ArrayList<Board> result = bService.tiwm(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -215,7 +209,6 @@ public class HomeController {
 	public void tiww(HttpServletResponse response) {
 		int value = 7;
 		ArrayList<Board> result = bService.tiww(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
