@@ -55,7 +55,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
-		
 		ArrayList<Board> review = bService.review();
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
