@@ -448,17 +448,22 @@ public class BoardDAO {
 	}
 
 	public ArrayList<Board> review(SqlSessionTemplate sqlSession) {
-
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+		System.out.println(result);
+		return result; 
+				
 	}
 
 	public ArrayList<Board> tiw(SqlSessionTemplate sqlSession) {
-
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
+		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
+		System.out.println(result);
+		return result;
 	}
 
 	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+		ArrayList<Board> result =(ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+		System.out.println(result);
+		return result;
 	}
 
 	public ArrayList<String> searchLikeList(SqlSessionTemplate sqlSession, SearchCondition sc) {
