@@ -250,6 +250,7 @@ select::-ms-expand {
 			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
 		%>
 		<div class="list-all-div">
+		<%if(bookList.size() != 0 || !bookList.isEmpty()){ %>
 			<%for(int i = 0; i < bookList.size(); i++){ %>
 				<div class="list-div">
 					<div class="img-div">
@@ -276,6 +277,11 @@ select::-ms-expand {
 					</div>
 				</div>
 				<%} %>
+			<%}else{ %>
+				<div class="list-div">
+					책방 리스트가 없습니다.
+				</div>
+			<%} %>
 		</div>
       <script>
   			$('.list-div').on('click',function(){
