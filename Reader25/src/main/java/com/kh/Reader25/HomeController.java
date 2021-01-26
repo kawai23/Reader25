@@ -138,7 +138,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping( value = "/reviewd.do")
+	@RequestMapping( value = "/revieww.do")
 	@ResponseBody
 	public void revieww(HttpServletResponse response) {
 		int value = 7;
@@ -156,7 +156,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping( value = "/reviewd.do")
+	@RequestMapping( value = "/reviewm.do")
 	@ResponseBody
 	public void reviewm(HttpServletResponse response) {
 		int value = 30;
