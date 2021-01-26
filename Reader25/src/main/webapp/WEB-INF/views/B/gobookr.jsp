@@ -15,13 +15,8 @@ section {
 	margin:auto;
 	min-width: 1000px;
 }
-.dddd{
-text-align: center;
-
-}
-
 .top-div {
-	width: 500px;
+	width: 440px;
 	height: 50px;
 	margin: auto;
 }
@@ -29,6 +24,7 @@ text-align: center;
 select {
 	font-family: inherit;
 	font-size: 15px;
+	appearance: none;
 	background: url('/Reader25/images/bookreview/arrow3.png') no-repeat 100% 50%;
 	border-radius: 0px;
 	-webkit-appearance: none;
@@ -40,7 +36,6 @@ select {
 select::-ms-expand {
 	display: none;
 }
-
 .search-div {
 	margin: 0px;
 	padding: 0px;
@@ -50,9 +45,8 @@ select::-ms-expand {
 
 .search-option {
 	border: none;
-	width: 50px;
+	width: 60px;
 }
-
 #search-input {
 	background: none;
 	border: none;
@@ -89,9 +83,7 @@ select::-ms-expand {
 
 #like-h4 {
 	border-left: 1px solid black;
-	border-right: 1px solid black;
 	padding-left: 5px;
-	padding-right: 5px;
 }
 
 .list-all-div {
@@ -109,18 +101,18 @@ select::-ms-expand {
 	display: inline-block;
 	margin-left: 1%;
 }
-
+.list-div:hover{cursor:pointer;}
 .img-div {
 	background: rgba(229, 229, 229, 1);
-	/*line-height: 180px;  이미지 가운데로 넣기 */
 	height: 200px; 
-	text-align: center;
+	width: 200px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
 }
 .img-div>img{
-	max-height:200px;
-	max-width: 200px;
-  	object-fit: cover;
-  	vertical-align: middle;
+	max-height:100%;
+	max-width: 100%;
 }
 
 .list-img {
@@ -130,8 +122,8 @@ select::-ms-expand {
 }
 
 .content-div {
-	background: white;
 	height: 100px;
+	line-height: 110%;
 }
 
 .content-ul {
@@ -145,37 +137,29 @@ select::-ms-expand {
 	margin: 0;
 	margin-top: 2px;
 	width: 100%;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
 }
 
 .title-li {
 	font-weight: bold;
 }
-
-.tag-li {
-	font-size: 13px;
-	color: rgba(245, 113, 92, 1);
-}
-
-.writer-li {
+.date-li {
 	font-size: 10px;
 }
-
-.wise-li {
-	font-size: 13px;
-}
-
+.paging{width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
 .paging-div {
-	width: 250px;
-	margin: auto;
-	margin-top: 10px;
+	display:inline-block;
+	max-width: 250px;
+	margin-top: 20px;
 }
-
-.paging-div>a, .paging-div>p{
- 	padding: 0;
+.paging-div>a, .paging-div>p {
+	padding: 0;
 	margin: 0;
 	display: inline-block;
-	width: 30px;
-	height: 30px;
+	width: 26px;
+	height: 26px;
 	color: rgba(85, 83, 83, 1);
 	font-size: 17px;
 	background: rgba(229, 229, 229, 1);
@@ -184,17 +168,15 @@ select::-ms-expand {
 	text-align: center;
 	vertical-align: middle;
 }
-
 .paging-div>a:hover {
 	font-weight: bold;
 	background: rgba(220, 220, 220, 1);
 }
 
-.paging-div>p{
+.paging-div>p {
 	background: rgba(39, 50, 56, 1);
 	color: white;
 }
-
 .write-btn {
 	position: fixed;
 	border-radius: 50%;
@@ -204,6 +186,7 @@ select::-ms-expand {
 	text-align: center;
 	top: 90%;
 	right: 12%;
+	text-decoration: underline;
 }
 
 .write-btn>img {
@@ -219,7 +202,6 @@ select::-ms-expand {
 	<%@include file="../common/menubar.jsp" %>
 	<section>
 		<br>
-		<h4 class="dddd">중고 책 거래</h4>
 		<div class="top-div">
 			<div class="search-div">
 				<select class="search-option">
@@ -240,8 +222,7 @@ select::-ms-expand {
 			</script>
 			<div class="sort-div">
 				<h4 class="sort-h4">최신순</h4>
-				<h4 class="sort-h4" id="like-h4">좋아요</h4>
-				<h4 class="sort-h4">북마크</h4>
+				<h4 class="sort-h4" id="like-h4">조회순</h4>
 			</div>
 		</div>
 		<%
@@ -256,9 +237,9 @@ select::-ms-expand {
 					<div class="img-div">
 						<%for(int j = 0; j < atList.size(); j++){ %>
 							<%if(bList.get(i).getBoardNo() == atList.get(j).getBoardNo()) {%>
-								<img class="list-img" src="resources/buploadFiles/<%=atList.get(j).getAtcName()%>">
+								<img src="resources/buploadFiles/<%=atList.get(j).getAtcName()%>">
 							<%}else{ %>
-								<img class="list-img">
+								<img>
 							<%} %>
 						<%} %>
 					</div>
@@ -267,20 +248,15 @@ select::-ms-expand {
 					<div class="content-div">
 						<ul class="content-ul">
 							<li class="title-li"><%=bList.get(i).getbTitle() %></li>
-							<li class="tag-li">
-								#<%=bookList.get(i).getAuthor() %>
-								#<%= bookList.get(i).getB_name() %>
-							</li>
-							<li class="writer-li"><%= bList.get(i).getUserId() %></li>
-							<!-- <li class="wise-li">명언</li> -->
+							<li class="book-li"><%= bookList.get(i).getB_name() %></li>
+							<li class="author-li"><%= bookList.get(i).getAuthor() %></li>
+							<li class="date-li"><%= bList.get(i).getUpdateDay() %></li>
 						</ul>
 					</div>
 				</div>
 				<%} %>
 			<%}else{ %>
-				<div class="list-div">
 					책방 리스트가 없습니다.
-				</div>
 			<%} %>
 		</div>
       <script>
@@ -289,11 +265,12 @@ select::-ms-expand {
 				var b_no = $(this).find('#b_no').val();
 				location.href = "redetail.bo?boardNo="+boardNo+"&page="+${pi.currentPage} + "&b_no=" + b_no;
 			}).mouseenter(function(){
-				$(this).css({'cursor':'pointer','box-shadow':'2px 2px 2px 2px lightgray', });
+				$(this).find('.title-li').css({'text-decoration':'underline', 'background':' rgba(220, 220, 220, 1)'});
 			}).mouseout(function(){
-				$(this).css('box-shadow','none');
+				$(this).find('.title-li').css({'text-decoration':'underline', 'background':'none'});
 			});
       </script>
+      <div class="paging">
 		<div class="paging-div">
 			<!-- 이전 -->
 			<c:if test="${ pi.currentPage <=1 }">
@@ -330,6 +307,7 @@ select::-ms-expand {
 			</c:if>
 			
 		</div>
+		</div>
 		<c:if test="${ !empty loginUser }">
 			<div class="write-btn">
 				<img src="${contextPath}/resources/images/bookreview/write.png"/>
@@ -341,5 +319,6 @@ select::-ms-expand {
 			</script>
 		</c:if>
 	</section>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

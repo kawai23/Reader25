@@ -93,12 +93,12 @@ select::-ms-expand {
 
 .list-all-div {
 	width: 70%;
+	max-width: 1000px;
 	min-height: 800px;
 	margin: auto;
 	margin-top: 20px;
 	text-align: center; /*  */
 }
-
 .list-div {
 	text-align: left;
 	width: 200px;
@@ -124,6 +124,7 @@ select::-ms-expand {
 .content-div {
 	background: white;
 	height: 100px;
+	line-height: 110%;
 }
 
 .content-ul {

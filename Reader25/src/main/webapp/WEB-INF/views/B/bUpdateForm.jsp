@@ -259,7 +259,10 @@
 		});
 	</script>
 	<section>
-		<form action="insert.bo" id="write-book" method="post" enctype="multipart/form-data" >
+		<form action="update.bo" id="write-book" method="post" enctype="multipart/form-data" >
+			<input type="hidden" name="page" value="${page }">
+			<input type="hidden" name="boardNo" value="${board.boardNo }">
+			<input type="hidden" name="b_no" value="${book.b_no }">
 			<div class="title-div">
 				<div class="title">title</div>
 				<input type="text" name="bTitle" id="bTitle" value="${board.bTitle }">

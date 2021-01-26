@@ -270,7 +270,9 @@ section {
 						nameArr[i] = atList.get(i).getAtcName();
 					%>
 						<%if(ext.equals("png") || ext.equals("jpeg") || ext.equals("jpg")){ %>
+						<div class="image-box">
 							<img src="resources/buploadFiles/<%=atList.get(i).getAtcName()%>"/>
+						</div>
 						<%} %>
 					<%} %>
 				<%} %>
