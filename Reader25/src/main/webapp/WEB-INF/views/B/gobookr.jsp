@@ -14,6 +14,7 @@ section {
 	width: 80%;
 	margin:auto;
 	min-width: 1000px;
+	border: 1px solid rgba(246, 246, 246, 1);
 }
 .top-div {
 	width: 440px;
@@ -25,7 +26,7 @@ select {
 	font-family: inherit;
 	font-size: 15px;
 	appearance: none;
-	background: url('/Reader25/images/bookreview/arrow3.png') no-repeat 100% 50%;
+	background: url('${contextPath}/resources/images/mark/arrow4.png') no-repeat 100% 60%;
 	border-radius: 0px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -45,7 +46,7 @@ select::-ms-expand {
 
 .search-option {
 	border: none;
-	width: 60px;
+	width: 70px;
 }
 #search-input {
 	background: none;
@@ -87,7 +88,8 @@ select::-ms-expand {
 }
 
 .list-all-div {
-	width: 90%;
+	width: 70%;
+	max-width: 1000px;
 	min-height: 800px;
 	margin: auto;
 	margin-top: 20px;
@@ -204,22 +206,49 @@ select::-ms-expand {
 		<br>
 		<div class="top-div">
 			<div class="search-div">
-				<select class="search-option">
-					<option selected="selected">title</option>
-					<option>author</option>
-					<option>writer</option>
+				<select class="search-option" name="searchCondition" id="searchCondition">
+					<option selected="selected" value="book">title</option>
+					<option value="author">author</option>
+					<option value="category">분류</option>
 				</select>
 				<input type="text" id="search-input">
 				<span class="img-span">
 					<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
 				</span>
 			</div>
-			
+			<!-- 자동완성 -->
+			<script src="//code.jquery.com/jquery.min.js"></script>
+			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 			<script>
 				$('#search-icon').click(function(){
-					location.href="<%=request.getContextPath()%>/search";
-				});				
+					search();
+				});
+				$('#search-input').keydown(function(key){
+					if(key.keyCode == 13){
+						search();
+					}
+				});	
+				function search(){
+					var searchCondition = $('#searchCondition').val();
+					var searchValue = $('#search-input').val();
+					location.href="<%=request.getContextPath()%>/search.bo?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
+				}
+				$(function(){
+					var sc = '';
+					$('#searchCondition').change(function(){
+						sc = $(this).val();
+					});
+					var category = ['총류','기술과학','역사','문학','자연과학','철학','종교','사회과학','예술','언어'];
+					$('#search-input').keyup(function(){
+						if(sc == 'category'){
+							$('#search-input').autocomplete({
+								source : category
+							});
+						}
+					});
+				});
 			</script>
+			
 			<div class="sort-div">
 				<h4 class="sort-h4">최신순</h4>
 				<h4 class="sort-h4" id="like-h4">조회순</h4>

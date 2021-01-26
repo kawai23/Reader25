@@ -9,10 +9,11 @@ public class Book {
  private String b_Q3;
  private String author;
  private String b_Status;
+ private int boardNo;
  
  public Book(){} 
 public Book(int b_no, String b_name, int b_price, String b_Q1, String b_Q2, String b_Q3, String author,
-		String b_Status) {
+		String b_Status, int boardNo) {
 	super();
 	this.b_no = b_no;
 	this.b_name = b_name;
@@ -22,6 +23,7 @@ public Book(int b_no, String b_name, int b_price, String b_Q1, String b_Q2, Stri
 	this.b_Q3 = b_Q3;
 	this.author = author;
 	this.b_Status = b_Status;
+	this.boardNo = boardNo;
 }
 
 public Book(int b_no, String b_name) {
@@ -104,10 +106,16 @@ public void setB_Status(String b_Status) {
 	this.b_Status = b_Status;
 }
 
+public int getBoardNo() {
+	return boardNo;
+}
+public void setBoardNo(int boardNo) {
+	this.boardNo = boardNo;
+}
 @Override
 public String toString() {
 	return "Book [b_no=" + b_no + ", b_name=" + b_name + ", b_price=" + b_price + ", b_Q1=" + b_Q1 + ", b_Q2=" + b_Q2
-			+ ", b_Q3=" + b_Q3 + ", author=" + author + ", b_Status=" + b_Status + "]";
+			+ ", b_Q3=" + b_Q3 + ", author=" + author + ", b_Status=" + b_Status +", boardNo="+boardNo+ "]";
 }
  
  

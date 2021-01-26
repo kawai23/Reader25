@@ -2,6 +2,9 @@ package com.kh.Reader25.book.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.Reader25.board.model.service.BoardService;
+import com.kh.Reader25.board.model.vo.Attachment;
+import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
@@ -22,6 +29,8 @@ import com.kh.Reader25.common.Pagination;
 public class BookController {
 	@Autowired
 	private BookService b_Service;
+	@Autowired
+	private BoardService bService;
 	
 	@RequestMapping("booktrade.tr")
 	public ModelAndView bookTradeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
@@ -76,6 +85,39 @@ public class BookController {
 		}else {
 			throw new BookException("관리자 창에서 결제 내역 조회에 실패하였습니다.");
 		}
+	}
+	
+	//book찾기
+	@RequestMapping("search.bo")
+	public ModelAndView searchBook(ModelAndView mv,@ModelAttribute SearchReview sr,
+									HttpServletRequest request,
+									HttpServletResponse response ) {
+		String condition = request.getParameter("searchCondition");
+		String value = request.getParameter("searchValue");
+		
+		int searchCate = 0;
+		if(condition.equals("author")){
+			sr.setAuthor(value+"#작가");
+			searchCate = 2;
+		}else if(condition.equals("book")) {
+			sr.setBook(value +"#책제목");
+			searchCate = 1;
+		}else {
+			sr.setCate(value);
+			searchCate = 3;
+		}
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int listCount = bService.getSearchReviewListCount(sr);
+		
+		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+		
+		ArrayList<Board> bList = bService.selectSearchReviewList(sr, pi);
+		ArrayList<Attachment> atList = bService.selectAttachmentTList(2);
+		
+		return mv;
 	}
 }
 
