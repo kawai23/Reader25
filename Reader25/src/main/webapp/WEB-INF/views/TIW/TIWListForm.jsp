@@ -49,6 +49,19 @@ input, select{
  a{
 	text-decoration: none;
 }
+a:link{
+    color :black;
+    text-decoration: none;
+}
+
+a:visited{
+    color: seagreen;
+}
+
+a:hover{
+    color: #F7B45E;
+    text-decoration: underline;
+}
 .txt_TIW{
 	font-size:50px;
 	font-family: 카페24 아네모네;
