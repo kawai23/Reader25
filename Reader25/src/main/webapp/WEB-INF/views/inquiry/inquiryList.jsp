@@ -101,6 +101,9 @@
 		color: white;
 		font-family: 카페24 아네모네에어;
 	}	
+	 a{
+	text-decoration: none;
+}
 		
 </style>
 </head>

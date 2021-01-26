@@ -51,6 +51,9 @@ input, select{
 	font-family: 카페24 아네모네;
 	text-align: center;
 }
+ a{
+	text-decoration: none;
+}
 #up{color:red;}
 /*버튼*/
 .btn1 {
