@@ -71,7 +71,7 @@ public class HomeController {
 	@RequestMapping( value = "/recod.do")
 	@ResponseBody
 	public void recod(HttpServletResponse response) {
-		int value = 30;
+		int value = 1;
 		ArrayList<Board> result = bService.recod(value);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -88,7 +88,7 @@ public class HomeController {
 	@RequestMapping( value = "/recow.do")
 	@ResponseBody
 	public void recow(HttpServletResponse response) {
-		int value = 30;
+		int value = 7;
 		ArrayList<Board> result = bService.recow(value);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -107,6 +107,114 @@ public class HomeController {
 	public void recom(HttpServletResponse response) {
 		int value = 30;
 		ArrayList<Board> result = bService.recom(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/reviewd.do")
+	@ResponseBody
+	public void reviewd(HttpServletResponse response) {
+		int value = 1;
+		ArrayList<Board> result = bService.reviewd(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/revieww.do")
+	@ResponseBody
+	public void revieww(HttpServletResponse response) {
+		int value = 7;
+		ArrayList<Board> result = bService.revieww(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/reviewm.do")
+	@ResponseBody
+	public void reviewm(HttpServletResponse response) {
+		int value = 30;
+		ArrayList<Board> result = bService.reviewm(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/tiwd.do")
+	@ResponseBody
+	public void tiwd(HttpServletResponse response) {
+		int value = 1;
+		ArrayList<Board> result = bService.tiwd(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/tiwm.do")
+	@ResponseBody
+	public void tiwm(HttpServletResponse response) {
+		int value = 30;
+		ArrayList<Board> result = bService.tiwm(value);
+		System.out.println(result);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/tiww.do")
+	@ResponseBody
+	public void tiww(HttpServletResponse response) {
+		int value = 7;
+		ArrayList<Board> result = bService.tiww(value);
 		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
