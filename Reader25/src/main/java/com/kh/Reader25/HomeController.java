@@ -60,7 +60,7 @@ public class HomeController {
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
-		System.out.println(review);
+		System.out.println(tiw);
 		model.addAttribute("review", review);
 		model.addAttribute("discuss", discuss);
 		model.addAttribute("tiw", tiw);
