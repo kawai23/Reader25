@@ -127,5 +127,16 @@ public class DiscussServiceImpl  implements DiscussService{
 	public ArrayList<Discuss> selectAllList() {
 		return dDAO.selectAllList(sqlSession);
 	}
-
+	@Override
+	public ArrayList<Discuss> discussd(int value) {
+		return dDAO.discussd(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Discuss> discussw(int value) {
+		return dDAO.discussw(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Discuss> discussm(int value) {
+		return dDAO.discussm(sqlSession, value);
+	}
 }
