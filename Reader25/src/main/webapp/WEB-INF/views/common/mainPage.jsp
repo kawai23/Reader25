@@ -446,7 +446,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
-			<div class = "tiw_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
@@ -770,7 +770,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_t").append("<p class= 'ellipsis_t' style='text-align : left'>"+data[i].bTitle+"</p>");
+				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'>"+data[i].bTitle+"</p>");
 			}
 		}
 	</script>
