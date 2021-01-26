@@ -466,8 +466,10 @@ section {
 		         <span class="info" id="sort">${book.author }</span> <br>
 		         <p class="tag">거래자</p>
 		         <span class="info" id="sort">${board.userId }</span>
+		         <p class="tag">수량</p>
+		         <span class="info" id="sort">${book.b_Q1 }</span>
 		         <p class="tag">금액</p>
-		         <span class="info" id="sort">${book.b_Q1 }</span> 
+		         <span class="info" id="sort">${book.b_price }</span> 
 	         </div>
       </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
@@ -532,15 +534,15 @@ section {
              
              var boardNo = '${board.boardNo}';
              var book_no = '${book.b_no}';
-             var price = '${book.b_price}';
-             var amount = '${book.b_Q1}';
+             var price = ${book.b_price};
+             var amount = ${book.b_Q1};
              if(user_id == ''){
             	 $('#login-modal').show();
              	$('#login-modal .modal').show();
              }else{
 	             $.ajax({
 	                url: 'insertCart.tr',
-	                data:{b_price:price, b_no:book_no, b_Q1:amount, user_id:user_id,boardNo:boardNo},
+	                data:{price:price, book_no:book_no, sb_v:amount, user_id:user_id},
 	                success: function(data){
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");

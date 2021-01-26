@@ -871,26 +871,26 @@
 	</select>
 	<select id = "selectTitleRD" resultMap="boardResultSet">
 	<![CDATA[
-		select b_title
-		from board
-		where code = '2' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
-		order by b_count desc
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-1 AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 		<select id = "selectTitleTD" resultMap="boardResultSet">
 	<![CDATA[
-		select b_title
-		from board
-		where code = '5' AND (enroll_day between trunc(sysdate) - 1 and trunc(sysdate +1)) AND ROWNUM <= 17
-		order by b_count desc
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE- 1 AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id = "selectTitleVD" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - 1 AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-1 AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	
@@ -924,74 +924,74 @@
 	</insert>
 	<select id="recd" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+	select B_TITLE 
+	from BOARD 
+	WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+	ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="recw" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+	    select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="recm" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="reviewd" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="revieww" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="reviewm" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="tiwd" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="tiww" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	<select id="tiwm" resultMap="boardResultSet">
 	<![CDATA[
-        SELECT B_TITLE
-        FROM BOARD
-        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
-        ORDER BY B_COUNT DESC
+        select B_TITLE 
+		from BOARD 
+		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 17
+		ORDER BY B_COUNT DESC
 	]]>
 	</select>
 	

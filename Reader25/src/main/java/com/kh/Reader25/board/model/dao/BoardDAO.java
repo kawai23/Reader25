@@ -448,17 +448,22 @@ public class BoardDAO {
 	}
 
 	public ArrayList<Board> review(SqlSessionTemplate sqlSession) {
-
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
+		System.out.println(result);
+		return result; 
+				
 	}
 
 	public ArrayList<Board> tiw(SqlSessionTemplate sqlSession) {
-
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
+		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
+		System.out.println(result);
+		return result;
 	}
 
 	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+		ArrayList<Board> result =(ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
+		System.out.println(result);
+		return result;
 	}
 
 	public ArrayList<String> searchLikeList(SqlSessionTemplate sqlSession, SearchCondition sc) {
@@ -578,15 +583,15 @@ public class BoardDAO {
 	}
 
 	public ArrayList<Board> reviewd(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.reviewd", value);
 	}
 
 	public ArrayList<Board> revieww(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.recw", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.revieww", value);
 	}
 
 	public ArrayList<Board> reviewm(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("boardMapper.revicwm", value);
+		return (ArrayList)sqlSession.selectList("boardMapper.reviewm", value);
 	}
 
 	public ArrayList<Board> tiwd(SqlSessionTemplate sqlSession, int value) {
