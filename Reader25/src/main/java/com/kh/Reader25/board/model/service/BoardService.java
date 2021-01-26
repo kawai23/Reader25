@@ -232,6 +232,18 @@ public interface BoardService {
 
 	ArrayList<Board> recom(int value);
 
+	ArrayList<Board> reviewd(int value);
+
+	ArrayList<Board> revieww(int value);
+
+	ArrayList<Board> reviewm(int value);
+
+	ArrayList<Board> tiww(int value);
+
+	ArrayList<Board> tiwm(int value);
+
+	ArrayList<Board> tiwd(int value);
+
 
 
 

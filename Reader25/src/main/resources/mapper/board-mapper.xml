@@ -930,6 +930,70 @@
         ORDER BY B_COUNT DESC
 	]]>
 	</select>
+	<select id="recw" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="recm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="reviewd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="revieww" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="reviewm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiwd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiww" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiwm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
 	
 	<select id="topWriterList" resultMap="TWITopWriterResultSet">
 		<![CDATA[
