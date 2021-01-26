@@ -55,10 +55,13 @@
 	/*메뉴바 관련*/
 	.subul {
 		list-style-image: url( "<%=request.getContextPath() %>/resources/images/icon/li_file.png" );
-		
 	}
-	.subli {
-		max-width: 300px;
+	.subli > span{
+		display:inline-block; 
+		width:300px; 
+		overflow:hidden; 
+		text-overflow:ellipsis; 
+		white-space:nowrap;
 	}
 	/*토론방 리스트 관련*/
   	.outer{
@@ -105,12 +108,7 @@
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
-	
-	<c:forEach var = "d" items="${ discuss }" begin = "0" end = "13" varStatus="status">
-               <div id="discuss<c:out value="${status.count}"/>"style = "width : 100%">
-               <p class = "ellipsis"><c:out value = "${ d.dTitle }"/></p>
-               </div>
-    </c:forEach>
+
 	<br><br>
 	<section>
 		<div id="infomenu">
@@ -142,8 +140,8 @@
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
 						<c:if test="${d.dStatus == 'Y'}">
-						<c:set var="count" value="${count + 1}"/>
-							<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
+							<c:set var="count" value="${count + 1}"/>
+							<li class="subli"><input type="hidden" value="${ d.dNo }"><span>${d.dTitle}</span></li>
 						</c:if>
 					</c:if>
 					</c:forEach>
@@ -158,7 +156,7 @@
 					<c:if test="${count < 5 }">
 						<c:if test="${d.dStatus == 'N'}">
 						<c:set var="count" value="${count + 1}"/>
-							<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
+							<li class="subli"><input type="hidden" value="${ d.dNo }"><span>${d.dTitle}</span></li>
 						</c:if>
 					</c:if>
 					</c:forEach>
@@ -174,7 +172,7 @@
 						<c:if test="${count < 5 }">
 							<c:if test="${(d.dWriter == loginUser.id) && d.dStatus == 'Y'}">
 								<c:set var="count" value="${count + 1}"/>
-								<li class="subli"><input type="hidden" value="${ d.dNo }">${d.dTitle}</li>
+								<li class="subli"><input type="hidden" value="${ d.dNo }"><span>${d.dTitle}</span></li>
 							</c:if>
 						</c:if>
 						</c:forEach>

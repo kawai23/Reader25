@@ -121,11 +121,12 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr >
-								<td><input type="checkbox"  name="mInfo" value="${ b.likeNo }" ></td>
+								<td><input type="checkbox"  name="mInfo" value="${ b.bookNo }" ></td>
 								
 								
 								<td class="contentTR">${ b.boardNo }</td>
 								<td style="display: none;" class="contentTR">${ b.code }</td>
+								
 								<td class="contentTR">${ b.bTitle }</td>
 								
 								<td class="contentTR">${ b.userId }</td>
@@ -198,72 +199,7 @@
 			
 				
 			
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-		<script type="text/javascript">
-				
-				
-	
-				
-				$(function(){
-					
-
-
-					$('#seachDate').keyup(function(){
-						var searchCondition =  $.trim($("#Search1").text());
-						var tTitle = $.trim($(this).val());				
-						
-						if(tTitle.length>0){
-							
-							$.ajax({
-								type: 'POST',
-								url: "searchComplete.me",
-								data: {tTitle:tTitle,searchCondition:searchCondition},
-								dataType: 'json',
-								success:function(data){		
-									console.log(data);
-									
-									
-									$("#seachDate").autocomplete({ 
-										source : data,	
-										select : function(event, ui) {	
-											console.log(ui.item);
-										},
-										focus : function(event, ui) {	
-											return false;
-										},
-										minLength: 1,
-										autoFocus: true, 
-									
-										delay: 300,	
-
-										
-										close : function(event){	
-											console.log(event);
-										}
-									});
-							
-
-
-								}
-							});
-							
-						}
-						
-					});
-
-
-
-	})
-	
-	
-	
-
-
-				
-				
-				</script>
 				
 				
 				
@@ -275,7 +211,7 @@
 		$(function(){
 			
 
-				$('#like').addClass('active');
+				$('#bm').addClass('active');
 				
 
 			
@@ -362,7 +298,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myLikeList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
+ 		    	location.href='myBookMarkList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    

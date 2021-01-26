@@ -120,15 +120,15 @@
 		</div>
 		<c:if test="${d.dStatus == 'Y' }">
 		<select class="wid" id="dis">
-			<option selected value="P">찬성</option>
-			<option value="N">중립</option>
+			<option value="P">찬성</option>
+			<option selected value="N">중립</option>
 			<option value="C">반대</option>
 		</select><br>
 			<c:if test="${ !empty loginUser }">
 				<input type="text" class="wid" id="id" readonly value="${loginUser.id }"><br>
 			</c:if>
 			<c:if test="${ empty loginUser }">
-				<input type="text" class="wid" id="id" placeholder="아이디을 작성하세요"><br>
+				<input type="text" class="wid" id="id" readonly value="로그인이 필요한 기능입니다."><br>
 			</c:if>
 			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
 			<button class="btn" id="btn3">작성하기</button>
@@ -159,14 +159,18 @@
 				var content = $('#area1').val();
 				var dNo = ${d.dNo};
 				var dis = $('#dis option:selected').val();
-				$.ajax({
-					url: 'addReply.di',
-					data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
-					success: function(data){
-						$('#area1').val('');
-						getRList();
-					}
-				});
+				if(${empty loginUser}){
+					alert("로그인이 필요한 기능입니다.");
+				} else{
+					$.ajax({
+						url: 'addReply.di',
+						data: {rContent:content, rWriter:id, rWhether:dis, dNo:dNo},
+						success: function(data){
+							$('#area1').val('');
+							getRList();
+						}
+					});
+				}
 			});
 			// 댓글 리스트 불러오기
 			function getRList(){

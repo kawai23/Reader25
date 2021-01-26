@@ -245,6 +245,6 @@
 	<select id="selectAllList" resultMap="discussResultSet">
 		SELECT *
 		FROM DISCUSS
-		ORDER BY D_CREATE
+		ORDER BY D_CREATE DESC
 	</select>
 </mapper>

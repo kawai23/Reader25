@@ -644,6 +644,18 @@ public class BoardServiceImpl implements BoardService {
 		bDAO.deleteMark(sqlSession, mark);
 	}
 
+	@Override
+	public int MyBookMarkCount(SearchCondition sc) {
+		
+		return bDAO.MyBookMarkCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi) {
+		
+		return bDAO.BookMarkList(sqlSession, sc,pi);
+	}
+
 	
 	
 

@@ -569,6 +569,22 @@ public class BoardDAO {
 		sqlSession.delete("boardMapper.deleteMark",mark);
 	}
 
+	public int MyBookMarkCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		return sqlSession.selectOne("boardMapper.MyBookMarkCount", sc);
+	}
+
+	public ArrayList<Bookmarkto> BookMarkList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.BookMarkList",sc , rowBounds);
+	}
+
 
 
 

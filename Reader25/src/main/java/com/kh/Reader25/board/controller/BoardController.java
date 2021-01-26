@@ -183,12 +183,13 @@ public class BoardController {
 	}
 	//(7)삭제하기
 	@RequestMapping("delete.no")
-	public String deleteNotice(@RequestParam("boardNo") int boardNo) {
+	public String deleteNotice(@RequestParam("boardNo") int boardNo,@RequestParam("b_no") int b_no) {
 		int result = bService.deleteBoardAndFile(boardNo);
-		if(result > 0) {
+		int result2 = b_Service.deleteBook(b_no);
+		if(result > 0 && result2 >  0) {
 			return "redirect:notice.no";
 		}else {
-			throw new BoardException("공지사항 게시물 삭제에 실패하였습니다.");
+			throw new BoardException("책발 게시물 삭제에 실패하였습니다.");
 		}
 	}
 	// 문의사항 = 1----------------------------------------------------
@@ -2174,6 +2175,107 @@ public class BoardController {
 	
 	
 	
+	@RequestMapping("myBookMarkList.me")
+	public ModelAndView myBookMarkList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+		// 마이페이지에서 검색
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			if (condition.equals("Title")) {
+				
+				sc.setTitle(value);
+			}else if (condition.equals("내용")) {
+				
+				sc.setContent(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = bService.MyBookMarkCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<Bookmarkto> list = bService.BookMarkList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+		
+			
+			
+			
+			mv.setViewName("myBookmarkList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BoardException("마이페이지 좋아요 리스트 실패");
+			
+		}
+
+		
+
+		return mv;
+
+	}
+	
+	
 	@RequestMapping("myLikeList.me")
 	public ModelAndView myLikeList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 		// 마이페이지에서 검색
@@ -2574,9 +2676,6 @@ public class BoardController {
 			/* bService.selectAttachmentTList(code); */
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
 			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
-			System.out.println(atList);
-			System.out.println(bookList);
-			System.out.println(bList.size());
 			if (bList != null) {
 				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
 						.addObject("pi", pi)
@@ -2630,15 +2729,15 @@ public class BoardController {
 		}
 
 		@RequestMapping("redetail.bo")
-		public ModelAndView bookroomD(@RequestParam("boardNo") int boardNo,
+		public ModelAndView bookroomD(@RequestParam("boardNo") int boardNo,@RequestParam("b_no") int b_no,
 				@RequestParam("page") int page, ModelAndView mv) {
 			Board board = bService.selectBoard(boardNo);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
-			
-			if (board != null) {
-				
+			Book book = b_Service.selectBook(b_no);
+			if (board != null && book != null) {
 
 				mv.addObject("board", board);
+				mv.addObject("book", book);
 				mv.addObject("atlist", atlist);
 				mv.addObject("page", page);
 				mv.setViewName("bookRD");// 북 상세페이지
@@ -2680,48 +2779,19 @@ public class BoardController {
 		}
 		@RequestMapping("modify.bo")
 		public ModelAndView bookReviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
-										ModelAndView mv) {
+										ModelAndView mv, @RequestParam("b_no") int b_no) {
 			Board board = bService.selectBoardExceptAddCount(boardNo);
 			/* Attachment at = bService.selectAttachment(boardNo); */
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
-			if(board != null) {
-				/*
-				 * String booktitle =
-				 * board.getbContent().substring(0,(board.getbContent()).indexOf("#책제목"));
-				 * String exbook =
-				 * board.getbContent().substring((board.getbContent()).indexOf("#책제목")+4);
-				 * String author = exbook.substring(0,exbook.indexOf("#작가")); String exauthor =
-				 * exbook.substring(exbook.indexOf("#작가") + 3); String content =
-				 * exauthor.substring(exauthor.indexOf("#명언") + 3);
-				 * 
-				 * board.setbContent(content);
-				 * 
-				 * mv.addObject("board", board) .addObject("page", page) .addObject("booktitle",
-				 * booktitle) .addObject("author", author) .addObject("at", at)
-				 * .setViewName("bUpdateForm");
-				 */
-				
-				
-				
-				String booktitle = board.getbContent().substring(0, (board.getbContent()).indexOf("#책제목"));
-				String exbook = board.getbContent().substring((board.getbContent()).indexOf("#책제목") + 4);
-				String author = exbook.substring(0, exbook.indexOf("#작가"));
-				String exauthor = exbook.substring(exbook.indexOf("#작가") + 3);
-				String content = exauthor.substring(exauthor.indexOf("#명언") + 3);
-
-				board.setbContent(content);
-
+			Book book = b_Service.selectBook(b_no);
+			if(board != null && book != null) {
 				mv.addObject("board", board);
+				mv.addObject("book", book);
 				mv.addObject("atlist", atlist);
-				mv.addObject("booktitle", booktitle);
-				mv.addObject("author", author);
 				mv.addObject("page", page);
 				mv.setViewName("bUpdateForm");
-				
-				
-
 			}else {
-				throw new BoardException("리뷰 게시판 수정하기에 값을 불러오는데 실패하였습니다.");
+				throw new BoardException("책방 게시판 수정하기에 값을 불러오는데 실패하였습니다.");
 			}
 			
 			return mv;
@@ -2729,23 +2799,19 @@ public class BoardController {
 		// 수정하기
 		@RequestMapping("update.bo")
 		public ModelAndView bookRD(@RequestParam("page") int page, @ModelAttribute Board b,
-										@RequestParam("reloadFile") MultipartFile[] reloadFile,
-										HttpServletRequest request, @ModelAttribute  Attachment at,
-										ModelAndView mv,
-										@RequestParam("booktitle") String booktitle,
-										@RequestParam("author") String author,
-										@RequestParam("wise") String wise) {
-			
-			String contentAddTag =  booktitle + "#책제목"  + author + "#작가" + b.getbContent();//b.getbContent() 이거 뭐죠?
-			b.setbContent(contentAddTag);
-			
-			if (reloadFile.length != 0) { // 업로드파일이 !=0 (없을시)
-				b.setCode(3); // 공지사항 코드
-				for (int i = 0; i < reloadFile.length; i++) {// 업르드 파일의 수만큼 돌린다
-					/*Attachment at = saveFile(uploadFile[i], request, 3);*/ // 업로드 파일 저장하기 위해 파일이름 구별하여 저장하기 위해 사용하고 saveFile에
-																			// uploadFile[i], request, 3 의 값을 받아와 Attachment
-																			// at 에 담아준다.
-					ArrayList<Attachment> atList = new ArrayList<Attachment>();
+										@RequestParam(value="reloadFile", required=false) MultipartFile[] reloadFile,
+										HttpServletRequest request, @RequestParam("nameArr") String[] nameArr,
+										@ModelAttribute Book book,
+										ModelAndView mv) {
+			ArrayList<Attachment> atList = new ArrayList<Attachment>();
+			int result = 0;
+			int result2 = 0;
+			if (reloadFile.length != 0) { 
+				for(String str: nameArr) {
+					deleteFile(str, request);
+				}
+				for (int i = 0; i < reloadFile.length; i++) {
+					Attachment at = saveFile(reloadFile[i], request, 3);
 					if (i == reloadFile.length -1) {
 						at.setAtcLevel(0); // setAtcLevel() 썸내일 을 설정해주는 메소드
 					} else {
@@ -2753,21 +2819,24 @@ public class BoardController {
 					}
 					atList.add(at); // 여러개의 파일을 담을수있는 객체를 at라는객체를 add라는 메소드를 통하여 추가로 담아준다.
 				}
+				result = bService.updateBoardAnFiles(b, atList);
+			}else {
+				result = bService.updateBoard(b);
 			}
-			int result = bService.updateBoardAndFile(b,at);
-			
-			if(result > 0) {
+			result2 = b_Service.updateBook(book);
+			if(result > 0 && result2 > 0) {
 				Board board = bService.selectBoard(b.getBoardNo());
-				Attachment attach = bService.selectAttachment(b.getBoardNo());// 이거 여러
+				Book books = b_Service.selectBook(book.getB_no());
+				ArrayList<Attachment> atlist = bService.selectAttachmentList(b.getBoardNo());
 				mv.addObject("board", board)
 				  .addObject("boardNo", b.getBoardNo())
+				  .addObject("book", books)
 				  .addObject("page", page)
-				  .addObject("at", attach)
+				  .addObject("atlist", atlist)
 				  .setViewName("redirect:redetail.bo");
 			}else {
-				throw new BoardException("리뷰 게시물 수정에 실패하였습니다.");
+				throw new BoardException("책방 게시물 수정에 실패하였습니다.");
 			}
-			
 			return mv;
 		}
 		

@@ -42,30 +42,33 @@
 		border:  1px solid rgba(235, 235, 235, 1);
 	}
 	.content{
+		min-width: 1000px;
+		width: 80%;
 		margin-top: 30px;
+		margin:auto;
 	}
+	#input-file{margin-left: 20%;margin-top: 20px;}
 	.file-div{
 		min-width: 300px;
 		margin:auto;
 	}
 	.file-upload{
-		height: 250px;
+		min-height: 250px;
 		line-height:250px;
 		margin-top: 20px;
 		text-align: center;
-		width: 80%;
+		width: 60%;
 		margin:auto;
 	} 
 	.image-box {
 		border: 3px solid rgba(246, 246, 246, 1);
 		display: inline-block;
 		text-align: center;
-		width: 200px;
-		height: 200px;
+		min-width: 200px;
+		min-height: 200px;
 		line-height: 200px;
 		background: rgba(235, 235, 235, 1);
 	}
-	
 	.image-box img {
 		display:inline-block;
 		max-height: 200px;
@@ -79,17 +82,20 @@
 	.file-upload:hover{
 		background: lightgray;
 	}
-	.tag{display:inline; color:rgba(245, 113, 92, 1);}
-	.bookInfo{
-		background: none;
- 		border: none; 
-	}
-	.tag-div{
-		height: 40px; 
-		width: 400px; 
+	.book-box{
+		min-height: 130px; 
 		margin:auto;
 		margin-top: 10px;
+		margin-bottom: 10px;
 	}
+	.book-table{
+		width: 60%; margin:auto;
+		border-left: 2px solid rgb(200, 200, 200);
+		padding-left: 12px;
+	}
+	.book-table tr{ height: 40px; margin-top: 10px;}
+	.book-table td{ width: 100px;}
+	.book-input{width: 400px;height: 30px; border: none;}
 	.wise-div{
 		width: 300px;
 		margin: auto;
@@ -170,7 +176,6 @@
 		position:relative;
 		top: 10px;
 	}
-	*{border: 1px solid pink;}
 </style>
 </head>
 <body>
@@ -182,7 +187,7 @@
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 				<p>제목을 입력해 주세요</p>
 				<br>
-				<button class="modal-close" value="Close">Close</button>
+				<button class="modal-close" value="bTitle">Close</button>
 			</div>
 		</div>
 	</div>
@@ -192,26 +197,58 @@
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 				<p>내용을 입력해 주세요</p>
 				<br>
-				<button class="modal-close" value="Close">Close</button>
+				<button class="modal-close" value="submit-btn">Close</button>
 			</div>
 		</div>
 	</div>
-	<div class="modal-back" id="book-modal">
+		<div class="modal-back" id="b-title-modal">
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-				<p>책 제목, 작가, 명언을 입력하지 않으십니까??</p>
+				<p>책 제목을 입력해 주세요</p>
 				<br>
-				<button class="modal-accept" value="accept">네</button>
-				<button class="modal-close" value="Close">아니오</button>
+				<button class="modal-close" value="booktitle">Close</button>
+			</div>
+		</div>
+	</div>
+		<div class="modal-back" id="b-author-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>작가를 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="author">Close</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="b-publisher-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>출판사를 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="publisher">Close</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="b-price-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>금액를 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="price">Close</button>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
+				var num = $(this).val();
+				console.log(num);
 				$('.modal').hide();
 				$('.modal-back').hide();
+				document.getElementById(num).focus();
 			});
 			$('.modal-accept').click(function(){
 				$('#write-book').submit();
@@ -224,19 +261,36 @@
 				<div class="title">title</div>
 				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
 			</div>
-			<div class="content">
-				<div class="file-div">
-					<input type="file" id="input-file" name="uploadFile" onchange="loadImg(this);" accept="image/jpg, image/jpeg, image/png" multiple="multiple">
-					<div class="file-upload">
+				<div class="content">
+					<div class="file-div">
+						<input type="file" id="input-file" name="uploadFile" onchange="loadImg(this);" accept="image/jpg, image/jpeg, image/png" multiple="multiple">
+						<div class="file-upload">
 					</div>
 				</div>
 				
-				<div class="tag-div">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="b_name" id="booktitle" placeholder="책제목">
-					<p class="tag">#</p><input type="text" class="bookInfo" name="author" id="author" placeholder="작가">
-					<br>
-					<p class="tag">#</p><input type="text" class="bookAmount" name="b_price" id="amount" placeholder="금액">
-					<p class="tag">#</p><input type="text" class="bookAmount" name="b_Q1"  placeholder="수량">
+				<div class="book-box">
+					<table class="book-table">
+					<tr>
+						<td>책 제목 </td>
+						<td><input type="text" class="book-input" name="b_name" id="booktitle" placeholder="책제목을 입력하세요"></td>
+					</tr>
+					<tr>
+						<td>작가</td>
+						<td><input type="text" class="book-input" name="author" id="author" placeholder="작가를 입력하세요"></td>
+					</tr>
+					<tr>
+						<td>출판사</td>
+						<td><input type="text" class="book-input" name="b_Q2" id="publisher" placeholder="출판사를 입력하세요"></td>
+					</tr>
+					<tr>
+						<td>금액</td>
+						<td><input type="number" class="book-input" name="b_price" id="price" placeholder="금액을 입력하세요"></td>
+					</tr>
+					<tr>
+						<td>수량</td>
+						<td><input type="number" class="book-input" name="b_Q1" id="amount" value="1"></td>
+					</tr>
+					</table>
 				</div>
 				<div class="content-edit" style="text-align:center;">
 					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
@@ -262,24 +316,40 @@
 				content = $('#smart_edit').val();
 				booktitle = $('#booktitle').val();
 				author = $('#author').val();
+				publisher = $('#publisher').val();
 				amount = $('#amount').val();
-				/* wise = $('#wise').val(); */
+				price = $('#price').val();
+				
 				if(title == ''){
 					event.preventDefault();
 					this.blur();
 					$('#t-modal').show();
 					$('#t-modal .modal').show();
-					return false;
 				}else if(content == '<p><br></p>'){
 					event.preventDefault();
 					this.blur();
 					$('#c-modal').show();
 					$('#c-modal .modal').show();
-				}else if(booktitle == ''|| wise == '' || author == ''){
+				}else if(booktitle == ''){
 					event.preventDefault();
 					this.blur();
-					$('#book-modal').show();
-					$('#book-modal .modal').show();
+					$('#b-title-modal').show();
+					$('#b-title-modal .modal').show();
+				}else if(author == ''){
+					event.preventDefault();
+					this.blur();
+					$('#b-author-modal').show();
+					$('#b-author-modal .modal').show();
+				}else if(publisher == ''){
+					event.preventDefault();
+					this.blur();
+					$('#b-publisher-modal').show();
+					$('#b-publisher-modal .modal').show();
+				}else if(price == ''){
+					event.preventDefault();
+					this.blur();
+					$('#b-price-modal').show();
+					$('#b-price-modal .modal').show();
 				}else{
 					$('#write-book').submit();
 				}

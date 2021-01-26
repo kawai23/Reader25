@@ -310,6 +310,84 @@
     </delete>
     
     
+    
+    
+    
+    <select id="MyBookMarkCount"   resultType="_int">
+ 	
+ 	
+ 		select count(*)
+		from bookmark  LEFT OUTER join board using(BOARD_NO) 
+		where  b_status ='Y' 		
+		
+		<if test="mId != null">
+ 		
+ 			and bookmark.user_id = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 	</select>
+    
+    <select id="BookMarkList" parameterType="SearchCondition" resultMap="boardResultSet2">
+ 	
+ 	
+ 		select *
+		from bookmark  LEFT OUTER join board using(BOARD_NO) 
+		where  b_status ='Y' 		
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and bookmark.user_id = #{mId}
+ 		
+ 		</if>
+ 		
+ 		<if test="title != null">
+ 		
+ 			and B_TITLE like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="content != null">
+ 		
+ 			and B_CONTENT like '%' || #{content} || '%'
+ 		
+ 		</if> 
+ 	
+ 		order by BOARD_NO desc
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+<!--  	<delete id="myLikeDelete"> -->
+<!-- 		DELETE FROM bookmark -->
+<!-- 		WHERE BMK_NO=#{s}  -->
+<!--     </delete> -->
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
     <select id="searchLikeList" resultType="string">
  	
  	
@@ -358,6 +436,7 @@
     <resultMap type="Board" id="boardResultSet2">
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="likeNo" column="LIKENO"/>
+		<result property="bookNo" column="BOARD_NO"/>
 		<result property="bTitle" column="B_TITLE"/>
 		<result property="bContent" column="B_CONTENT"/>
 		<result property="bCount" column="B_COUNT"/>

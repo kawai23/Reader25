@@ -404,7 +404,9 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
 			<div class = "test1"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ views }" begin="0" end="13" varStatus="status">
+						<div id="recommend<c:out value='${status.count}'/>" style = "text-align : left">
 						<p class="ellipsis_r"><c:out value="${ r.bTitle }" /></p>
+						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -417,9 +419,11 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<div class = "test12" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ review }" begin="0" end="13"
 					varStatus="status">
+						<div id="reviews<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_b">
 							<c:out value="${ r.bTitle }" />
 						</p>
+						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -431,9 +435,11 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<div class = "test123" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="d" items="${ discuss }" begin="0" end="13"
 					varStatus="status">
+						<div id="discuss<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_d">
-							<c:out value="${ d.dTitle }" />
+						<c:out value="${ d.dTitle }" />
 						</p>
+						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -444,9 +450,11 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
 			<div class = "test1234" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
+						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
 							<c:out value="${ b.bTitle }" />
 						</p>
+						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -745,7 +753,26 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$("#test_r" + i).text(data[i].dTitle);
+				$(".test1").append("<p class= 'ellipsis_r'>"+data[i].bTitle+"</p>");
+				
+			}
+		}
+		function insert_v(data){
+			for(var i = 0; i < data.length; i ++)
+			{
+				$("#views" + i).text(data[i].dTitle);
+			}
+		}
+		function insert_d(data){
+			for(var i = 0; i < data.length; i ++)
+			{
+				$("#discuss" + i).text(data[i].dTitle);
+			}
+		}
+		function insert_t(data){
+			for(var i = 0; i < data.length; i ++)
+			{
+				$("#todaywriter" + i).text(data[i].dTitle);
 			}
 		}
 	</script>

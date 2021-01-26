@@ -38,8 +38,8 @@
 						<a href="myPayList.me" class="list-group-item"  id="pay">주문 리스트</a>
 						<a href="myBasketList.me" class="list-group-item"  id="bs">장바구니 목록</a>
 						<a href="myList.me?code=5" class="list-group-item" id="c5">내가 쓴 책</a>
-						<a href="myLikeList.me" class="list-group-item" id="like">좋아요/북마크</a>
-						
+						<a href="myLikeList.me" class="list-group-item" id="like">좋아요</a>
+						<a href="myBookMarkList.me" class="list-group-item" id="bm">북마크</a>
 						<a href="myList.me?code=1" class="list-group-item" id="c1">문의사항</a>
 
 				

@@ -61,6 +61,7 @@ public class BookServiceImpl implements BookService{
 	public int insertSB(ShoppingBasket sb) {
 		return b_DAO.insertSB(sqlSession, sb);
 	}
+
 	
 	@Override
 	public int MyBasketListCount(SearchCondition sc) {
@@ -78,6 +79,18 @@ public class BookServiceImpl implements BookService{
 	public int myPayDelete(String[] lists) {
 		
 		return 0;
+	}
+
+
+
+	@Override
+	public int updateBook(Book book) {
+		return b_DAO.updateBook(sqlSession, book);
+	}
+
+	@Override
+	public int deleteBook(int b_no) {
+		return b_DAO.deleteBook(sqlSession, b_no);
 	}
 
 }

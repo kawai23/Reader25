@@ -229,6 +229,10 @@ public interface BoardService {
 
 	void deleteMark(Bookmarkto mark);
 
+	int MyBookMarkCount(SearchCondition sc);
+
+	ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi);
+
 
 
 

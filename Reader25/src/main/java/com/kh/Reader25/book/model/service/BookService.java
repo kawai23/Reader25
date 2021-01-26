@@ -32,4 +32,8 @@ public interface BookService {
 
 	int myPayDelete(String[] lists);
 
+	int updateBook(Book book);
+
+	int deleteBook(int b_no);
+
 }
