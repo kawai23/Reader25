@@ -538,7 +538,16 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return bDAO.recod(sqlSession, value);
 	}
-
+	@Override
+	public ArrayList<Board> recow(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recow(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> recom(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recom(sqlSession, value);
+	}
 	@Override
 	public ArrayList<String> searchLikeList(SearchCondition sc) {
 		return bDAO.searchLikeList(sqlSession, sc);
