@@ -229,10 +229,30 @@ public interface BoardService {
 
 	void deleteMark(Bookmarkto mark);
 
+
 	int MyBookMarkCount(SearchCondition sc);
 
 	ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi);
 
+
+
+	ArrayList<Board> recow(int value);
+
+	ArrayList<Board> recom(int value);
+
+	ArrayList<Board> reviewd(int value);
+
+	ArrayList<Board> revieww(int value);
+
+	ArrayList<Board> reviewm(int value);
+
+	ArrayList<Board> tiww(int value);
+
+	ArrayList<Board> tiwm(int value);
+
+	ArrayList<Board> tiwd(int value);
+
+	int myBookMarkDelete(String[] lists);
 
 
 

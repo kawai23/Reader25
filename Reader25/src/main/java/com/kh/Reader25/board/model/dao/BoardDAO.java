@@ -569,6 +569,7 @@ public class BoardDAO {
 		sqlSession.delete("boardMapper.deleteMark",mark);
 	}
 
+
 	public int MyBookMarkCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		
 		return sqlSession.selectOne("boardMapper.MyBookMarkCount", sc);
@@ -586,6 +587,43 @@ public class BoardDAO {
 	}
 
 
+	public ArrayList<Board> recow(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.recw", value);
+	}
+
+	public ArrayList<Board> recom(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.recm", value);
+	}
+
+	public ArrayList<Board> reviewd(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.recd", value);
+	}
+
+	public ArrayList<Board> revieww(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.recw", value);
+	}
+
+	public ArrayList<Board> reviewm(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.revicwm", value);
+	}
+
+	public ArrayList<Board> tiwd(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.tiwd", value);
+	}
+
+	public ArrayList<Board> tiww(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.tiww", value);
+	}
+
+	public ArrayList<Board> tiwm(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("boardMapper.tiwm", value);
+	}
+
+	public int BookMarkDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		return sqlSession.delete("boardMapper.BookMarkDelete",s);
+
+	}
 
 
 

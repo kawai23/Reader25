@@ -597,7 +597,7 @@
 				 			    	
 				 			    	
 								    
-								    location.href='myLikeDelete.me?inFo='+select_obj+'&page='+ ${pi.currentPage}+path;
+								    location.href='myBookMarkDelete.me?inFo='+select_obj+'&page='+ ${pi.currentPage}+path;
 							    	
 				 			    
 							    

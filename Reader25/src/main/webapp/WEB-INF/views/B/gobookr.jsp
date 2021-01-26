@@ -250,7 +250,7 @@ select::-ms-expand {
 			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
 		%>
 		<div class="list-all-div">
-			<%for(int i = 0; i < bList.size(); i++){ %>
+			<%for(int i = 0; i < bookList.size(); i++){ %>
 				<div class="list-div">
 					<div class="img-div">
 						<%for(int j = 0; j < atList.size(); j++){ %>

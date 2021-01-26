@@ -58,12 +58,12 @@
 	<insert id="insertBook">
 		insert into book
 		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, null,
-			#{author}, default)
+			#{author}, default, SYSDATE)
 	</insert>
 	
 	<insert id="insertsb">
 		INSERT INTO SHOPPINGBASKET
-		VALUES(SEQ_SBNO.nextval, #{sb_v}, #{price}, default, #{user_id}, #{book_no}, SYSDATE)
+		VALUES(SEQ_SBNO.nextval, #{sb_v}, #{price}, default, #{user_id}, #{book_no})
 	</insert>
 	
 

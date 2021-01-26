@@ -373,10 +373,10 @@
  	
  	
  	
-<!--  	<delete id="myLikeDelete"> -->
-<!-- 		DELETE FROM bookmark -->
-<!-- 		WHERE BMK_NO=#{s}  -->
-<!--     </delete> -->
+ 	<delete id="BookMarkDelete">
+		DELETE FROM bookmark
+		WHERE BMK_NO=#{s} 
+    </delete>
     
     
     
@@ -436,7 +436,7 @@
     <resultMap type="Board" id="boardResultSet2">
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="likeNo" column="LIKENO"/>
-		<result property="bookNo" column="BOARD_NO"/>
+		<result property="bookNo" column="BMK_NO"/>
 		<result property="bTitle" column="B_TITLE"/>
 		<result property="bContent" column="B_CONTENT"/>
 		<result property="bCount" column="B_COUNT"/>
@@ -1006,6 +1006,70 @@
         SELECT B_TITLE
         FROM BOARD
         WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="recw" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="recm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="reviewd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="revieww" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="reviewm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '2' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiwd" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiww" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
+        ORDER BY B_COUNT DESC
+	]]>
+	</select>
+	<select id="tiwm" resultMap="boardResultSet">
+	<![CDATA[
+        SELECT B_TITLE
+        FROM BOARD
+        WHERE CODE = '5' AND (ENROLL_DAY BETWEEN TRUNC(SYSDATE) - #{value} AND TRUNC(SYSDATE + 1)) AND ROWNUM <= 17 AND NOT(BOARD_NO = 0)
         ORDER BY B_COUNT DESC
 	]]>
 	</select>

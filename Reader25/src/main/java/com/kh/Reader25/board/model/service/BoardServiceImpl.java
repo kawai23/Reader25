@@ -539,7 +539,46 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return bDAO.recod(sqlSession, value);
 	}
-
+	@Override
+	public ArrayList<Board> recow(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recow(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> recom(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.recom(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> reviewd(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.reviewd(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> revieww(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.revieww(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> reviewm(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.reviewm(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> tiwd(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.tiwd(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> tiww(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.tiww(sqlSession, value);
+	}
+	@Override
+	public ArrayList<Board> tiwm(int value) {
+		// TODO Auto-generated method stub
+		return bDAO.tiwm(sqlSession, value);
+	}
 	@Override
 	public ArrayList<String> searchLikeList(SearchCondition sc) {
 		return bDAO.searchLikeList(sqlSession, sc);
@@ -654,6 +693,28 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi) {
 		
 		return bDAO.BookMarkList(sqlSession, sc,pi);
+	}
+
+	@Transactional
+	@Override
+	public int myBookMarkDelete(String[] lists) {
+		
+		int result = 0;
+
+		for (String s : lists) {
+
+			result += bDAO.BookMarkDelete(sqlSession, s);
+
+		}
+		
+		
+		
+		if (result != lists.length) {
+
+			throw new BoardException("북마크 삭제 실패");
+		}
+		
+		return result;
 	}
 
 	
