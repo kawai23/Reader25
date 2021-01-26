@@ -73,7 +73,6 @@ public class HomeController {
 	public void recod(HttpServletResponse response) {
 		int value = 30;
 		ArrayList<Board> result = bService.recod(value);
-		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -90,8 +89,7 @@ public class HomeController {
 	@ResponseBody
 	public void recow(HttpServletResponse response) {
 		int value = 30;
-		ArrayList<Board> result = bService.recod(value);
-		System.out.println(result);
+		ArrayList<Board> result = bService.recow(value);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {
@@ -108,7 +106,7 @@ public class HomeController {
 	@ResponseBody
 	public void recom(HttpServletResponse response) {
 		int value = 30;
-		ArrayList<Board> result = bService.recod(value);
+		ArrayList<Board> result = bService.recom(value);
 		System.out.println(result);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

@@ -569,6 +569,16 @@ public class BoardDAO {
 		sqlSession.delete("boardMapper.deleteMark",mark);
 	}
 
+	public ArrayList<Board> recow(SqlSessionTemplate sqlSession, int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Board> recom(SqlSessionTemplate sqlSession, int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

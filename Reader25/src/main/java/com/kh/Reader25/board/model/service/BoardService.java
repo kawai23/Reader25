@@ -228,6 +228,10 @@ public interface BoardService {
 
 	void deleteMark(Bookmarkto mark);
 
+	ArrayList<Board> recow(int value);
+
+	ArrayList<Board> recom(int value);
+
 
 
 

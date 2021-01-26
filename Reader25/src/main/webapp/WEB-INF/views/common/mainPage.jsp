@@ -402,7 +402,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_brown" onclick="clickbutton1()">일간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
-			<div class = "test1"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "recommend_t"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ views }" begin="0" end="13" varStatus="status">
 						<div id="recommend<c:out value='${status.count}'/>" style = "text-align : left">
 						<p class="ellipsis_r"><c:out value="${ r.bTitle }" /></p>
@@ -416,7 +416,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_brown" onclick="clickbutton4()">일간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
-			<div class = "test12" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "review_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="r" items="${ review }" begin="0" end="13"
 					varStatus="status">
 						<div id="reviews<c:out value='${status.count}'/>"style = "text-align : left">
@@ -432,7 +432,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_brown" onclick="clickbutton7()">일간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
-			<div class = "test123" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "discuss_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="d" items="${ discuss }" begin="0" end="13"
 					varStatus="status">
 						<div id="discuss<c:out value='${status.count}'/>"style = "text-align : left">
@@ -448,7 +448,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
-			<div class = "test1234" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
+			<div class = "tiw_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
@@ -753,26 +753,26 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".test1").append("<p class= 'ellipsis_r'>"+data[i].bTitle+"</p>");
+				$(".recommend_t").append("<p class= 'ellipsis_r'>"+data[i].bTitle+"</p>");
 				
 			}
 		}
 		function insert_v(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$("#views" + i).text(data[i].dTitle);
+				$(".review_t").append("<p class= 'ellipsis_v'>"+data[i].bTitle+"</p>");
 			}
 		}
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$("#discuss" + i).text(data[i].dTitle);
+				$(".discuss_t").append("<p class= 'ellipsis_d'>"+data[i].dTitle+"</p>");
 			}
 		}
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$("#todaywriter" + i).text(data[i].dTitle);
+				$(".tiw_t").append("<p class= 'ellipsis_t'>"+data[i].bTitle+"</p>");
 			}
 		}
 	</script>
