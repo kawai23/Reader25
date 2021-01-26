@@ -55,7 +55,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
-		
 		ArrayList<Board> review = bService.review();
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
@@ -209,6 +208,57 @@ public class HomeController {
 	public void tiww(HttpServletResponse response) {
 		int value = 7;
 		ArrayList<Board> result = bService.tiww(value);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/discussd.do")
+	@ResponseBody
+	public void discussd(HttpServletResponse response) {
+		int value = 1;
+		ArrayList<Discuss> result = dService.discussd(value);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/discussw.do")
+	@ResponseBody
+	public void discussw(HttpServletResponse response) {
+		int value = 7;
+		ArrayList<Discuss> result = dService.discussw(value);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping( value = "/discussm.do")
+	@ResponseBody
+	public void discussm(HttpServletResponse response) {
+		int value = 30;
+		ArrayList<Discuss> result = dService.discussm(value);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		try {

@@ -80,7 +80,7 @@ public class DiscussDAO {
 	}
 	// 메인페이지(토론방) 리스트 불러오기기
 	public ArrayList<Discuss> discuss(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("DiscussMapper.discussD", null);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussf", null);
 	}
 	// 댓글 수정시 찬성,반대,중립 변경이 있을시
 	public void changePCN(SqlSessionTemplate sqlSession, Map<String, Object> d) {
@@ -93,6 +93,15 @@ public class DiscussDAO {
 	// 모든 토론방 검색
 	public ArrayList<Discuss> selectAllList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("DiscussMapper.selectAllList");
+	}
+	public ArrayList<Discuss> discussd(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
+	}
+	public ArrayList<Discuss> discussw(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
+	}
+	public ArrayList<Discuss> discussm(SqlSessionTemplate sqlSession, int value) {
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
 	}
 	
 }
