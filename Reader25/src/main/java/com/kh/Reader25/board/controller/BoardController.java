@@ -2712,16 +2712,28 @@ public class BoardController {
 			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
 			Attachment at = new Attachment();
 			for(Attachment a : atList) {
-				
+				if(a.getAtcLevel() == 0) {
+					at = a;
+				}
 			}
 			mv.addObject("book", book);
+			mv.addObject("at", at);
 			mv.setViewName("bookCart");
 			return mv;
 		}
 		@RequestMapping("pcs.bo") 
-		public ModelAndView bookPurchase(@RequestParam("b_no") int b_no, ModelAndView mv) {
+		public ModelAndView bookPurchase(@RequestParam("b_no") int b_no, ModelAndView mv,
+										@RequestParam("boardNo") int boardNo) {
 			Book book = b_Service.selectBook(b_no);
+			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+			Attachment at = new Attachment();
+			for(Attachment a : atList) {
+				if(a.getAtcLevel() == 0) {
+					at = a;
+				}
+			}
 			mv.addObject("book", book);
+			mv.addObject("at", at);
 			mv.setViewName("bookPurchase");
 			return mv;	
 		}
