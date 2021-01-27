@@ -2706,8 +2706,8 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpServletRequest request) {
-			String userid = ((Member)request.getSession().getAttribute("loginUser")).getId();
+		public ModelAndView bookCart(ModelAndView mv, HttpSession session) {
+			String userid = ((Member)session.getAttribute("loginUser")).getId();
 			ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
 			ArrayList<Book> bookList = new ArrayList<Book>();
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
@@ -2717,17 +2717,14 @@ public class BoardController {
 				bookList.add(book);
 				atList.add(at);
 			}
-			System.out.println(bookList);
-			System.out.println(atList);
 			mv.addObject("book", bookList);
 			mv.addObject("at", atList);
 			mv.setViewName("bookCart");
 			return mv;
 		}
 		@RequestMapping("pcs.bo") 
-		public ModelAndView bookPurchase(@RequestParam("b_no") int b_no, ModelAndView mv,
-										@RequestParam("boardNo") int boardNo) {
-			Book book = b_Service.selectBook(b_no);
+		public ModelAndView bookPurchase(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpSession session) {
+			Book book = b_Service.selectBook(b.getB_no());
 			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
 			Attachment at = new Attachment();
 			for(Attachment a : atList) {

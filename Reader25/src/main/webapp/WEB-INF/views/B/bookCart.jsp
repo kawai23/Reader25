@@ -110,7 +110,7 @@
 
 .bak_item {
 	height: 130px;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .proquantity {
@@ -161,7 +161,7 @@
 				<table class="list-table" style="border-spacing: 0px;">
 					<tr class="list-tableth">
 						<td width="10px;" class="tdtop">
-							<label><input type="checkbox" value="alldelete"></label>
+							<input type="checkbox" value="alldelete">
 						</td>
 						<td width="200" class="tdtop">책 이미지</td>
 						<td width="300" class="tdtop">책 제목</td>
@@ -174,28 +174,50 @@
 					<tbody class="list-tabletd">
 					<c:forEach var="b" items="${book}" varStatus="vs">
 						<tr>
-							<td width="10" class="tdbottom"><label><input type="checkbox" value="prodelete1"></label></td>
-							<td width="150" class="tdbottom">
 							<c:choose>
-								<c:when test="${ at[vs.index] eq null }">
-									<div class="bak_item">
-										<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" width="200" height="125">
-									</div>
+								<c:when test="${vs.last}">
+									<td width="10" class="tdbottom"><label><input type="checkbox" value="prodelete1"></label></td>
+									<td width="150" class="tdbottom">
+									<c:choose>
+										<c:when test="${ at[vs.index] eq null }">
+											<p>등록된 이미지가 없습니다.<p>
+										</c:when>
+										<c:otherwise>
+											<div class="bak_item">
+												<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+											</div>
+										</c:otherwise>
+									</c:choose>
+									</td>
+									<td width="150" class="tdbottom">${b.b_name}</td>
+									<td width="150" class="tdbottom">${b.b_price}원</td>
+									<td width="150" class="tdbottom">${b.b_Q1}</td>
+									<td width="150" class="tdbottom">2500원</td>
+									<td width="150" class="tdbottom">${b.b_price + 2500}원</td>
+									<td width="50" class="tdbottom"></td>
 								</c:when>
 								<c:otherwise>
-									<div class="bak_item">
-										<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="125">
-									</div>
+									<td width="10" class="tdbottom2"><label><input type="checkbox" value="prodelete1"></label></td>
+									<td width="150" class="tdbottom2">
+									<c:choose>
+										<c:when test="${ at[vs.index] eq null }">
+											<p>등록된 이미지가 없습니다.<p>
+										</c:when>
+										<c:otherwise>
+											<div class="bak_item">
+												<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+											</div>
+										</c:otherwise>
+									</c:choose>
+									</td>
+									<td width="150" class="tdbottom2">${b.b_name}</td>
+									<td width="150" class="tdbottom2">${b.b_price}원</td>
+									<td width="150" class="tdbottom2">${b.b_Q1}</td>
+									<td width="150" class="tdbottom2">2500원</td>
+									<td width="150" class="tdbottom2">${b.b_price + 2500}원</td>
+									<td width="50" class="tdbottom2"></td>
 								</c:otherwise>
 							</c:choose>
-							
-							</td>
-							<td width="150" class="tdbottom">${b.b_name}</td>
-							<td width="150" class="tdbottom">${b.b_price}원</td>
-							<td width="150" class="tdbottom">${b.b_Q1}</td>
-							<td width="150" class="tdbottom">2500원</td>
-							<td width="150" class="tdbottom">${b.b_price + 2500}원</td>
-							<td width="50" class="tdbottom"></td>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -208,6 +230,9 @@
 						type="submit" value="선택상품주문" class="longbt2">
 				</div>
 			</div>
+			<script>
+				
+			</script>
 		</section>
 	</div>
 	<br>

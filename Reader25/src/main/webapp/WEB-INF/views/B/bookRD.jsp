@@ -547,7 +547,7 @@ section {
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 						if(check){
-							location.href="<%=request.getContextPath()%>/cart.bo?boardNo="+ boardNo + "&b_no= "+ book_no;
+							location.href="<%=request.getContextPath()%>/cart.bo";
 						}
 	                }
 	             });
@@ -559,7 +559,8 @@ section {
             	 $('#login-modal').show();
              	$('#login-modal .modal').show();
              }else{
-            	location.href="<%=request.getContextPath()%>/pcs.bo?b_no=" +${book.b_no};
+                 
+            	 location.href="<%=request.getContextPath()%>/pcs.bo?boardNo="+ ${board.boardNo} + "&b_no=" +${book.b_no};
              }
          });
          </script>
