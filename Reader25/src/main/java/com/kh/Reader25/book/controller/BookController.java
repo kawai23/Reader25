@@ -1,5 +1,6 @@
 package com.kh.Reader25.book.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
@@ -191,6 +195,33 @@ public class BookController {
 			  .setViewName("gobookr");
 		}
 		return mv;
+	}
+	
+	// 책방 책이름 같은 리뷰 보기
+	@RequestMapping("reList.bo")
+	public void selectReviewList(@RequestParam(value="page1", required=false, defaultValue="1") Integer page1,
+	   							@RequestParam("booktitle") String book, HttpServletResponse response) {
+		   response.setContentType("application/json; charset=UTF-8");
+			int currentPage1 = 1;
+			if (page1 != null) {
+				currentPage1 = page1;
+			}
+			String booktitle = book + "#책제목";
+			int listCount = bService.getReListCount(booktitle);
+			PageInfo pi1 = Pagination.getPageInfo3(currentPage1, listCount);
+			ArrayList<Board> reList = bService.selectAnotherReview(booktitle, pi1);
+
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			map.put("reList", reList);
+			map.put("pi1", pi1);
+
+			Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
 	}
 }
 

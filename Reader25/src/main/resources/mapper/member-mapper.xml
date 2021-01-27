@@ -164,4 +164,14 @@
 		WHERE user_id = #{id}
 	</update>
 	
+	<select id="getGender" resultMap="genderMap">
+		select gender,count(*) as count 
+		from member
+		where status = 'Y'
+		group by gender
+	</select>
+	<resultMap type="java.util.HashMap" id="genderMap">
+		<result javaType="java.lang.String" column="gender" property="gender"/>
+		<result javaType="java.lang.String" column="count" property="count"/>
+	</resultMap>
 </mapper>

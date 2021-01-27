@@ -101,7 +101,7 @@
 <body>
 	<header>
 		<img src="#logo" id="logo-img" onclick="goHome();"/>
-		<h3 id="header-h2">통계 자료</h3>
+		<h3 id="header-h2">방문자 관리</h3>
 	</header>
 	<%@ include file="header.jsp" %>
 	<script>
@@ -137,6 +137,7 @@
      		month = [${monthStr}];
      		
 			$(function(){
+				console.log(day);
 				var today = new Date();
 	     		var dd = today.getDate();
 	     		var mm = today.getMonth() + 1;
@@ -164,7 +165,17 @@
 							day[0] = ['Day','방문자수','회원가입수'];
 							
 							for(var i = 0; i < data.dayList.length; i++){
-								day[i+1] = [data.dayList[i].day, Number(data.dayList[i].count),Number(data.enrollList[i].count)];
+								var count = 0;
+								for(var j = 0; j <data.enrollList.length; j++){
+									if(data.dayList[i].day == data.enrollList[j].day){
+										day[i+1] = [data.dayList[i].day, Number(data.dayList[i].count),Number(data.enrollList[j].count)];
+									}else{
+										count++;
+									}
+								}
+								if(count == data.enrollList.length){
+									day[i+1] = [data.dayList[i].day, Number(data.dayList[i].count),0];
+								}
 							}
 							drawChart();
 						}

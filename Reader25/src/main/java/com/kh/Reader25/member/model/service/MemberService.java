@@ -59,6 +59,8 @@ public interface MemberService {
 
 	int downPointUser(HashMap<String, Object> cap);
 
+	List<Map<String, String>> selectGender();
+
 	
 
 

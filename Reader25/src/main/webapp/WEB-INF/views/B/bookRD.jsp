@@ -204,7 +204,42 @@ section {
 	height: 25px;
 	color: white;
 }
-
+	.list-box{
+		clear:both;
+		width: 80%;
+		margin:auto;
+		margin-top:10px;
+		max-width: 1000px;
+		background: white;
+		border-radius: 5px;
+	}
+	.list{
+		margin: 10px;
+	}
+	.list-header{
+		height: 35px;
+		line-height: 35px;
+		border-bottom: 1px solid rgb(200, 200, 200);
+	}
+	.list-header p{
+		display:inline;
+	}
+	.list-table{
+		width: 100%;
+		border-collapse: collapse;
+		margin:auto;
+	}
+	.list-table tr{border-bottom: 1px solid rgb(240, 240, 240);font-size:14px; height: 25px;}
+	.list-table tr:hover{
+		cursor: pointer;
+		background: rgb(240, 240, 240);
+	}
+	.list-table td{
+		text-align: center;
+		color:gray;
+	}
+	.list-table td[class=td-left]{text-align: left;}
+	#none-reList:hover{background:white; cursor:default;}
 .write-btn:hover {
 	background: rgba(245, 185, 142, 1);
 	cursor: pointer;
@@ -566,16 +601,11 @@ section {
 				<tr>
 					<td>수량</td>
 					<td>
-						<c:if test="${book.b_Q1  > 1}">
 							<select class="book-info" id="amount-option" name="b_Q1">
 								<c:forEach begin="1" end="${book.b_Q1 }" var="i">
 									<option value="${i }">${i }</option>
 								</c:forEach>
 							</select>
-						</c:if>
-						<c:if test="${book.b_Q1  <= 1}">
-							1
-						</c:if>
 					</td>
 				</tr>
 			</table>
@@ -698,6 +728,102 @@ section {
 				 }
 			 });
 		 }
+		</script>
+		<div class="list-box">
+			<div class="list">
+				<div class="list-header">
+					<p>책 리뷰보기</p>
+				</div>
+				<div class="list-contents">
+					<table class="list-table" id="reTable">
+						<!-- 리뷰 게시뮬 -->
+					</table>
+				</div>
+			</div>
+			<div class="paging-btn" id="re-paging">
+			<!-- 다른 리뷰 페이징 -->
+			</div>
+		</div>
+				<script>
+			var reList;
+			$(function(){
+				getReList(1);
+				$('.modal').hide();
+			});
+			function getReList(value){
+				var booktitle = "${book.b_name}";
+				var page1 = value;
+				$.ajax({
+					url: 'reList.bo',
+					data: {booktitle:booktitle, page1:page1},
+					success: function(data){
+						
+						//1) 페이징 버튼 넣기
+						pi1 = data.pi1;
+						$repaging = $('#re-paging');
+						$repaging.html('');
+						if(pi1.currentPage <= 1){
+							$before = $('<p>').text('<');
+						}else{
+							$before = $('<a>').on('click',function(){getReList(pi1.currentPage - 1)}).text('<');
+						}
+						$repaging.append($before);
+
+						for(var i = pi1.startPage; i <= pi1.endPage; i++){
+							if(pi1.currentPage == i){
+								$pNo = $('<p>').text(i);
+							}else{
+								$pNo = $('<a>').on('click', function(){
+									getReList($(this).text());
+								}).text(i);
+							}
+							$repaging.append($pNo);
+						}
+						
+						if(pi1.currentPage >= pi1.maxPage){
+							$next = $('<p>').text(">");
+						}else{
+							$next = $('<a>').on("click", function(){getReList(pi1.currentPage + 1)}).text('>');
+						}
+						
+						$repaging.append($next);
+						
+						//2) 게시물리스트 넣기
+						reList = data.reList;
+						
+						$reTable = $('#reTable');
+						$reTable.html('');
+						if(reList.length <= 1){
+							$tr = $('<tr>');
+							$td = $('<td class="td-left" colspan=6 id="none-reList">').text('다른 리뷰가 없습니다.');
+							$tr.append($td);
+							$reTable.append($tr);
+						}else{
+							for(var i in reList){
+								if(reList[i].boardNo != '${board.boardNo}'){
+									$tr = $('<tr>').on('click', function(){
+										var boardNo = $(this).children('td').eq(0).text();
+										location.href='redetail.re?boardNo='+boardNo+"&page=1";
+									});
+									$tdNo = $('<td>').text(reList[i].boardNo);
+									$tdTitle = $('<td class="td-left">').text(reList[i].bTitle);
+									$tdWriter = $('<td>').text(reList[i].userId);
+									$tdDate = $('<td class="td-right">').text(reList[i].updateDay);
+									$tdCount = $('<td>').text(reList[i].bCount);
+									$tr.append($tdNo);
+									$tr.append($tdTitle);
+									$tr.append($tdWriter);
+									$tr.append($tdCount);
+									$tr.append($tdDate);
+
+									$reTable.append($tr);
+								}
+							}
+						}
+						
+					}
+				});
+			}
 		</script>
 		
 		

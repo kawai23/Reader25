@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -463,11 +465,21 @@ public class MemberController {
 		PageInfo pi2 = Pagination.getPageInfo3(currentPage2, listCount2);
 		ArrayList<Member> memList = mService.selectMemberList(pi);
 		ArrayList<Member> delList = mService.selectdeletMemberList(pi2);
-		if(memList != null) {
+		List<Map<String,String>> genderMap = mService.selectGender();
+		String genderArr = "['Gender','회원수']";
+		for(int i = 0; i < genderMap.size(); i++) {
+			if(i != genderMap.size()) {
+				genderArr += ",";
+			}
+			
+			genderArr += "['" + genderMap.get(i).get("gender") +"'," + genderMap.get(i).get("count") + "]";
+		}
+		if(memList != null && delList != null) {
 			mv.addObject("memList", memList)
 			  .addObject("pi", pi)
 			  .addObject("pi2", pi2)
-			  .addObject("delList", delList);
+			  .addObject("delList", delList)
+			  .addObject("genderArr", genderArr);
 			mv.setViewName("memberList");
 			return mv;
 		}else {

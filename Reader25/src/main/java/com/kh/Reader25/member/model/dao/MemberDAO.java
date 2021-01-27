@@ -156,6 +156,10 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.downPointUser", cap);
 	}
+
+	public List<Map<String, String>> selectGender(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("memberMapper.getGender");
+	}
 	
 
 

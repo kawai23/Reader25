@@ -338,22 +338,19 @@ public class HomeController {
 		// 값 가공
 		String[] dayArr = dayStart.split("-");
 		String day = "";
-		day += dayArr[0].substring(2);
+		day += dayArr[0].substring(2) +"/";
 		for(int i = 1; i < dayArr.length; i++) {
 			day += dayArr[i];
 			if(i != dayArr.length-1) {
 				day += "/";
 			}
 		}
+		
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		
 		List<Map<String,String>> dayList = vService.getDayVisitor(day);
 		List<Map<String,String>> enrollList = mService.getEnrollList(day);
 		
-		for(int i = 0; i < enrollList.size(); i++) {
-			
-			System.out.println(enrollList.get(i));
-		}
 		
 		map.put("dayList", dayList);
 		map.put("enrollList", enrollList);
