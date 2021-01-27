@@ -682,6 +682,11 @@ public class BoardServiceImpl implements BoardService {
 		bDAO.deleteMark(sqlSession, mark);
 	}
 
+	@Override
+	public Attachment selectAttachmentzero(int boardNo) {
+		return bDAO.selectAttachmentzero(sqlSession, boardNo);
+	}
+
 	
 	
 

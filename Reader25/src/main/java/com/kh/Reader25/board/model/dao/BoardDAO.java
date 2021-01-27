@@ -606,6 +606,10 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.tiwm", value);
 	}
 
+	public Attachment selectAttachmentzero(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectAttachmentzero", boardNo);
+	}
+
 
 
 

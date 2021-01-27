@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,6 +43,7 @@ import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -2708,20 +2708,19 @@ public class BoardController {
 		@RequestMapping("cart.bo") 
 		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpServletRequest request) {
 			String userid = ((Member)request.getSession().getAttribute("loginUser")).getId();
-			System.out.println(userid);
-			Book book = b_Service.selectBook(b.getB_no());
-			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-			System.out.println(book);
-			System.out.println(atList);
-			
-			Attachment at = new Attachment();
-			for(Attachment a : atList) {
-				if(a.getAtcLevel() == 0) {
-					at = a;
-				}
+			ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
+			ArrayList<Book> bookList = new ArrayList<Book>();
+			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
+			for(ShoppingBasket sbList : sb) {
+				Book book = b_Service.selectBook(sbList.getBook_no());
+				Attachment at = bService.selectAttachmentzero(book.getBoardNo());
+				bookList.add(book);
+				atList.add(at);
 			}
-			mv.addObject("book", book);
-			mv.addObject("at", at);
+			System.out.println(bookList);
+			System.out.println(atList);
+			mv.addObject("book", bookList);
+			mv.addObject("at", atList);
 			mv.setViewName("bookCart");
 			return mv;
 		}

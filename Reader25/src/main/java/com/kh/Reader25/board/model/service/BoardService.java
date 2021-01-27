@@ -244,6 +244,8 @@ public interface BoardService {
 
 	ArrayList<Board> tiwd(int value);
 
+	Attachment selectAttachmentzero(int boardNo);
+
 
 
 

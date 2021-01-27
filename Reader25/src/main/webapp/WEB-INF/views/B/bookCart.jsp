@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*"%>
 <%@ page import="java.sql.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
@@ -162,8 +163,8 @@
 						<td width="10px;" class="tdtop">
 							<label><input type="checkbox" value="alldelete"></label>
 						</td>
-						<td width="200" class="tdtop">이미지</td>
-						<td width="300" class="tdtop">상품정보</td>
+						<td width="200" class="tdtop">책 이미지</td>
+						<td width="300" class="tdtop">책 제목</td>
 						<td width="120" class="tdtop">판매가</td>
 						<td width="180" class="tdtop">수량</td>
 						<td width="100" class="tdtop">배송비</td>
@@ -171,20 +172,32 @@
 						<td width="100" class="tdtop"></td>
 					</tr>
 					<tbody class="list-tabletd">
+					<c:forEach var="b" items="${book}" varStatus="vs">
 						<tr>
 							<td width="10" class="tdbottom"><label><input type="checkbox" value="prodelete1"></label></td>
 							<td width="150" class="tdbottom">
-								<div class="bak_item">
-									<img src="../img/pizza-3007395_420.jpg" width="200" height="150">
-								</div>
+							<c:choose>
+								<c:when test="${ at[vs.index] eq null }">
+									<div class="bak_item">
+										<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" width="200" height="125">
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="bak_item">
+										<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="125">
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
 							</td>
-							<td width="150" class="tdbottom">책제목</td>
-							<td width="150" class="tdbottom">19,900원</td>
-							<td width="150" class="tdbottom">수량</td>
+							<td width="150" class="tdbottom">${b.b_name}</td>
+							<td width="150" class="tdbottom">${b.b_price}원</td>
+							<td width="150" class="tdbottom">${b.b_Q1}</td>
 							<td width="150" class="tdbottom">2500원</td>
-							<td width="150" class="tdbottom">22,400원</td>
+							<td width="150" class="tdbottom">${b.b_price + 2500}원</td>
 							<td width="50" class="tdbottom"></td>
 						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>
