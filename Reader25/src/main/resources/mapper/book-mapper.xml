@@ -67,6 +67,72 @@
 		VALUES(SEQ_SBNO.nextval, #{sb_v}, #{price}, default, #{user_id}, #{book_no})
 	</insert>
 	
+
+	
+	
+	
+	<select id="MyBasketListCount"  resultType="_int">
+	
+		SELECT count( * ) 
+		FROM shoppingbasket  LEFT OUTER join book using(BOOK_NO) 
+		where  shoppingbasket.status = 'Y' 
+		
+		
+		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and SB_NO = #{no} 
+ 		
+ 		</if> 
+		
+		
+	
+	
+	</select>
+	
+	<select id="MyBasketList" parameterType="SearchCondition" resultType="SB">
+ 	
+ 	
+ 		SELECT * 
+		FROM shoppingbasket  LEFT OUTER join book using(BOOK_NO) 
+		where  shoppingbasket.status = 'Y' 
+ 
+ 		
+ 		
+ 		<if test="mId != null">
+ 		
+ 			and USER_ID = #{mId}
+ 		 </if>
+
+ 		
+ 		<if test="title != null">
+ 		
+ 			and BOOK_NAME like '%' || #{title} || '%'
+ 		
+ 		</if>
+ 		
+ 		<if test="no != null">
+ 		
+ 			and SB_NO = #{no} 
+ 		
+ 		</if> 
+ 	
+ 		order by SB_NO desc
+ 	
+ 	</select>
+	
+
 	<update id="updateBook">
 		update book
 		set book_name = #{b_name}, price=#{b_price}, book_q1 = #{b_Q1}, book_q2 = #{b_Q2}, book_q3 =#{b_Q3}, author = #{author}
@@ -78,10 +144,19 @@
 		set status = 'N'
 		where book_no = #{b_no}
 	</update>
+
 	
 	<select id="selectSB" resultType="SB">
 		SELECT *
 		FROM SHOPPINGBASKET
 		WHERE STATUS = 'Y' AND USER_ID = #{userid}
 	</select>
+	
+	
+	
+	<delete id="BasketDelete">
+		DELETE FROM SHOPPINGBASKET
+		WHERE SB_NO=#{s} 
+    </delete>
+
 </mapper>

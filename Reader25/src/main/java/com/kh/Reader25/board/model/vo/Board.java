@@ -20,6 +20,7 @@ public class Board {
 	private String userId;
 	
 	private int likeNo;
+	private int bookNo;
 	
 	private Book book;
 	
@@ -28,11 +29,7 @@ public class Board {
 
 	
 	public Board(int boardNo, String bTitle, String bContent, int bCount, int bLike, int comCount, String bStatus,
-
-			Date enrollDay, Date updateDay, String cate, int code, String userId, int likeNo) {
-
-	
-
+			Date enrollDay, Date updateDay, String cate, int code, String userId, int likeNo, int bookNo) {
 		super();
 		this.boardNo = boardNo;
 		this.bTitle = bTitle;
@@ -46,11 +43,8 @@ public class Board {
 		this.cate = cate;
 		this.code = code;
 		this.userId = userId;
-
 		this.likeNo = likeNo;
-
-		
-
+		this.bookNo = bookNo;
 	}
 
 	
@@ -228,7 +222,6 @@ public class Board {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
 
 
 
@@ -244,13 +237,37 @@ public class Board {
 
 
 
+	public int getBookNo() {
+		return bookNo;
+	}
+
+
+
+	public void setBookNo(int bookNo) {
+		this.bookNo = bookNo;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", bTitle=" + bTitle + ", bContent=" + bContent + ", bCount=" + bCount
 				+ ", bLike=" + bLike + ", comCount=" + comCount + ", bStatus=" + bStatus + ", enrollDay=" + enrollDay
 				+ ", updateDay=" + updateDay + ", cate=" + cate + ", code=" + code + ", userId=" + userId + ", likeNo="
-				+ likeNo + ", book=" + book + "]";
+
+				+ likeNo + ", bookNo=" + bookNo + "]";
+
+			
+
 	}
+
+
+
+
+	
+
+
+	
 
 	
 }

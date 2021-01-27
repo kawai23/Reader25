@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
@@ -24,11 +25,19 @@ public interface BookService {
 	int insertBook(Book book);
 
 	int insertSB(ShoppingBasket sb);
+	
+	int MyBasketListCount(SearchCondition sc);
+
+	ArrayList<ShoppingBasket> MyBasketList(SearchCondition sc, PageInfo pi);
+
+	int myPayDelete(String[] lists);
 
 	int updateBook(Book book);
 
 	int deleteBook(int b_no);
 
 	ArrayList<ShoppingBasket> selectSb(String userid);
+
+	int myBasketDelete(String[] lists);
 
 }

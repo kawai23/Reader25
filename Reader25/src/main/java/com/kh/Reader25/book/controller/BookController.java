@@ -3,9 +3,13 @@ package com.kh.Reader25.book.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+import javax.servlet.http.HttpSession;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +19,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import com.kh.Reader25.board.model.exception.BoardException;
+
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
+
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+
+import com.kh.Reader25.board.model.vo.SearchCondition;
+
 import com.kh.Reader25.board.model.vo.SearchReview;
+
 import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.vo.Member;
 
 @Controller
 public class BookController {
@@ -102,6 +115,181 @@ public class BookController {
 		}
 	}
 	
+
+	
+	
+	@RequestMapping("myBasketList.me")
+	public ModelAndView myBasketList(@RequestParam(value = "searchCondition", required = false) String searchCondition, @RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv  , @RequestParam(value = "page", required = false) Integer page, HttpSession session) {
+		
+		
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+	
+		
+		
+
+		
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			
+			if (condition.equals("번호")) {
+				
+				sc.setNo(value);
+				
+			}else if (condition.equals("책이름")) {
+				
+				sc.setTitle(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = b_Service.MyBasketListCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<ShoppingBasket> list = b_Service.MyBasketList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+			
+			
+			
+			
+			mv.setViewName("myBasketList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BookException("장바구니 리스트 삭제 실패");
+			
+		}
+		
+		
+		
+		
+		
+		return mv; 
+	}
+	
+	@RequestMapping("myBasketDelete.me")
+	public ModelAndView myBasketDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		int result = b_Service.myBasketDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myBasketList.me");
+		} else {
+
+			throw new BookException("장바구니 리스트 삭제 실패");
+		}
+
+		return mv;
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 	//book찾기
 	@RequestMapping("search.bo")
 	public ModelAndView searchBook(ModelAndView mv,@ModelAttribute SearchReview sr,
@@ -208,5 +396,6 @@ public class BookController {
 		}
 		return mv;
 	}
+
 }
 

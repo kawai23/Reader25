@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
+import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
@@ -51,6 +52,25 @@ public class BookDAO {
 		return sqlSession.insert("bookMapper.insertsb", sb);
 	}
 
+	
+	public int MyBasketListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		
+		return sqlSession.selectOne("bookMapper.MyBasketListCount", sc);
+	}
+
+	public ArrayList<ShoppingBasket> myBasketList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("bookMapper.MyBasketList",sc , rowBounds);
+	}
+
+
+
 	public int updateBook(SqlSessionTemplate sqlSession, Book book) {
 		return sqlSession.update("bookMapper.updateBook", book);
 	}
@@ -59,7 +79,15 @@ public class BookDAO {
 		return sqlSession.update("bookMapper.deleteBook", b_no);
 	}
 
+
 	public ArrayList<ShoppingBasket> selectSB(SqlSessionTemplate sqlSession, String userid) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectSB", userid);
 	}
+
+	public int BasketDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		
+		return sqlSession.delete("bookMapper.BasketDelete",s);
+	}
+
 }

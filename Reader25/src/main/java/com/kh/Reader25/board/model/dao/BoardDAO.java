@@ -574,6 +574,24 @@ public class BoardDAO {
 		sqlSession.delete("boardMapper.deleteMark",mark);
 	}
 
+
+	public int MyBookMarkCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		
+		return sqlSession.selectOne("boardMapper.MyBookMarkCount", sc);
+	}
+
+	public ArrayList<Bookmarkto> BookMarkList(SqlSessionTemplate sqlSession, SearchCondition sc, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit(); 
+		
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		
+		return  (ArrayList)sqlSession.selectList("boardMapper.BookMarkList",sc , rowBounds);
+	}
+
+
 	public ArrayList<Board> recow(SqlSessionTemplate sqlSession, int value) {
 		return (ArrayList)sqlSession.selectList("boardMapper.recw", value);
 	}
@@ -606,6 +624,15 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.tiwm", value);
 	}
 
+
+
+	public int BookMarkDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		return sqlSession.delete("boardMapper.BookMarkDelete",s);
+
+	}
+
+
 	public ArrayList<Board> selectSearchBook(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
@@ -632,6 +659,7 @@ public class BoardDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSortBookList", sortValue, rowBounds);
 	}
+
 	public Attachment selectAttachmentzero(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectAttachmentzero", boardNo);
 	}
@@ -641,6 +669,7 @@ public class BoardDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBookList", code, rowBounds);
 	}
+
 
 
 
