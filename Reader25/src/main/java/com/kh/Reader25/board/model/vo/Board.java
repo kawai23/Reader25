@@ -2,6 +2,8 @@ package com.kh.Reader25.board.model.vo;
 
 import java.sql.Date;
 
+import com.kh.Reader25.book.model.vo.Book;
+
 public class Board {
 	private int boardNo;
 	private String bTitle;
@@ -12,19 +14,19 @@ public class Board {
 	private String bStatus;
 	private Date  enrollDay;
 	private Date updateDay;
-	// 0 : 공지사항 1: 문의사항 2: 리뷰 3: 책방 4: 책쓰기5:오늘은 나도 작가 6:좋아요
+	// 0 : 공지사항 , 1: 문의사항,  2: 리뷰,  3: 책방,  4: 책쓰기, 5:오늘은 나도 작가, 6:좋아요
 	private String cate;
 	private int code;
 	private String userId;
 	
 	private int likeNo;
 	
-	
+	private Book book;
 	
 	public Board() {}
 
 
-
+	
 	public Board(int boardNo, String bTitle, String bContent, int bCount, int bLike, int comCount, String bStatus,
 
 			Date enrollDay, Date updateDay, String cate, int code, String userId, int likeNo) {
@@ -49,6 +51,38 @@ public class Board {
 
 		
 
+	}
+
+	
+
+	public Board(int boardNo, String bTitle, String bContent, int bCount, int bLike, int comCount, String bStatus,
+			Date enrollDay, Date updateDay, String cate, int code, String userId, Book book) {
+		super();
+		this.boardNo = boardNo;
+		this.bTitle = bTitle;
+		this.bContent = bContent;
+		this.bCount = bCount;
+		this.bLike = bLike;
+		this.comCount = comCount;
+		this.bStatus = bStatus;
+		this.enrollDay = enrollDay;
+		this.updateDay = updateDay;
+		this.cate = cate;
+		this.code = code;
+		this.userId = userId;
+		this.book = book;
+	}
+
+	
+
+	public Book getBook() {
+		return book;
+	}
+
+
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 
@@ -215,11 +249,9 @@ public class Board {
 		return "Board [boardNo=" + boardNo + ", bTitle=" + bTitle + ", bContent=" + bContent + ", bCount=" + bCount
 				+ ", bLike=" + bLike + ", comCount=" + comCount + ", bStatus=" + bStatus + ", enrollDay=" + enrollDay
 				+ ", updateDay=" + updateDay + ", cate=" + cate + ", code=" + code + ", userId=" + userId + ", likeNo="
-				+ likeNo + "]";
+				+ likeNo + ", book=" + book + "]";
 	}
 
-
-	
 	
 }
 

@@ -38,7 +38,7 @@
 	margin: auto
 }
 
-.longbt1 {
+.allbuy {
 	
 	background-color: #F5715C;
 	font-size: 17px;
@@ -53,16 +53,16 @@
 	border-radius: 5px;
 	
 }
-.longbt1:hover {
+.allbuy:hover {
    background:linear-gradient(to bottom, #F99F93 5%, #F99F93 100%);
    background-color:#F99F93;
 }
-.longbt1:active {
+.allbuy:active {
    position:relative;
    top:1px;
 }
 
-.longbt2 {
+.buy {
 	background-color: white;
 	font-size: 17px;
 	border-color: #B3B2AF;
@@ -74,11 +74,11 @@
 	width: 150px;
 	border-radius: 5px;
 }
-.longbt2:hover {
+.buy:hover {
    background:linear-gradient(to bottom, #D0D0D0 5%, #D0D0D0 100%);
    background-color:#D0D0D0;
 }
-.longbt2:active {
+.buy:active {
    position:relative;
    top:1px;
 }
@@ -158,10 +158,10 @@
 			<div id="listArea" class="list-A">
 				
 				<br>
-				<table class="list-table" style="border-spacing: 0px;">
+				<table class="list-table" id="sbtable" style="border-spacing: 0px;">
 					<tr class="list-tableth">
 						<td width="10px;" class="tdtop">
-							<input type="checkbox" value="alldelete">
+							<input type="checkbox" id="allchecked">
 						</td>
 						<td width="200" class="tdtop">책 이미지</td>
 						<td width="300" class="tdtop">책 제목</td>
@@ -176,7 +176,7 @@
 						<tr>
 							<c:choose>
 								<c:when test="${vs.last}">
-									<td width="10" class="tdbottom"><label><input type="checkbox" value="prodelete1"></label></td>
+									<td width="10" class="tdbottom"><input type="checkbox" class="prodelete1"></td>
 									<td width="150" class="tdbottom">
 									<c:choose>
 										<c:when test="${ at[vs.index] eq null }">
@@ -197,7 +197,7 @@
 									<td width="50" class="tdbottom"></td>
 								</c:when>
 								<c:otherwise>
-									<td width="10" class="tdbottom2"><label><input type="checkbox" value="prodelete1"></label></td>
+									<td width="10" class="tdbottom2"><input type="checkbox" class="prodelete1"></td>
 									<td width="150" class="tdbottom2">
 									<c:choose>
 										<c:when test="${ at[vs.index] eq null }">
@@ -226,12 +226,44 @@
 			<br> <br> <br>
 			<div class="btn-a">
 				<div class="btn-b">
-					<input type="reset" value="전체상품주문" class="longbt1"> <input
-						type="submit" value="선택상품주문" class="longbt2">
+					<input type="button" value="전체상품주문" class="allbuy"> 
+					<input type="button" value="선택상품주문" class="buy">
 				</div>
 			</div>
 			<script>
+			//체크박스 부분
+			$(document).ready(function(){
+				$("#sbtable #allchecked").click(function () {
+					if ($("#sbtable #allchecked").is(':checked')) {
+						$("#sbtable input[type=checkbox]").each(function () {
+				        	$(this).prop("checked", true);
+				       	});
+
+					} else {
+				    	$("#sbtable input[type=checkbox]").each(function () {
+				    		$(this).prop("checked", false);
+				        });
+					}
+				});
+				$(".prodelete1").on("click", function() {
+					var is_checked = true;
+
+					$(".prodelete1").each(function(){
+						is_checked = is_checked && $(this).is(":checked");
+					});
+
+					$("#allchecked").prop("checked", is_checked);
+				});
+			});
+
+			//주문하기 부분
+			$(".allbuy").click(function(){
 				
+			});
+			
+			$(".buy").click(function(){
+			});
+			
 			</script>
 		</section>
 	</div>

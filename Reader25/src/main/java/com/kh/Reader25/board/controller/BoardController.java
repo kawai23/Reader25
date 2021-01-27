@@ -822,7 +822,7 @@ public class BoardController {
 			sr.setWriter(value);
 			searchCate = 4;
 		}else if(condition.equals("content")) {
-			sr.setWriter(value);
+			sr.setContent(value);
 			searchCate = 5;
 		}else {
 			sr.setCate(value);
@@ -925,9 +925,12 @@ public class BoardController {
 		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
 			searchCate = 4;
-		}else {
+		}else if(condition.equals("content")) {
 			sr.setContent(value);
 			searchCate = 5;
+		}else {
+			sr.setCate(value);
+			searchCate = 6;
 		}
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -937,6 +940,7 @@ public class BoardController {
 		map.put("book",sr.getBook());
 		map.put("author",sr.getAuthor());
 		map.put("title",sr.getTitle());
+		map.put("cate",sr.getCate());
 		
 		int listCount = bService.getSearchAndSortCount(map);
 		
@@ -2557,14 +2561,12 @@ public class BoardController {
 			int listCount = bService.getListCount(code);
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
-			ArrayList<Board> bList = bService.selectList(pi, code); 
+			ArrayList<Board> bList = bService.selectBookList(pi, code); 
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); 
-			ArrayList<Book> bookList = b_Service.selectList(pi, code); 
 			if (bList != null) {
 				mv.addObject("bList", bList) 
 						.addObject("pi", pi)
 						.addObject("atList", atList)
-						.addObject("bookList", bookList)
 						.setViewName("gobookr");// setViewName view 이름을
 																								// 지정해준다
 			} else {
@@ -2713,6 +2715,7 @@ public class BoardController {
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
 			for(ShoppingBasket sbList : sb) {
 				Book book = b_Service.selectBook(sbList.getBook_no());
+				book.setB_Q1(sbList.getSb_v());
 				Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 				bookList.add(book);
 				atList.add(at);
@@ -2722,20 +2725,4 @@ public class BoardController {
 			mv.setViewName("bookCart");
 			return mv;
 		}
-		@RequestMapping("pcs.bo") 
-		public ModelAndView bookPurchase(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpSession session) {
-			Book book = b_Service.selectBook(b.getB_no());
-			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-			Attachment at = new Attachment();
-			for(Attachment a : atList) {
-				if(a.getAtcLevel() == 0) {
-					at = a;
-				}
-			}
-			mv.addObject("book", book);
-			mv.addObject("at", at);
-			mv.setViewName("bookPurchase");
-			return mv;	
-		}
-
 	}

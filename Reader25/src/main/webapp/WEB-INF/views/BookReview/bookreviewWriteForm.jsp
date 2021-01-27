@@ -61,6 +61,7 @@
 		background: lightgray;
 		text-align: center;
 	}
+	input:focus{outline: 1px solid lightgray;}
 	.file-img>img{
 		max-height:100%;
 		max-width: 100%;

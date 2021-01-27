@@ -33,11 +33,13 @@ select {
 	appearance: none;
 	padding: 2px;
 }
-
+select:focus{
+	outline: 1px solid lightgray;
+}
 select::-ms-expand {
 	display: none;
 }
-
+input:focus{outline: none;}
 .search-div {
 	margin: 0px;
 	padding: 0px;
