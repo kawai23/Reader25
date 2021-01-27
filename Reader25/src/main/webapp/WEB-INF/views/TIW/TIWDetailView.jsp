@@ -754,7 +754,7 @@ textarea{
 
 		var supportval = ${support};
 		var userId = ${ board.userId };
-		
+		console.log("1"+supportval);
 	    if(supportval>0) {
 	        console.log(supportval);
 	        $("#support").prop("src", "resources/images/icon/support.png");

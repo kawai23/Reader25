@@ -450,7 +450,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
-							<c:out value="${ b.bTitle }" />
+							<c:out value="${ t.bTitle }" />
 						</p>
 						</div>
 				</c:forEach>
