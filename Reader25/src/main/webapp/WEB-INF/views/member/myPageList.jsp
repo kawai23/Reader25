@@ -28,7 +28,7 @@
 
 <style>
 
-	th{width: 25%}
+	th{max-width: 15%}
 
 
 </style>
@@ -213,7 +213,7 @@
 						$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
 						
 						
-						console.log(boardNo);
+						
 					}).mouseout(function(){
 						
 						$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
@@ -223,9 +223,13 @@
 						
 						var boardNo = $(this).parent().children('td').eq(1).text();
 						
+						var cpath = "";
 						
+						if(code == 5){
+							cpath = "&code="+code
+						}
 						
-						location.href= path +'?boardNo='+boardNo+'&page=1';
+						location.href= path +'?boardNo='+boardNo+'&page=1'+cpath;
 						
 					});
 					

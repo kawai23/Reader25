@@ -70,7 +70,7 @@
 					<c:if test="${empty list}">
 					
 						<tr>
-							<td colspan="6">조회된 리스트가 없습니다.</td>
+							<td colspan="7">조회된 리스트가 없습니다.</td>
 						</tr>
 					
 					</c:if>
