@@ -533,7 +533,7 @@
 							  
 							    	
 				 			   
-							 location.href='myPointDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
+							 location.href='myBasketDelete.me?inFo='+select_obj+ '&page='+ ${pi.currentPage}+path;
 							    	
 				 			   
 							    

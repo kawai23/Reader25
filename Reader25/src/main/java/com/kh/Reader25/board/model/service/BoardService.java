@@ -252,7 +252,11 @@ public interface BoardService {
 
 	ArrayList<Board> tiwd(int value);
 
+
 	int myBookMarkDelete(String[] lists);
+
+
+	Attachment selectAttachmentzero(int boardNo);
 
 
 

@@ -542,6 +542,13 @@
 		from attachment
 		where atc_status = 'Y' and board_no = #{boardNo}
 	</select>
+	
+	<select id="selectAttachmentzero" resultMap="attachmentResultSet">
+		select *
+		from attachment
+		where board_no = #{boardNo} and atc_status = 'Y' AND ATC_LEVEL = 0
+	</select>
+	
 	<update id="updateAttachment">
 		update attachment
 		set atc_level=#{atcLevel}, atc_origin=#{atcOrigin}, atc_name=#{atcName},

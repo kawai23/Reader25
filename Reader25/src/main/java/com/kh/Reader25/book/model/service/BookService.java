@@ -36,4 +36,8 @@ public interface BookService {
 
 	int deleteBook(int b_no);
 
+	ArrayList<ShoppingBasket> selectSb(String userid);
+
+	int myBasketDelete(String[] lists);
+
 }

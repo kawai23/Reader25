@@ -79,4 +79,15 @@ public class BookDAO {
 		return sqlSession.update("bookMapper.deleteBook", b_no);
 	}
 
+
+	public ArrayList<ShoppingBasket> selectSB(SqlSessionTemplate sqlSession, String userid) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectSB", userid);
+	}
+
+	public int BasketDelete(SqlSessionTemplate sqlSession, String s) {
+		
+		
+		return sqlSession.delete("bookMapper.BasketDelete",s);
+	}
+
 }

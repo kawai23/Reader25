@@ -44,6 +44,8 @@ import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
+
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -2873,17 +2875,21 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo) {
-			Book book = b_Service.selectBook(b.getB_no());
-			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-			Attachment at = new Attachment();
-			for(Attachment a : atList) {
-				if(a.getAtcLevel() == 0) {
-					at = a;
-				}
+		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpServletRequest request) {
+			String userid = ((Member)request.getSession().getAttribute("loginUser")).getId();
+			ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
+			ArrayList<Book> bookList = new ArrayList<Book>();
+			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
+			for(ShoppingBasket sbList : sb) {
+				Book book = b_Service.selectBook(sbList.getBook_no());
+				Attachment at = bService.selectAttachmentzero(book.getBoardNo());
+				bookList.add(book);
+				atList.add(at);
 			}
-			mv.addObject("book", book);
-			mv.addObject("at", at);
+			System.out.println(bookList);
+			System.out.println(atList);
+			mv.addObject("book", bookList);
+			mv.addObject("at", atList);
 			mv.setViewName("bookCart");
 			return mv;
 		}

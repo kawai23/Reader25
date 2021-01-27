@@ -2,15 +2,16 @@ package com.kh.Reader25.book.model.service;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.book.model.dao.BookDAO;
+import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
@@ -92,6 +93,36 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public int deleteBook(int b_no) {
 		return b_DAO.deleteBook(sqlSession, b_no);
+	}
+
+
+	@Override
+	public ArrayList<ShoppingBasket> selectSb(String userid) {
+		return b_DAO.selectSB(sqlSession, userid);
+	}
+
+	
+	
+	@Transactional
+	@Override
+	public int myBasketDelete(String[] lists) {
+		
+		int result = 0;
+
+		for (String s : lists) {
+
+			result += b_DAO.BasketDelete(sqlSession, s);
+
+		}
+		
+		
+		
+		if (result != lists.length) {
+
+			throw new BookException("북마크 삭제 실패");
+		}
+		
+		return result;
 	}
 
 }

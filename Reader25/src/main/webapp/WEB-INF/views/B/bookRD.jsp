@@ -542,12 +542,12 @@ section {
              }else{
 	             $.ajax({
 	                url: 'insertCart.tr',
-	                data:{price:price, book_no:book_no, sb_v:amount, user_id:user_id},
+	                data:{price:price, book_no:book_no, sb_v:amount, user_id:user_id, board_no:boardNo},
 	                success: function(data){
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 						if(check){
-							location.href="<%=request.getContextPath()%>/cart.bo";
+							location.href="<%=request.getContextPath()%>/cart.bo?boardNo="+ boardNo + "&b_no= "+ book_no;
 						}
 	                }
 	             });

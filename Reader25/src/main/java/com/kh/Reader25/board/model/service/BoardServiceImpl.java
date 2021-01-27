@@ -684,6 +684,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+
 	public int MyBookMarkCount(SearchCondition sc) {
 		
 		return bDAO.MyBookMarkCount(sqlSession, sc);
@@ -719,6 +720,11 @@ public class BoardServiceImpl implements BoardService {
 
 	
 	
+
+	public Attachment selectAttachmentzero(int boardNo) {
+		return bDAO.selectAttachmentzero(sqlSession, boardNo);
+	}
+
 
 	
 	

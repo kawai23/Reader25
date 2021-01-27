@@ -22,8 +22,6 @@
      max-width: 80%;
 	}
 	.lu-table{
-
-	
 	margin-left: 15%;
     margin-right: 50%;
 	}

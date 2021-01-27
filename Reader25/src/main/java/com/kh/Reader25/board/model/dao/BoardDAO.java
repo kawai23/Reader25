@@ -624,11 +624,18 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.tiwm", value);
 	}
 
+
 	public int BookMarkDelete(SqlSessionTemplate sqlSession, String s) {
 		
 		return sqlSession.delete("boardMapper.BookMarkDelete",s);
 
 	}
+
+	public Attachment selectAttachmentzero(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectAttachmentzero", boardNo);
+	}
+
+
 
 
 
