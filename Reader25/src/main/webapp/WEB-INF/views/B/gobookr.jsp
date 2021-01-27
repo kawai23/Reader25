@@ -278,7 +278,6 @@ input:focus{outline: none;}
 		<%
 			ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
 			ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
-			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
 		%>
 		<div class="list-all-div">
 		<%if(bList != null && bList.size() > 0){ %>
@@ -294,12 +293,12 @@ input:focus{outline: none;}
 						<%} %>
 					</div>
 					<input type="hidden" id="boardNo" value="<%= bList.get(i).getBoardNo()%>">
-					<input type="hidden" id="b_no" value="<%=bookList.get(i).getB_no()%>">
+					<input type="hidden" id="b_no" value="<%=bList.get(i).getBook().getB_no()%>">
 					<div class="content-div">
 						<ul class="content-ul">
 							<li class="title-li"><%=bList.get(i).getbTitle() %></li>
-							<li class="book-li"><%= bookList.get(i).getB_name() %></li>
-							<li class="author-li"><%= bookList.get(i).getAuthor() %></li>
+							<li class="book-li"><%= bList.get(i).getBook().getB_name() %></li>
+							<li class="author-li"><%= bList.get(i).getBook().getAuthor() %></li>
 							<li class="date-li"><%= bList.get(i).getUpdateDay() %></li>
 						</ul>
 					</div>

@@ -636,6 +636,12 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectAttachmentzero", boardNo);
 	}
 
+	public ArrayList<Board> selectBookList(SqlSessionTemplate sqlSession, PageInfo pi, int code) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBookList", code, rowBounds);
+	}
+
 
 
 

@@ -313,10 +313,10 @@ select::-ms-expand {
 			$('#like-sort').click(function(){sort('like');});
 			$('#count-sort').click(function(){sort('count');});
 			function sort(value){
-				var searchConditon = $('#searchConditon').val();
+				var searchCondition = $('#searchCondition').val();
 				var searchValue = $('#search-input').val();
 				
-				location.href="searchsort.re?sortValue=" + value +"&searchConditon=" + searchConditon +"&searchValue=" + searchValue;
+				location.href="searchsort.re?sortValue=" + value +"&searchCondition=" + searchCondition +"&searchValue=" + searchValue;
 			}
 		</script>
 		

@@ -256,6 +256,8 @@ public interface BoardService {
 	
 	Attachment selectAttachmentzero(int boardNo);
 
+	ArrayList<Board> selectBookList(PageInfo pi, int code);
+
 
 
 

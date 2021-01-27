@@ -19,7 +19,7 @@
   		min-width: 1000px;
   	}
 	.title-div{
-		width: 60%;
+		width: 80%;
 		margin: auto;
 		margin-top: 10px;
 		padding: 0;
@@ -29,7 +29,7 @@
 		background: rgba(235, 235, 235, 1);
 		text-align: center;
 		vertical-align:middle;
-		width: 60px;
+		width: 50px;
 		height: 27px;
 		border: 1px solid rgba(235, 235, 235, 1);
 		border-radius: 3px 0px 0px 3px;
@@ -38,9 +38,16 @@
 	.title-div>input{
 		height: 25px;
 		margin-left: -7px;
-		width: 85%;
+		width: 75%;
 		border:  1px solid rgba(235, 235, 235, 1);
 	}
+	.title-div>select{
+		height: 29px;
+		border:  1px solid rgba(235, 235, 235, 1);
+		margin-left: -6px;
+		color: rgba(85, 83, 83, 1);		
+	}
+	input:focus{outline:none;}
 	.content{
 		min-width: 1000px;
 		width: 80%;
@@ -241,6 +248,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="b-amount-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>수량은 최소 1개 부터 등록 가능합니다</p>
+				<br>
+				<button class="modal-close" value="amount">Close</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -260,6 +277,19 @@
 			<div class="title-div">
 				<div class="title">title</div>
 				<input type="text" name="bTitle" id="bTitle" placeholder="제목을 작성하세요">
+				<select name="cate">
+					<option selected="selected" value="null">분류</option>
+					<option value="총류">총류</option>
+					<option value="철학">철학</option>
+					<option value="종교">종교</option>
+					<option value="사회과학">사회 과학</option>
+					<option value="자연과학">자연 과학</option>
+					<option value="기술과학">기술 과학</option>
+					<option value="예술">예술</option>
+					<option value="언어">언어</option>
+					<option value="문학">문학</option>
+					<option value="역사">역사</option>
+				</select>
 			</div>
 				<div class="content">
 					<div class="file-div">
@@ -284,11 +314,11 @@
 					</tr>
 					<tr>
 						<td>금액</td>
-						<td><input type="number" class="book-input" name="b_price" id="price" placeholder="금액을 입력하세요"></td>
+						<td><input type="number" class="book-input" name="b_price" id="price" placeholder="금액을 입력하세요" min="0"></td>
 					</tr>
 					<tr>
 						<td>수량</td>
-						<td><input type="number" class="book-input" name="b_Q1" id="amount" value="1"></td>
+						<td><input type="number" class="book-input" name="b_Q1" id="amount" value="1" min="1"></td>
 					</tr>
 					</table>
 				</div>
@@ -319,6 +349,7 @@
 				publisher = $('#publisher').val();
 				amount = $('#amount').val();
 				price = $('#price').val();
+				amount = $('#amount').val();
 				
 				if(title == ''){
 					event.preventDefault();
@@ -350,6 +381,11 @@
 					this.blur();
 					$('#b-price-modal').show();
 					$('#b-price-modal .modal').show();
+				}else if(amount < 1){
+					event.preventDefault();
+					this.blur();
+					$('#b-amount-modal').show();
+					$('#b-amount-modal .modal').show();
 				}else{
 					$('#write-book').submit();
 				}

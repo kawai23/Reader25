@@ -2561,14 +2561,12 @@ public class BoardController {
 			int listCount = bService.getListCount(code);
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
-			ArrayList<Board> bList = bService.selectList(pi, code); 
+			ArrayList<Board> bList = bService.selectBookList(pi, code); 
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); 
-			ArrayList<Book> bookList = b_Service.selectList(pi, code); 
 			if (bList != null) {
 				mv.addObject("bList", bList) 
 						.addObject("pi", pi)
 						.addObject("atList", atList)
-						.addObject("bookList", bookList)
 						.setViewName("gobookr");// setViewName view 이름을
 																								// 지정해준다
 			} else {

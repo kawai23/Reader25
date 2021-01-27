@@ -4,6 +4,7 @@ package com.kh.Reader25.board.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -710,6 +711,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Attachment selectAttachmentzero(int boardNo) {
 		return bDAO.selectAttachmentzero(sqlSession, boardNo);
+	}
+
+	@Override
+	public ArrayList<Board> selectBookList(PageInfo pi, int code) {
+		return bDAO.selectBookList(sqlSession, pi, code);
 	}
 
 	

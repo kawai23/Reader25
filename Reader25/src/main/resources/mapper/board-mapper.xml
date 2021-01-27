@@ -649,7 +649,7 @@
 			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by b.board_no desc
 		</if>
 		<if test="sortValue eq 'count'">
 			order by b_count desc
@@ -1152,9 +1152,18 @@
 		<if test="cate != null">
 			and cate =#{cate}
 		</if>
-		order by board_no desc
+		order by b.board_no desc
 	</select>
 	
+	<select id="selectBookList" resultMap="bookSearchResultSet">
+		select *
+		from board b join book bo
+		using (board_no)
+		where b_status = 'Y' and code = 3 
+		order by board_no desc
+		
+	</select>
+		
 	<resultMap type="Board" id="bookSearchResultSet">
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="bTitle" column="B_TITLE"/>

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,6 @@ section {
 	color: rgb(100, 100, 100);
 	margin-left: 10px;
 }
-
 .count-p {
 	float: right;
 	margin-right: 10px
@@ -66,15 +66,7 @@ section {
 	padding:0;
 	
 }
-/* .slide ul li {
-	display: inline-block;
-	width: 400px;
-} */
-/* .slide ul li img{
-	max-height: 250px;
-	max-width: 300px;
-	margin-right: 100px;
-} */
+
 .slide ul li {
 	display: inline-block;
 	width: 400px;
@@ -109,7 +101,6 @@ section {
 	margin: auto;
 	max-width: 1000px;
 }
-
 .title {
 	display: inline-block;
 	margin: auto;
@@ -119,27 +110,23 @@ section {
 	margin-left: 20px;
 	margin-bottom: 10px;
 }
-.tags{margin-left: 10px; margin-bottom: 20px;}
-.tag {
-	display: inline;
-	margin: 10px;
-	margin-right: 0px;
-	color: gray;
-	font-size: 13px;
-}
-
-#quote1 {
-	float: left;
-}
-
-#quote2 {
-	float: right;
-}
-
-.wise-content {
-	display: inline-block;
+.book-div{
+	min-height: 130px; 
+	width:80%;
+	max-width: 1000px;
+	margin:auto;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
+.book-table{
+	min-width: 60%;
+	border-left: 5px solid rgba(245, 113, 92, 0.7);
+	padding-left: 20px;
+}
+.book-table tr{ height: 40px; margin-top: 10px;}
+.book-table td{ width: 100px;}
+.book-info{min-width: 100px; height:40px; padding-left: 10px;}
+#amount-option{border: 1px solid lightgray;}
 /* 내용박스*/
 .rectangle-box {
 	max-width: 1000px;
@@ -147,9 +134,10 @@ section {
 	border-top: 1px solid rgb(200, 200, 200);
 	border-bottom: 1px solid rgb(200, 200, 200);
 	margin: auto;
+	margin-top: 30px;
 }
 .contents {
-	height: 448px;
+	min-height: 100px;
 	font-size: 20px;
 	color: #000000;
 	border-bottom: 1px solid rgb(200, 200, 200);
@@ -458,19 +446,7 @@ section {
 		</div>
 		 <!---------------------------------- 책제목 ------------------------------------>
       <div class="info-box">
-	         <h3 class="title">책제목: ${ board.bTitle }</h3>
-	         <div class="tags">
-		         <p class="tag">#제목</p>
-		         <span class="info" id="author">${book.b_name}</span>
-		         <p class="tag">#작가</p>
-		         <span class="info" id="sort">${book.author }</span> <br>
-		         <p class="tag">거래자</p>
-		         <span class="info" id="sort">${board.userId }</span>
-		         <p class="tag">수량</p>
-		         <span class="info" id="sort">${book.b_Q1 }</span>
-		         <p class="tag">금액</p>
-		         <span class="info" id="sort">${book.b_price }</span> 
-	         </div>
+	         <h3 class="title">${ board.bTitle }</h3>
       </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
       <div class="book-box">
@@ -535,7 +511,8 @@ section {
              var boardNo = '${board.boardNo}';
              var book_no = '${book.b_no}';
              var price = ${book.b_price};
-             var amount = ${book.b_Q1};
+             var amount = $('#amount-option').val();
+             
              if(user_id == ''){
             	 $('#login-modal').show();
              	$('#login-modal .modal').show();
@@ -559,18 +536,54 @@ section {
             	 $('#login-modal').show();
              	$('#login-modal .modal').show();
              }else{
-            	location.href="<%=request.getContextPath()%>/pcs.bo?b_no=" +${book.b_no};
+            	 var amount = $('#amount-option').val();
+            	location.href="<%=request.getContextPath()%>/pcs.bo?b_no=" +${book.b_no} +"&b_Q2=" + amount;
              }
          });
          </script>
       </div>
      
       <!---------------------------------- 내용박스 ------------------------------------>
-      <div class="rectangle-box"> 
+     
+	  <div class="book-div">
+			<table class="book-table">
+				<tr>
+					<td>책 제목</td>
+					<td class="book-info">${book.b_name }</td>
+				</tr>
+				<tr>
+					<td>작가</td>
+					<td class="book-info">${book.author }</td>
+				</tr>
+				<tr>
+					<td>출판사</td>
+					<td class="book-info">${book.b_Q2 }</td>
+				</tr>
+				<tr>
+					<td>금액</td>
+					<td class="book-info">${book.b_price }</td>
+				</tr>
+				<tr>
+					<td>수량</td>
+					<td>
+						<c:if test="${book.b_Q1  > 1}">
+							<select class="book-info" id="amount-option" name="b_Q1">
+								<c:forEach begin="1" end="${book.b_Q1 }" var="i">
+									<option value="${i }">${i }</option>
+								</c:forEach>
+							</select>
+						</c:if>
+						<c:if test="${book.b_Q1  <= 1}">
+							1
+						</c:if>
+					</td>
+				</tr>
+			</table>
+		</div>
+	  <div class="rectangle-box"> 
          <div class="contents">${board.bContent}</div>
       </div>
-		
-		<!---------------------------------- 리뷰 ------------------------------------>
+		<!---------------------------------- 댓글 ------------------------------------>
 		<div class="comment-box">
 			<div class="commentList">
 			</div>
