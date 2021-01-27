@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-
+<script src="//code.jquery.com/jquery.min.js"></script>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -22,13 +19,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 
 
 <style>
 
-	th{max-width: 15%}
+	th{max-width: 16%}
 
 
 </style>
@@ -47,12 +46,7 @@
  	  <div class="col-sm-2"></div>
  	  
  	  
- 	  
- 	  
- 	   <%@ include file="../common/mySideMenubar.jsp"%> 
-
-			
-	  
+ 	  <%@ include file="../common/mySideMenubar.jsp"%> 
 
 	  
 	  
@@ -62,14 +56,18 @@
 	  
 	   <div class="col-sm-6" style="border: 1px solid black;" >
 	   
-	   <table id="mytable"  class="table table-bordred table-striped" >
+	   
+	   
+	   <table id="mytable" class="table table-bordred table-striped" >
 
 					<thead>
 
 	 					<tr>
-							<th><input type="checkbox" id="checkall" /></th>
-							<th>번호</th>
+							<th style="max-width: 20px"><input type="checkbox" id="checkall" /></th>
+							<th>북마크번호</th>
 							<th>제목</th>
+							<th>글쓴이</th>
+							<th>좋아요</th>
 							<th>조회수</th>
 							
 							
@@ -90,17 +88,27 @@
 						<c:forEach var="b" items="${ list }">
 
 							<tr >
-								<td><input type="checkbox"  name="mInfo" value="${ b.boardNo }" ></td>
+								<td ><input type="checkbox"  name="mInfo" value="${ b.bookNo }" ></td>
 								
 								
 								<td class="contentTR">${ b.boardNo }</td>
+								<td style="display: none;" class="contentTR">${ b.code }</td>
+								
 								<td class="contentTR">${ b.bTitle }</td>
 								
+								<td class="contentTR">${ b.userId }</td>
 								
+								<td class="contentTR">${ b.bLike }</td>
 								<td class="contentTR">${ b.bCount }</td>
+					
 								
+
+									
+									
 								
 							</tr>
+							
+							
 							
 							
 							</c:forEach>
@@ -112,6 +120,10 @@
 					</tbody>
 
 				</table>
+				
+				
+				
+				
 				
 				<div style="text-align: left ; ">
 				
@@ -153,102 +165,75 @@
 						
 			
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<script >
-				
-				
-
+			
 
 				
 				
 				
 				
 				
-				$(function(){
+		<script>
+		
+
+		$(function(){
+			
+
+				$('#bm').addClass('active');
+				
+
+			
+			});
+		
+		
+			
+
+
+
+			
+
+
+
+				
+				
+
+				
+				
+				$('.contentTR').mouseenter(function(){
 					
-					var code = ${code};
+					$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
 					
+					
+					
+				}).mouseout(function(){
+					
+					$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
+					
+					
+				}).click(function(){
+					
+					
+					
+					var boardNo = $(this).parent().children('td').eq(1).text();
+					var code =$(this).parent().children('td').eq(2).text();
 					var path = "";
 					
-					
-					switch (code) {
-					
-					case 1:
-						
-						
-						$('#c1').addClass('active');
-						path="idetail.in";
-						break;
-						
-					case 2:
-						$('#c2').addClass('active');
-						path="redetail.re";
-						break;
-						
-					case 3:
-						$('#c3').addClass('active');
-						path="redetail.bo";
-						break;
-						
-					case 5:
-						$('#c5').addClass('active');
-						path="TIWdetail.to";
-						break;
-
-					
+					if(code == 5){
+						path = "TIWdetail.to?code="+code+"&"
+					}else if(code == 2){
+						path = "redetail.re?"
 					}
 					
 					
-					$('.contentTR').mouseenter(function(){
-						
-						$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
-						
-						
-						
-					}).mouseout(function(){
-						
-						$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
-						
-						
-					}).click(function(){
-						
-						var boardNo = $(this).parent().children('td').eq(1).text();
-						
-						var cpath = "";
-						
-						if(code == 5){
-							cpath = "&code="+code
-						}
-						
-						location.href= path +'?boardNo='+boardNo+'&page=1'+cpath;
-						
-					});
-					
+					location.href= path +'boardNo='+boardNo+'&page=1';
 					
 				});
 				
+
+
 				
 				
 				
-					
-					
-					
 				
-					
-					
-			
-			
-			
-			
 			
 				
 				$('#search1 li > a').on('click', function() {
@@ -270,7 +255,7 @@
 			    	
 			    	var data = '';
 			    	
-			    	var code = ${code};
+			    	
 			    		
 			    		
 			    	var searchCondition = $('#Search1').text();
@@ -280,7 +265,7 @@
 			    	console.log(data);
 			    
 			    	
- 		    	location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
+ 		    	location.href='myBookMarkList.me?searchCondition='+searchCondition+'&searchValue='+searchValue; 
 			    	 
 			 
 			    
@@ -316,7 +301,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myList.me"></c:set>
+						<c:set var="loc" value="myLikeList.me"></c:set>
 						
  
 				    
@@ -335,7 +320,7 @@
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -361,14 +346,14 @@
 				<c:if test="${ pi.currentPage <= 1 }">
 					 <li  class="disabled">
 						 <a  aria-label="Previous" >
-					        <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+					        <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"><!--  &laquo; --></span>
 					      </a>
 				      </li>
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
-						<c:param name="code" value="${code }"></c:param>
+						
 						
 						
 						<c:if test="${searchValue ne null }">
@@ -403,7 +388,7 @@
 						<c:url var="pagination" value="${ loc }">
 						
 							<c:param name="page" value="${ p }"/>
-							<c:param name="code" value="${code }"></c:param>
+							
 					
 						
 						
@@ -426,7 +411,7 @@
 						<c:if test="${ pi.currentPage >= pi.maxPage }">
 						<li class="disabled">
 							<a  aria-label="Next">
-				       				 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				       				 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true">        <!-- &raquo--></span>
 				      			</a>
 				      			</li>
 						</c:if>
@@ -434,7 +419,7 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage + 1 }"/>
-								<c:param name="code" value="${code }"></c:param>
+								
 								
 								<c:if test="${searchValue ne null }">
 						
@@ -464,7 +449,6 @@
 						<c:if test="${ pi.currentPage < pi.maxPage }">
 							<c:url var="after" value="${ loc }">
 								<c:param name="page" value="${ pi.maxPage }"/>
-								<c:param name="code" value="${code }"></c:param>
 								
 								<c:if test="${searchValue ne null }">
 						
@@ -539,11 +523,8 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
-								
-					        	var code = ${code};
-					        	
-					        	var check = ${ !empty searchValue } ; 
+					      
+					        	var check = ${ !empty searchValue   } ; 
 					        	
 					        	var searchCondition = null;
 					        	
@@ -579,15 +560,13 @@
 							    
 							    
 							    
-							    console.log(select_obj);
-							    
-							    
-							    
-				 			 
+					
+				 			    	
+				 			    	
 								    
-								    location.href='mBlistDelete.me?inFo='+select_obj+"&code=" + code+'&page='+ ${pi.currentPage}+path;
+								    location.href='myBookMarkDelete.me?inFo='+select_obj+'&page='+ ${pi.currentPage}+path;
 							    	
-				 			 
+				 			    
 							    
 
 						});
@@ -599,14 +578,6 @@
 						
 						
 						</script>
-						
-						
-		
-	
-		
-		
-		
-	
 
 
 </body>

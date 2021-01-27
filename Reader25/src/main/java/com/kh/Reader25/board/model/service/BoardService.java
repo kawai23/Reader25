@@ -16,6 +16,7 @@ import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.discuss.model.vo.Discuss;
 
 public interface BoardService {
@@ -228,6 +229,13 @@ public interface BoardService {
 
 	void deleteMark(Bookmarkto mark);
 
+
+	int MyBookMarkCount(SearchCondition sc);
+
+	ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi);
+
+
+
 	ArrayList<Board> recow(int value);
 
 	ArrayList<Board> recom(int value);
@@ -244,6 +252,12 @@ public interface BoardService {
 
 	ArrayList<Board> tiwd(int value);
 
+
+
+	int myBookMarkDelete(String[] lists);
+
+
+
 	ArrayList<Board> selectSearchBook(SearchReview sr, PageInfo pi);
 
 	int getSearchAndSortCountBook(HashMap<String, String> map);
@@ -254,9 +268,11 @@ public interface BoardService {
 
 	ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi);
 	
+
 	Attachment selectAttachmentzero(int boardNo);
 
 	ArrayList<Board> selectBookList(PageInfo pi, int code);
+
 
 
 

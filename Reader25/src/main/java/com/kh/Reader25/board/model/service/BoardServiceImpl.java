@@ -25,6 +25,7 @@ import com.kh.Reader25.board.model.vo.SearchCondition;
 import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
+import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
 @Service("bService")
 public class BoardServiceImpl implements BoardService {
@@ -684,6 +685,45 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+
+
+	public int MyBookMarkCount(SearchCondition sc) {
+		
+		return bDAO.MyBookMarkCount(sqlSession, sc);
+	}
+
+	@Override
+	public ArrayList<Bookmarkto> BookMarkList(SearchCondition sc, PageInfo pi) {
+		
+		return bDAO.BookMarkList(sqlSession, sc,pi);
+	}
+
+	@Transactional
+	@Override
+	public int myBookMarkDelete(String[] lists) {
+		
+		int result = 0;
+
+		for (String s : lists) {
+
+			result += bDAO.BookMarkDelete(sqlSession, s);
+
+		}
+		
+		
+		
+		if (result != lists.length) {
+
+			throw new BoardException("북마크 삭제 실패");
+		}
+		
+		return result;
+	}
+
+	
+	
+
+
 	public ArrayList<Board> selectSearchBook(SearchReview sr, PageInfo pi) {
 		return bDAO.selectSearchBook(sqlSession, sr, pi);
 	}
@@ -713,10 +753,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.selectAttachmentzero(sqlSession, boardNo);
 	}
 
+
 	@Override
 	public ArrayList<Board> selectBookList(PageInfo pi, int code) {
 		return bDAO.selectBookList(sqlSession, pi, code);
 	}
+
 
 	
 	

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<h1 align="center">${ message }</h1>
+	<h1 align="center">${ requestScope['javax.servlet.error.message'] }</h1>
 	<div align="center">
 		<button onclick="history.back();">이전 페이지</button>
 		<button onclick="location.href='<%= request.getContextPath() %>/'">홈으로 돌아가기</button>

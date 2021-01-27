@@ -84,6 +84,7 @@
 								<td><input type="checkbox"  name="mInfo" value="${ b.pNo }" ></td>
 								
 								<td >${  b.pNo }</td>
+								
 								<td >${ b.pCon }</td>
 								<td >${ b.point }</td>
 								

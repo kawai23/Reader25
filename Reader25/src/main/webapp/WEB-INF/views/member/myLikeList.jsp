@@ -27,7 +27,7 @@
 
 <style>
 
-	th{width: 16%}
+ 	th{max-width: 16%} 
 
 
 </style>
@@ -96,8 +96,8 @@
 					<thead>
 
 	 					<tr>
-							<th><input type="checkbox" id="checkall" /></th>
-							<th>번호</th>
+							<th style="max-width: 20px"><input type="checkbox" id="checkall" /></th>
+							<th>좋아요번호</th>
 							<th>제목</th>
 							<th>글쓴이</th>
 							<th>좋아요</th>

@@ -43,7 +43,9 @@ import com.kh.Reader25.board.model.vo.Support;
 import com.kh.Reader25.board.model.vo.TWITopWriter;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
+
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
+
 import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
@@ -2014,8 +2016,8 @@ public class BoardController {
 
 
 	
-	@RequestMapping("myLikeDelete.me")
-	public ModelAndView myLikeDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	@RequestMapping("myBookMarkDelete.me")
+	public ModelAndView myBookMarkDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 	
 
 		
@@ -2037,7 +2039,7 @@ public class BoardController {
 		
 		
 		
-		int result = bService.myLikeDelete(lists);
+		int result = bService.myBookMarkDelete(lists);
 		
 		
 
@@ -2062,7 +2064,7 @@ public class BoardController {
 			
 			
 			
-			mv.setViewName("redirect:myLikeList.me");
+			mv.setViewName("redirect:myBookMarkList.me");
 		} else {
 
 			throw new BoardException("좋아요 리스트 삭제 실패");
@@ -2179,6 +2181,165 @@ public class BoardController {
 	}
 	
 	
+	
+	
+	@RequestMapping("myBookMarkList.me")
+	public ModelAndView myBookMarkList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+		// 마이페이지에서 검색
+		
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+	 	
+	 	String mId = loginUser.getId();
+		
+	 	
+	 	
+
+		
+		int currentPage = 1 ;
+		
+		if(page != null) {
+			
+			currentPage = page;
+			
+		}
+		
+		SearchCondition sc = new SearchCondition();
+		
+		
+		
+	
+		sc.setmId(mId);
+		
+		
+		String condition =null;
+		
+		String value =null;
+		
+		if(searchValue != null) {
+			
+			
+			
+			condition =searchCondition;
+			
+			value =  searchValue;
+			
+			
+			if (condition.equals("Title")) {
+				
+				sc.setTitle(value);
+			}else if (condition.equals("내용")) {
+				
+				sc.setContent(value);
+			}
+		}
+		
+		
+		
+		System.out.println("sc= " +sc);
+		
+		
+		try {
+			int listCount = bService.MyBookMarkCount(sc);
+			
+			System.out.println("listcount= "+ listCount);
+			
+			
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			
+			ArrayList<Bookmarkto> list = bService.BookMarkList(sc,pi);
+			
+			System.out.println(list);
+			
+			mv.addObject("list", list);
+			
+			mv.addObject("pi", pi);
+			
+			
+			
+			mv.addObject("searchCondition",condition);
+				
+			mv.addObject("searchValue",value);
+			
+		
+			
+			
+			
+			mv.setViewName("myBookmarkList");
+			
+			
+		} catch (BoardException e) {
+			
+			
+			throw new BoardException("마이페이지 좋아요 리스트 실패");
+			
+		}
+
+		
+
+		return mv;
+
+	}
+	
+	@RequestMapping("myLikeDelete.me")
+	public ModelAndView myLikeDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	
+
+		
+		
+		
+		
+		String list = inFo;
+		
+		String [] lists = list.split(",");
+		
+		for(String s : lists) {
+			
+			System.out.println(s);
+			
+			
+			
+		}
+		
+		
+		
+		
+		int result = bService.myLikeDelete(lists);
+		
+		
+
+	
+
+		if (result > 0) {
+
+			
+			
+			mv.addObject("page", page);
+			
+
+			
+			
+			if(searchValue!=null) {
+
+				mv.addObject("searchCondition",searchCondition);
+					
+				mv.addObject("searchValue",searchValue);
+			}
+		
+			
+			
+			
+			mv.setViewName("redirect:myLikeList.me");
+		} else {
+
+			throw new BoardException("좋아요 리스트 삭제 실패");
+		}
+
+		return mv;
+
+	}
 	
 	
 	@RequestMapping("myLikeList.me")
@@ -2463,6 +2624,14 @@ public class BoardController {
 		return mv;
 
 	}
+
+	
+	
+	
+	
+	
+	
+	//===============================================
 	
 	
 	@RequestMapping("searchComplete.me")
