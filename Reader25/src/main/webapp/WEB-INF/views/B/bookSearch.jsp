@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*" %>
+<%@ page import="java.util.ArrayList, com.kh.Reader25.board.model.vo.*,com.kh.Reader25.book.model.vo.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -13,13 +13,12 @@
 section {
 	background: rgba(246, 246, 246, 1);
 	width: 80%;
-	margin: auto;
+	margin:auto;
 	min-width: 1000px;
 	border: 1px solid rgba(246, 246, 246, 1);
 }
-
 .top-div {
-	width: 500px;
+	width: 440px;
 	height: 50px;
 	margin: auto;
 }
@@ -27,19 +26,20 @@ section {
 select {
 	font-family: inherit;
 	font-size: 15px;
-	background: url('${contextPath}/resources/images/bookreview/arrow3.png') no-repeat 100%
-		50%;
+	appearance: none;
+	background: url('${contextPath}/resources/images/mark/arrow4.png') no-repeat 100% 60%;
 	border-radius: 0px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	padding: 2px;
 }
-
+select:focus{
+	outline: 1px solid lightgray;
+}
 select::-ms-expand {
 	display: none;
 }
-
 .search-div {
 	margin: 0px;
 	padding: 0px;
@@ -51,13 +51,12 @@ select::-ms-expand {
 	border: none;
 	width: 70px;
 }
-
 #search-input {
 	background: none;
 	border: none;
 	width: 220px;
 }
-
+input:focus{outline: none;}
 #search-icon {
 	float: right;
 	width: 20px;
@@ -86,15 +85,14 @@ select::-ms-expand {
 	cursor: pointer;
 }
 
-#like-sort {
+#count-sort {
 	border-left: 1px solid black;
-	border-right: 1px solid black;
 	padding-left: 5px;
-	padding-right: 5px;
 }
 
 .list-all-div {
-	width: 90%;
+	width: 70%;
+	max-width: 1000px;
 	min-height: 800px;
 	margin: auto;
 	margin-top: 20px;
@@ -107,9 +105,8 @@ select::-ms-expand {
 	height: 300px;
 	display: inline-block;
 	margin-left: 1%;
-	margin-top: 20px;
 }
-
+.list-div:hover{cursor:pointer;}
 .img-div {
 	background: rgba(229, 229, 229, 1);
 	height: 200px; 
@@ -123,9 +120,15 @@ select::-ms-expand {
 	max-width: 100%;
 }
 
+.list-img {
+	display:inline-block;
+	height: auto;
+	margin:auto;
+}
+
 .content-div {
-	background: white;
 	height: 100px;
+	line-height: 110%;
 }
 
 .content-ul {
@@ -139,46 +142,29 @@ select::-ms-expand {
 	margin: 0;
 	margin-top: 2px;
 	width: 100%;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
 }
 
 .title-li {
 	font-weight: bold;
-	overflow: hidden;
-	text-overflow:ellipsis;
-	white-space: nowrap;
-	height: 18px;
-	width: 180px;
 }
-
-.tag-li {
-	font-size: 13px;
-	color: rgba(245, 113, 92, 1);
-}
-
-.writer-li {
+.date-li {
 	font-size: 10px;
-}
-
-.wise-li {
-	font-size: 13px;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	white-space: nowrap;
-	height: 15px;
-	width: 190px;
 }
 .paging{width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
 .paging-div {
 	display:inline-block;
 	max-width: 250px;
-	margin-top: 50px;
+	margin-top: 20px;
 }
 .paging-div>a, .paging-div>p {
 	padding: 0;
 	margin: 0;
 	display: inline-block;
-	width: 30px;
-	height: 30px;
+	width: 26px;
+	height: 26px;
 	color: rgba(85, 83, 83, 1);
 	font-size: 17px;
 	background: rgba(229, 229, 229, 1);
@@ -196,7 +182,6 @@ select::-ms-expand {
 	background: rgba(39, 50, 56, 1);
 	color: white;
 }
-
 .write-btn {
 	position: fixed;
 	border-radius: 50%;
@@ -206,6 +191,7 @@ select::-ms-expand {
 	text-align: center;
 	top: 90%;
 	right: 12%;
+	text-decoration: underline;
 }
 
 .write-btn>img {
@@ -228,23 +214,18 @@ select::-ms-expand {
          case 1: select[0] = "selected"; break;
          case 2: select[1] = "selected"; break;
          case 3: select[2] = "selected"; break;
-         case 4: select[3] = "selected"; break;
-         case 5: select[4] = "selected"; break;
-         case 6: select[5] = "selected"; break;
          }
       }
    %>
+		<br>
 		<div class="top-div">
 			<div class="search-div">
 				<select class="search-option" name="searchCondition" id="searchCondition">
-					<option <%=select[0] %> value="title">title</option>
+					<option <%=select[0] %> value="book">title</option>
 					<option <%=select[1] %> value="author">author</option>
-					<option <%=select[2] %> value="book">book</option>
-					<option <%=select[3] %> value="writer">writer</option>
-					<option <%=select[4] %> value="content">content</option>
-					<option <%=select[5] %> value="category">분류</option>
+					<option <%=select[2] %> value="category">분류</option>
 				</select>
-				<input type="text" id="search-input" value="${ searchValue }">
+				<input type="text" id="search-input" value="${searchValue }">
 				<span class="img-span">
 					<img src="<%=request.getContextPath() %>/resources/images/bookreview/search.png" id="search-icon"/>
 				</span>
@@ -264,8 +245,7 @@ select::-ms-expand {
 				function search(){
 					var searchCondition = $('#searchCondition').val();
 					var searchValue = $('#search-input').val();
-					
-					location.href="<%=request.getContextPath()%>/search.re?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
+					location.href="<%=request.getContextPath()%>/search.bo?searchCondition=" + searchCondition +"&searchValue=" + searchValue;
 				}
 				$(function(){
 					var sc = '';
@@ -282,133 +262,115 @@ select::-ms-expand {
 					});
 				});
 			</script>
+			
 			<div class="sort-div">
-				<% String sortValue = (String)request.getAttribute("sortValue"); %>
-				<% if(sortValue != null){ %>
-					<% if(sortValue.equals("lated")){ %>
-						<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;" >최신순</h4>
+				<%String sortValue = (String)request.getAttribute("sortValue"); %>
+				<%if(sortValue != null){ %>
+					<%if(sortValue.equals("lated")){ %>
+						<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;">최신순</h4>
+						<h4 class="sort-h4" id="count-sort">조회순</h4>
 					<%}else{ %>
 						<h4 class="sort-h4" id="lated-sort">최신순</h4>
-					<%} %>
-					<% if(sortValue.equals("like")){ %>
-						<h4 class="sort-h4" id="like-sort" style="font-weight: bolder;">좋아요</h4>
-					<%}else{ %>			
-						<h4 class="sort-h4" id="like-sort">좋아요</h4>
-					<%} %>
-					<% if(sortValue.equals("count")){ %>
 						<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
-					<%}else{ %>
-						<h4 class="sort-h4" id="count-sort">조회순</h4>
 					<%} %>
 				<%}else{ %>
 					<h4 class="sort-h4" id="lated-sort">최신순</h4>
-					<h4 class="sort-h4" id="like-sort">좋아요</h4>
 					<h4 class="sort-h4" id="count-sort">조회순</h4>
 				<%} %>
 			</div>
 		</div>
-		
 		<script>
 			$('#lated-sort').click(function(){sort('lated');});
-			$('#like-sort').click(function(){sort('like');});
 			$('#count-sort').click(function(){sort('count');});
 			function sort(value){
 				var searchConditon = $('#searchConditon').val();
 				var searchValue = $('#search-input').val();
 				
-				location.href="searchsort.re?sortValue=" + value +"&searchConditon=" + searchConditon +"&searchValue=" + searchValue;
+				location.href="searchsort.bo?sortValue=" + value +"&searchConditon=" + searchConditon +"&searchValue=" + searchValue;
 			}
 		</script>
-		
+		<%
+			ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
+			ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
+		%>
 		<div class="list-all-div">
-			
-			<%
-				ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
-				ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
-				String[] wiseArr = (String[])request.getAttribute("wiseArr");
-				String[] contentArr = (String[])request.getAttribute("contentArr");
-			%>
-			<% for(int i = 0; i < bList.size();i++){ %>
+		<%if(bookList.size() != 0 || !bookList.isEmpty()){ %>
+			<%for(int i = 0; i < bookList.size(); i++){ %>
 				<div class="list-div">
 					<div class="img-div">
-						<%for(Attachment at: atList){%>
-							<%if(bList.get(i).getBoardNo() == at.getBoardNo()){ %>
-								<img class="list-img" src="resources/buploadFiles/<%=at.getAtcName()%>">
+						<%for(int j = 0; j < atList.size(); j++){ %>
+							<%if(bList.get(i).getBoardNo() == atList.get(j).getBoardNo()) {%>
+								<img src="resources/buploadFiles/<%=atList.get(j).getAtcName()%>">
 							<%}else{ %>
-								<img class="list-img">
+								<img>
 							<%} %>
 						<%} %>
 					</div>
-					<input type="hidden" id="boardNo" value="<%=bList.get(i).getBoardNo()%>">
+					<input type="hidden" id="boardNo" value="<%= bList.get(i).getBoardNo()%>">
+					<input type="hidden" id="b_no" value="<%=bookList.get(i).getB_no()%>">
 					<div class="content-div">
 						<ul class="content-ul">
-							<li class="title-li"><%=bList.get(i).getbTitle()%></li>
-							<li class="tag-li">
-								#<%=bList.get(i).getUserId() %> 
-								<% if(!bList.get(i).getCate().equals("null")){ %>
-								#<%=bList.get(i).getCate() %>
-								<%} %>
-							</li>
-							<li class="writer-li"><%=bList.get(i).getUserId() %></li>
-							<li class="wise-li">
-								<%=wiseArr[i] %>
-								<%if(wiseArr[i].equals("")){ %>
-									<%=contentArr[i] %>
-								<%} %>
-							</li>
+							<li class="title-li"><%=bList.get(i).getbTitle() %></li>
+							<li class="book-li"><%= bookList.get(i).getB_name() %></li>
+							<li class="author-li"><%= bookList.get(i).getAuthor() %></li>
+							<li class="date-li"><%= bList.get(i).getUpdateDay() %></li>
 						</ul>
 					</div>
 				</div>
+				<%} %>
+			<%}else{ %>
+					책방 리스트가 없습니다.
 			<%} %>
 		</div>
-		
-		<script>
-			$('.list-div').on('click',function(){
+      <script>
+  			$('.list-div').on('click',function(){
 				var boardNo = $(this).children('#boardNo').val();
-				location.href = "redetail.re?boardNo="+boardNo+"&page="+${pi.currentPage};
+				var b_no = $(this).find('#b_no').val();
+				location.href = "redetail.bo?boardNo="+boardNo+"&page="+${pi.currentPage} + "&b_no=" + b_no;
 			}).mouseenter(function(){
-				$(this).css({'cursor':'pointer','box-shadow':'2px 2px 2px 2px lightgray', });
+				$(this).find('.title-li').css({'text-decoration':'underline', 'background':' rgba(220, 220, 220, 1)'});
 			}).mouseout(function(){
-				$(this).css('box-shadow','none');
+				$(this).find('.title-li').css({'text-decoration':'underline', 'background':'none'});
 			});
-		</script>
-		<div class="paging">
-			<div class="paging-div">
-				<!-- 이전 -->
-				<c:if test="${ pi.currentPage <=1 }">
-					<p>&lt;</p>
+      </script>
+      <div class="paging">
+		<div class="paging-div">
+			<!-- 이전 -->
+			<c:if test="${ pi.currentPage <=1 }">
+				<p>&lt;</p>
+			</c:if>
+			<c:if test="${ pi.currentPage > 1 }">
+				<c:url var="before" value="${ loc }">
+					<c:param name="page" value="${ pi.currentPage -1 }"/>
+				</c:url>
+				<a href="${ before }">&lt;</a>
+			</c:if>
+			<!-- 번호 -->
+			<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+				<c:if test="${ pi.currentPage eq p }">
+					<p>${ p }</p>
 				</c:if>
-				<c:if test="${ pi.currentPage > 1 }">
-					<c:url var="before" value="${ loc }">
-						<c:param name="page" value="${ pi.currentPage -1 }"/>
+				<c:if test="${ pi.currentPage ne p }">
+					<c:url var="pNo" value="${ loc }">
+						<c:param name="page" value="${ p }"/>
 					</c:url>
-					<a href="${ before }">&lt;</a>
+					<a href="${ pNo }">${ p }</a>
 				</c:if>
-				<!-- 번호 -->
-				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-					<c:if test="${ pi.currentPage eq p }">
-						<p>${ p }</p>
-					</c:if>
-					<c:if test="${ pi.currentPage ne p }">
-						<c:url var="pNo" value="${ loc }">
-							<c:param name="page" value="${ p }"/>
-						</c:url>
-						<a href="${ pNo }">${ p }</a>
-					</c:if>
-				</c:forEach>
-				
-				<!-- 다음 -->
-				<c:if test="${ pi.currentPage < pi.endPage }">
-					<c:url var="next" value="${ loc }">
-						<c:param name="page" value="${ pi.currentPage + 1 }"/>
-					</c:url>
-					<a href="${next}">&gt;</a>
-				</c:if>
-				<c:if test="${pi.currentPage >= pi.endPage }">
-					<p>&gt;</p>
-				</c:if>
-				
-			</div>
+			</c:forEach>
+			
+			<!-- 다음 -->
+			<c:if test="${ pi.currentPage >= pi.endPage }">
+				<c:url var="next" value="${ loc }">
+					<c:param name="page" value="${ pi.currentPage + 1 }"/>
+				</c:url>
+				<a href="${next}">&gt;</a>
+			</c:if>
+			<c:if test="${pi.currentPage < pi.endPage }">
+				<p>&gt;</p>
+			</c:if>
+			
+		</div>
 		</div>
 		<c:if test="${ !empty loginUser }">
 			<div class="write-btn">
@@ -416,11 +378,11 @@ select::-ms-expand {
 			</div>
 			<script>
 				$('.write-btn').click(function(){
-					location.href="<%=request.getContextPath()%>/write.re";
+					location.href="<%=request.getContextPath()%>/write.bo";
 				});
 			</script>
 		</c:if>
 	</section>
-	<%@include file="../common/footer.jsp" %>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

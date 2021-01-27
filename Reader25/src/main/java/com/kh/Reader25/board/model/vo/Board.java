@@ -12,7 +12,7 @@ public class Board {
 	private String bStatus;
 	private Date  enrollDay;
 	private Date updateDay;
-	// 0 : 공지사항 1: 문의사항 2: 리뷰 3: 책방 4: 책쓰기5:오늘은 나도 작가 6:좋아요
+	// 0 : 공지사항 , 1: 문의사항,  2: 리뷰,  3: 책방,  4: 책쓰기, 5:오늘은 나도 작가, 6:좋아요
 	private String cate;
 	private int code;
 	private String userId;

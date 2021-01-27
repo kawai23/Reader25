@@ -682,6 +682,31 @@ public class BoardServiceImpl implements BoardService {
 		bDAO.deleteMark(sqlSession, mark);
 	}
 
+	@Override
+	public ArrayList<Board> selectSearchBook(SearchReview sr, PageInfo pi) {
+		return bDAO.selectSearchBook(sqlSession, sr, pi);
+	}
+
+	@Override
+	public int getSearchAndSortCountBook(HashMap<String, String> map) {
+		return bDAO.getSearchAndSortCountBook(sqlSession ,map);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchSortBookList(HashMap<String, String> map, PageInfo pi) {
+		return bDAO.selectSearchSortBookList(sqlSession, map, pi);
+	}
+
+	@Override
+	public int getSortBookListCount(String sortValue) {
+		return bDAO.getSortBookListCount(sqlSession, sortValue);
+	}
+
+	@Override
+	public ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi) {
+		return bDAO.selectSortBookList(sqlSession, sortValue, pi);
+	}
+
 	
 	
 

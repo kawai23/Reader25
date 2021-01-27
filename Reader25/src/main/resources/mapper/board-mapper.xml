@@ -573,6 +573,28 @@
 		</if>
 	</select>
 	
+	<select id="getSearchAndSortCountBook" resultType="_int">
+		select count(*)
+		from board 
+		join book using(board_no)
+		where b_status = 'Y' and code = 3
+		<if test="book != null">
+			and book_name like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and author like '%' || #{author} || '%'
+		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
 	<select id="selectSearchSortList" parameterType="SearchReview" resultMap="boardResultSet">
 		select *
 		from board
@@ -606,6 +628,27 @@
 		</if>
 	</select>
 	
+	<select id="selectSearchSortBookList" parameterType="SearchReview" resultMap="bookSearchResultSet">
+		select *
+		from board b, book book
+		where b_status = 'Y' and b.board_no = book.board_no and code = 3
+		<if test="book != null">
+			and book_name like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and author like '%' || #{author} || '%'
+		</if>
+		<if test="cate != null">
+			and cate like '%' || #{cate} || '%'
+		</if>
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
 	<select id="getSortListCount" resultType="_int">
 		select count(*)
 		from board
@@ -621,6 +664,18 @@
 		</if>
 	</select>
 	
+	<select id="getSortBookListCount" resultType="_int">
+		select count(*)
+		from board
+		where code = 3 and b_status = 'Y' 
+		<if test="sortValue eq 'lated'">
+			order by board_no desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
 	<select id="selectSortList" resultMap="boardResultSet">
 		select *
 		from board
@@ -630,6 +685,18 @@
 		</if>
 		<if test="sortValue eq 'like'">
 			order by b_like desc
+		</if>
+		<if test="sortValue eq 'count'">
+			order by b_count desc
+		</if>
+	</select>
+	
+	<select id="selectSortBookList" resultMap="bookSearchResultSet">
+		select b.*, bo.*
+		from board b, book bo
+		where code = 3 and b_status = 'Y' and b.board_no = bo.board_no
+		<if test="sortValue eq 'lated'">
+			order by b.board_no desc
 		</if>
 		<if test="sortValue eq 'count'">
 			order by b_count desc
@@ -1065,4 +1132,45 @@
 		WHERE BOARD_NO=#{boardNo} and USER_ID=#{userId}
     </delete>
 	
+	<select id="searchBook" resultMap="bookSearchResultSet">
+		select b.*, book.*
+		from board b, book book
+		where b.board_no = book.board_no and status = 'Y'
+		<if test="book != null">
+			and book_name = #{book}
+		</if>
+		<if test="author != null">
+			and author = #{author}
+		</if>
+		<if test="cate != null">
+			and cate =#{cate}
+		</if>
+		order by board_no desc
+	</select>
+	
+	<resultMap type="Board" id="bookSearchResultSet">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="bTitle" column="B_TITLE"/>
+		<result property="bContent" column="B_CONTENT"/>
+		<result property="bCount" column="B_COUNT"/>
+		<result property="bLike" column="B_LIKE"/>
+		<result property="comCount" column="COM_COUNT"/>
+		<result property="bStatus" column="B_STATUS"/>
+		<result property="enrollDay" column="ENROLL_DAY"/>
+		<result property="updateDay" column="UPDATE_DAY"/>
+		<result property="cate" column="CATE"/>
+		<result property="code" column="CODE"/>
+		<result property="userId" column="USER_ID"/>
+		<association javaType="Book" property="book">
+			<id property="b_no" column="BOOK_NO"/>
+			<result property="b_name" column="BOOK_NAME"/>
+			<result property="b_price" column="PRICE"/>
+			<result property="b_Q1" column="BOOK_Q1"/>
+			<result property="b_Q2" column="BOOK_Q2"/>
+			<result property="b_Q3" column="BOOK_Q3"/>
+			<result property="author" column="AUTHOR"/>
+			<result property="b_Status" column="STATUS"/>
+			<result property="boardNo" column="BOARD_NO"/>
+		</association>
+	</resultMap>
 </mapper>

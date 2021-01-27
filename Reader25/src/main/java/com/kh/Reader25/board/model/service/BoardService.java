@@ -244,6 +244,16 @@ public interface BoardService {
 
 	ArrayList<Board> tiwd(int value);
 
+	ArrayList<Board> selectSearchBook(SearchReview sr, PageInfo pi);
+
+	int getSearchAndSortCountBook(HashMap<String, String> map);
+
+	ArrayList<Board> selectSearchSortBookList(HashMap<String, String> map, PageInfo pi);
+
+	int getSortBookListCount(String sortValue);
+
+	ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi);
+
 
 
 
