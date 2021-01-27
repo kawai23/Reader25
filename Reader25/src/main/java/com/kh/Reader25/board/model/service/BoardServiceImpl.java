@@ -4,6 +4,7 @@ package com.kh.Reader25.board.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -685,6 +686,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 
+
 	public int MyBookMarkCount(SearchCondition sc) {
 		
 		return bDAO.MyBookMarkCount(sqlSession, sc);
@@ -721,8 +723,40 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 
+
+	public ArrayList<Board> selectSearchBook(SearchReview sr, PageInfo pi) {
+		return bDAO.selectSearchBook(sqlSession, sr, pi);
+	}
+
+	@Override
+	public int getSearchAndSortCountBook(HashMap<String, String> map) {
+		return bDAO.getSearchAndSortCountBook(sqlSession ,map);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchSortBookList(HashMap<String, String> map, PageInfo pi) {
+		return bDAO.selectSearchSortBookList(sqlSession, map, pi);
+	}
+
+	@Override
+	public int getSortBookListCount(String sortValue) {
+		return bDAO.getSortBookListCount(sqlSession, sortValue);
+	}
+
+	@Override
+	public ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi) {
+		return bDAO.selectSortBookList(sqlSession, sortValue, pi);
+	}
+	
+	@Override
 	public Attachment selectAttachmentzero(int boardNo) {
 		return bDAO.selectAttachmentzero(sqlSession, boardNo);
+	}
+
+
+	@Override
+	public ArrayList<Board> selectBookList(PageInfo pi, int code) {
+		return bDAO.selectBookList(sqlSession, pi, code);
 	}
 
 

@@ -824,7 +824,7 @@ public class BoardController {
 			sr.setWriter(value);
 			searchCate = 4;
 		}else if(condition.equals("content")) {
-			sr.setWriter(value);
+			sr.setContent(value);
 			searchCate = 5;
 		}else {
 			sr.setCate(value);
@@ -927,9 +927,12 @@ public class BoardController {
 		}else if(condition.equals("writer")) {
 			sr.setWriter(value);
 			searchCate = 4;
-		}else {
+		}else if(condition.equals("content")) {
 			sr.setContent(value);
 			searchCate = 5;
+		}else {
+			sr.setCate(value);
+			searchCate = 6;
 		}
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -939,6 +942,7 @@ public class BoardController {
 		map.put("book",sr.getBook());
 		map.put("author",sr.getAuthor());
 		map.put("title",sr.getTitle());
+		map.put("cate",sr.getCate());
 		
 		int listCount = bService.getSearchAndSortCount(map);
 		
@@ -2726,14 +2730,12 @@ public class BoardController {
 			int listCount = bService.getListCount(code);
 
 			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
-			ArrayList<Board> bList = bService.selectList(pi, code); 
+			ArrayList<Board> bList = bService.selectBookList(pi, code); 
 			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); 
-			ArrayList<Book> bookList = b_Service.selectList(pi, code); 
 			if (bList != null) {
 				mv.addObject("bList", bList) 
 						.addObject("pi", pi)
 						.addObject("atList", atList)
-						.addObject("bookList", bookList)
 						.setViewName("gobookr");// setViewName view 이름을
 																								// 지정해준다
 			} else {

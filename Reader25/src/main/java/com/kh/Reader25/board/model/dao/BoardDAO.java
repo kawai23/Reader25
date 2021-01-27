@@ -625,14 +625,49 @@ public class BoardDAO {
 	}
 
 
+
 	public int BookMarkDelete(SqlSessionTemplate sqlSession, String s) {
 		
 		return sqlSession.delete("boardMapper.BookMarkDelete",s);
 
 	}
 
+
+	public ArrayList<Board> selectSearchBook(SqlSessionTemplate sqlSession, SearchReview sr, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.searchBook", sr, rowBounds);
+	}
+
+	public int getSearchAndSortCountBook(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("boardMapper.getSearchAndSortCountBook", map);
+	}
+
+	public ArrayList<Board> selectSearchSortBookList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+			PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchSortBookList", map, rowBounds);
+	}
+
+	public int getSortBookListCount(SqlSessionTemplate sqlSession, String sortValue) {
+		return sqlSession.selectOne("boardMapper.getSortBookListCount", sortValue);
+	}
+
+	public ArrayList<Board> selectSortBookList(SqlSessionTemplate sqlSession, String sortValue, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSortBookList", sortValue, rowBounds);
+	}
+
 	public Attachment selectAttachmentzero(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectAttachmentzero", boardNo);
+	}
+
+	public ArrayList<Board> selectBookList(SqlSessionTemplate sqlSession, PageInfo pi, int code) {
+		int offset = (pi.getCurrentPage() - 1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBookList", code, rowBounds);
 	}
 
 

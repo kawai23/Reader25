@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>BookReview</title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
 section {
 	background: rgba(246, 246, 246, 1);
@@ -33,7 +34,9 @@ select {
 	appearance: none;
 	padding: 2px;
 }
-
+select:focus{
+	outline: 1px solid lightgray;
+}
 select::-ms-expand {
 	display: none;
 }
@@ -53,7 +56,7 @@ select::-ms-expand {
 	border: none;
 	width: 220px;
 }
-
+input:focus{outline: none;}
 #search-icon {
 	float: right;
 	width: 20px;
@@ -82,7 +85,7 @@ select::-ms-expand {
 	cursor: pointer;
 }
 
-#like-h4 {
+#count-sort {
 	border-left: 1px solid black;
 	padding-left: 5px;
 }
@@ -250,18 +253,35 @@ select::-ms-expand {
 			</script>
 			
 			<div class="sort-div">
-				<h4 class="sort-h4">최신순</h4>
-				<h4 class="sort-h4" id="like-h4">조회순</h4>
+				<%String sortValue = (String)request.getAttribute("sortValue"); %>
+				<%if(sortValue != null){ %>
+					<%if(sortValue.equals("lated")){ %>
+						<h4 class="sort-h4" id="lated-sort" style="font-weight: bolder;">최신순</h4>
+						<h4 class="sort-h4" id="count-sort">조회순</h4>
+					<%}else{ %>
+						<h4 class="sort-h4" id="lated-sort">최신순</h4>
+						<h4 class="sort-h4" id="count-sort" style="font-weight: bolder;">조회순</h4>
+					<%} %>
+				<%}else{ %>
+					<h4 class="sort-h4" id="lated-sort">최신순</h4>
+					<h4 class="sort-h4" id="count-sort">조회순</h4>
+				<%} %>
 			</div>
 		</div>
+		<script>
+			$('#lated-sort').click(function(){sort('lated');});
+			$('#count-sort').click(function(){sort('count');});
+			function sort(value){
+				location.href="sort.bo?sortValue=" + value;
+			}
+		</script>
 		<%
 			ArrayList<Board> bList = (ArrayList<Board>)request.getAttribute("bList");
 			ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
-			ArrayList<Book> bookList = (ArrayList<Book>)request.getAttribute("bookList");
 		%>
 		<div class="list-all-div">
-		<%if(bookList.size() != 0 || !bookList.isEmpty()){ %>
-			<%for(int i = 0; i < bookList.size(); i++){ %>
+		<%if(bList != null && bList.size() > 0){ %>
+			<%for(int i = 0; i < bList.size(); i++){ %>
 				<div class="list-div">
 					<div class="img-div">
 						<%for(int j = 0; j < atList.size(); j++){ %>
@@ -273,12 +293,12 @@ select::-ms-expand {
 						<%} %>
 					</div>
 					<input type="hidden" id="boardNo" value="<%= bList.get(i).getBoardNo()%>">
-					<input type="hidden" id="b_no" value="<%=bookList.get(i).getB_no()%>">
+					<input type="hidden" id="b_no" value="<%=bList.get(i).getBook().getB_no()%>">
 					<div class="content-div">
 						<ul class="content-ul">
 							<li class="title-li"><%=bList.get(i).getbTitle() %></li>
-							<li class="book-li"><%= bookList.get(i).getB_name() %></li>
-							<li class="author-li"><%= bookList.get(i).getAuthor() %></li>
+							<li class="book-li"><%= bList.get(i).getBook().getB_name() %></li>
+							<li class="author-li"><%= bList.get(i).getBook().getAuthor() %></li>
 							<li class="date-li"><%= bList.get(i).getUpdateDay() %></li>
 						</ul>
 					</div>
