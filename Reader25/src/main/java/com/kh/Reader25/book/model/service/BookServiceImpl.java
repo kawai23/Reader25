@@ -70,4 +70,9 @@ public class BookServiceImpl implements BookService{
 	public int deleteBook(int b_no) {
 		return b_DAO.deleteBook(sqlSession, b_no);
 	}
+
+	@Override
+	public ArrayList<ShoppingBasket> selectSb(String userid) {
+		return b_DAO.selectSB(sqlSession, userid);
+	}
 }

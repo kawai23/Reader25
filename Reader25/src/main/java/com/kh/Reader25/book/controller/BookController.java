@@ -57,11 +57,9 @@ public class BookController {
 	@RequestMapping("insertCart.tr")
 	@ResponseBody
 	public String insertSB(@ModelAttribute ShoppingBasket sb) {
-		System.out.println(sb);
 		int result = b_Service.insertSB(sb);
-		System.out.println("완료됨: " + result);
 		if(result < 0) {
-			throw new BookException("책 거래 게시판 전체 조회에 실패하였습니다.");
+			throw new BookException("장바구니 추가에 실패하였습니다.");
 		} else {
 			return "success";
 		}

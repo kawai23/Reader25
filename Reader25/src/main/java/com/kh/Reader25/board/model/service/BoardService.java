@@ -253,6 +253,8 @@ public interface BoardService {
 	int getSortBookListCount(String sortValue);
 
 	ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi);
+	
+	Attachment selectAttachmentzero(int boardNo);
 
 
 

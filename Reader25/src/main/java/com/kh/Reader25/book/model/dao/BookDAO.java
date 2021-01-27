@@ -58,4 +58,8 @@ public class BookDAO {
 	public int deleteBook(SqlSessionTemplate sqlSession, int b_no) {
 		return sqlSession.update("bookMapper.deleteBook", b_no);
 	}
+
+	public ArrayList<ShoppingBasket> selectSB(SqlSessionTemplate sqlSession, String userid) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectSB", userid);
+	}
 }

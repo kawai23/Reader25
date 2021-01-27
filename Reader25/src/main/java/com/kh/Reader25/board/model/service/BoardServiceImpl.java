@@ -706,6 +706,11 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Board> selectSortBookList(String sortValue, PageInfo pi) {
 		return bDAO.selectSortBookList(sqlSession, sortValue, pi);
 	}
+	
+	@Override
+	public Attachment selectAttachmentzero(int boardNo) {
+		return bDAO.selectAttachmentzero(sqlSession, boardNo);
+	}
 
 	
 	
