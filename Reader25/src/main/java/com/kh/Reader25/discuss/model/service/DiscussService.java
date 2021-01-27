@@ -42,4 +42,7 @@ public interface DiscussService {
 	int rUpdate(Reply r);
 	// 모든 토론방 검색
 	ArrayList<Discuss> selectAllList();
+	ArrayList<Discuss> discussd(int value);
+	ArrayList<Discuss> discussw(int value);
+	ArrayList<Discuss> discussm(int value);
 }

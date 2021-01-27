@@ -9,6 +9,13 @@ public class SearchReview {
 	private String cate;
 	
 	public SearchReview() {}
+	
+	public SearchReview(String author, String book, String cate) {
+		super();
+		this.author = author;
+		this.book = book;
+		this.cate = cate;
+	}
 
 	public SearchReview(String title, String writer, String content, String author, String book, String cate) {
 		super();

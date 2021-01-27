@@ -101,6 +101,22 @@
 		color: white;
 		font-family: 카페24 아네모네에어;
 	}	
+	 a{
+	text-decoration: none;
+}
+a:link{
+    color :black;
+    text-decoration: none;
+}
+
+a:visited{
+    color: seagreen;
+}
+
+a:hover{
+    color: #F7B45E;
+    text-decoration: underline;
+}
 		
 </style>
 </head>

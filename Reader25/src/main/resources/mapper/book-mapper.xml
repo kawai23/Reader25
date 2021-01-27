@@ -18,6 +18,7 @@
 		<result property="b_Q3" column="BOOK_Q3"/>
 		<result property="author" column="AUTHOR"/>
 		<result property="b_Status" column="STATUS"/>
+		<result property="boardNo" column="boardNo"/>
 	</resultMap>
 	
 	<select id="getPayList" resultType="_int">
@@ -58,7 +59,7 @@
 	<insert id="insertBook">
 		insert into book
 		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, null,
-			#{author}, default, SYSDATE)
+			#{author}, default, SYSDATE, seq_bid.currval)
 	</insert>
 	
 	<insert id="insertsb">

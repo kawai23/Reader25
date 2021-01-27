@@ -96,7 +96,7 @@ public class BoardController {
 							HttpServletRequest request) {
 		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
 		int result = 0;
-		if(uploadFile.length != 1) {
+		if(uploadFile.length > 1) {
 			b.setCode(0); //공지사항 코드
 			for(int i = 0; i < uploadFile.length; i++ ){
 				Attachment at = saveFile(uploadFile[i], request, 0);
@@ -186,13 +186,12 @@ public class BoardController {
 	}
 	//(7)삭제하기
 	@RequestMapping("delete.no")
-	public String deleteNotice(@RequestParam("boardNo") int boardNo,@RequestParam("b_no") int b_no) {
+	public String deleteNotice(@RequestParam("boardNo") int boardNo) {
 		int result = bService.deleteBoardAndFile(boardNo);
-		int result2 = b_Service.deleteBook(b_no);
-		if(result > 0 && result2 >  0) {
+		if(result > 0 ) {
 			return "redirect:notice.no";
 		}else {
-			throw new BoardException("책발 게시물 삭제에 실패하였습니다.");
+			throw new BoardException("공지사항 게시물 삭제에 실패하였습니다.");
 		}
 	}
 	// 문의사항 = 1----------------------------------------------------
@@ -2549,26 +2548,20 @@ public class BoardController {
 
 	// ------------------------------------------------------------------------ 책방
 		@RequestMapping("gobookr.bo")
-		public ModelAndView gobookr(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) { // ModelAndView
-																														// 는
-																														// 값을
-																														// 화면에
-																														// 전달할때
-																														// 쓰는
-																														// 객체
-			int currentPage = 1; // currentPage 현재 페이지
-			if (page != null) { // page 값이 null 이 아닐때 currentPage에 page라는 값이 넣어진다
+		public ModelAndView gobookr(@RequestParam(value = "page", required = false) Integer page, ModelAndView mv) { 
+			int currentPage = 1; 
+			if (page != null) { 
 				currentPage = page;
 			}
-			int code = 3; // 책방 관한 게시물을 가져올때 코드를 지정하여 다른게시물과 차별점을 두어 구별할수있게 지정한 코드의 게시물만 가져올수있게 한다
-			int listCount = bService.getListCount(code);// 총 게시물 갯수
+			int code = 3; 
+			int listCount = bService.getListCount(code);
 
-			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);// PageInfo는 게시물 페이징을 설정 하는 객체
-			ArrayList<Board> bList = bService.selectList(pi, code); // selectList 총 게시물을 불러오는 함수 // 총 게시물 리스트를 받아오는 객체
-			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
-			ArrayList<Book> bookList = b_Service.selectList(pi, code); // 첨부파일 리스트 받아오는 객체 (썸네일만 가져오게 해놓은것)
+			PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
+			ArrayList<Board> bList = bService.selectList(pi, code); 
+			ArrayList<Attachment> atList = bService.selectAttachmentTList(code); 
+			ArrayList<Book> bookList = b_Service.selectList(pi, code); 
 			if (bList != null) {
-				mv.addObject("bList", bList) // addObject 는 값을 mv에 값을 넣어주는 메소드
+				mv.addObject("bList", bList) 
 						.addObject("pi", pi)
 						.addObject("atList", atList)
 						.addObject("bookList", bookList)
@@ -2586,33 +2579,31 @@ public class BoardController {
 		}
 
 		@RequestMapping("insert.bo") // 
-		public String bookReviewInsert1(@ModelAttribute Board b, // @ModelAttribute 가 Board 라는 객체를 생성해준다
+		public String bookInsert(@ModelAttribute Board b, // @ModelAttribute 가 Board 라는 객체를 생성해준다
 				@RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletRequest request,
 				@ModelAttribute Book book) {
 
 			Member member = (Member)(request.getSession().getAttribute("loginUser")); 
-			String userId = member.getId(); // 맴버 객체 안에서 userId 라는 값을 가져온다.
-			b.setUserId(userId); // userId 를 b에 담는다
-			b.setCode(3); // 해당 게시판을 식별할수있는 코드를 b에 담는다.
-
-			ArrayList<Attachment> atList = new ArrayList<Attachment>(); // ArrayList<Attachment>() ArrayList안에
+			String userId = member.getId(); 
+			b.setUserId(userId); 
+			b.setCode(3); 
+			ArrayList<Attachment> atList = new ArrayList<Attachment>(); 
 			int result = 0;
-			if (uploadFile.length != 1) { // 업로드파일이 !=0 (없을시)
-				b.setCode(3); // 공지사항 코드
-				for (int i = 0; i < uploadFile.length; i++) {// 업르드 파일의 수만큼 돌린다
-					Attachment at = saveFile(uploadFile[i], request, 3); // 업로드 파일 저장하기 위해 파일이름 구별하여 저장하기 위해 사용하고 saveFile에
-					if (i == uploadFile.length -1) {
-						at.setAtcLevel(0); // setAtcLevel() 썸내일 을 설정해주는 메소드
+			if (uploadFile.length > 1) {
+				b.setCode(3); 
+				for (int i = 0; i < uploadFile.length; i++) {
+					Attachment at = saveFile(uploadFile[i], request, 3); 
+					if (i == 0) {
+						at.setAtcLevel(0); 
 					} else {
-						at.setAtcLevel(1);// setAtcLevel(1); 가로안에 1이 들어가면 썸내일이 아니다
+						at.setAtcLevel(1);
 					}
-					atList.add(at); // 여러개의 파일을 담을수있는 객체를 at라는객체를 add라는 메소드를 통하여 추가로 담아준다.
+					atList.add(at); 
 				}
 				result = bService.insertBoardAndFiles(b, atList);
 			}else {
 				result = bService.insertBoard(b);
 			}
-			
 			int result2 = b_Service.insertBook(book);
 			
 			if (result > 0 && result2 > 0) {
@@ -2628,8 +2619,8 @@ public class BoardController {
 			Board board = bService.selectBoard(boardNo);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
 			Book book = b_Service.selectBook(b_no);
+			
 			if (board != null && book != null) {
-
 				mv.addObject("board", board);
 				mv.addObject("book", book);
 				mv.addObject("atlist", atlist);
@@ -2640,12 +2631,13 @@ public class BoardController {
 		}
 
 		@RequestMapping("delete.bo")
-		public String deleteReviewBoard1(@RequestParam("boardNo") int boardNo) {
+		public String deleteBookAndBoard(@RequestParam("boardNo") int boardNo,@RequestParam("b_no") int b_no) {
 			int result = bService.deleteBoardAndFile(boardNo);
-			if (result > 0) {
+			int result2 = b_Service.deleteBook(b_no);
+			if (result > 0 && result2 > 0) {
 				return "redirect:gobookr.bo";
 			} else {
-				throw new BoardException("리뷰 게시물 삭제에 실패하였습니다.");
+				throw new BoardException("책방 게시물 삭제에 실패하였습니다.");
 			}
 		}
 
@@ -2653,7 +2645,6 @@ public class BoardController {
 		public ModelAndView bookReviewModifyView(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
 										ModelAndView mv, @RequestParam("b_no") int b_no) {
 			Board board = bService.selectBoardExceptAddCount(boardNo);
-			/* Attachment at = bService.selectAttachment(boardNo); */
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
 			Book book = b_Service.selectBook(b_no);
 			if(board != null && book != null) {
@@ -2678,18 +2669,19 @@ public class BoardController {
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();
 			int result = 0;
 			int result2 = 0;
-			if (reloadFile.length != 0) { 
+			if (reloadFile.length > 1) { 
 				for(String str: nameArr) {
 					deleteFile(str, request);
 				}
 				for (int i = 0; i < reloadFile.length; i++) {
 					Attachment at = saveFile(reloadFile[i], request, 3);
+					at.setBoardNo(b.getBoardNo());
 					if (i == reloadFile.length -1) {
-						at.setAtcLevel(0); // setAtcLevel() 썸내일 을 설정해주는 메소드
+						at.setAtcLevel(0); 
 					} else {
-						at.setAtcLevel(1);// setAtcLevel(1); 가로안에 1이 들어가면 썸내일이 아니다
+						at.setAtcLevel(1);
 					}
-					atList.add(at); // 여러개의 파일을 담을수있는 객체를 at라는객체를 add라는 메소드를 통하여 추가로 담아준다.
+					atList.add(at); 
 				}
 				result = bService.updateBoardAnFiles(b, atList);
 			}else {
@@ -2705,7 +2697,8 @@ public class BoardController {
 				  .addObject("book", books)
 				  .addObject("page", page)
 				  .addObject("atlist", atlist)
-				  .setViewName("redirect:redetail.bo");
+				  .setViewName("redirect:redetail.bo?b_no="+books.getB_no() + "&boardNo="+b.getBoardNo() +"&page=" +page);
+				
 			}else {
 				throw new BoardException("책방 게시물 수정에 실패하였습니다.");
 			}
