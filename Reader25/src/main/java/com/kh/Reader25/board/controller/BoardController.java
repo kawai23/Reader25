@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -2712,9 +2713,14 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo) {
+		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpServletRequest request) {
+			String userid = ((Member)request.getSession().getAttribute("loginUser")).getId();
+			System.out.println(userid);
 			Book book = b_Service.selectBook(b.getB_no());
 			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
+			System.out.println(book);
+			System.out.println(atList);
+			
 			Attachment at = new Attachment();
 			for(Attachment a : atList) {
 				if(a.getAtcLevel() == 0) {

@@ -10,8 +10,8 @@ public class ShoppingBasket {
 	private int book_no;
 	
 	public ShoppingBasket() {}
-
-	public ShoppingBasket(int sb_no, String sb_v, String book_name, String price, String status, String user_id, int book_no) {
+	public ShoppingBasket(int sb_no, String sb_v, String book_name, String price, String status, String user_id,
+			int book_no) {
 		super();
 		this.sb_no = sb_no;
 		this.sb_v = sb_v;
@@ -77,7 +77,7 @@ public class ShoppingBasket {
 	public void setBook_name(String book_name) {
 		this.book_name = book_name;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ShoppingBasket [sb_no=" + sb_no + ", sb_v=" + sb_v + ", book_name=" + book_name + ", price=" + price
