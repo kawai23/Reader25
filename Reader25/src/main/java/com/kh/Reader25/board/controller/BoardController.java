@@ -1168,7 +1168,7 @@ public class BoardController {
 	// 오늘은 나도 작가 = 5 디테일 뷰 컨트롤러
 	@RequestMapping("TIWdetail.to")
 	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo, @RequestParam("code") int code,
-									@RequestParam("page") int page, @RequestParam(value="cpage", required=false) Integer cpage, 
+									@RequestParam("page") int page, 
 									ModelAndView mv, HttpSession session) {
 		
 		Board board = bService.selectTIWBoard(boardNo);
