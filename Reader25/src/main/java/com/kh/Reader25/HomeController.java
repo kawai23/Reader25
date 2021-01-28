@@ -275,6 +275,7 @@ public class HomeController {
 	public String aboutViewPage() {
 		return "about";
 	}
+	//관리자 통계자료
 	@RequestMapping("statistic.ad")
 	public ModelAndView statisticPage(@RequestParam(value="dayStart", required=false) String dayStart, 
 								@RequestParam(value="page", required=false) Integer page,

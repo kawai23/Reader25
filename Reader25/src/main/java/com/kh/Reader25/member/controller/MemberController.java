@@ -466,6 +466,9 @@ public class MemberController {
 		ArrayList<Member> memList = mService.selectMemberList(pi);
 		ArrayList<Member> delList = mService.selectdeletMemberList(pi2);
 		List<Map<String,String>> genderMap = mService.selectGender();
+		List<Map<String,String>> rankMap = mService.getRankCount();
+		
+		// 값 가공하기
 		String genderArr = "['Gender','회원수']";
 		for(int i = 0; i < genderMap.size(); i++) {
 			if(i != genderMap.size()) {

@@ -1219,19 +1219,35 @@
     </delete>
 	
 	<select id="searchBook" resultMap="bookSearchResultSet">
-		select b.*, book.*
-		from board b, book book
-		where b.board_no = book.board_no and status = 'Y'
+		select b.*, bo.*
+		from board b, book bo
+		where b.board_no = bo.board_no and status = 'Y' and code=3
 		<if test="book != null">
-			and book_name = #{book}
+			and book_name like '%' || #{book} || '%'
 		</if>
 		<if test="author != null">
-			and author = #{author}
+			and author like '%' || #{author} ||'%'
 		</if>
 		<if test="cate != null">
 			and cate =#{cate}
 		</if>
 		order by b.board_no desc
+	</select>
+	<select id="getSearchBookListCount" resultType="_int">
+		select count(*)
+		from board 
+		join book
+		using(board_no)
+		where b_status = 'Y' and code=3
+		<if test="book != null">
+			and book_name like '%' || #{book} || '%'
+		</if>
+		<if test="author != null">
+			and author like '%' || #{author} ||'%'
+		</if>
+		<if test="cate != null">
+			and cate =#{cate}
+		</if>
 	</select>
 	
 	<select id="selectBookList" resultMap="bookSearchResultSet">

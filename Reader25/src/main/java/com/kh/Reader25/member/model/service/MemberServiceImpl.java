@@ -164,6 +164,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectGender(sqlSession);
 	}
 
+	@Override
+	public List<Map<String, String>> getRankCount() {
+		return mDAO.getRankCount(sqlSession);
+	}
+
 
 
 	

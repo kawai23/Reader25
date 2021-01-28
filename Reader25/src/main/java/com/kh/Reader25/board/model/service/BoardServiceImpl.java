@@ -759,6 +759,11 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.selectBookList(sqlSession, pi, code);
 	}
 
+	@Override
+	public int getSearchBookListCount(SearchReview sr) {
+		return bDAO.getSearchBookListCount(sqlSession, sr);
+	}
+
 
 	
 	

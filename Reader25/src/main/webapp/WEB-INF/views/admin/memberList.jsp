@@ -106,6 +106,7 @@
 	.graphs-title{
 		width:100%;
 		padding-bottom:7px; 
+		padding-left:15px; 
 		display:inline-block;
 		border-bottom: 1px solid rgb(200, 200, 200);
 		font-size: 20px;

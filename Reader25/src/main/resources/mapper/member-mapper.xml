@@ -174,4 +174,18 @@
 		<result javaType="java.lang.String" column="gender" property="gender"/>
 		<result javaType="java.lang.String" column="count" property="count"/>
 	</resultMap>
+	
+	<select id="getRankCount" resultMap="rankMap">
+		select  grant_name, count(*)
+		from member
+		join mgrant
+		using(grant_id)
+		where status = 'Y' and grant_id  not in (1)
+		group by  grant_name
+	</select>
+	 
+	<resultMap type="java.util.HashMap" id="rankMap">
+		<result javaType="java.lang.String" column="rank" property="rank"/>
+		<result javaType="java.lang.String" column="count" property="count"/>
+	</resultMap>
 </mapper>

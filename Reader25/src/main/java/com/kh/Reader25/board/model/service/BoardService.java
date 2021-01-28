@@ -273,6 +273,8 @@ public interface BoardService {
 
 	ArrayList<Board> selectBookList(PageInfo pi, int code);
 
+	int getSearchBookListCount(SearchReview sr);
+
 
 
 
