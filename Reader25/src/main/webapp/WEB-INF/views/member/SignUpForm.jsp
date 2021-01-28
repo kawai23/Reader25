@@ -10,12 +10,33 @@
 <style>
 /*화면*/
 .outer{
-		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
-		 min-width: 1000px;
-		padding-top: 15px; display: inline-block;
+		background: rgba(246, 246, 246, 1);
+		width: 80%; min-height: 1800px; margin-left: 10%; margin-right: 10%; 
+		min-width: 1000px;
 		font-family: 카페24 아네모네에어; font-size:18px;
 		}
-		
+.login-div{
+		min-height: 100px; 
+		background: white;
+		border-radius: 10px;
+		margin-left: auto; margin-right: auto;
+		margin-top: 3%; margin-bottom: 3%;
+		box-shadow: 0px 5px 5px 7px lightgray;
+		padding: 20px;
+		width: 700px;
+		animation-duration:2s; animation-iteration-count:1; animation-name:aa_ani;
+}	
+
+@keyframes aa_ani{
+            0%{
+                opacity: 0;
+            } 10%{
+            	opacity: 0;
+            }100%{
+            	opacity: 1;
+            }
+        }
+        	
 span.guide{display: none; top: 12px; right: 10px;}
 span.ok{color: green;}
 span.error{color: red;}
@@ -28,7 +49,19 @@ td{
 	height: 45px;
 }
 /*글자*/
-#blabla{color: #DB0000;}
+#blabla{
+	color: #DB0000;
+	
+	animation-duration:2s; animation-iteration-count:200; animation-name:bb_ani;
+}
+
+@keyframes bb_ani{
+            0%{
+                opacity: 0;
+            }100%{
+            	opacity: 1;
+            }
+        }
 .massage {
 		font-size:15px; border:0.5px solid #aaa;
 		font-family: 카페24 아네모네에어;
@@ -43,10 +76,11 @@ span.email{font-size:18px;
 		font-family: 카페24 아네모네에어;
 		}
 .txt_signup{
-	display: inline-block;
-	font-size:55px;
+	font-size:60px;
 	font-family: 카페24 아네모네;
 	margin-left: 20%;
+	
+	animation-duration:2s; animation-iteration-count:1; animation-name:aa_ani;
 }
 
 .txt_signup_tb{
@@ -111,163 +145,164 @@ span.email{font-size:18px;
 		<form action="minsert.me" method="post" id="joinForm" name="joinForm" onsubmit="return send(this);">
 			<br>
 			<h2 class="txt_signup">회원가입 . . .</h2>
-			<hr><br>
-			<table align="center">
-				<tr>
-					<td class="txt_signup_tb">아이디</td>
-					<td width="200px"><input type="text" id= "joinMemberid" name="id" placeholder="6자 이상의 영문+숫자" required></td>
-					<td width="300px"><span class="guide ok">이 아이디는 사용 가능합니다.</span>
-						<span class="guide error">이 아이디는 사용 불가능합니다.</span>
-						<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
-					</td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">이름</td>
-					<td><input type="text" name="name" required></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">비밀번호</td>
-					<td><input type="text" class="joinPassword" id="joinPassword1" name="pwd" required></td>
-					<td rowspan="2"><label id="pwResult"></label></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">비밀번호 확인</td>
-					<td><input type="text" class="joinPassword" id="joinPassword2" name="pwd2" required></td>
-				</tr>
-			</table>
-			
-			<br><br><br>
-			
-			<table align="center">
-				<tr>
-					<td class="txt_signup_tb">연락처</td>
-					<td width="200px"><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" required></td>
-					<td width="300px"></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">우편번호</td>
-					<td><input type="text" id="joinPostal" name="joinPostal" readonly></td>
-					<td><input type="button" class="btn_sign_input" id="findPostal" onclick="ifindPostal();" value="검색"></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">주소</td>
-					<td><input type="text" id="joinAddress1" name="joinAddress1" readonly></td>
-					<td><span id="guide" style="color:#999;display:none"></span></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">상세주소</td>
-					<td><input type="text" id="joinAddress2" name="joinAddress2" required></td>
-					<td></td>
-				</tr>
-			</table>
-			
-			<br><br><br>
-			
-			<table align="center">
-				<tr>
-					<td class="txt_signup_tb">이메일</td>
-					<td width="200px"><input type="email" id="joinEmail" name="email" required></td>
-					<td width="150px"><span class="email check">이 이메일은 사용 가능합니다.</span>
-						<span class="email no">이 이메일은 사용 불가능합니다.</span>
-						<input type="hidden" name="emailDuplicateCheck" id="emailDuplicateCheck" value="0" required>
-					</td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">성별</td>
-					<td><input type="radio" id="male" name="gender" value="M">남자<input type="radio" id="female" name="gender" value="F">여자</td>
-					<td width="300px"></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">생년월일</td>
-					<td><input type="date" name="birthDay" required></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="txt_signup_tb">MBTI</td>
-					<td><input type="text" name="mbti"></td>
-					<td></td>
-				</tr>
-			</table>
-			
-			<br><hr><br>
-			
-			<br><br>
-			
-			<table align="center">
-				<tr>
-					<td align="center" colspan="3">
-						<input type="checkbox" class="terms" id="terms" name="terms" value="약관동의" onclick="allCheck();">필수 약관 동의 (필수)
-					</td>
-				</tr>
-				<tr height="30px">
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="2">
-						<input type="checkbox" class=" terms" id="all" name="receiveInform" value="전체선택" onclick="allReciveCheck();">할인 쿠폰, 혜택 정보 수신 동의 (선택)
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="2">
-						<input type="checkbox" class=" terms" id="sms" name="receiveInform" value="sms" onclick="check();">SMS
-						<input type="checkbox" class=" terms" id="email" name="receiveInform" value="email" onclick="check();">E-MAIL
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="2">
-						<input type="checkbox" id="adult" name="adult" value="adult">본인은 만 14세 이상 입니다.(필수)	
-					</td>
-				</tr>
-			</table>
-			
-			<div id="dirrhks">
-				<table>
+			<hr>
+			<div class="login-div">
+				<table align="center">
 					<tr>
-						<td class="txt_signup_tb">이용약관 동의</td>
-						<td width="500px" colspan="2">
-							<div class="message">
-							Reader25는 Reader들의 활동을 응원합니다.<br>
-							Reader25의 서비스 및 제품(이하 '서비스')을 이용하실 수 있으시며<br> 서비스의 발전의 위한 제안도 가능합니다.<br>
-							본 약관은 다양한 Reader25 서비스의 이용과 관련하여<br> Reader25 서비스를 제공하는 Reader25와 <br>
-							이를 이용하는 Reader25 서비스 회원(이하 '회원') 또는 <br>비회원과의 관계를 설명하며, <br>
-							아울러 여러분의 Reader25 서비스 이용에<br> 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
-							</div>
+						<td class="txt_signup_tb">아이디</td>
+						<td width="200px"><input type="text" id= "joinMemberid" name="id" placeholder="6자 이상의 영문+숫자" required></td>
+						<td width="300px"><span class="guide ok">이 아이디는 사용 가능합니다.</span>
+							<span class="guide error">이 아이디는 사용 불가능합니다.</span>
+							<input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0">
 						</td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">이름</td>
+						<td><input type="text" name="name" required></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">비밀번호</td>
+						<td><input type="text" class="joinPassword" id="joinPassword1" name="pwd" required></td>
+						<td rowspan="2"><label id="pwResult"></label></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">비밀번호 확인</td>
+						<td><input type="text" class="joinPassword" id="joinPassword2" name="pwd2" required></td>
+					</tr>
+				</table>
+			
+				<br><br><br>
+				
+				<table align="center">
+					<tr>
+						<td class="txt_signup_tb">연락처</td>
+						<td width="200px"><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" required></td>
+						<td width="300px"></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">우편번호</td>
+						<td><input type="text" id="joinPostal" name="joinPostal" readonly></td>
+						<td><input type="button" class="btn_sign_input" id="findPostal" onclick="ifindPostal();" value="검색"></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">주소</td>
+						<td><input type="text" id="joinAddress1" name="joinAddress1" readonly></td>
+						<td><span id="guide" style="color:#999;display:none"></span></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">상세주소</td>
+						<td><input type="text" id="joinAddress2" name="joinAddress2" required></td>
+						<td></td>
+					</tr>
+				</table>
+			
+				<br><br><br>
+				
+				<table align="center">
+					<tr>
+						<td class="txt_signup_tb">이메일</td>
+						<td width="200px"><input type="email" id="joinEmail" name="email" required></td>
+						<td width="150px"><span class="email check">이 이메일은 사용 가능합니다.</span>
+							<span class="email no">이 이메일은 사용 불가능합니다.</span>
+							<input type="hidden" name="emailDuplicateCheck" id="emailDuplicateCheck" value="0" required>
+						</td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">성별</td>
+						<td><input type="radio" id="male" name="gender" value="M">남자<input type="radio" id="female" name="gender" value="F">여자</td>
+						<td width="300px"></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">생년월일</td>
+						<td><input type="date" name="birthDay" required></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="txt_signup_tb">MBTI</td>
+						<td><input type="text" name="mbti"></td>
+						<td></td>
 					</tr>
 				</table>
 			</div>
-			<br>
-			<table align="center">
-				<tr>
-					<td align="center">
-						<a id="blabla">선택 항목에 동의하지 않은 경우는 <br>
-						회원가입 및 일반적인 서비스를 이용할 수 없습니다.</a>
-					</td>
-				</tr>
-			</table>
-			
-			<br><br><br><br>	
-			
-			
-			<br clear="all">
-			
-			<div class="btns" id="signUpBtns" align="center">
-				<table>
+			<hr>
+			<div class="login-div">
+				<table align="center">
 					<tr>
-						<td width="300" align="center">
-							<button style="cursor:pointer" id="btn1" type="submit" class="btn1" onclick="return validate();"><span>가입하기</span></button>
+						<td align="center" colspan="3">
+							<input type="checkbox" class="terms" id="terms" name="terms" value="약관동의" onclick="allCheck();">필수 약관 동의 (필수)
 						</td>
-						<td width="300" align="center">
-							<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='home.do'"><span class="txt_type">메인으로</span></button>
+					</tr>
+					<tr height="30px">
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="2">
+							<input type="checkbox" class=" terms" id="all" name="receiveInform" value="전체선택" onclick="allReciveCheck();">할인 쿠폰, 혜택 정보 수신 동의 (선택)
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="2">
+							<input type="checkbox" class=" terms" id="sms" name="receiveInform" value="sms" onclick="check();">SMS
+							<input type="checkbox" class=" terms" id="email" name="receiveInform" value="email" onclick="check();">E-MAIL
+						</td>
+					</tr>
+				</table>
+				
+				<div id="dirrhks">
+					<table>
+						<tr>
+							<td width="600px" colspan="3" ><a class="txt_signup_tb">이용약관 동의<a>
+								<div class="message">
+								Reader25는 Reader들의 활동을 응원합니다.<br>
+								Reader25의 서비스 및 제품(이하 '서비스')을 이용하실 수 있으시며<br> 서비스의 발전의 위한 제안도 가능합니다.<br>
+								본 약관은 다양한 Reader25 서비스의 이용과 관련하여<br> Reader25 서비스를 제공하는 Reader25와 <br>
+								이를 이용하는 Reader25 서비스 회원(이하 '회원') 또는 <br>비회원과의 관계를 설명하며, <br>
+								아울러 여러분의 Reader25 서비스 이용에<br> 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<table align="center">
+					<tr>
+						<td align="center">
+							<input type="checkbox" id="adult" name="adult" value="adult">본인은 만 14세 이상 입니다.<br>
+							<input type="checkbox" id="adult" name="adult" value="adult">본인은 만 14세 이하 입니다.
 						</td>
 					</tr>
 				</table>
 				<br><br>
+				<table align="center">
+					<tr>
+						<td align="center">
+							<a id="blabla">선택 항목에 동의하지 않은 경우는 <br>
+							회원가입 및 일반적인 서비스를 이용할 수 없습니다.</a>
+						</td>
+					</tr>
+				</table>
+				
+				<br>	
+				
+				
+				<br clear="all">
+				
+				<div class="btns" id="signUpBtns" align="center">
+					<table>
+						<tr>
+							<td width="300" align="right">
+								<button style="cursor:pointer" id="btn1" type="submit" class="btn1" onclick="return validate();"><span>가입하기</span></button>
+							</td>
+							<td width="300" align="left">
+								<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='home.do'"><span class="txt_type">메인으로</span></button>
+							</td>
+						</tr>
+					</table>
+					<br><br>
+				</div>
 			</div>
-			
 		</form>
 		
 	</div>

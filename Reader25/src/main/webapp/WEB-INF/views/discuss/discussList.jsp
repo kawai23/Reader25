@@ -97,6 +97,7 @@
 	#search-type{border: none;}
 	#bimg{width: 100px;height: 100px;}
 	#orderTable{table-layout:fixed;}
+	#orderTable tr{margin-top: 100px;}/*나중에 확인하라*/
 	#dC{ /*글자수 제한(...) 포시*/
 		overflow:hidden;
 		text-overflow: ellipsis;
@@ -108,7 +109,7 @@
      	font-size: 20px; 
 	}
 	#dc-span{/*글제목*/
-		font-size: 26px;
+		font-size: 20px;
 	}
 </style>
 </head>
@@ -214,17 +215,17 @@
 					<tr class="dtr2">
 						<c:forEach var="at" items="${ atList }">
 							<c:if test="${ d.atcNo == at.atcNo}">
-								<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
+								<td rowspan="2"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="bimg"/></td>
 							</c:if>
 						</c:forEach>
 						<c:if test="${ d.atcNo == 0 }">
-							<td><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
+							<td rowspan="2"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
 						</c:if>
 						<td id="dC"><span id="dc-span">${d.dTitle}</span><br>${ d.dContent }</td>
 					</tr>
 					<tr class="dtr">
-						<td><input type="hidden" value="${ d.dNo }"></td>
-						<td>찬반여론 
+<%-- 						<td><input type="hidden" value="${ d.dNo }"></td> --%>
+						<td><input type="hidden" value="${ d.dNo }">찬반여론 
 						<c:if test="${ d.dCount > 0}">
 						<c:set var="P" value="${d.dPros/(d.dPros+d.dNeutrality + d.dCons)}"/>
 						<c:set var="N" value="${d.dNeutrality/(d.dPros+d.dNeutrality + d.dCons)}"/>

@@ -177,35 +177,78 @@
 #sumTable{
 	min-width: 400px; margin-left: 10%
 }
+.tdbottom{
+	border-bottom: 4px solid #F7B45E;
+}
+.tdbottom2{
+	border-bottom: 2px solid #F7B45E;
+}
 </style>
 </head>
 <body>
 <%@include file="../common/menubar.jsp" %>
 <div class="outer">
     <form action="home.do" method="post" id="buyForm" name="buyForm">
-    <h2 class="txt_pack">주문하기</h2>
+    <h2 class="txt_pack">결제 하기</h2>
       <div id="listArea" class="list-A">
-        <table class="table1" align="center">
+        <table class="table1">
           <tr>
             <th width="300px">책이미지</th>
-            <th width="300px">책정보</th>
+            <th width="300px">책제목</th>
             <th width="80px">가격</th>
             <th width="50px">수량</th>
             <th width="80px">배송비</th>
             <th width="100px">합계</th>
           </tr>
-          <tr>
-            <td><input type="text" name="chk"></td>
-            <td><input type="image" name="b_image"></td>
-            <td><input type="text" name="b_id"></td>
-            <td><input type="text" name="b_name"></td>
-            <td><input type="text" name="cart_price"></td>
-            <td><input type="text" name="amount"></td>
-          </tr>
+          <c:set var="sum" value="0"/>
+          <c:forEach var="b" items="${book}" varStatus="vs">
+			<tr>
+				<c:choose>
+					<c:when test="${vs.last}">
+						<td width="150" class="tdbottom">
+						<c:choose>
+							<c:when test="${ at[vs.index] eq null }">
+								<p>등록된 이미지가 없습니다.<p>
+							</c:when>
+							<c:otherwise>
+								<div class="bak_item">
+									<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+								</div>
+							</c:otherwise>
+						</c:choose>
+						</td>
+							<td width="150" class="tdbottom">${b.b_name}</td>
+							<td width="150" class="tdbottom">${b.b_price}원</td>
+							<td width="150" class="tdbottom">${b.b_Q1}</td>
+							<td width="150" class="tdbottom">2500원</td>
+							<td width="150" class="tdbottom">${(b.b_price * b.b_Q1)+ 2500}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) }"/></td>
+					</c:when>
+						<c:otherwise>
+							<td width="150" class="tdbottom2">
+							<c:choose>
+								<c:when test="${ at[vs.index] eq null }">
+									<p>등록된 이미지가 없습니다.<p>
+								</c:when>
+								<c:otherwise>
+									<div class="bak_item">
+										<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+									</div>
+								</c:otherwise>
+							</c:choose>
+							</td>
+							<td width="150" class="tdbottom2">${b.b_name}</td>
+							<td width="150" class="tdbottom2">${b.b_price}원</td>
+							<td width="150" class="tdbottom2">${b.b_Q1}</td>
+							<td width="150" class="tdbottom2">2500원</td>
+							<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + 2500}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) }"/></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+			</c:forEach>
         </table>
         <br><br>
         <div id="total_price">
-       	 총 금액 : <input type="text" name="total"> 원
+       	 총 금액 : <span>${sum + 2500} 원</span>
         </div>
       </div>
       <br><br>
@@ -213,35 +256,35 @@
       	<h2 class="bea-title">배송받을 정보</h2><p class="bea-sub">(기본으로 회원가입 시 입력한 정보를 가져옵니다)</p>
 	      <div id="loginUserTable" class="lu-table">
 	        <br>
-	        <table id="sumTable" align="center">
+	        <table id="sumTable">
 	          <tr>
 					<td class="txt_sum_tb" width="100px">이름</td> 
-					<td width="200px"><input type="text" name="name" required></td>
+					<td width="200px"><input type="text" name="name" required value="${loginUser.name }"></td>
 					<td width="100px"></td>
 			  </tr>
 	          <tr>
 					<td class="txt_sum_tb">연락처</td>
-					<td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)01012345678" required></td>
+					<td><input type="tel" maxlength="11" name="phone" id="phnoe" placeholder="(-없이)01012345678" required value="${loginUser.phone }"></td>
 					<td></td>
 			  </tr>
 	          <tr>
 					<td class="txt_sum_tb">우편번호</td>
-					<td><input type="text" id="joinPostal" name="joinPostal" readonly></td>
+					<td><input type="text" id="joinPostal" name="joinPostal" readonly value="${loginUser.address.split("/")[0]}"></td>
 					<td><input type="button" class="btn_sign_input" id="findPostal" onclick="ifindPostal();" value="검색"></td>
 				</tr>
 				<tr>
 					<td class="txt_sum_tb">주소</td>
-					<td><input type="text" id="joinAddress1" name="joinAddress1" readonly></td>
+					<td><input type="text" id="joinAddress1" name="joinAddress1" readonly value="${loginUser.address.split("/")[1]}"></td>
 					<td><span id="guide" style="color:#999;display:none"></span></td>
 				</tr>
 				<tr>
 					<td class="txt_sum_tb">상세주소</td>
-					<td><input type="text" id="joinAddress2" name="joinAddress2" required></td>
+					<td><input type="text" id="joinAddress2" name="joinAddress2" required value="${loginUser.address.split("/")[2]}"></td>
 					<td></td>
 			  </tr>
 	          <tr>
 					<td class="txt_sum_tb">이메일</td>
-					<td><input type="email" id="joinEmail" name="email" required></td>
+					<td><input type="email" id="joinEmail" name="email" required value="${loginUser.email }"></td>
 					<td></td>
 			  </tr>
 			  <tr>
@@ -264,13 +307,19 @@
 	<script>
 		// 결제 api
 		function buy(frm){
-			var name = '강병현';
-			var price = '1000';
-			var orderemail = 'bbgh@naver.com';
-			var orderName = '강병현';
-			var orderphone = '01045901429';
-			var orderaddress = '경기도 광주시';
-			var orderPost = '12777';
+			if(${book.size()>1}){
+				var name = '${book.get(0).b_name } 외 ${book.size() - 1}';
+				console.log(name);
+			} else{
+				var name = '${book.get(0).b_name }';
+				console.log(name);
+			}
+			var price = ${sum};// 택배비 어떻게 할것인지 물어보자
+			var orderemail = $('#joinEmail').val();
+			var orderName =$('#name').val();
+			var orderphone = $('#phone').val();
+			var orderaddress = $('#joinAddress1').val() + $('#joinAddress12').val();
+			var orderPost = $('#joinPostal').val();
 			
 			IMP.init('imp09501430');//내가맹점고유번호
 			IMP.request_pay({

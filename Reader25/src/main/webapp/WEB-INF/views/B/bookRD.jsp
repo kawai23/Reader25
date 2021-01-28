@@ -35,6 +35,7 @@ section {
 	color: rgb(100, 100, 100);
 	margin-left: 10px;
 }
+
 .count-p {
 	float: right;
 	margin-right: 10px
@@ -66,7 +67,6 @@ section {
 	padding:0;
 	
 }
-
 .slide ul li {
 	display: inline-block;
 	width: 400px;
@@ -101,6 +101,7 @@ section {
 	margin: auto;
 	max-width: 1000px;
 }
+
 .title {
 	display: inline-block;
 	margin: auto;
@@ -127,6 +128,29 @@ section {
 .book-table td{ width: 100px;}
 .book-info{min-width: 100px; height:40px; padding-left: 10px;}
 #amount-option{border: 1px solid lightgray;}
+
+
+.tags{margin-left: 10px; margin-bottom: 20px;}
+.tag {
+	display: inline;
+	margin: 10px;
+	margin-right: 0px;
+	color: gray;
+	font-size: 13px;
+}
+
+#quote1 {
+	float: left;
+}
+
+#quote2 {
+	float: right;
+}
+
+.wise-content {
+	display: inline-block;
+	margin-top: 10px;
+}
 /* 내용박스*/
 .rectangle-box {
 	max-width: 1000px;
@@ -481,7 +505,7 @@ section {
 		</div>
 		 <!---------------------------------- 책제목 ------------------------------------>
       <div class="info-box">
-	         <h3 class="title">${ board.bTitle }</h3>
+	         <h3 class="title">책제목: ${ board.bTitle }</h3>
       </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
       <div class="book-box">
@@ -547,7 +571,6 @@ section {
              var book_no = '${book.b_no}';
              var price = ${book.b_price};
              var amount = $('#amount-option').val();
-             
              if(user_id == ''){
             	 $('#login-modal').show();
              	$('#login-modal .modal').show();
@@ -559,7 +582,7 @@ section {
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 						if(check){
-							location.href="<%=request.getContextPath()%>/cart.bo?boardNo="+ boardNo + "&b_no= "+ book_no;
+							location.href="<%=request.getContextPath()%>/cart.bo";
 						}
 	                }
 	             });
@@ -572,15 +595,14 @@ section {
              	$('#login-modal .modal').show();
              }else{
             	 var amount = $('#amount-option').val();
-            	location.href="<%=request.getContextPath()%>/pcs.bo?b_no=" +${book.b_no} +"&b_Q2=" + amount;
+            	 location.href="<%=request.getContextPath()%>/pcs.tr?b_no=" +${book.b_no}+"&book_v=" + amount;
              }
          });
          </script>
       </div>
      
       <!---------------------------------- 내용박스 ------------------------------------>
-     
-	  <div class="book-div">
+       <div class="book-div">
 			<table class="book-table">
 				<tr>
 					<td>책 제목</td>
@@ -610,10 +632,11 @@ section {
 				</tr>
 			</table>
 		</div>
-	  <div class="rectangle-box"> 
+      <div class="rectangle-box"> 
          <div class="contents">${board.bContent}</div>
       </div>
-		<!---------------------------------- 댓글 ------------------------------------>
+		
+		<!---------------------------------- 리뷰 ------------------------------------>
 		<div class="comment-box">
 			<div class="commentList">
 			</div>

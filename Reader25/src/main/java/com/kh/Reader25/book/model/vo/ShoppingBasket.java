@@ -2,7 +2,7 @@ package com.kh.Reader25.book.model.vo;
 
 public class ShoppingBasket {
 	private int sb_no;
-	private String sb_v;
+	private int sb_v;
 	private String book_name;
 	private String price;
 	private String status;
@@ -10,7 +10,7 @@ public class ShoppingBasket {
 	private int book_no;
 	
 	public ShoppingBasket() {}
-	public ShoppingBasket(int sb_no, String sb_v, String book_name, String price, String status, String user_id,
+	public ShoppingBasket(int sb_no, int sb_v, String book_name, String price, String status, String user_id,
 			int book_no) {
 		super();
 		this.sb_no = sb_no;
@@ -30,11 +30,11 @@ public class ShoppingBasket {
 		this.sb_no = sb_no;
 	}
 
-	public String getSb_v() {
+	public int getSb_v() {
 		return sb_v;
 	}
 
-	public void setSb_v(String sb_v) {
+	public void setSb_v(int sb_v) {
 		this.sb_v = sb_v;
 	}
 

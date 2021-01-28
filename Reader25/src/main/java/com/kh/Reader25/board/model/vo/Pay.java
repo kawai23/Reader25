@@ -55,6 +55,15 @@ public class Pay {
 		this.book_no = book_no;
 		this.status = status;
 	}
+	
+	
+	public Pay(int book_v, int price, String userId, int book_no) {
+		super();
+		this.book_v = book_v;
+		this.price = price;
+		this.userId = userId;
+		this.book_no = book_no;
+	}
 
 	public int getPay_no() {
 		return pay_no;

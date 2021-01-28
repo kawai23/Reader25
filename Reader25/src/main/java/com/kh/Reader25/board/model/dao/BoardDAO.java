@@ -449,20 +449,17 @@ public class BoardDAO {
 
 	public ArrayList<Board> review(SqlSessionTemplate sqlSession) {
 		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleRD", null);
-		System.out.println(result);
 		return result; 
 				
 	}
 
 	public ArrayList<Board> tiw(SqlSessionTemplate sqlSession) {
 		ArrayList<Board> result = (ArrayList)sqlSession.selectList("boardMapper.selectTitleTD", null);
-		System.out.println(result);
 		return result;
 	}
 
 	public ArrayList<Board> views(SqlSessionTemplate sqlSession) {
 		ArrayList<Board> result =(ArrayList)sqlSession.selectList("boardMapper.selectTitleVD", null);
-		System.out.println(result);
 		return result;
 	}
 

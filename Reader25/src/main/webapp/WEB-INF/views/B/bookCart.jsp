@@ -38,7 +38,7 @@
 	margin: auto
 }
 
-.longbt1 {
+.allbuy {
 	
 	background-color: #F5715C;
 	font-size: 17px;
@@ -53,16 +53,16 @@
 	border-radius: 5px;
 	
 }
-.longbt1:hover {
+.allbuy:hover {
    background:linear-gradient(to bottom, #F99F93 5%, #F99F93 100%);
    background-color:#F99F93;
 }
-.longbt1:active {
+.allbuy:active {
    position:relative;
    top:1px;
 }
 
-.longbt2 {
+.buy {
 	background-color: white;
 	font-size: 17px;
 	border-color: #B3B2AF;
@@ -74,11 +74,11 @@
 	width: 150px;
 	border-radius: 5px;
 }
-.longbt2:hover {
+.buy:hover {
    background:linear-gradient(to bottom, #D0D0D0 5%, #D0D0D0 100%);
    background-color:#D0D0D0;
 }
-.longbt2:active {
+.buy:active {
    position:relative;
    top:1px;
 }
@@ -110,7 +110,7 @@
 
 .bak_item {
 	height: 130px;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .proquantity {
@@ -153,15 +153,15 @@
 <body id="body">
 	<%@include file="../common/menubar.jsp"%>
 	<div id="maindiv">
-		<br> <br> <br> <br><div class="writetitle1">장바구니</div>
+		<br> <br> <br> <br><div class="writetitle1">주문 목록</div>
 		<section>
 			<div id="listArea" class="list-A">
 				
 				<br>
-				<table class="list-table" style="border-spacing: 0px;">
+				<table class="list-table" id="sbtable" style="border-spacing: 0px;">
 					<tr class="list-tableth">
 						<td width="10px;" class="tdtop">
-							<label><input type="checkbox" value="alldelete"></label>
+							<input type="checkbox" id="allchecked">
 						</td>
 						<td width="200" class="tdtop">책 이미지</td>
 						<td width="300" class="tdtop">책 제목</td>
@@ -174,28 +174,50 @@
 					<tbody class="list-tabletd">
 					<c:forEach var="b" items="${book}" varStatus="vs">
 						<tr>
-							<td width="10" class="tdbottom"><label><input type="checkbox" value="prodelete1"></label></td>
-							<td width="150" class="tdbottom">
 							<c:choose>
-								<c:when test="${ at[vs.index] eq null }">
-									<div class="bak_item">
-										<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" width="200" height="125">
-									</div>
+								<c:when test="${vs.last}">
+									<td width="10" class="tdbottom"><input type="checkbox" class="prodelete1" value="${b.b_no }"></td>
+									<td width="150" class="tdbottom">
+									<c:choose>
+										<c:when test="${ at[vs.index] eq null }">
+											<p>등록된 이미지가 없습니다.<p>
+										</c:when>
+										<c:otherwise>
+											<div class="bak_item">
+												<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+											</div>
+										</c:otherwise>
+									</c:choose>
+									</td>
+									<td width="150" class="tdbottom">${b.b_name}</td>
+									<td width="150" class="tdbottom">${b.b_price}원</td>
+									<td width="150" class="tdbottom">${b.b_Q1}</td>
+									<td width="150" class="tdbottom">2500원</td>
+									<td width="150" class="tdbottom">${(b.b_price * b.b_Q1)+ 2500}원</td>
+									<td width="50" class="tdbottom"></td>
 								</c:when>
 								<c:otherwise>
-									<div class="bak_item">
-										<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="125">
-									</div>
+									<td width="10" class="tdbottom2"><input type="checkbox" class="prodelete1" value="${b.b_no }"></td>
+									<td width="150" class="tdbottom2">
+									<c:choose>
+										<c:when test="${ at[vs.index] eq null }">
+											<p>등록된 이미지가 없습니다.<p>
+										</c:when>
+										<c:otherwise>
+											<div class="bak_item">
+												<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at[vs.index].atcName }" width="200" height="120">
+											</div>
+										</c:otherwise>
+									</c:choose>
+									</td>
+									<td width="150" class="tdbottom2">${b.b_name}</td>
+									<td width="150" class="tdbottom2">${b.b_price}원</td>
+									<td width="150" class="tdbottom2">${b.b_Q1}</td>
+									<td width="150" class="tdbottom2">2500원</td>
+									<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + 2500}원</td>
+									<td width="50" class="tdbottom2"></td>
 								</c:otherwise>
 							</c:choose>
-							
-							</td>
-							<td width="150" class="tdbottom">${b.b_name}</td>
-							<td width="150" class="tdbottom">${b.b_price}원</td>
-							<td width="150" class="tdbottom">${b.b_Q1}</td>
-							<td width="150" class="tdbottom">2500원</td>
-							<td width="150" class="tdbottom">${b.b_price + 2500}원</td>
-							<td width="50" class="tdbottom"></td>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -204,10 +226,59 @@
 			<br> <br> <br>
 			<div class="btn-a">
 				<div class="btn-b">
-					<input type="reset" value="전체상품주문" class="longbt1"> <input
-						type="submit" value="선택상품주문" class="longbt2">
+					<input type="button" value="전체상품주문" class="allbuy"> 
+					<input type="button" value="선택상품주문" class="buy">
 				</div>
 			</div>
+			<script>
+			//체크박스 부분
+			$(document).ready(function(){
+				$("#sbtable #allchecked").click(function () {
+					if ($("#sbtable #allchecked").is(':checked')) {
+						$("#sbtable input[type=checkbox]").each(function () {
+				        	$(this).prop("checked", true);
+				       	});
+
+					} else {
+				    	$("#sbtable input[type=checkbox]").each(function () {
+				    		$(this).prop("checked", false);
+				        });
+					}
+				});
+				$(".prodelete1").on("click", function() {
+					var is_checked = true;
+
+					$(".prodelete1").each(function(){
+						is_checked = is_checked && $(this).is(":checked");
+					});
+
+					$("#allchecked").prop("checked", is_checked);
+				});
+			});
+
+			//주문하기 부분
+			$(".allbuy").click(function(){
+				var b_no = [];
+				var book_v = [];
+				<c:forEach var="b" items="${book}">
+					 b_no.push(${b.b_no});
+					 book_v.push(${b.b_Q1});
+				</c:forEach>
+				location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+			});
+			
+			$(".buy").click(function(){
+				var b_no = [];
+				var book_v = [];
+				 $('.prodelete1:checked').each(function(){
+					 var bv = $(this).parent().parent().children().eq(4).text();
+					 b_no.push(Number($(this).val()));
+					 book_v.push(Number(bv));
+				 });
+				 location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+			});
+			
+			</script>
 		</section>
 	</div>
 	<br>

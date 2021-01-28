@@ -1168,7 +1168,7 @@ public class BoardController {
 	// 오늘은 나도 작가 = 5 디테일 뷰 컨트롤러
 	@RequestMapping("TIWdetail.to")
 	public ModelAndView boardDetail(@RequestParam("boardNo") int boardNo, @RequestParam("code") int code,
-									@RequestParam("page") int page, @RequestParam(value="cpage", required=false) Integer cpage, 
+									@RequestParam("page") int page, 
 									ModelAndView mv, HttpSession session) {
 		
 		Board board = bService.selectTIWBoard(boardNo);
@@ -1284,7 +1284,7 @@ public class BoardController {
 		suppoint.setSendId(sendId);
 		suppoint.setbNo(bNo);
 		suppoint.setUserId(userId);
-	    
+		
 		int upSup = bService.updateSupport(suppoint);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -2877,39 +2877,21 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpServletRequest request) {
-			String userid = ((Member)request.getSession().getAttribute("loginUser")).getId();
+		public ModelAndView bookCart(ModelAndView mv, HttpSession session) {
+			String userid = ((Member)session.getAttribute("loginUser")).getId();
 			ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
 			ArrayList<Book> bookList = new ArrayList<Book>();
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
 			for(ShoppingBasket sbList : sb) {
 				Book book = b_Service.selectBook(sbList.getBook_no());
+				book.setB_Q1(sbList.getSb_v());
 				Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 				bookList.add(book);
 				atList.add(at);
 			}
-			System.out.println(bookList);
-			System.out.println(atList);
 			mv.addObject("book", bookList);
 			mv.addObject("at", atList);
 			mv.setViewName("bookCart");
 			return mv;
 		}
-		@RequestMapping("pcs.bo") 
-		public ModelAndView bookPurchase(@RequestParam("b_no") int b_no, ModelAndView mv,
-										@RequestParam("boardNo") int boardNo) {
-			Book book = b_Service.selectBook(b_no);
-			ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-			Attachment at = new Attachment();
-			for(Attachment a : atList) {
-				if(a.getAtcLevel() == 0) {
-					at = a;
-				}
-			}
-			mv.addObject("book", book);
-			mv.addObject("at", at);
-			mv.setViewName("bookPurchase");
-			return mv;	
-		}
-
 	}

@@ -125,4 +125,9 @@ public class BookServiceImpl implements BookService{
 		return result;
 	}
 
+	@Override
+	public int insertPay(Pay pay) {
+		return b_DAO.insertPay(sqlSession, pay);
+	}
+
 }

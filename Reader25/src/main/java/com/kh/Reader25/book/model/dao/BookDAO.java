@@ -90,4 +90,8 @@ public class BookDAO {
 		return sqlSession.delete("bookMapper.BasketDelete",s);
 	}
 
+	public int insertPay(SqlSessionTemplate sqlSession, Pay pay) {
+		return sqlSession.insert("bookMapper.insertPay", pay);
+	}
+
 }
