@@ -1024,7 +1024,7 @@
 	</select>
 	<select id = "selectTitleRD" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select *
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-1 AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1032,7 +1032,7 @@
 	</select>
 		<select id = "selectTitleTD" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE- 1 AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1040,7 +1040,7 @@
 	</select>
 	<select id = "selectTitleVD" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-1 AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1077,7 +1077,7 @@
 	</insert>
 	<select id="recd" resultMap="boardResultSet">
 	<![CDATA[
-	select B_TITLE 
+	select *
 	from BOARD 
 	WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 	ORDER BY B_COUNT DESC
@@ -1085,7 +1085,7 @@
 	</select>
 	<select id="recw" resultMap="boardResultSet">
 	<![CDATA[
-	    select B_TITLE 
+	    select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1093,7 +1093,7 @@
 	</select>
 	<select id="recm" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1101,7 +1101,7 @@
 	</select>
 	<select id="reviewd" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1109,7 +1109,7 @@
 	</select>
 	<select id="revieww" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1117,7 +1117,7 @@
 	</select>
 	<select id="reviewm" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '2' AND ENROLL_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1125,7 +1125,7 @@
 	</select>
 	<select id="tiwd" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1133,7 +1133,7 @@
 	</select>
 	<select id="tiww" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
@@ -1141,7 +1141,7 @@
 	</select>
 	<select id="tiwm" resultMap="boardResultSet">
 	<![CDATA[
-        select B_TITLE 
+        select * 
 		from BOARD 
 		WHERE CODE = '5' AND UPDATE_DAY > SYSDATE-#{value} AND NOT(BOARD_NO <0) AND ROWNUM <= 5
 		ORDER BY B_COUNT DESC
