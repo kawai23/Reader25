@@ -54,17 +54,18 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping("/home.do")
-	public String home(Locale locale, Model model) {
+	public ModelAndView home(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, Locale locale) {
 		ArrayList<Board> review = bService.review();
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
 		System.out.println(tiw);
-		model.addAttribute("review", review);
-		model.addAttribute("discuss", discuss);
-		model.addAttribute("tiw", tiw);
-		model.addAttribute("views", views);
-		return "home";
+		mv.addObject("review", review);
+		mv.addObject("discuss", discuss);
+		mv.addObject("tiw", tiw);
+		mv.addObject("views", views);
+        mv.setViewName("home");
+		return mv;
 	}
 	
 	@RequestMapping( value = "/recod.do")
