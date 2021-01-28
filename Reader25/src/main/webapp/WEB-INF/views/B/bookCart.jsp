@@ -153,7 +153,7 @@
 <body id="body">
 	<%@include file="../common/menubar.jsp"%>
 	<div id="maindiv">
-		<br> <br> <br> <br><div class="writetitle1">장바구니</div>
+		<br> <br> <br> <br><div class="writetitle1">주문 목록</div>
 		<section>
 			<div id="listArea" class="list-A">
 				
@@ -176,7 +176,7 @@
 						<tr>
 							<c:choose>
 								<c:when test="${vs.last}">
-									<td width="10" class="tdbottom"><input type="checkbox" class="prodelete1"></td>
+									<td width="10" class="tdbottom"><input type="checkbox" class="prodelete1" value="${b.b_no }"></td>
 									<td width="150" class="tdbottom">
 									<c:choose>
 										<c:when test="${ at[vs.index] eq null }">
@@ -193,11 +193,11 @@
 									<td width="150" class="tdbottom">${b.b_price}원</td>
 									<td width="150" class="tdbottom">${b.b_Q1}</td>
 									<td width="150" class="tdbottom">2500원</td>
-									<td width="150" class="tdbottom">${b.b_price + 2500}원</td>
+									<td width="150" class="tdbottom">${(b.b_price * b.b_Q1)+ 2500}원</td>
 									<td width="50" class="tdbottom"></td>
 								</c:when>
 								<c:otherwise>
-									<td width="10" class="tdbottom2"><input type="checkbox" class="prodelete1"></td>
+									<td width="10" class="tdbottom2"><input type="checkbox" class="prodelete1" value="${b.b_no }"></td>
 									<td width="150" class="tdbottom2">
 									<c:choose>
 										<c:when test="${ at[vs.index] eq null }">
@@ -214,7 +214,7 @@
 									<td width="150" class="tdbottom2">${b.b_price}원</td>
 									<td width="150" class="tdbottom2">${b.b_Q1}</td>
 									<td width="150" class="tdbottom2">2500원</td>
-									<td width="150" class="tdbottom2">${b.b_price + 2500}원</td>
+									<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + 2500}원</td>
 									<td width="50" class="tdbottom2"></td>
 								</c:otherwise>
 							</c:choose>
@@ -258,10 +258,24 @@
 
 			//주문하기 부분
 			$(".allbuy").click(function(){
-				
+				var b_no = [];
+				var book_v = [];
+				<c:forEach var="b" items="${book}">
+					 b_no.push(${b.b_no});
+					 book_v.push(${b.b_Q1});
+				</c:forEach>
+				location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
 			});
 			
 			$(".buy").click(function(){
+				var b_no = [];
+				var book_v = [];
+				 $('.prodelete1:checked').each(function(){
+					 var bv = $(this).parent().parent().children().eq(4).text();
+					 b_no.push(Number($(this).val()));
+					 book_v.push(Number(bv));
+				 });
+				 location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
 			});
 			
 			</script>

@@ -80,18 +80,20 @@ public class BookController {
 	}
 	// 결제 페이지 이동(+결제테이블에 인설트)
 	@RequestMapping("pcs.tr") 
-	public ModelAndView bookPurchase(@ModelAttribute Book b, ModelAndView mv, @RequestParam("boardNo") int boardNo, HttpSession session) {
-		Book book = b_Service.selectBook(b.getB_no());
-		ArrayList<Attachment> atList = bService.selectAttachmentList(boardNo);
-		Attachment at = new Attachment();
-		for(Attachment a : atList) {
-			if(a.getAtcLevel() == 0) {
-				at = a;
-			}
+	public ModelAndView bookPurchase(@RequestParam("b_no") ArrayList<Integer> b, @RequestParam("book_v") ArrayList<Integer> book_v, ModelAndView mv, HttpSession session) {
+		String userid = ((Member)session.getAttribute("loginUser")).getId();
+		ArrayList<Attachment> atList = new ArrayList<Attachment>();
+		ArrayList<Book> bList = new ArrayList<Book>();
+		for(int i = 0; i<b.size(); i++) {
+			Book book = b_Service.selectBook(b.get(i));
+			Attachment at = bService.selectAttachmentzero(book.getBoardNo());
+			book.setB_Q1(book_v.get(i));
+			bList.add(book);
+			atList.add(at);
+			Pay pay = new Pay(book_v.get(i), (book_v.get(i)*book.getB_price()) ,userid, book.getB_no());
+			int result = b_Service.insertPay(pay);
 		}
-		mv.addObject("book", book);
-		mv.addObject("at", at);
-		mv.setViewName("bookPurchase");
+		mv.addObject("book", bList).addObject("at", atList).setViewName("bookPurchase");
 		return mv;	
 	}
 	//관리자창 : 결제 내역 조회

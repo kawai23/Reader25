@@ -40,4 +40,6 @@ public interface BookService {
 
 	int myBasketDelete(String[] lists);
 
+	int insertPay(Pay pay);
+
 }

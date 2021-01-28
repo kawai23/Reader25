@@ -560,7 +560,7 @@ section {
              	$('#login-modal .modal').show();
              }else{
             	 var amount = $('#amount-option').val();
-            	 location.href="<%=request.getContextPath()%>/pcs.tr?boardNo="+ ${board.boardNo} + "&b_no=" +${book.b_no}+"&b_Q2=" + amount;
+            	 location.href="<%=request.getContextPath()%>/pcs.tr?b_no=" +${book.b_no}+"&book_v=" + amount;
              }
          });
          </script>
