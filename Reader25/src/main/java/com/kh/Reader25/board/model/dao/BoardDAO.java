@@ -667,6 +667,10 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBookList", code, rowBounds);
 	}
 
+	public int getSearchBookListCount(SqlSessionTemplate sqlSession, SearchReview sr) {
+		return sqlSession.selectOne("boardMapper.getSearchBookListCount", sr);
+	}
+
 
 
 

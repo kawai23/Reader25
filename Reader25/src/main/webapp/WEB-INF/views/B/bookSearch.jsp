@@ -221,7 +221,7 @@ input:focus{outline: none;}
 		<div class="top-div">
 			<div class="search-div">
 				<select class="search-option" name="searchCondition" id="searchCondition">
-					<option <%=select[0] %> value="book">title</option>
+					<option <%=select[0] %> value="book">book</option>
 					<option <%=select[1] %> value="author">author</option>
 					<option <%=select[2] %> value="category">분류</option>
 				</select>

@@ -210,7 +210,7 @@ input:focus{outline: none;}
 		<div class="top-div">
 			<div class="search-div">
 				<select class="search-option" name="searchCondition" id="searchCondition">
-					<option selected="selected" value="book">title</option>
+					<option selected="selected" value="book">book</option>
 					<option value="author">author</option>
 					<option value="category">분류</option>
 				</select>
@@ -316,7 +316,7 @@ input:focus{outline: none;}
 			}).mouseenter(function(){
 				$(this).find('.title-li').css({'text-decoration':'underline', 'background':' rgba(220, 220, 220, 1)'});
 			}).mouseout(function(){
-				$(this).find('.title-li').css({'text-decoration':'underline', 'background':'none'});
+				$(this).find('.title-li').css({'text-decoration':'none', 'background':'none'});
 			});
       </script>
       <div class="paging">
@@ -328,6 +328,9 @@ input:focus{outline: none;}
 			<c:if test="${ pi.currentPage > 1 }">
 				<c:url var="before" value="${ loc }">
 					<c:param name="page" value="${ pi.currentPage -1 }"/>
+					<c:if test="${sortValue ne null }">
+						<c:param name="sortValue" value="${sortValue}"/>
+					</c:if>
 				</c:url>
 				<a href="${ before }">&lt;</a>
 			</c:if>
@@ -339,6 +342,9 @@ input:focus{outline: none;}
 				<c:if test="${ pi.currentPage ne p }">
 					<c:url var="pNo" value="${ loc }">
 						<c:param name="page" value="${ p }"/>
+						<c:if test="${sortValue ne null }">
+								<c:param name="sortValue" value="${sortValue}"/>
+						</c:if>
 					</c:url>
 					<a href="${ pNo }">${ p }</a>
 				</c:if>
@@ -348,6 +354,9 @@ input:focus{outline: none;}
 			<c:if test="${ pi.currentPage >= pi.endPage }">
 				<c:url var="next" value="${ loc }">
 					<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					<c:if test="${sortValue ne null }">
+						<c:param name="sortValue" value="${sortValue}"/>
+					</c:if>
 				</c:url>
 				<a href="${next}">&gt;</a>
 			</c:if>

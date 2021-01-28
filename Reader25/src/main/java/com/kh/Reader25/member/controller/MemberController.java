@@ -466,6 +466,9 @@ public class MemberController {
 		ArrayList<Member> memList = mService.selectMemberList(pi);
 		ArrayList<Member> delList = mService.selectdeletMemberList(pi2);
 		List<Map<String,String>> genderMap = mService.selectGender();
+		List<Map<String,String>> rankMap = mService.getRankCount();
+		
+		// 값 가공하기
 		String genderArr = "['Gender','회원수']";
 		for(int i = 0; i < genderMap.size(); i++) {
 			if(i != genderMap.size()) {
@@ -474,11 +477,20 @@ public class MemberController {
 			
 			genderArr += "['" + genderMap.get(i).get("gender") +"'," + genderMap.get(i).get("count") + "]";
 		}
+		String rankArr = "['Rank','회원수']";
+		for(int i = 0; i < rankMap.size(); i++) {
+			if(i != rankMap.size()) {
+				rankArr += ",";
+			}
+			
+			rankArr += "['" + rankMap.get(i).get("rank") +"'," + rankMap.get(i).get("count") + "]";
+		}
 		if(memList != null && delList != null) {
 			mv.addObject("memList", memList)
 			  .addObject("pi", pi)
 			  .addObject("pi2", pi2)
 			  .addObject("delList", delList)
+			  .addObject("rankArr", rankArr)
 			  .addObject("genderArr", genderArr);
 			mv.setViewName("memberList");
 			return mv;

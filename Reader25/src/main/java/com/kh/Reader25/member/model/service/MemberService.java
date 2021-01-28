@@ -61,6 +61,8 @@ public interface MemberService {
 
 	List<Map<String, String>> selectGender();
 
+	List<Map<String, String>> getRankCount();
+
 	
 
 

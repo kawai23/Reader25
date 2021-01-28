@@ -160,6 +160,10 @@ public class MemberDAO {
 	public List<Map<String, String>> selectGender(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("memberMapper.getGender");
 	}
+
+	public List<Map<String, String>> getRankCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("memberMapper.getRankCount");
+	}
 	
 
 

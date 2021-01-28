@@ -254,7 +254,7 @@ section {
 			<div class="file-div">
 				<input class="upload-name" value="파일선택" disabled="disabled">
 				<label for="file-input">파일 업로드</label>
-				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple" accept="image/*,application/vnd.ms-excel,audio/*,video/*,text/plain,text/html,.pdf">
+				<input type="file" id="file-input" name="uploadFile"  onchange="loadImg(this);" multiple="multiple" accept="image/*,application/vnd.ms-excel,text/plain,text/html,.doc,.docx,.pdf,application/msword">
 			</div>
 			<div class="fileList" id="fileList"></div>
 			<div class="file-upload">

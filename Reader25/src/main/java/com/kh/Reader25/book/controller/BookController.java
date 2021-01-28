@@ -323,7 +323,7 @@ public class BookController {
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int listCount = bService.getSearchReviewListCount(sr);
+		int listCount = bService.getSearchBookListCount(sr);
 		
 		PageInfo pi = Pagination.getPageInfo2(currentPage, listCount);
 		ArrayList<Board> bList = bService.selectSearchBook(sr, pi);

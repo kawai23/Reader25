@@ -30,6 +30,7 @@
 		padding: 20px;
 		width: 80%;
 		max-width: 1000px;
+		line-height: 110%;
 	}
 	.notice-header{
 		text-align: center;
@@ -268,11 +269,14 @@
 				<!-- 이미지 파일 넣기 -->
 				<% 
 					ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+					System.out.println(atList);
 				%>
 				<%if(atList != null){ %>
 					<div class="file-list">
 						<%for(Attachment at: atList){ %>
-						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); %>
+						<% String ext = at.getAtcName().substring(at.getAtcName().lastIndexOf(".") +1 ); 
+							System.out.println(at.getAtcName());
+						%>
 							<%if(!ext.equals("jpg") && !ext.equals("jepg") && !ext.equals("png")) { %>
 								<a href="resources/buploadFiles/<%=at.getAtcName()%>" download="<%=at.getAtcOrigin()%>"><%=at.getAtcOrigin()%></a>
 							<%} %>
@@ -285,7 +289,7 @@
 								<div class="image">
 									<img src="<%=request.getContextPath()%>/resources/buploadFiles/<%=at.getAtcName()%>">
 								</div>
-							<%} %>
+							<%}%>
 						<%} %>
 					</div>
 				<%} %>

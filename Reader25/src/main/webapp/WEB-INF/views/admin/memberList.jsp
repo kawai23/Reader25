@@ -34,7 +34,7 @@
 		background: white;
 		border-radius: 3px;
 		box-shadow: 3px 3px 3px 1px lightgray;
-		max-width: 1100px;
+		max-width: 900px;
 	}
 	.title {
 		font-size: 20px;
@@ -99,18 +99,22 @@
 		visibility: none;
 	}
 	.member-chart{
-		max-width: 1100px;
+		max-width: 900px;
 		margin:auto;
-		min-width:700px;
+		min-width:770px;
+		text-align: center;
 	}
 	.graphs-title{
 		width:100%;
 		padding-bottom:7px; 
+		padding-left:15px; 
 		display:inline-block;
 		border-bottom: 1px solid rgb(200, 200, 200);
 		font-size: 20px;
 		font-weight: 400;
+		text-align: left;
 	}
+	.member-chart div{display:inline-block;}
 	.modal {
 		margin: 40% auto; 
 		padding: 20px;
@@ -194,6 +198,44 @@
 		});
 	</script>
 	<section id="member-section">
+		<div class="member-chart">
+			<h4 class="graphs-title">회원 그래프</h4>
+			<div id="chart_div"></div>
+			<div id="chart_div2"></div>
+		</div>
+		
+			<script>
+		gender = [${genderArr}];
+		rank = [${rankArr}];
+		$(function(){
+			console.log(rank);
+		});
+	      google.charts.load("current", {packages:["corechart"]});
+	      google.charts.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var data = google.visualization.arrayToDataTable(gender);
+			var data2 = google.visualization.arrayToDataTable(rank);
+	        var options = {
+	          title: '회원 성비',
+	          pieHole: 0.3,
+	          width: 370, 
+ 	          height: 250,
+ 	         legend:'bottom'
+	        };
+	        var options2 = {
+	  	          title: '등급',
+	  	          width: 370, 
+	   	          height: 250,
+	   	         legend:'bottom'
+	  	        };
+	
+	        var chart = new google.visualization.PieChart(document.getElementById("chart_div"));
+	        var chart2 = new google.visualization.PieChart(document.getElementById("chart_div2"));
+	        chart.draw(data, options);
+	        chart2.draw(data2, options2);
+	      }
+	    </script>
+		
 		<div class="member-li-div">
 			<div class="content">
 				<div class="title">회원 관리<span><button id="deleteMem">계정 중지</button></span></div>
@@ -434,32 +476,8 @@
 					}
 				});
 			</script>
-		<div class="member-chart">
-			<h4 class="graphs-title">회원 그래프</h4>
-			<div id="chart_div"></div>
-		</div>
-		<script>
-		gender = [${genderArr}];
-		$(function(){
-			console.log(${genderArr});
-		});
-	      google.charts.load("current", {packages:["corechart"]});
-	      google.charts.setOnLoadCallback(drawChart);
-	      function drawChart() {
-	        var data = google.visualization.arrayToDataTable(gender);
+		
 	
-	        var options = {
-	          title: '회원 성비',
-	          pieHole: 0.3,
-	          width: 300, 
- 	          height: 300,
- 	         legend:'top'
-	        };
-	
-	        var chart = new google.visualization.PieChart(document.getElementById("chart_div"));
-	        chart.draw(data, options);
-	      }
-	    </script>
 	</section>
 </body>
 </html>

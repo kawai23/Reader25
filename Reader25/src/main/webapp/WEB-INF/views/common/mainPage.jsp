@@ -14,7 +14,12 @@
 	padding: 0;
 }
 .main{
-
+		width: 80%; min-height: 400px; margin-left: 10%; margin-right: 10%; 
+		margin-bottom: 0%; min-width: 1000px;
+		padding-top: 15px;
+		background-color:  #F6F6F6; 
+		font-family: 카페24 아네모네에어;
+		min-height: 750px;
 }
 input[id*="slide"] {
 	display: none;
@@ -347,6 +352,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 </style>
 </head>
 <body>
+	<div class = "main">
 	<div class="news_login">
 		<!-- 로그인 공지사항 알리미 div -->
 		<input type="radio" name="slide" id="slide01" checked> <input
@@ -451,13 +457,18 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
-						<p class="ellipsis_t">
-							<c:out value="${ t.bTitle }" />
-						</p>
+						<c:url var="TIWdetail" value="TIWdetail.to">
+							<c:param name="boardNo" value="${ b.boardNo }"/>
+							<c:param name="page" value="${ pi.currentPage }"/>
+							<c:param name="User" value="${ loginUser.id }"/>
+							<c:param name="code" value="${ t.code }"/>
+						</c:url>
+						<p class="ellipsis_t"><a href = ${ TIWdetail }><c:out value="${ t.bTitle }" /></a></p>
 						</div>
 				</c:forEach>
 			</div>
 		</div>
+	</div>
 	</div>
 	<script>
 		function clickbutton1() {
