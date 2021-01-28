@@ -477,11 +477,20 @@ public class MemberController {
 			
 			genderArr += "['" + genderMap.get(i).get("gender") +"'," + genderMap.get(i).get("count") + "]";
 		}
+		String rankArr = "['Rank','회원수']";
+		for(int i = 0; i < rankMap.size(); i++) {
+			if(i != rankMap.size()) {
+				rankArr += ",";
+			}
+			
+			rankArr += "['" + rankMap.get(i).get("rank") +"'," + rankMap.get(i).get("count") + "]";
+		}
 		if(memList != null && delList != null) {
 			mv.addObject("memList", memList)
 			  .addObject("pi", pi)
 			  .addObject("pi2", pi2)
 			  .addObject("delList", delList)
+			  .addObject("rankArr", rankArr)
 			  .addObject("genderArr", genderArr);
 			mv.setViewName("memberList");
 			return mv;

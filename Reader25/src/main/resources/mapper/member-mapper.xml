@@ -176,7 +176,7 @@
 	</resultMap>
 	
 	<select id="getRankCount" resultMap="rankMap">
-		select  grant_name, count(*)
+		select  grant_name as rank, count(*) as count
 		from member
 		join mgrant
 		using(grant_id)
