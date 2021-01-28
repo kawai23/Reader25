@@ -102,6 +102,8 @@
 @keyframes aa_ani{
             0%{
                 opacity: 0;
+            } 10%{
+            	opacity: 0;
             }100%{
             	opacity: 1;
             }

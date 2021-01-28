@@ -1284,7 +1284,7 @@ public class BoardController {
 		suppoint.setSendId(sendId);
 		suppoint.setbNo(bNo);
 		suppoint.setUserId(userId);
-	    
+		
 		int upSup = bService.updateSupport(suppoint);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
