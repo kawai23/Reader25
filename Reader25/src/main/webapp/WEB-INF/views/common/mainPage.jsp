@@ -13,7 +13,9 @@
 	margin: 0;
 	padding: 0;
 }
+.main{
 
+}
 input[id*="slide"] {
 	display: none;
 }
@@ -192,7 +194,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 .r_timebook {
 	margin-top: 3%;
 	width: 100%;
-	height: 400px;
+	height: 20%;
 }
 
 #button_brown {
@@ -403,7 +405,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
 			<div class = "recommend_t"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="r" items="${ views }" begin="0" end="13" varStatus="status">
+				<c:forEach var="r" items="${ views }" begin="0" end="4" varStatus="status">
 						<div id="recommend<c:out value='${status.count}'/>" style = "text-align : left">
 						<p class="ellipsis_r"><c:out value="${ r.bTitle }" /></p>
 						</div>
@@ -417,7 +419,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
 			<div class = "review_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="r" items="${ review }" begin="0" end="13" varStatus="status">
+				<c:forEach var="r" items="${ review }" begin="0" end="4" varStatus="status">
 						<div id="reviews<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_v">
 							<c:out value="${ r.bTitle }" />
@@ -432,7 +434,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
 			<div class = "discuss_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="d" items="${ discuss }" begin="0" end="13" varStatus="status">
+				<c:forEach var="d" items="${ discuss }" begin="0" end="4" varStatus="status">
 						<div id="discuss<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_d">
 						<c:out value="${ d.dTitle }" />
@@ -447,7 +449,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
 			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="t" items="${ tiw }" begin="0" end="13">
+				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<p class="ellipsis_t">
 							<c:out value="${ t.bTitle }" />
@@ -736,6 +738,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				}
 			});
 		}
+		
 		function Reset_r() { // 책추천
 			$('.ellipsis_r').remove();
 		}
