@@ -9,7 +9,7 @@
 	section{
 		background: rgba(246, 246, 246, 1);
 		margin: auto;
-		min-height: 900px;
+		min-height: 650px;
 		width: 80%;
 		min-width:1000px;
 		margin:auto;
@@ -23,7 +23,7 @@
 		margin-top: 20px;
 		border-radius: 2px;
 		box-shadow: 0px 2px 2px 3px lightgray;
-		padding: 20px;
+		padding: 20px;padding-top:5%;padding-bottom:5%;
 		width: 80%;
 		max-width: 1000px;
 	}

@@ -10,6 +10,8 @@
 <!-- jqyery Modal -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<!-- google charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 	body{
 		background:rgba(246, 246, 246, 1);
@@ -93,8 +95,21 @@
 		background: rgba(39, 50, 56, 1);
 		color: white;
 	}
-		.jquery-modal blocker current {
+	.jquery-modal blocker current {
 		visibility: none;
+	}
+	.member-chart{
+		max-width: 1100px;
+		margin:auto;
+		min-width:700px;
+	}
+	.graphs-title{
+		width:100%;
+		padding-bottom:7px; 
+		display:inline-block;
+		border-bottom: 1px solid rgb(200, 200, 200);
+		font-size: 20px;
+		font-weight: 400;
 	}
 	.modal {
 		margin: 40% auto; 
@@ -419,6 +434,32 @@
 					}
 				});
 			</script>
+		<div class="member-chart">
+			<h4 class="graphs-title">회원 그래프</h4>
+			<div id="chart_div"></div>
+		</div>
+		<script>
+		gender = [${genderArr}];
+		$(function(){
+			console.log(${genderArr});
+		});
+	      google.charts.load("current", {packages:["corechart"]});
+	      google.charts.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var data = google.visualization.arrayToDataTable(gender);
+	
+	        var options = {
+	          title: '회원 성비',
+	          pieHole: 0.3,
+	          width: 300, 
+ 	          height: 300,
+ 	         legend:'top'
+	        };
+	
+	        var chart = new google.visualization.PieChart(document.getElementById("chart_div"));
+	        chart.draw(data, options);
+	      }
+	    </script>
 	</section>
 </body>
 </html>

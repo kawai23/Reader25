@@ -159,6 +159,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.downPointUser(sqlSession, cap);
 	}
 
+	@Override
+	public List<Map<String, String>> selectGender() {
+		return mDAO.selectGender(sqlSession);
+	}
+
 
 
 	

@@ -16,15 +16,16 @@
 <style>
 /*화면*/
 .outer { 
-			display:block;
-			text-align:center; 
-			padding-top:30px; 
-			width: 900px; min-height: 400px; margin-left: auto; margin-right: auto; 
-			margin-top: 1%; margin-bottom: 10%;
-			font-family: 카페24 아네모네에어; font-size:25px;
+		background: rgba(246, 246, 246, 1);
+		min-height: 600px;
+		width: 80%;
+		min-width:1000px;
+		margin:auto;
+		padding-top: 20px;
+		font-family: 카페24 아네모네에어; font-size:25px;
 }
 /*글자*/
-.outer>h3 {display: inline-block;
+.outer>.search-div>h3 {
 			font-size:50px;
 			font-family: 카페24 아네모네;
 			text-align: center;}
@@ -104,6 +105,28 @@
 	position:relative;
 	top: 10px;
 }
+.search-div{
+		min-height: 100px; 
+		background: white;
+		border-radius: 10px;
+		margin-left: auto; margin-right: auto;
+		margin-top: 3%; margin-bottom: 10%;
+		box-shadow: 0px 5px 5px 7px lightgray;
+		padding: 20px;
+		width: 600px;
+		
+		animation-duration:2s; animation-iteration-count:1; animation-name:aa_ani;
+}
+
+@keyframes aa_ani{
+            0%{
+                opacity: 0;
+            } 10%{
+            	opacity: 0;
+            }100%{
+            	opacity: 1;
+            }
+        }
 </style>
 </head>
 <body>
@@ -141,61 +164,72 @@
 	</div>
 	
   <div class="outer">
-  	<h3>아이디/비밀번호 찾기</h3>
-				<div style="margin-bottom: 10px;" class="radio_div">
-					<input type="radio" id="search_1" name="search_total" onclick="search_check(1)" checked="checked">
-					<label for="search_1">아이디 찾기</label>
-				</div>
-				<div class="radio_div">
-					<input type="radio" id="search_2" name="search_total" onclick="search_check(2)"> 
-					<label for="search_2">비밀번호 찾기</label>
-				</div>
-				<br>
-				<!-- 아이디 찾기 단  -->
-				<div id="searchI">
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputName_1">이름</label>
-						<div>
-							<input type="text" class="form-control" id="inputName_1" name="inputName_1" placeholder="ex) 김건강">
+  	<div class="search-div">
+	  	<h3>아이디/비밀번호 찾기</h3>
+	  		<table align="center">
+	  			<tr>
+	  				<td>
+	  					<div style="margin-bottom: 10px;" class="radio_div">
+						<input type="radio" id="search_1" name="search_total" onclick="search_check(1)" checked="checked">
+						<label for="search_1">아이디 찾기</label>
 						</div>
-					</div>
+	  				</td>
+	  				<td>
+	  					<div class="radio_div">
+						<input type="radio" id="search_2" name="search_total" onclick="search_check(2)"> 
+						<label for="search_2">비밀번호 찾기</label>
+						</div>
+	  				</td>
+	  			</tr>
+	  		</table>
 					<br>
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputPhone_1">휴대폰번호</label>
-						<div>
-							<input type="text" class="form-control" id="inputPhone_1" name="inputPhone_1" placeholder="ex) 010-7777-9999">
+					<!-- 아이디 찾기 단  -->
+					<div id="searchI" align="center">
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="inputName_1">이름</label>
+							<div>
+								<input type="text" class="form-control" id="inputName_1" name="inputName_1" placeholder="ex) 김건강">
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="inputPhone_1">휴대폰번호</label>
+							<div>
+								<input type="text" class="form-control" id="inputPhone_1" name="inputPhone_1" placeholder="ex) 010-7777-9999">
+							</div>
+						</div>
+						<br><br>
+						<div class="form-group">
+							<button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block"><label for="modal">확인</label></button>
+							<button  style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='loginView.me'"><span class="txt_type">취소</span></button>
 						</div>
 					</div>
-					<br><br>
-					<div class="form-group">
-						<button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block"><label for="modal">확인</label></button>
-						<button  style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='loginView.me'"><span class="txt_type">취소</span></button>
-					</div>
-				</div>
-				<!-- 비밀번호 찾기 단  -->
-				<div id="searchP" style="display: none;">
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputId">아이디</label>
-						<div>
-							<input type="text" class="form-control" id="inputId_2" name="inputId_2" placeholder="ex) asdfg">
+					<!-- 비밀번호 찾기 단  -->
+					<div id="searchP" style="display: none;" align="center">
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="inputId">아이디</label>
+							<div>
+								<input type="text" class="form-control" id="inputId_2" name="inputId_2" placeholder="ex) asdfg">
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="inputEmail_2">이메일</label>
-						<div>
-							<input type="email" class="form-control" id="inputEmail_2"	name="inputEmail_2" placeholder="ex) E-mail@gmail.com">
+						<br>
+						<div class="form-group">
+							<label class="font-weight-bold text-white" for="inputEmail_2">이메일</label>
+							<div>
+								<input type="email" class="form-control" id="inputEmail_2"	name="inputEmail_2" placeholder="ex) E-mail@gmail.com">
+							</div>
 						</div>
-					</div>
-					<br><br>
-					<div class="form-group">
-						<button id="searchBtn2" type="button" onclick="pwSearch_click()" class="btn1"><label for="modal2">확인</label></button>
-						<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='loginView.me'"><span class="txt_type">취소</span></button>
-  					</div>
-         
-  				</div>
-  	</div>
-  <br><br><br><br><br><br><br><br><br>
+						<br><br>
+						<div class="form-group">
+							<button id="searchBtn2" type="button" onclick="pwSearch_click()" class="btn1"><label for="modal2">확인</label></button>
+							<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='loginView.me'"><span class="txt_type">취소</span></button>
+	  					</div>
+	  				</div>
+	  				<br>
+	  			</div>
+	  	</div>
+ 
+  <%@ include file="../common/footer.jsp" %>
 </body>
 <script>
 	//모달 기능

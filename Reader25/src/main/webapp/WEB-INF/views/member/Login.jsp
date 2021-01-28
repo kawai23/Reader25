@@ -16,24 +16,26 @@
 <style>
 /*화면*/
 .outer{
-		width: 900px; min-height: 400px; margin-left: auto; margin-right: auto; 
-		margin-top:20px; margin-bottom: 5%;
+		background: rgba(246, 246, 246, 1);
+		min-height: 400px;
+		width: 80%;
+		min-width:1000px;
+		margin:auto;
+		padding-top: 20px;
+		font-family: 카페24 아네모네에어;	
 	}
 /*글자*/
 .txt_login{
-	display: inline-block;
 	font-size:70px;
 	font-family: 카페24 아네모네;
 	text-align: center;
 }
 .txt_login_div{
-	display: inline-block;
 	font-size:40px;
 	font-family: 카페24 아네모네에어;
 	text-align: center;
 }
 .login_search {
-	display: inline-block;
     left: 600px;
     padding-top: 10px;
     text-indent: 240px;
@@ -59,9 +61,7 @@
 	font-family: 카페24 아네모네에어;
 }
 /*테이블*/
-.login_put{ 
-	display: inline-block;
-}
+
 /*버튼*/
 #btn1 {
 	width:200px;
@@ -87,6 +87,28 @@
     background-color:  #C4C4C4;
     font-family: 카페24 아네모네에어;
 }
+.login-div{
+		min-height: 100px; 
+		background: white;
+		border-radius: 10px;
+		margin-left: auto; margin-right: auto;
+		margin-top: 3%; margin-bottom: 3%;
+		box-shadow: 0px 5px 5px 7px lightgray;
+		padding: 20px;
+		width: 600px;
+		animation-duration:2s; animation-iteration-count:1; animation-name:aa_ani;
+}
+
+@keyframes aa_ani{
+            0%{
+                opacity: 0;
+            } 10%{
+            	opacity: 0;
+            }100%{
+            	opacity: 1;
+            }
+        }
+
 </style>
 </head>
 <body>
@@ -94,111 +116,89 @@
 
 	<div class="outer">
 		<form action="login.me" method="post" id="login">
-		
-			<h2 class="txt_login" align="center">로그인 . . .</h2>
+			<div class="login-div">
+				<h2 class="txt_login" align="center">로그인 . . .</h2>
+				
+			
+				<table class="login_put" align="center">
+					<tr>
+						<td width="200px">
+							<div class="txt_login_div">
+								아이디
+							</div>
+						</td>
+						<td width="400px">
+							<div class="input_id">
+								<input type="text" name="id" size="20" tabindex="1" placeholder="아이디를 입력하세요" required>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="200px">
+							<div class="txt_login_div">
+								비밀번호
+							</div>
+						</td>
+						<td>
+							<div class="input_pw">
+								<input type="password" name="pwd" size="20" tabindex="2" placeholder="비밀번호를 입력하세요" required>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+							<div class="login_search">
+								<a class="link" style="cursor:pointer" onclick="location.href='searchUserForm.me'">아이디 | 비밀번호 찾기 </a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			
+				<br><br>
+				
+				<table class="login_put" align="center">
+					<tr>
+						<td colspan="2" align="center">
+							<button style="cursor:pointer" id="btn2" type="submit" class="btn2"><span class="txt_type">로그인</span></button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button style="cursor:pointer" id="btn1" class="btn1" onclick="location.href='signUpForm.me'"><span class="txt_type">회원가입</span></button>
+							<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='home.do'"><span class="txt_type">메인으로</span></button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<!-- 네이버 로그인 화면으로 이동 시키는 URL -->
+							<!-- 네이버 로그인 화면에서 ID, PW를 올바르게 입력하면 callback 메소드 실행 요청 -->
+							<div id="naver_id_login" style="text-align:center">
+								<a href="${naver_url}">
+									<img width="400px" src="resources/images/login/naverB.jpg"/>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div id="kakao_id_login" style="text-align: center"> 
+								<a href="${kakao_url}"> 
+								<img width="400px" src="resources/images/login/kakao.png" /></a> 
+							</div>		
+						</td>
+					</tr>
+				</table>
+			</div>
 			<br>
-			<table class="login_put">
-				<tr>
-					<td width="200px">
-						<div class="txt_login_div">
-							아이디
-						</div>
-					</td>
-					<td width="400px">
-						<div class="input_id">
-							<input type="text" name="id" size="20" tabindex="1" placeholder="아이디를 입력하세요" required>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td width="200px">
-						<div class="txt_login_div">
-							비밀번호
-						</div>
-					</td>
-					<td>
-						<div class="input_pw">
-							<input type="password" name="pwd" size="20" tabindex="2" placeholder="비밀번호를 입력하세요" required>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-					<td>
-						<div class="login_search">
-							<a class="link" style="cursor:pointer" onclick="location.href='searchUserForm.me'">아이디 | 비밀번호 찾기 </a>
-						</div>
-					</td>
-				</tr>
-			</table>
-			
-			<br><br>
-			
-			<table class="login_put">
-				<tr>
-					<td width="200px">
-					</td>
-					<td colspan="2" align="center">
-						<button style="cursor:pointer" id="btn2" type="submit" class="btn2"><span class="txt_type">로그인</span></button>
-					</td>
-				</tr>
-				<tr>
-					<td width="200px">
-					</td>
-					<td colspan="2" align="center">
-						<button style="cursor:pointer" id="btn1" class="btn1" onclick="location.href='signUpForm.me'"><span class="txt_type">회원가입</span></button>
-						<button style="cursor:pointer" id="btn3" class="btn3" onclick="location.href='home.do'"><span class="txt_type">메인으로</span></button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-					<td colspan="2">
-						<!-- 네이버 로그인 화면으로 이동 시키는 URL -->
-						<!-- 네이버 로그인 화면에서 ID, PW를 올바르게 입력하면 callback 메소드 실행 요청 -->
-						<div id="naver_id_login" style="text-align:center">
-							<a href="${naver_url}">
-								<img width="400" src="resources/images/login/naverB.jpg"/>
-							</a>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					</td>
-					<td colspan="2">
-						<div id="kakao_id_login" style="text-align: center"> 
-							<a href="${kakao_url}"> 
-							<img width="400" src="resources/images/login/kakao.png" /></a> 
-						</div>		
-					</td>
-				</tr>
-			</table>
-			
-
-		
-		
-		
-		
-
-		
-			
-
 		</form>
 		
-			
-			
-			
-			<br>
-			
-			<br>
 	</div>
-	<br><br><br><br><br><br><br><br><br>
 	
 	
 
-	<%-- <%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="../common/footer.jsp" %>
 	
 </body>
 </html>

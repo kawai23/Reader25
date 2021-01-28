@@ -28,13 +28,13 @@
 		min-height: 100px; 
 		background: white;
 		margin: auto;
-		margin-top: 20px;
+		margin-top: 20px; 
 		border-radius: 2px;
 		box-shadow: 0px 2px 2px 3px lightgray;
-		padding: 20px;
-		width: 80%;
+		padding: 20px;padding-left:10%; padding-right:10%;padding-top:5%;
+		min-width: 80%;
 		min-width: 500px;
-		max-width: 800px;
+		max-width: 600px;
 	}
 	.inquiry-header{
 		text-align: center;
@@ -106,6 +106,9 @@
 		margin: 5px;
 		color:white;
 		font-family: 카페24 아네모네에어;
+	}
+	span{
+	line-height:200%
 	}
 	 textarea{
 		clear:both;
@@ -535,7 +538,7 @@
 				
 			</div>
 		</div>
-		<c:if test="${ loginUser.id eq board.userId || loginUser.id eq 'admin' }">
+		
 		<div  class="inquiry-div">
 			
 				<div class="comment-box">
@@ -543,6 +546,7 @@
 					</div>
 					<div class="paging-btn" id="co-paging">
 					</div>
+					<c:if test="${ loginUser.id eq board.userId || loginUser.id eq 'admin' }">
 					<div class="comment-write">
 						<div class="user-div">
 							<c:if test="${loginUser ne null }">
@@ -554,10 +558,12 @@
 					</div>
 					<button id="comment-add">댓글 등록</button>
 					<br>
+					</c:if>
 				</div>
+				
 				<br>
 				<br>
-			
+		</div>	
 				<script>
 		 		$(function(){
 			 		getComments();
@@ -685,11 +691,11 @@
 					}
 		</script>
 			
-		</div>
+		
 		
 		
 		<br>
-		</c:if>
+		
 		<div class="btn-div">
 			<c:url var="inquiryUpdate" value="inquiryUpView.in">
 				<c:param name="boardNo" value="${ board.boardNo }"/>

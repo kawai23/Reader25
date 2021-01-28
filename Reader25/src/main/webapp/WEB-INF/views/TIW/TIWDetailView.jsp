@@ -74,6 +74,14 @@ textarea{
     background-color:  #C95F12;
     font-family: 카페24 아네모네에어;
 }
+#btn22{
+	width:200px;
+    height: 40px;
+	font-size: 18px; color:#000000;
+	border: 1px solid  #C95F12;
+    background-color:  #C95F12;
+    font-family: 카페24 아네모네에어;
+}
 #btn3{
 	width:100px;
     height: 40px;
@@ -513,6 +521,14 @@ textarea{
 							</td>
 						</tr>
 					</c:if>
+					<c:if test="${ loginUser.id ne board.userId }">
+						<tr>
+							<td colspan="9" align="center">
+								<button id="btn22" onclick="location.href='${ goTIWList }'">목록으로</button>
+							</td>
+						</tr>
+					</c:if>
+					
 					
 					<script>
 						function deleteTIWDelete(){
@@ -524,30 +540,34 @@ textarea{
 						}
 					</script>
 					
-					<tr>
-						<td colspan="5" align="right">
-							<c:choose>
-							  <c:when test="${heart eq '1'}">
-							    <a class="heart"><img id="heart" src="resources/images/like/like.png"></a>
-							  </c:when>
-							  <c:otherwise>
-							    <a class="heart"><img id="heart" src="resources/images/like/unlike.png"></a>
-							  </c:otherwise>
-							</c:choose>
-						</td>
-						<td colspan="4" align="left">
-							<c:choose>
-							  <c:when test="${support > 0}">
-							    <a class="support"><img id="support" src="resources/images/icon/support.png"></a>
-							  </c:when>
-							  <c:otherwise>
-							    <a class="support"><img id="support" src="resources/images/icon/support-d.png"></a>
-							  </c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
+					
 				</table>
 			</div>
+			
+			<table align="center">
+			<tr>
+				<td colspan="4" align="right">
+				<c:choose>
+					<c:when test="${heart eq '1'}">
+						<a class="heart"><img id="heart" src="resources/images/like/like.png"></a>
+					</c:when>
+					<c:otherwise>
+						<a class="heart"><img id="heart" src="resources/images/like/unlike.png"></a>
+					</c:otherwise>
+				</c:choose>
+				</td>
+				<td colspan="4" align="left">
+				<c:choose>
+					<c:when test="${support > 0}">
+						<a class="support"><img id="support" src="resources/images/icon/support.png"></a>
+					</c:when>
+					<c:otherwise>
+						<a class="support"><img id="support" src="resources/images/icon/support-d.png"></a>
+					</c:otherwise>
+				</c:choose>
+				</td>
+			</tr>
+			</table>
 			
 				
 			<div class="comment-box">
@@ -753,7 +773,7 @@ textarea{
 	$(document).ready(function () {
 
 		var supportval = ${support};
-		var userId = ${ board.userId };
+		var userId = '${ board.userId }';
 		console.log("1"+supportval);
 	    if(supportval>0) {
 	        console.log(supportval);
