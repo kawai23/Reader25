@@ -582,6 +582,7 @@ section {
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 						if(check){
+<%-- 							location.href="<%=request.getContextPath()%>/myBasketList.me"; --%>
 							location.href="<%=request.getContextPath()%>/cart.bo";
 						}
 	                }

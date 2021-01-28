@@ -97,6 +97,9 @@ public class BookController {
 			atList.add(at);
 			Pay pay = new Pay(book_v.get(i), (book_v.get(i)*book.getB_price()) ,userid, book.getB_no());
 			int result = b_Service.insertPay(pay);
+			if(result <0) {
+				throw new BookException("주문내역 추가에 실패하였습니다.");
+			}
 		}
 		mv.addObject("book", bList).addObject("at", atList).setViewName("bookPurchase");
 		return mv;	

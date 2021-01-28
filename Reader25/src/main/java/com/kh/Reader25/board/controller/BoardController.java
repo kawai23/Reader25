@@ -2877,17 +2877,27 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(ModelAndView mv, HttpSession session) {
-			String userid = ((Member)session.getAttribute("loginUser")).getId();
-			ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
+		public ModelAndView bookCart(@RequestParam(value ="b_no", required = false) ArrayList<Integer> b, @RequestParam(value ="book_v", required = false) ArrayList<Integer> book_v,ModelAndView mv, HttpSession session) {
 			ArrayList<Book> bookList = new ArrayList<Book>();
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
-			for(ShoppingBasket sbList : sb) {
-				Book book = b_Service.selectBook(sbList.getBook_no());
-				book.setB_Q1(sbList.getSb_v());
-				Attachment at = bService.selectAttachmentzero(book.getBoardNo());
-				bookList.add(book);
-				atList.add(at);
+			if(b != null) {
+				for(int i = 0; i<b.size(); i++) {
+					Book book = b_Service.selectBook(b.get(i));
+					book.setB_Q1(book_v.get(i));
+					Attachment at = bService.selectAttachmentzero(book.getBoardNo());
+					bookList.add(book);
+					atList.add(at);
+				}
+			}else {
+				String userid = ((Member)session.getAttribute("loginUser")).getId();
+				ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
+				for(ShoppingBasket sbList : sb) {
+					Book book = b_Service.selectBook(sbList.getBook_no());
+					book.setB_Q1(sbList.getSb_v());
+					Attachment at = bService.selectAttachmentzero(book.getBoardNo());
+					bookList.add(book);
+					atList.add(at);
+				}
 			}
 			mv.addObject("book", bookList);
 			mv.addObject("at", atList);
