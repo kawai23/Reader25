@@ -1285,4 +1285,11 @@
 			<result property="boardNo" column="BOARD_NO"/>
 		</association>
 	</resultMap>
+	
+	
+	<select id="searchBookSendEmail" resultType="string">
+		select email
+		from selleremail
+		where board_no=#{boardNo}
+	</select>
 </mapper>
