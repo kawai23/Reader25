@@ -13,12 +13,11 @@
 		width:100%;
 		min-width: 700px;
 	}
-	header>h3, header>img{
+	header h3, header>img{
 		display:inline-block;
 		color:white;
-		margin-top: 10px;
-		margin-left: 5%;
 	}
+	header h3{ position:relative; top:-15px; left:30px;}
 	nav{
 		display:inline-block;
 		background:rgba(39, 50, 56, 1);
