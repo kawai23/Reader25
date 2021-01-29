@@ -66,7 +66,7 @@
 		height: 20px;
 		border-bottom: 1px solid lightgray; 
 	}
-	.paging{width: 200px; margin:auto;text-align: center;}
+	.paging{min-width: 200px; margin:auto;text-align: center;}
 	.paging-div {
 		display:inline-block;
 		max-width: 200px;

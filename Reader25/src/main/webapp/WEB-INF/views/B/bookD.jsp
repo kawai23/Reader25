@@ -134,6 +134,15 @@
 		margin-bottom: 20px;
 		margin-top: 20px;
 	}
+	.cofirm-info{
+		width: 80%;
+		margin:auto;
+		margin-top: 20px;
+	}
+	.confirm-content{
+		padding-left: 20px;
+		color:red;
+	}
 	#submit-btn{
 		width: 100%;
 		height: 100%;
@@ -258,6 +267,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="info-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>상기 내용을 확인해 주세요</p>
+				<br>
+				<button class="modal-close" value="confirm-check">Close</button>
+			</div>
+		</div>
+	</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -326,6 +345,10 @@
 					<textarea name="bContent" id="smart_edit" style="width:100%;"></textarea>
 				</div>
 			</div>
+			<div class="cofirm-info">
+				<div class="confirm-content">구매자가 해당 제품 선택 시 판매자 해당 이메일로 내용이 전송됩니다. 상기 내용에 확인하셔야 등록이 가능합니다.</div>
+				<input type="checkbox" id="confirm-check"> 위 내용을 확인하였습니다.
+			</div>
 			<div class="btn">
 				<button id="submit-btn">등록하기</button>
 			</div>
@@ -350,7 +373,6 @@
 				amount = $('#amount').val();
 				price = $('#price').val();
 				amount = $('#amount').val();
-				
 				if(title == ''){
 					event.preventDefault();
 					this.blur();
@@ -386,6 +408,11 @@
 					this.blur();
 					$('#b-amount-modal').show();
 					$('#b-amount-modal .modal').show();
+				}else if($('#confirm-check').is(":checked")!= true){
+					event.preventDefault();
+					this.blur();
+					$('#info-modal').show();
+					$('#info-modal .modal').show();
 				}else{
 					$('#write-book').submit();
 				}

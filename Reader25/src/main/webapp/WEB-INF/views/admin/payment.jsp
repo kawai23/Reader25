@@ -43,7 +43,7 @@ body{background:rgba(246, 246, 246, 1);}
 	.left-td{
 		text-align: left;
 	}
-	.paging{width: 150px; margin:auto;text-align: center; margin-top:12px;}
+	.paging{min-width: 150px; margin:auto;text-align: center; margin-top:12px;}
 	.paging-div {
 		display:inline-block;
 		max-width: 250px;
