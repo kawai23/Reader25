@@ -80,6 +80,7 @@ public class BoardController {
 		if(bList != null) {
 			mv.addObject("bList", bList)
 				.addObject("pi", pi)
+				.addObject("listCount", listCount)
 				.setViewName("noticeList");
 		}else {
 			throw new BoardException("공지사항 게시글 전체 조회에 실패하였습니다.");
@@ -1709,6 +1710,7 @@ public class BoardController {
 		if(list != null) {
 			mv.addObject("list", list)
 				.addObject("pi", pi)
+				.addObject("listCount", listCount)
 				.addObject("page", page)
 				.setViewName("notice");
 		}else {

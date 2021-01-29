@@ -25,8 +25,6 @@
 		background: white;
 		margin: auto;
 		margin-top: 20px;
-		border-radius: 5px;
-		box-shadow: 0px 2px 3px 3px lightgray;
 		padding: 10px;
 		max-width: 1100px;
 	}
@@ -39,9 +37,14 @@
 	}
 	#notice-table th{
 		height: 30px;
+		min-width: 50px;
 		border-bottom: 1px solid rgba(245, 113, 92, 1);
 	}
-	#notice-table tr{height:30px;}
+	#notice-table tr{
+		height:50px;
+		border-bottom: 1px solid rgba(230, 230, 230, 1);
+	}
+	.list-title{text-align: left;}
 	#write{
 		margin-left:90%;
 		cursor:pointer;
@@ -124,10 +127,10 @@
 					<tr><td colspan="5">공지사항이 없습니다.</td></tr>
 				</c:if>
 				<c:if test="${!empty list}">
-					<c:forEach var="l" items="${ list }">
+					<c:forEach var="l" items="${ list }" varStatus="vs">
 						<tr class="contentTR">
-							<td>${ l.boardNo }</td>
-							<td>${ l.bTitle }</td>
+							<td>${ listCount - vs.index }</td>
+							<td class="list-title">${ l.bTitle }</td>
 							<td>${ l.bCount }</td>
 							<td>${ l.comCount }</td>
 							<td>${ l.enrollDay }</td>
@@ -143,7 +146,7 @@
 		<script>
 		 	$(function(){
 				$('.contentTR').mouseenter(function(){
-					$(this).css({'background':'rgba(234, 234, 234, 1)','cursor':'pointer'});
+					$(this).css({'background':'rgba(255, 246, 240, 0.5)','cursor':'pointer'});
 				}).mouseout(function(){
 					$(this).css({'background':'white'});
 				}).click(function(){

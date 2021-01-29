@@ -2,9 +2,11 @@ package com.kh.Reader25.book.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
@@ -41,5 +43,7 @@ public interface BookService {
 	int myBasketDelete(String[] lists);
 
 	int insertPay(Pay pay);
+
+	ArrayList<Board> selectAutoBookList(SearchReview sr);
 
 }

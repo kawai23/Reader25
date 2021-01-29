@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.book.model.dao.BookDAO;
 import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.vo.Book;
@@ -128,6 +130,11 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public int insertPay(Pay pay) {
 		return b_DAO.insertPay(sqlSession, pay);
+	}
+
+	@Override
+	public ArrayList<Board> selectAutoBookList(SearchReview sr) {
+		return b_DAO.selectAutoBookList(sqlSession, sr);
 	}
 
 }

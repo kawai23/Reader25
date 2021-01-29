@@ -201,6 +201,7 @@ input:focus{outline: none;}
 .write-btn:hover {
 	cursor: pointer;
 }
+.ui-autocomplete{font-size: 13px;}
 </style>
 </head>
 <body>
@@ -223,14 +224,7 @@ input:focus{outline: none;}
 			<script src="//code.jquery.com/jquery.min.js"></script>
 			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 			<script>
-				$('#search-icon').click(function(){
-					search();
-				});
-				$('#search-input').keydown(function(key){
-					if(key.keyCode == 13){
-						search();
-					}
-				});	
+				
 				function search(){
 					var searchCondition = $('#searchCondition').val();
 					var searchValue = $('#search-input').val();
@@ -247,8 +241,35 @@ input:focus{outline: none;}
 							$('#search-input').autocomplete({
 								source : category
 							});
+						}else{
+							var searchCondition = $('#searchCondition').val();
+							var tTitle = $.trim($(this).val());
+							var currencies;
+							if(tTitle.length > 0){
+								$.ajax({
+									type:'POST',
+									url: "autocomplete.bo",
+									data:{tTitle:tTitle,searchCondition:searchCondition},
+									dataType:'json',
+									success:function(data){
+										console.log(data);
+										currencies = data;
+										$('#search-input').autocomplete({
+											source:currencies
+										}).css({"width":'200px'});
+									}
+								});
+							} 
 						}
 					});
+					$('#search-icon').click(function(){
+						search();
+					});
+					$('#search-input').keydown(function(key){
+						if(key.keyCode == 13){
+							search();
+						}
+					});	
 				});
 			</script>
 			

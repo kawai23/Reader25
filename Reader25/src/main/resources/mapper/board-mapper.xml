@@ -1258,7 +1258,8 @@
 		order by board_no desc
 		
 	</select>
-		
+
+	
 	<resultMap type="Board" id="bookSearchResultSet">
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="bTitle" column="B_TITLE"/>

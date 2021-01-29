@@ -671,6 +671,10 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.getSearchBookListCount", sr);
 	}
 
+	public ArrayList<Board> selectAutoBookList(SqlSessionTemplate sqlSession, SearchReview sr) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAutoBookList", sr);
+	}
+
 
 
 

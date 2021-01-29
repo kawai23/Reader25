@@ -46,7 +46,7 @@ input:focus{outline: none;}
 	display: inline-block;
 	border-bottom: 1px solid black;
 }
-
+.ui-autocomplete{font-size: 13px;}
 .search-option {
 	border: none;
 	width: 70px;

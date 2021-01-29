@@ -6,9 +6,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
 import com.kh.Reader25.board.model.vo.SearchCondition;
+import com.kh.Reader25.board.model.vo.SearchReview;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 
@@ -92,6 +94,10 @@ public class BookDAO {
 
 	public int insertPay(SqlSessionTemplate sqlSession, Pay pay) {
 		return sqlSession.insert("bookMapper.insertPay", pay);
+	}
+
+	public ArrayList<Board> selectAutoBookList(SqlSessionTemplate sqlSession, SearchReview sr) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAutoBookList", sr);
 	}
 
 }

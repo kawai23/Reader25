@@ -22,7 +22,7 @@ section {
 	height: 50px;
 	margin: auto;
 }
-
+.ui-autocomplete{font-size: 13px;}
 select {
 	font-family: inherit;
 	font-size: 15px;
@@ -258,6 +258,25 @@ input:focus{outline: none;}
 							$('#search-input').autocomplete({
 								source : category
 							});
+						}else{
+							var searchCondition = $('#searchCondition').val();
+							var tTitle = $.trim($(this).val());
+							var currencies;
+							if(tTitle.length > 0){
+								$.ajax({
+									type:'POST',
+									url: "autocomplete.bo",
+									data:{tTitle:tTitle,searchCondition:searchCondition},
+									dataType:'json',
+									success:function(data){
+										console.log(data);
+										currencies = data;
+										$('#search-input').autocomplete({
+											source:currencies
+										}).css({"width":'200px'});
+									}
+								});
+							} 
 						}
 					});
 				});

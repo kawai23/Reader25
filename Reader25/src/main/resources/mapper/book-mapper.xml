@@ -163,4 +163,24 @@
 		INSERT INTO PAY
 		VALUES(P_SEQ.nextval, #{book_v}, #{price}, sysdate, default,default,#{userId}, #{book_no})
 	</insert>
+	
+	<select id="selectAutoBookList" resultType="string">
+		<if test="book != null">
+			select DISTINCT book_name
+		</if>
+		<if test="author != null">
+			select DISTINCT book_name
+		</if>
+		from book
+		where status = 'Y' 
+		<if test="book != null">
+			and (book_name like '%'|| UPPER(#{book})||'%') 
+			or (book_name like '%' || LOWER(#{book}) ||'%')
+		</if>
+		<if test="author != null">
+			and (author like '%'|| UPPER(#{author})||'%') 
+			or (author like '%' || LOWER(#{author}) ||'%')
+		</if>
+	</select>
+	
 </mapper>

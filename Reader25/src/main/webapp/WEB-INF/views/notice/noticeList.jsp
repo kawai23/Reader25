@@ -20,8 +20,6 @@
 		background: white;
 		margin: auto;
 		margin-top: 20px;
-		border-radius: 2px;
-		box-shadow: 0px 2px 2px 3px lightgray;
 		padding: 20px;
 		width: 80%;
 		max-width: 1000px;
@@ -29,7 +27,7 @@
 	.notice-header{
 		text-align: center;
 		font-size: 25px;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 		font-weight: bolder;
 	}
 	#notice-table{
@@ -41,11 +39,14 @@
 	}
 	#notice-table th{
 		height: 30px;
+		min-width: 50px;
 		border-bottom: 1px solid rgba(245, 113, 92, 1);
 	}
 	#notice-table tr{
-		height:30px;
+		height:50px;
+		border-bottom: 1px solid rgba(230, 230, 230, 1);
 	}
+	.list-title{text-align: left;}
 	#write{
 		margin-left:90%;
 		cursor:pointer;
@@ -99,7 +100,8 @@
 	.paging-div>p {
 		background: rgba(39, 50, 56, 1);
 		color: white;
-	}	
+	}
+	
 </style>
 </head>
 <body>
@@ -113,13 +115,12 @@
 					<th>제목</th>
 					<th>조회수</th>
 					<th>댓글</th>
-					<th>작성일</th>
+					<th>등록일</th>
 				</tr>
-				
-				<c:forEach var="b" items="${bList}">
+				<c:forEach var="b" items="${bList}" varStatus="vs">
 					<tr class="contentTR">
-						<td>${ b.boardNo }</td>
-						<td>
+						<td>${ listCount - vs.index}</td>
+						<td class="list-title">
 							<c:url var="noDetail" value="ndetail.no">
 								<c:param name="boardNo" value="${ b.boardNo }"/>
 								<c:param name="page" value="${pi.currentPage }"/>
@@ -136,7 +137,7 @@
 		<script>
 		 	$(function(){
 				$('.contentTR').mouseenter(function(){
-					$(this).css({'background':'rgba(234, 234, 234, 1)','cursor':'pointer'});
+					$(this).css({'background':'rgba(255, 246, 240, 0.5)','cursor':'pointer'});
 				}).mouseout(function(){
 					$(this).css({'background':'white'});
 				}).click(function(){

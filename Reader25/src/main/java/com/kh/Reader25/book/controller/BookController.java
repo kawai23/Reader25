@@ -430,6 +430,29 @@ public class BookController {
 				e.printStackTrace();
 			}
 	}
-
+	
+	@RequestMapping("autocomplete.bo")
+	public void SearchAutocomplteBook(@RequestParam("tTitle") String bTitle, @RequestParam("searchCondition") String condition,
+										@ModelAttribute SearchReview sr,
+										HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");	
+		String value = bTitle;
+		
+		if(condition.equals("book")) {
+			sr.setBook(value);
+		} else if(condition.equals("author")) {
+			sr.setAuthor(value);
+		}
+		ArrayList<Board> autoList = b_Service.selectAutoBookList(sr);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm").create();
+		try {
+			gson.toJson(autoList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	
+	}
 }
 
