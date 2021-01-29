@@ -28,10 +28,7 @@
 
 <style>
 
-  section{
-  		
-  		min-width: 1000px;
-  	}
+  
 	th{max-width: 15%}
 
 
