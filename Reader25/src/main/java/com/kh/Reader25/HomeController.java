@@ -55,11 +55,18 @@ public class HomeController {
 	 */
 	@RequestMapping("/home.do")
 	public ModelAndView home(@RequestParam(value="page", required=false) Integer page, ModelAndView mv, Locale locale) {
+	      int currentPage = 1;
+	      if(page != null) {
+	         currentPage = page;
+	      }
+	      int listCount = bService.getTIWListCount();
+	      PageInfo pi = Pagination.getPageInfo5(currentPage, listCount);
 		ArrayList<Board> review = bService.review();
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
 		System.out.println(tiw);
+		mv.addObject("pi", pi);
 		mv.addObject("review", review);
 		mv.addObject("discuss", discuss);
 		mv.addObject("tiw", tiw);

@@ -344,6 +344,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	text-align: left;
 }
 .ellipsis_t {
+	
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -458,12 +459,12 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<c:url var="TIWdetail" value="TIWdetail.to">
-							<c:param name="boardNo" value="${ b.boardNo }"/>
-							<c:param name="page" value="${ pi.currentPage }"/>
+							<c:param name="boardNo" value="${ t.boardNo }"/>
+							<c:param name="page" value = "${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
-							<c:param name="code" value="${ t.code }"/>
+							<c:param name="code" value='${ t.code }'/>
 						</c:url>
-						<p class="ellipsis_t"><a href = ${ TIWdetail }><c:out value="${ t.bTitle }" /></a></p>
+						<p class="ellipsis_t"><a style = "color : black;"href="${ TIWdetail }">${ t.bTitle }</a></p>
 						</div>
 				</c:forEach>
 			</div>
@@ -751,7 +752,10 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		}
 		
 		function Reset_r() { // 책추천
-			$('.ellipsis_r').remove();
+			for(var i = 0; i < 5; i++)
+			{
+			$('#todaywriter'+[i]).remove();
+			}
 		}
 		function Reset_v() { // 책 리뷰
 			$('.ellipsis_v').remove();
@@ -760,12 +764,15 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			$('.ellipsis_d').remove();
 		}
 		function Reset_t() { // 오나작
-			$('.ellipsis_t').remove();
+			for(var i = 0; i < 6; i++)
+			{
+			$('#todaywriter'+[i]).remove();
+			}
 		}
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".recommend_t").append("<p class= 'ellipsis_r' style = 'text-align : left'>"+data[i].bTitle+"</p>");
+				$(".recommend_t").append("<p class= 'ellipsis_r' style = 'text-align : left'><a href = "+data[i].bTitle+"</p>");
 				
 			}
 		}
@@ -784,7 +791,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'>"+data[i].bTitle+"</p>");
+				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'><a style = 'color : black;'href='${ TIWdetail }''>${ t.bTitle }</a>"+data[i].bTitle+"</a></p>");
 			}
 		}
 	</script>
