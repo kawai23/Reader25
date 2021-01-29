@@ -2789,7 +2789,7 @@ public class BoardController {
 
 		@RequestMapping("redetail.bo")
 		public ModelAndView bookroomD(@RequestParam("boardNo") int boardNo,@RequestParam("b_no") int b_no,
-				@RequestParam("page") int page, ModelAndView mv) {
+										@RequestParam("page") int page, ModelAndView mv) {
 			Board board = bService.selectBoard(boardNo);
 			ArrayList<Attachment> atlist = bService.selectAttachmentList(boardNo);
 			Book book = b_Service.selectBook(b_no);

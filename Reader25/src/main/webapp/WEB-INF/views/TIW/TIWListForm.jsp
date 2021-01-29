@@ -146,7 +146,7 @@ hr{
 }
 #line{ margin-left: 30%; }
 #topList{font-size: 14px;}
-img{
+#top img{
 	-webkit-animation:blink 1s ease-in-out infinite alternate;
     -moz-animation:blink 1s ease-in-out infinite alternate;
     animation:blink 1s ease-in-out infinite alternate;
@@ -287,8 +287,8 @@ img{
 	
 	<h3 align="center">작품 수 : <a id="up">${todayListCount}</a> / ${ pi.listCount }</h3>
 	
-		<table id="TIWTable" align="center">
-			<tr>
+		<table class="TIWTable" id="TIWTable" align="center">
+			<tr class="contentTR">
 				<th height="40px">글 번호</th>
 				<th>원작</th>
 				<th width="350px">제목</th>

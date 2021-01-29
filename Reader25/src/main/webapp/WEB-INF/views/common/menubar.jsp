@@ -54,8 +54,9 @@
 		</div>
 		<div class="top_logo">
 			<img
-				src="${ pageContext.servletContext.contextPath }/images/Logo2.png"
-				style="display: block; margin: 0 auto;" width="210" height="45">
+				src="resources/images/logo/logo.png"
+				style="display: block; margin: 0 auto;width: 300px;">
+				
 		</div>
 		
 		<br clear="all"> <br>

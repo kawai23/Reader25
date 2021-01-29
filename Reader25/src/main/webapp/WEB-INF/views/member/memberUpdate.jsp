@@ -219,6 +219,12 @@ td{ margin: 5px; padding: 5px }
 	   </div>
 	   
 	   
+
+
+		<br><br>
+		
+	  
+	   
 	   <script>
 	   
 	   $(function(){
@@ -452,8 +458,14 @@ td{ margin: 5px; padding: 5px }
 	  
 	  
 	</div>
+	
+	
+	
+	
 
- </div>
+ </div><br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
 
 
 </body>
