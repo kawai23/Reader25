@@ -103,7 +103,7 @@
 </head>
 <body>
 	<header>
-		<img src="#logo" id="logo-img" onclick="goHome();"/>
+		<img src="resources/images/logo/logo.png" id="logo-img" style="height:45px" onclick="goHome();"/>
 		<h3 id="header-h2">공지 사항</h3>
 	</header>
 	<script>

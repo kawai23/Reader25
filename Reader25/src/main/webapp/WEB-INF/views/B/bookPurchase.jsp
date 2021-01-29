@@ -309,10 +309,8 @@
 		function buy(frm){
 			if(${book.size()>1}){
 				var name = '${book.get(0).b_name } 외 ${book.size() - 1}';
-				console.log(name);
 			} else{
 				var name = '${book.get(0).b_name }';
-				console.log(name);
 			}
 			var price = ${sum};// 택배비 어떻게 할것인지 물어보자
 			var orderemail = $('#joinEmail').val();
