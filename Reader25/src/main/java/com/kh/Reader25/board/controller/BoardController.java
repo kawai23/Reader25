@@ -2889,6 +2889,7 @@ public class BoardController {
 					Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 					bookList.add(book);
 					atList.add(at);
+					
 				}
 			}else {
 				String userid = ((Member)session.getAttribute("loginUser")).getId();
