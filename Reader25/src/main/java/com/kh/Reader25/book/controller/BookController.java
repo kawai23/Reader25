@@ -58,6 +58,8 @@ public class BookController {
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		
 		int code = 0;
 		int listCount = b_Service.getListCount(code);
 		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
