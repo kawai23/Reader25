@@ -25,8 +25,6 @@
 		max-width: 1100px;
 		margin: auto;
 		margin-top: 20px;
-		border-radius: 5px;
-		box-shadow: 0px 2px 3px 3px lightgray;
 		padding: 10px;
 	}
 	#inquire-table{
@@ -38,9 +36,14 @@
 	}
 	#inquire-table th{
 		height: 30px;
+		min-width: 50px;
 		border-bottom: 1px solid rgba(245, 113, 92, 1);
 	}
-	#inquire-table tr{height:30px;}
+	#inquire-table tr{
+		height:50px;
+		border-bottom: 1px solid rgba(230, 230, 230, 1);
+	}
+	.list-title{text-align: left;}
 	#write{
 		margin-left:90%;
 		cursor:pointer;
@@ -110,7 +113,7 @@
 					<c:forEach var="l" items="${list }">
 						<tr class="contentTR">
 							<td>${l.boardNo }</td>
-							<td>${l.bTitle }</td>
+							<td class="list-title">${l.bTitle }</td>
 							<td>${l.bCount }</td>
 							<td>${l.comCount }</td>
 							<td>${l.userId }</td>

@@ -9,7 +9,7 @@
 	section{
 		background: rgba(246, 246, 246, 1);
 		margin: auto;
-		min-height: 650px;
+		min-height: 750px;
 		width: 80%;
 		min-width:1000px;
 		margin:auto;
@@ -21,16 +21,14 @@
 		background: white;
 		margin: auto;
 		margin-top: 20px;
-		border-radius: 2px;
-		box-shadow: 0px 2px 2px 3px lightgray;
-		padding: 20px;padding-top:5%;padding-bottom:5%;
+		padding: 20px;
 		width: 80%;
 		max-width: 1000px;
 	}
 	.inquiry-header{
 		text-align: center;
-		font-size: 38px;
-		margin-bottom: 10px;
+		font-size: 30px;
+		margin-bottom: 20px;
 		font-weight: bolder;
 		font-family: 카페24 아네모네;
 	}
@@ -43,11 +41,14 @@
 	}
 	#inquiry-table th{
 		height: 30px;
+		min-width: 50px;
 		border-bottom: 1px solid rgba(245, 113, 92, 1);
 	}
 	#inquiry-table tr{
-		height:30px;
+		height:50px;
+		border-bottom: 1px solid rgba(230, 230, 230, 1);
 	}
+	.list-title{text-align: left;}
 	#write{
 		margin-left:90%;
 		cursor:pointer;
@@ -137,7 +138,7 @@ a:hover{
 				<c:forEach var="b" items="${iList}">
 					<tr class="contentTR">
 						<td>${ b.boardNo }</td>
-						<td>
+						<td class="list-title">
 							<c:url var="inDetail" value="idetail.in">
 								<c:param name="boardNo" value="${ b.boardNo }"/>
 								<c:param name="page" value="${pi.currentPage }"/>

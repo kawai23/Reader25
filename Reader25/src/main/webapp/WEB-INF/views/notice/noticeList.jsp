@@ -10,7 +10,7 @@
 	section{
 		background: rgba(246, 246, 246, 1);
 		width: 80%;
-		min-height: 900px;
+		min-height: 750px;
 		min-width: 1000px;
 		margin:auto;
 		padding-top: 20px;
