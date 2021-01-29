@@ -510,11 +510,11 @@
 	
 	<div class="clearfix"></div>
 		
-<div class="row"style="margin-top:  10px">
+
  
   <%@include file="../common/footer.jsp" %>
   
-  </div>
+
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">
