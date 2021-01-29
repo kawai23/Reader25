@@ -527,7 +527,7 @@
 					<c:if test="${loginUser ne null }">
 						${loginUser.id}
 					</c:if>
-					<span class="text-count" id="counter">0/500</span>
+					<span class="text-count" id="input-counter">0/500</span>
 				</div>
 				<textarea id="comment-input" maxlength="500" placeholder="댓글을 작성해주세요"></textarea>
 			</div>
@@ -538,7 +538,7 @@
 			 getComments(1);
 			 $('#comment-input').keyup(function(){
 				 var content = $(this).val();
-				 $('#counter').html(content.length +'/500');
+				 $('#input-counter').html(content.length +'/500');
 			 });
 			 $('#comment-add').click(function(){
 				if('${loginUser}' == ''){
