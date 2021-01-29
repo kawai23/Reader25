@@ -344,6 +344,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	text-align: left;
 }
 .ellipsis_t {
+	
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -458,12 +459,12 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
 						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
 						<c:url var="TIWdetail" value="TIWdetail.to">
-							<c:param name="boardNo" value="${ b.boardNo }"/>
-							<c:param name="page" value="${ pi.currentPage }"/>
+							<c:param name="boardNo" value="${ t.boardNo }"/>
+							<c:param name="page" value = "${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
 							<c:param name="code" value="${ t.code }"/>
 						</c:url>
-						<p class="ellipsis_t"><a href = ${ TIWdetail }><c:out value="${ t.bTitle }" /></a></p>
+						<p class="ellipsis_t"><a style = "color : black;"href="${ TIWdetail }">${ t.bTitle }</a></p>
 						</div>
 				</c:forEach>
 			</div>
