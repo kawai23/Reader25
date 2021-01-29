@@ -19,7 +19,7 @@
 </head>
 <body>
 	<footer>
-		<div class="footer-div">
+		<div class="footer-div" >
 			<p class="company">@Reader25.leader25</p>
 			<div class="company-info">
 				<p>대표 : 이유준</p>

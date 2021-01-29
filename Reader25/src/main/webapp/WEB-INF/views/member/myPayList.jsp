@@ -415,7 +415,7 @@
 	
 	</div>
 	
-	
+	 <%@ include file="../common/footer.jsp" %>
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">
@@ -447,7 +447,7 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
-						</div>
+						</div>						
 						
 						
 						
@@ -543,6 +543,8 @@
 						
 						
 						</script>
+						
+
 
 
 </body>
