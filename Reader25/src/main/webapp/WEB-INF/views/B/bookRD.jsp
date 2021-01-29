@@ -109,7 +109,7 @@ section {
 	width: 100%;
 	font-size: 30px;
 	margin-left: 20px;
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
 .book-div{
 	min-height: 130px; 
@@ -505,7 +505,7 @@ section {
 		</div>
 		 <!---------------------------------- 책제목 ------------------------------------>
       <div class="info-box">
-	         <h3 class="title">책제목: ${ board.bTitle }</h3>
+	         <h3 class="title">${ board.bTitle }</h3>
       </div>
 		<!---------------------------------- 작성자 이미지 ------------------------------------>
       <div class="book-box">
@@ -768,7 +768,7 @@ section {
 			<!-- 다른 리뷰 페이징 -->
 			</div>
 		</div>
-				<script>
+		<script>
 			var reList;
 			$(function(){
 				getReList(1);
@@ -781,7 +781,6 @@ section {
 					url: 'reList.bo',
 					data: {booktitle:booktitle, page1:page1},
 					success: function(data){
-						
 						//1) 페이징 버튼 넣기
 						pi1 = data.pi1;
 						$repaging = $('#re-paging');
