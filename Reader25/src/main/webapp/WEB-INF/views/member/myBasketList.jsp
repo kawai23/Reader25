@@ -59,7 +59,7 @@
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
 							
-							<th>번호 </th>
+							<th style="max-width: 50px">게시물번호 </th>
 							<th >책이름</th>
 							
 							<th>수량</th>
@@ -87,12 +87,14 @@
 							<tr>
 								<td><input type="checkbox"  name="mInfo" value="${ b.sb_no }" ></td>
 								
-								<td >${ b.book_no }</td>
-								<td  style="max-width: 100px" >${ b.book_name }</td>
-								<td >${  b.sb_v }</td>
-								<td >${ b.price }</td>
+								<td class="contentTR"  >${ b.book_no }</td>
 								
 								
+								<td class="contentTR"  style="max-width: 100px" >${ b.book_name }</td>
+								<td class="contentTR">${  b.sb_v }</td>
+								<td class="contentTR">${ b.price }</td>
+								
+								<td style="display: none;">${ b.BOARD_NO }</td>
 								
 								
 								
@@ -114,8 +116,11 @@
 				<div style="text-align: left ; ">
 				
 					<button  data-title="Delete" data-toggle="modal" data-target="#Delete"  class="btn btn-danger">선택삭제</button>
+					<button  class="btn btn-primary" id = "eBtn">주문 하기</button>
 				
 				</div>
+				
+				
 			
 			
 			<br>
@@ -169,6 +174,9 @@
 					
 		
 						$('#bs').addClass('active');
+						
+						
+						
 						
 
 					
@@ -416,8 +424,11 @@
 	   </div>
 	   
 	   
-	
+	 <%@ include file="../common/footer.jsp" %>
 	</div>
+	
+
+   
 	
 	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
@@ -451,7 +462,10 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
-						</div>
+						</div>						<br><br><br>
+ 
+  
+						
 						
 						
 						
@@ -539,6 +553,93 @@
 							    
 
 						});
+						 
+						 
+						 $('#eBtn').click(function() {
+					        	
+					        	
+					        	
+								
+					        	
+					        	
+							 var b_no = [];
+							var book_v = [];
+								 
+								
+							    $('input[name="mInfo"]:checked').each(function (index) {
+//							        if (index != 0) {
+//							            select_obj += ',';
+//							        }
+							        
+//							        select_obj += $(this).val();
+							        
+							        b_no.push($(this).parent().parent().children('td').eq(1).text());
+							        
+							        
+							        book_v.push($(this).parent().parent().children('td').eq(3).text());
+							        
+							       
+							        
+							        
+							    });
+							    
+							    
+							    console.log(b_no);
+							    
+							    console.log(book_v);
+							    
+							    
+								var path = ""
+							    
+								
+								
+							    if(b_no != ""){
+							    	
+							    	path = "?b_no="+b_no+"&book_v="+book_v;
+							    }
+
+								
+								location.href= "cart.bo" +path;
+							    	
+				 			   
+							    
+
+						});
+						 
+						 
+						 $('.contentTR').mouseenter(function(){
+								
+								$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+								
+								
+								
+							}).mouseout(function(){
+								
+								$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
+								
+								
+							}).click(function(){
+								
+								
+								
+								
+
+							
+						
+							   var boardNo = $(this).parent().children('td').eq(5).text();
+							   
+							   var b_no = $(this).parent().children('td').eq(1).text();
+							   
+							   
+							   console.log(b_no);
+								
+
+								
+ 								location.href=  'redetail.bo?boardNo='+boardNo+"&b_no="+b_no+"&page=1";
+ 								
+ 								
+								
+							});
 						
 						
 				       
@@ -547,6 +648,7 @@
 						
 						
 						</script>
+						
 
 
 </body>

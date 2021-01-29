@@ -38,6 +38,9 @@
 
 <div class="container-fluid" style="justify-content: center;"> 
 
+
+
+
  	<div class="row">
  
  
@@ -515,6 +518,11 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
+						
+						
+						<br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
 
 	<script>
 						
@@ -578,6 +586,8 @@
 						
 						
 						</script>
+						
+					
 
 
 </body>

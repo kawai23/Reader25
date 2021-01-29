@@ -28,6 +28,10 @@
 
 <style>
 
+  section{
+  		
+  		min-width: 1000px;
+  	}
 	th{max-width: 15%}
 
 
@@ -37,9 +41,12 @@
 
  <%@ include file="../common/menubar.jsp"%> <br><br><br>
 
-<div class="container-fluid" style="justify-content: center;"> 
 
- 	<div class="row">
+<div  class="container-fluid" style="justify-content: center; min-width: 1000px; "> 
+
+
+
+ 	<div style="min-width: 1000px; " class="row">
  
  
  
@@ -499,6 +506,15 @@
 	</div>
 	
 	
+	
+	
+	<div class="clearfix"></div>
+		
+
+ 
+  <%@include file="../common/footer.jsp" %>
+  
+
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">
@@ -531,6 +547,9 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
+						
+											
+						
 
 	<script>
 						
@@ -602,8 +621,7 @@
 						
 						
 		
-	
-		
+
 		
 		
 	

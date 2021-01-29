@@ -61,6 +61,10 @@ td{ margin: 5px; padding: 5px }
 
 <div class="container-fluid" style="justify-content: center;"> 
 
+
+
+
+
  	<div class="row">
  
  
@@ -123,6 +127,10 @@ td{ margin: 5px; padding: 5px }
 	</div>
 
  </div>
+ 
+ <br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
 	<script>
 		
 	$(function(){
