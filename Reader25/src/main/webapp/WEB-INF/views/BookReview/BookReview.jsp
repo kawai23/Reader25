@@ -177,7 +177,7 @@ input:focus{outline: none;}
 	height: 15px;
 	width: 190px;
 }
-.paging{width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
+.paging{min-width: 150px; margin:auto;text-align: center; margin-bottom: 50px;}
 .paging-div {
 	display:inline-block;
 	max-width: 250px;

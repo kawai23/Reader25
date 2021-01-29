@@ -612,6 +612,10 @@
 							</div>
 							<!-- /.modal-dialog -->
 						</div>
+						
+						<br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
 
 	<script>
 						
@@ -675,6 +679,7 @@
 						
 						
 						</script>
+
 
 
 </body>

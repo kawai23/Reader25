@@ -59,7 +59,7 @@
 	 					<tr>
 							<th><input type="checkbox" id="checkall" /></th>
 							
-							<th>번호 </th>
+							<th style="max-width: 50px">게시물번호 </th>
 							<th >책이름</th>
 							
 							<th>수량</th>
@@ -87,7 +87,7 @@
 							<tr>
 								<td><input type="checkbox"  name="mInfo" value="${ b.sb_no }" ></td>
 								
-								<td class="contentTR">${ b.book_no }</td>
+								<td class="contentTR"  >${ b.book_no }</td>
 								
 								
 								<td class="contentTR"  style="max-width: 100px" >${ b.book_name }</td>
@@ -424,11 +424,11 @@
 	   </div>
 	   
 	   
-	
+	 <%@ include file="../common/footer.jsp" %>
 	</div>
 	
 
-    
+   
 	
 	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
@@ -462,7 +462,10 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
-						</div>
+						</div>						<br><br><br>
+ 
+  
+						
 						
 						
 						
@@ -645,6 +648,7 @@
 						
 						
 						</script>
+						
 
 
 </body>
