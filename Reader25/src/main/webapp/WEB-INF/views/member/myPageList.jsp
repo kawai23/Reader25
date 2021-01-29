@@ -34,7 +34,7 @@
   	}
 	th{max-width: 15%}
 
-
+	#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>

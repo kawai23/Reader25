@@ -352,6 +352,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
+#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>
