@@ -786,35 +786,29 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".recommend_t").append("<c:url var='redetail' value='redetail.re'>" +
-				"<c:param name = 'boardNo' value='${" + data[i].boardNo +"}'/>"+
-				"<c:param name = 'page' value='${pi.currentPage}'/>"+
-				"</c:url>"+
-				"<p class = 'ellipsis_d' style='text-align : left'>"+
-				"<a style = 'color : black;'href='${ redetail }''>"
-				+data[i].bTitle+
-				"</a></p>'");
-				
+				$(".review_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_v(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<c:url var='redetail' value='redetail.re'><c:param name = 'boardNo' value='${" + data[i].boardNo +"}'/><c:param name = 'page' value='${pi.currentPage}'/></c:url><p class = 'ellipsis_d' style='text-align : left'><a style = 'color : black;'href='${ redetail }''>"+data[i].bTitle+"</a></p>'");
+				$(".review_t").append("<p class='ellipsis_v'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<c:url var='dDetail' value='dDetail.di'><c:param name = 'boardNo' value='${" + data[i].dNo +"}'/><c:param name = 'page' value='${pi.currentPage}'/></c:url><p class = 'ellipsis_d' style='text-align : left'><a style = 'color : black;'href='${ dDetail }''>"+data[i].dTitle+"</a></p>'");
+				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].bNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
 			}
 		}
 		function insert_t(data){
-			console.log(data);
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_f").append("<c:url var='TIWdetail' value='TIWdetail.to'><c:param name='boardNo' value='${ "+ Number(data[i].boardNo) + " }'/><c:param name='page' value = '${ pi.currentPage }'/><c:param name='User' value='${ loginUser.id }'/><c:param name='code' value='${" +data[i].code +"}'/></c:url><p class = 'ellipsis_t'><a style = 'color : black;' href='${ TIWdetail }'>"+data[i].bTitle+"</a></p>");
+				$(".tiw_f").append("<p class='ellipsis_t'><a style = 'color : black;' href='TIWdetail.to?boardNo=" + data[i].boardNo +"&page=1&code=5'>"+ data[i].bTitle+"</a></p>");
 			}
+		}
+		function click_t(){
+			
 		}
 	</script>
 	<%@ include file="../common/footer.jsp" %>
