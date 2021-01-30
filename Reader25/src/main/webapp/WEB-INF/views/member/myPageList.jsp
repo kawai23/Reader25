@@ -502,14 +502,17 @@
 	
 	</div>
 	
+	 						<br><br><br>
+ 
+  	<%@ include file="../common/footer.jsp" %>
 	
 	
 	
-	<div class="clearfix"></div>
+	
 		
 
  
-  <%@include file="../common/footer.jsp" %>
+ 
   
 
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
