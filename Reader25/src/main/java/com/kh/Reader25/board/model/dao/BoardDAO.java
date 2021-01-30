@@ -675,6 +675,11 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAutoBookList", sr);
 	}
 
+	public String searchBookSendEmail(SqlSessionTemplate sqlSession, Integer boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.searchBookSendEmail", boardNo);
+	}
+
 
 
 
