@@ -558,12 +558,12 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
+					        	
 								
 					        	var code = ${code};
 					        	
-					        	var check = ${ !empty searchValue } ; 
-					        	
+					        	var check = ${ check } ; 
+
 					        	var searchCondition = null;
 					        	
 					        	var searchValue = null;
