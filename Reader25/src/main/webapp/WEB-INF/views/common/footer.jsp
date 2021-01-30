@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	body{line-height: 1;}
+	body{line-height: 1;clear:both;}
 	footer{clear:both;background:rgba(245, 113, 92, 1);color:white;margin:0;padding:0;width: 80%;margin:auto; min-width: 1000px; bottom:0;border: 1px solid rgba(245, 113, 92, 1);}
 	.footer-div{width: 100%; text-align: center; height: 130px;font-size: 13px;}
 	.footer-div p{display:inline-block;}
@@ -19,8 +19,8 @@
 </head>
 <body>
 	<footer>
-		<div class="footer-div">
-			<p class="company">@Reader25.leader25</p>
+		<div class="footer-div" >
+			<p class="company" id="footer-company">@Reader25.leader25</p>
 			<div class="company-info">
 				<p>대표 : 이유준</p>
 				<span>|</span>

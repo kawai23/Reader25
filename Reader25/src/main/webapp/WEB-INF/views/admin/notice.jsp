@@ -66,7 +66,7 @@
 	.write-btn:hover {
 		cursor: pointer;
 	}
-	.paging{width: 150px; margin:auto;text-align: center; margin-top:12px;}
+	.paging{min-width: 150px; margin:auto;text-align: center; margin-top:12px;}
 	.paging-div {
 		display:inline-block;
 		max-width: 250px;

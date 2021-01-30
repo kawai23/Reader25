@@ -275,6 +275,9 @@ public interface BoardService {
 
 	int getSearchBookListCount(SearchReview sr);
 
+	String searchBookSendEmail(Integer boardNo);
+
+
 
 
 

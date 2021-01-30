@@ -582,7 +582,7 @@
 		from board
 		where b_status = 'Y' and code = 2
 		<if test="writer != null">
-			and user_id = #{writer}
+			and user_id like '%' || #{writer} || '%'
 		</if>
 		<if test="content != null">
 			and b_content like '%' || #{content} || '%'
@@ -606,7 +606,7 @@
 		from board
 		where b_status = 'Y' and code = 2
 		<if test="writer != null">
-			and user_id = #{writer}
+			and user_id like '%' || #{writer} || '%'
 		</if>
 		<if test="content != null">
 			and b_content like '%' || #{content} || '%'
@@ -631,7 +631,7 @@
 		from board
 		where b_status = 'Y' and code = 2
 		<if test="writer != null">
-			and user_id = #{writer}
+			and user_id like '%' || #{writer} || '%'
 		</if>
 		<if test="content != null">
 			and b_content like '%' || #{content} || '%'
@@ -649,7 +649,7 @@
 			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by update_day desc
 		</if>
 		<if test="sortValue eq 'like'">
 			order by b_like desc
@@ -674,7 +674,7 @@
 			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by  update_day desc
 		</if>
 		<if test="sortValue eq 'count'">
 			order by b_count desc
@@ -686,7 +686,7 @@
 		from board
 		where b_status = 'Y' and code = 2
 		<if test="writer != null">
-			and user_id = #{writer}
+			and user_id like '%' || #{writer} || '%'
 		</if>
 		<if test="content != null">
 			and b_content like '%' || #{content} || '%'
@@ -704,7 +704,7 @@
 			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by update_day desc
 		</if>
 		<if test="sortValue eq 'like'">
 			order by b_like desc
@@ -728,7 +728,7 @@
 			and cate like '%' || #{cate} || '%'
 		</if>
 		<if test="sortValue eq 'lated'">
-			order by b.board_no desc
+			order by b.update_day desc
 		</if>
 		<if test="sortValue eq 'count'">
 			order by b_count desc
@@ -740,7 +740,7 @@
 		from board
 		where code = 2 and b_status = 'Y'
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by update_day desc
 		</if>
 		<if test="sortValue eq 'like'">
 			order by b_like desc
@@ -767,7 +767,7 @@
 		from board
 		where code = 2 and b_status = 'Y'
 		<if test="sortValue eq 'lated'">
-			order by board_no desc
+			order by update_day desc
 		</if>
 		<if test="sortValue eq 'like'">
 			order by b_like desc
@@ -1285,4 +1285,11 @@
 			<result property="boardNo" column="BOARD_NO"/>
 		</association>
 	</resultMap>
+	
+	
+	<select id="searchBookSendEmail" resultType="string">
+		select email
+		from selleremail
+		where board_no=#{boardNo}
+	</select>
 </mapper>

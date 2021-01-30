@@ -64,7 +64,7 @@
 	.list-table .agent{font-size: 10px;}
 	.list-table td[class=td-left]{text-align: left;}
 	.list-table td[class=td-right]{text-align: right; color:rgb(180, 180, 180);}
-	.paging{width: 150px; margin:auto;text-align: center;}
+	.paging{min-width: 150px; margin:auto;text-align: center;}
 	.paging-div {
 		display:inline-block;
 		max-width: 250px;

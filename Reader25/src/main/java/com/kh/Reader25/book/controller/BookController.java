@@ -7,13 +7,17 @@ import java.util.HashMap;
 
 
 import javax.servlet.http.HttpSession;
-
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +47,7 @@ import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.dao.MemberDAO;
 import com.kh.Reader25.member.model.vo.Member;
 
 @Controller
@@ -52,12 +57,22 @@ public class BookController {
 	@Autowired
 	private BoardService bService;
 	
+	//메일 발송 관련
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	@Autowired
+	private MemberDAO mDAO;
+	
 	@RequestMapping("booktrade.tr")
 	public ModelAndView bookTradeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		
 		int code = 0;
 		int listCount = b_Service.getListCount(code);
 		PageInfo pi = Pagination.getPageInfo1(currentPage, listCount);
@@ -91,6 +106,9 @@ public class BookController {
 		ArrayList<Book> bList = new ArrayList<Book>();
 		for(int i = 0; i<b.size(); i++) {
 			Book book = b_Service.selectBook(b.get(i));
+			
+			String sendMailCheck = sendMailCheck(b.get(i));
+			
 			Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 			book.setB_Q1(book_v.get(i));
 			bList.add(book);
@@ -100,10 +118,36 @@ public class BookController {
 			if(result <0) {
 				throw new BookException("주문내역 추가에 실패하였습니다.");
 			}
+			
+			
 		}
 		mv.addObject("book", bList).addObject("at", atList).setViewName("bookPurchase");
 		return mv;	
 	}
+	private String sendMailCheck(Integer integer) {
+		Integer boardNo = integer;
+		String bookSendEmail = bService.searchBookSendEmail(boardNo);
+		//System.out.println(bookSendEmail);
+		
+		MimeMessage mail = mailSender.createMimeMessage();
+		String htmlStr = "<h2>안녕하세요 판매자 님</h2><br><br>" 
+				+ "<p>해당 메일은 등록하신 책에 대한 주문이 발생하여 안내 메일입니다.</p>"
+				+ "<p>주문이 발생된 후 3일 이내에 발송을 해주셔야합니다.</p><br>"
+				+ "<h3><a href='http://localhost:8105/Reader25'>Reader25 홈페이지 접속 (클릭!) </a></h3><br><br>"
+				+ "Reader25에 향한 무한한 관심과 사랑 감사드립니다.";
+		try {
+			mail.setSubject("[Reader25] 주문이 발생하였습니다.", "utf-8");
+			mail.setText(htmlStr, "utf-8", "html");
+			mail.addRecipient(RecipientType.TO, new InternetAddress(bookSendEmail));
+			mailSender.send(mail);
+		} catch (MessagingException e) { 
+			e.printStackTrace();
+		}
+		return bookSendEmail;
+		
+	}
+
+
 	//관리자창 : 결제 내역 조회
 	@RequestMapping("paylist.ad")
 	public ModelAndView adminPayList(@RequestParam(value="page", required=false) Integer page,

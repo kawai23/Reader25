@@ -764,6 +764,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.getSearchBookListCount(sqlSession, sr);
 	}
 
+	@Override
+	public String searchBookSendEmail(Integer boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.searchBookSendEmail(sqlSession, boardNo);
+	}
+
 
 	
 	
