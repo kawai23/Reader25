@@ -352,7 +352,6 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
-#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>
@@ -480,15 +479,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
 			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
-						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
-						<c:url var="TIWdetail" value="TIWdetail.to">
+						<c:url var='TIWdetail' value="TIWdetail.to">
 							<c:param name="boardNo" value="${ t.boardNo }"/>
 							<c:param name="page" value = "${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
 							<c:param name="code" value='${ t.code }'/>
 						</c:url>
-						<p class="ellipsis_t"><a style = "color : black;"href="${ TIWdetail }">${ t.bTitle }</a></p>
-						</div>
+						<p class="ellipsis_t"><a style = 'color : black;' href='${ TIWdetail }'>${ t.bTitle }</a></p>
 				</c:forEach>
 			</div>
 		</div>
@@ -775,41 +772,43 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		}
 		
 		function Reset_r() { // 책추천
-			$('.ellipsis_r').remove();
+			$('.recommend_t').empty();
 		}
 		function Reset_v() { // 책 리뷰
-			$('.ellipsis_v').remove();
+			$('.review_t').empty();
 		}
 		function Reset_d() { // 토론
-			$('.ellipsis_d').remove();
+			$('.discuss_t').empty();
 		}
 		function Reset_t() { // 오나작
-			$('.ellipsis_t').remove();
+			$('.tiw_f').empty();
 		}
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".recommend_t").append("<p class= 'ellipsis_r' style = 'text-align : left'><a href = "+data[i].bTitle+"</p>");
-				
+				$(".review_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_v(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<p class= 'ellipsis_v' style = 'text-align : left'></p>");
+				$(".review_t").append("<p class='ellipsis_v'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<p class= 'ellipsis_d' style = 'text-align : left'>"+data[i].dTitle+"</p>");
+				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].bNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
 			}
 		}
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'><a style = 'color : black;'href='${ TIWdetail }''>${ t.bTitle }"+data[i].bTitle+"</a></p>");
+				$(".tiw_f").append("<p class='ellipsis_t'><a style = 'color : black;' href='TIWdetail.to?boardNo=" + data[i].boardNo +"&page=1&code=5'>"+ data[i].bTitle+"</a></p>");
 			}
+		}
+		function click_t(){
+			
 		}
 	</script>
 	<%@ include file="../common/footer.jsp" %>
