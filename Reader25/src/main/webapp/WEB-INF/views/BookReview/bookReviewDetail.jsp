@@ -74,6 +74,7 @@
 		margin-top: 80px;
 		width: 100%;
 		font-size: 30px;
+		line-height: 110%;
 	}
 	.tag{
 		display:inline;
@@ -93,15 +94,13 @@
 		margin-top: 10px;
 	}
 	.wise-saying>div{
-		width: 80%;
+		width: 100%;
 		margin: auto;
 		text-align: center;
 	}
-	.wise-saying img{
-	}
 	#quote1{float:left;}
 	#quote2{float:right;}
-	.wise-content{display:inline-block; margin-top: 10px;}
+	.wise-content{display:inline-block; margin-top: 10px; max-width:70%;}
 	.contents{width: 80%;margin:auto; margin-top: 70px; min-height: 200px; max-width: 1000px; border-bottom: 1px solid rgb(200, 200, 200);line-height: 120%;}
 	.contents>p{margin:15px;}
 	.comment-box{

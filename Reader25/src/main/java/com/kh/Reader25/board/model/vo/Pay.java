@@ -14,7 +14,7 @@ public class Pay {
 	
 	private String pay_status;
 	
-	private Date PAY_DATE;
+	private Date pay_date;
 	
 	private String userId;
 	
@@ -22,12 +22,44 @@ public class Pay {
 	
 	private String status; //삭제 여부
 	
+	private String seller;
+	
 
 	public Pay() {
 		
 	}
+	
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
+			int book_no, String status, String seller) {
+		super();
+		this.pay_no = pay_no;
+		this.book_name = book_name;
+		this.book_v = book_v;
+		this.price = price;
+		this.pay_status = pay_status;
+		this.pay_date = pay_date;
+		this.userId = userId;
+		this.book_no = book_no;
+		this.status = status;
+		this.seller = seller;
+	}
+	
+	
+	
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
+			String seller) {
+		super();
+		this.pay_no = pay_no;
+		this.book_name = book_name;
+		this.book_v = book_v;
+		this.price = price;
+		this.pay_status = pay_status;
+		this.pay_date = pay_date;
+		this.userId = userId;
+		this.seller = seller;
+	}
 
-	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pAY_DATE, String userId,
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
 			int book_no) {
 		super();
 		this.pay_no = pay_no;
@@ -35,14 +67,14 @@ public class Pay {
 		this.book_v = book_v;
 		this.price = price;
 		this.pay_status = pay_status;
-		PAY_DATE = pAY_DATE;
+		this.pay_date = pay_date;
 		this.userId = userId;
 		this.book_no = book_no;
 	}
 	
 	
 	
-	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pAY_DATE, String userId,
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
 			int book_no, String status) {
 		super();
 		this.pay_no = pay_no;
@@ -50,7 +82,7 @@ public class Pay {
 		this.book_v = book_v;
 		this.price = price;
 		this.pay_status = pay_status;
-		PAY_DATE = pAY_DATE;
+		this.pay_date = pay_date;
 		this.userId = userId;
 		this.book_no = book_no;
 		this.status = status;
@@ -105,12 +137,14 @@ public class Pay {
 		this.pay_status = pay_status;
 	}
 
-	public Date getPAY_DATE() {
-		return PAY_DATE;
+	
+
+	public Date getPay_date() {
+		return pay_date;
 	}
 
-	public void setPAY_DATE(Date pAY_DATE) {
-		PAY_DATE = pAY_DATE;
+	public void setPay_date(Date pay_date) {
+		this.pay_date = pay_date;
 	}
 
 	public String getUserId() {
@@ -137,13 +171,22 @@ public class Pay {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+	
+	public String getSeller() {
+		return seller;
+	}
+
+	public void setSeller(String seller) {
+		this.seller = seller;
+	}
 
 	@Override
 	public String toString() {
 		return "Pay [pay_no=" + pay_no + ", book_name=" + book_name + ", book_v=" + book_v + ", price=" + price
-				+ ", pay_status=" + pay_status + ", PAY_DATE=" + PAY_DATE + ", userId=" + userId + ", book_no="
-				+ book_no + ", status=" + status + "]";
+				+ ", pay_status=" + pay_status + ", pay_date=" + pay_date + ", userId=" + userId + ", book_no="
+				+ book_no + ", status=" + status + ", seller=" + seller + "]";
 	}
-	
 
 }

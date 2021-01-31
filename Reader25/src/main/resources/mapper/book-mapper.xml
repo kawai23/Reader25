@@ -27,10 +27,11 @@
 		where status = 'N' <!-- 삭제 여부 -->
 	</select>
 	<select id="selectPayList" resultMap="payResultSet">
-		select p.*, book_name
+		select p.*, book_name, b.user_id as seller
 		from pay p
-			join book b on(p.book_no = b.book_no)
-		where p.status = 'N'
+			join book boo on(p.book_no=boo.book_no)
+            join board b on(b.board_no=boo.board_no)
+		where p.status = 'Y'
 		order by pay_no desc
 	</select>
 	<resultMap type="Pay" id="payResultSet">
@@ -43,6 +44,7 @@
 		<result property="pay_date" column="PAY_DATE"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="book_no" column="BOOK_NO"/>
+		<result property="seller" column="seller"/>
 	</resultMap>
 	
 	<select id="selectBookList" resultMap="bookResultSet">
@@ -169,7 +171,7 @@
 			select DISTINCT book_name
 		</if>
 		<if test="author != null">
-			select DISTINCT book_name
+			select DISTINCT author
 		</if>
 		from book
 		where status = 'Y' 
