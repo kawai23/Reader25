@@ -775,7 +775,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
+				$(".recommend_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_v(data){
