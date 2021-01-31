@@ -93,24 +93,29 @@ body{background:rgba(246, 246, 246, 1);}
 				<tr>
 					<th>주문번호</th>
 					<th>상품</th>
-					<th>결제내역</th>
-					<th>구매한 회원</th>
-					<th>판매한 회원</th>
+					<th>수량</th>
+					<th>가격</th>
+					<th>구매자</th>
+					<th>판매자</th>
 					<th>거래날짜</th>
+					<th>결제상태</th>
 				</tr>
 				<c:if test="${empty payList }">
 					<tr>
-						<td colspan="6">결제 내역이 존재하지 않습니다.</td>
+						<td colspan="8">결제 내역이 존재하지 않습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${!empty payList }">
 					<c:forEach var="p" items="${payList }">
 						<tr>
-							<td>${p. pay_no}</td>
-							<td>${p. book_name}</td>
-							<td>${p. pay_no}</td>
-							<td>${p. pay_no}</td>
-							<td>${p. pay_no}</td>
+							<td>${p.pay_no}</td>
+							<td>${p.book_name}</td>
+							<td>${p.book_v}</td>
+							<td>${p.price}</td>
+							<td>${p.userId}</td>
+							<td>${p.seller}</td>
+							<td>${p.pay_date}</td>
+							<td>${p.pay_status}</td>
 						</tr>
 					</c:forEach>
 				</c:if>

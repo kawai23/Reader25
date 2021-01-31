@@ -1,6 +1,7 @@
 package com.kh.Reader25.book.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -98,6 +99,22 @@ public class BookDAO {
 
 	public ArrayList<Board> selectAutoBookList(SqlSessionTemplate sqlSession, SearchReview sr) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAutoBookList", sr);
+	}
+
+	public int countUpdate(SqlSessionTemplate sqlSession, Book book) {
+		return sqlSession.update("bookMapper.countUpdate", book);
+	}
+
+	public int selectPayNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("bookMapper.selectPayNo");
+	}
+
+	public int updatePay(SqlSessionTemplate sqlSession, Integer p_no) {
+		return sqlSession.update("bookMapper.updatePay", p_no);
+	}
+
+	public int updateSb(SqlSessionTemplate sqlSession, Map<String, Object> sb) {
+		return sqlSession.update("bookMapper.updateSb", sb);
 	}
 
 }

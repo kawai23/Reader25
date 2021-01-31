@@ -1,6 +1,7 @@
 package com.kh.Reader25.book.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.Reader25.board.model.vo.Board;
 import com.kh.Reader25.board.model.vo.PageInfo;
@@ -45,5 +46,13 @@ public interface BookService {
 	int insertPay(Pay pay);
 
 	ArrayList<Board> selectAutoBookList(SearchReview sr);
+
+	int countUpdate(Book book);
+
+	int selectPayNo();
+
+	int updatePay(Integer integer);
+
+	int updateSb(Map<String, Object> sb);
 
 }

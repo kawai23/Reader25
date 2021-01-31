@@ -1,12 +1,11 @@
 package com.kh.Reader25.book.controller;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-
-import javax.servlet.http.HttpSession;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -28,26 +26,19 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-
 import com.kh.Reader25.board.model.exception.BoardException;
-
 import com.kh.Reader25.board.model.service.BoardService;
 import com.kh.Reader25.board.model.vo.Attachment;
 import com.kh.Reader25.board.model.vo.Board;
-
 import com.kh.Reader25.board.model.vo.PageInfo;
 import com.kh.Reader25.board.model.vo.Pay;
-
 import com.kh.Reader25.board.model.vo.SearchCondition;
-
 import com.kh.Reader25.board.model.vo.SearchReview;
-
 import com.kh.Reader25.book.model.exception.BookException;
 import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.common.Pagination;
-import com.kh.Reader25.member.model.dao.MemberDAO;
 import com.kh.Reader25.member.model.vo.Member;
 
 @Controller
@@ -60,10 +51,6 @@ public class BookController {
 	//메일 발송 관련
 	@Autowired
 	private JavaMailSender mailSender;
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	@Autowired
-	private MemberDAO mDAO;
 	
 	@RequestMapping("booktrade.tr")
 	public ModelAndView bookTradeList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
@@ -98,30 +85,33 @@ public class BookController {
 			return "success";
 		}
 	}
-	// 결제 페이지 이동(+결제테이블에 인설트)
+	// 결제 페이지 이동(+결제테이블에 인설트) // 책 수량 변경하기
 	@RequestMapping("pcs.tr") 
-	public ModelAndView bookPurchase(@RequestParam("b_no") ArrayList<Integer> b, @RequestParam("book_v") ArrayList<Integer> book_v, ModelAndView mv, HttpSession session) {
+	public ModelAndView bookPurchase(@RequestParam(value="b_no") ArrayList<Integer> b, @RequestParam(value="book_v") ArrayList<Integer> book_v, ModelAndView mv, HttpSession session) {
 		String userid = ((Member)session.getAttribute("loginUser")).getId();
 		ArrayList<Attachment> atList = new ArrayList<Attachment>();
 		ArrayList<Book> bList = new ArrayList<Book>();
+		ArrayList<Integer> pNoList = new ArrayList<Integer>();
+		
 		for(int i = 0; i<b.size(); i++) {
 			Book book = b_Service.selectBook(b.get(i));
-			
-			String sendMailCheck = sendMailCheck(b.get(i));
-			
 			Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 			book.setB_Q1(book_v.get(i));
+			int result = b_Service.countUpdate(book);
+			if(result < 0) {
+				throw new BookException("책 수량 조절에 실패하였습니다.");
+			}
 			bList.add(book);
 			atList.add(at);
 			Pay pay = new Pay(book_v.get(i), (book_v.get(i)*book.getB_price()) ,userid, book.getB_no());
-			int result = b_Service.insertPay(pay);
-			if(result <0) {
+			result = b_Service.insertPay(pay);
+			int pay_no = b_Service.selectPayNo();
+			pNoList.add(pay_no);
+			if(result < 0) {
 				throw new BookException("주문내역 추가에 실패하였습니다.");
 			}
-			
-			
 		}
-		mv.addObject("book", bList).addObject("at", atList).setViewName("bookPurchase");
+		mv.addObject("book", bList).addObject("at", atList).addObject("pay", pNoList).setViewName("bookPurchase");
 		return mv;	
 	}
 	private String sendMailCheck(Integer integer) {
@@ -145,6 +135,29 @@ public class BookController {
 		}
 		return bookSendEmail;
 		
+	}
+	// 결제완료 장바구니 리스트 N으로, 주문목록 Y로, 메일 보내기
+	@RequestMapping("paylast.tr")
+	@ResponseBody
+	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="pay") List<Integer> p_no, HttpSession session) {
+		String userid = ((Member)session.getAttribute("loginUser")).getId();
+		for(int i = 0; i< p_no.size(); i++) {
+			int result = b_Service.updatePay(p_no.get(i));
+			if(result < 0) {
+				throw new BookException("결제상태 변경에 실패하였습니다.");
+			}
+		}
+		for(int i = 0; i< b.size(); i++) {
+			Map<String, Object> sb = new HashMap<String, Object>();
+			sb.put("userid", userid);
+			sb.put("b_no", b.get(i));
+			sb.put("b_v", b_v.get(i));
+			int result = b_Service.updateSb(sb);
+		}
+		
+//		String sendMailCheck = sendMailCheck(book.getBoardNo()); 여기서 에러난다. 일어나서 물어보자
+		
+		return "success";
 	}
 
 

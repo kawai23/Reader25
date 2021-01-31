@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -2879,13 +2880,12 @@ public class BoardController {
 		}
 		
 		@RequestMapping("cart.bo") 
-		public ModelAndView bookCart(@RequestParam(value ="b_no", required = false) ArrayList<Integer> b, @RequestParam(value ="book_v", required = false) ArrayList<Integer> book_v,ModelAndView mv, HttpSession session) {
+		public ModelAndView bookCart(@RequestParam(value ="b_no", required = false) List<Integer> b, @RequestParam(value ="book_v", required = false) List<Integer> book_v,ModelAndView mv, HttpSession session) {
 			ArrayList<Book> bookList = new ArrayList<Book>();
-			ArrayList<Attachment> atList = new ArrayList<Attachment>();;
+			ArrayList<Attachment> atList = new ArrayList<Attachment>();
 			if(b != null) {
 				for(int i = 0; i<b.size(); i++) {
 					Book book = b_Service.selectBook(b.get(i));
-					book.setB_Q1(book_v.get(i));
 					Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 					bookList.add(book);
 					atList.add(at);
@@ -2895,7 +2895,6 @@ public class BoardController {
 				ArrayList<ShoppingBasket> sb = b_Service.selectSb(userid);
 				for(ShoppingBasket sbList : sb) {
 					Book book = b_Service.selectBook(sbList.getBook_no());
-					book.setB_Q1(sbList.getSb_v());
 					Attachment at = bService.selectAttachmentzero(book.getBoardNo());
 					bookList.add(book);
 					atList.add(at);
@@ -2903,6 +2902,7 @@ public class BoardController {
 			}
 			mv.addObject("book", bookList);
 			mv.addObject("at", atList);
+			mv.addObject("bv", book_v);
 			mv.setViewName("bookCart");
 			return mv;
 		}

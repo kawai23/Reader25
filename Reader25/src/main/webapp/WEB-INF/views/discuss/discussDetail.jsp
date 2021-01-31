@@ -16,15 +16,17 @@
   	#first{
   		text-align: center;
   	}
-  	#title{text-align: center;}
+  	#title{margin:auto; text-align: center; width: 80%;}
   	b{font-size:60px;}
   	#info{
-  		width: 100%;
+  		margin:auto;
+  		width: 80%;
   		background: #F5715C;
   		font-size:20px;
-  		text-align: center;
+  		color: white;
   	}
-  	.head{text-align: center;}
+  	.head{margin:auto; text-align: center; width: 80%;}
+  	.body{margin:auto; width: 80%;}
   	.dradio{margin-left: 50px;}
   	.btn{
   		width:100px;
@@ -37,7 +39,7 @@
   	#btn3{background: #C95F12;}
   	#load-img{wdith:713px; height:427px;}
   	hr{border: 2px solid #F5715C}
-  	p{font-size:20px;}
+  	#contentP{font-size:20px;}
   	.Argument{
   		background: #FFC398;
   		width:100%;
@@ -84,9 +86,10 @@
 				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/>
 			</c:if>
 		</div><br><br>
+		<div class="body">
 		<h2>토론주제</h2>
 		<hr>
-		<p>${d.dContent}</p>
+		<p id="contentP">${d.dContent}</p>
 		
 		<c:url var="dupdate" value="dUpdateForm.di">
 			<c:param name="dNo" value="${d.dNo}"/>
@@ -95,10 +98,11 @@
 		<c:url var="dDelete" value="dDelete.di">
 			<c:param name="dNo" value="${d.dNo}"/>
 		</c:url>
-		<c:if test="${ d.dWriter eq loginUser.id }">
+		<c:if test="${ d.dWriter eq loginUser.id  && d.dStatus=='Y'}">
 			<button class="btn" id="btn1" onclick="location.href='${ dupdate }'">토론방 수정</button>
 			<button class="btn" id="btn2" onclick="javascript:ddelete();">토론방 끝내기</button>
-		</c:if>	
+		</c:if>
+		
 		<script>
 			function ddelete(){
 				var check = confirm("정말로 토론방을 끝내갰습니까?");
@@ -107,7 +111,7 @@
 				}
 			}
 		</script>
-		<br><Br>
+		<br><br>
 		<h2>주장</h2>
 		<hr>
 		<div class="Argument">
@@ -133,6 +137,8 @@
 			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
 			<button class="btn" id="btn3">작성하기</button>
 		</c:if>
+		</div>
+		<br><%@include file="../common/footer.jsp" %>
 		<script>	
 			// 라디오버튼으로 댓글작성시 찬성,중립,반대 자동으로 체크
 			$("input:radio[name=discuss]").click(function(){

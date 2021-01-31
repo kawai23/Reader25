@@ -245,7 +245,7 @@
 				      
 		
 					
-						<c:set var="loc" value="myPointList.me"></c:set>
+						<c:set var="loc" value="myBasketList.me"></c:set>
 						
  
 				    

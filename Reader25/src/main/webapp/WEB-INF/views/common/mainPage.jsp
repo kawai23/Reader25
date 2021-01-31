@@ -29,7 +29,7 @@ input[class*="tiw_radio"]{
 }
 .slide-wrap {
 	float: left;
-	height: 400px;
+	height: 300px;
 	width: 45%;
 	margin-left: 18%;
 	border: 1px solid #000000;
@@ -59,7 +59,7 @@ input[class*="tiw_radio"]{
 
 .slidelist>li>a img {
 	width: 100%;
-	height: 398px;
+	height: 298px;
 	object-fit: fill;
 }
 
@@ -181,7 +181,9 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .login_place {
+	position : relative;
 	float: right;
+	text-align : center;
 	height: 100%;
 	width: 13%;
 	margin-left: 2%;
@@ -194,7 +196,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 
 .news_login {
 	width: 100%;
-	height: 400px;
+	height: 300px;
 	margin-top: 50px;
 }
 
@@ -273,9 +275,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .loginbtn {
-	text-align: center;
 	margin-top: 24%;
-	margin-left: 25%;
 	width: 50%;
 	height: 16%;
 	font-family: Roboto;
@@ -288,9 +288,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .enrollbtn {
-	text-align: center;
 	margin-top: 3%;
-	margin-left: 25%;
 	width: 50%;
 	height: 16%;
 	font-family: Roboto;
@@ -303,26 +301,18 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 #UserImage {
-	float: left;
-	width: 35%;
-	height: 40%;
+ 	display: inline-block;
+	width: 100px;
+	height: 100px;
 	margin-top: 15%;
-	margin-left: 11%;
 	border: 1px solid #000000;
 }
 
-#UserInfomation {
-	text-align: center;
-	float: left;
-	margin-top: 15%;
-	margin-left: 9%;
-	width: 40%;
-	height: 25%;
-}
-
 #Userpagelogout {
-	text-align: center;
-	margin-top: 90%;
+	position : absolute;
+	display: inline-block;
+	bottom : 40px;
+	left : 0px;
 	width: 100%;
 	cursor: pointer
 }
@@ -388,14 +378,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				</div>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser  }">
-				<div id="UserImage">사진</div>
-				<div id="UserInfomation">
+				<div id="UserImage">
+				<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" style="width: 100px;height: 100px; ">
+				</div>
 					<h2>
 						<c:out value="${loginUser.name}" />
 					</h2>
 					<h4>${loginUser.rank }</h4>
-				</div>
-
 				<div id="Userpagelogout">
 					<c:url var="mypage" value="myList.me?code=2" />
 					<c:url var="logout" value="logout.me" />

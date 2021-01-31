@@ -183,12 +183,65 @@
 .tdbottom2{
 	border-bottom: 2px solid #F7B45E;
 }
+.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+		font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-back {
+		display: none; 
+		position: fixed; 
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto; 
+		background: rgba(0, 0, 0, 0.3); 
+		font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-close, .modal-close-r{
+	background-color: #C4C4C4;
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal p{
+		display:inline-block;
+}
+.modal img{
+		position:relative;
+		top: 10px;
+}
 </style>
 </head>
 <body>
 <%@include file="../common/menubar.jsp" %>
+
+<div class="modal-back" id="cancel-modal">
+	<div class="modal">
+		<div class="modal-content">
+			<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+			<p>결제를 취소 하셨습니다.</p>
+			<br>
+			<button class="modal-close-r" id="cancel" value="Close">확인</button>
+		</div>
+	</div>
+</div>
+<div class="modal-back" id="success-modal">
+	<div class="modal">
+		<div class="modal-content">
+			<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+			<p>결제에 성공 하셨습니다.</p>
+			<br>
+			<button class="modal-close-r" id="success" value="Close">확인</button>
+		</div>
+	</div>
+</div>
+
 <div class="outer">
-    <form action="home.do" method="post" id="buyForm" name="buyForm">
     <h2 class="txt_pack">결제 하기</h2>
       <div id="listArea" class="list-A">
         <table class="table1">
@@ -298,21 +351,29 @@
       </div>
       <br><br>
       <div align="center">
-        <input type="button" onclick="buy(this);" value="주문하기" id="btn1">
-        <input type="button" onclick="location.href='javascript:history.back();'" value="장바구니 수정하기" id="btn3">
+        <input type="button" value="주문하기" id="btn1">
       </div>
-      <br><br>
-    </form>
+      <br>
   </div>
-	<script>
+  <script>
+	$('#cancel').click(function(){
+		$('.modal').hide();
+		$('.modal-back').hide();
+	});
+	$('#success').click(function(){
+		$('.modal').hide();
+		$('.modal-back').hide();
+		location.href="<%=request.getContextPath()%>/gobookr.bo"
+	});
 		// 결제 api
-		function buy(frm){
+		$('#btn1').click(function(){
 			if(${book.size()>1}){
 				var name = '${book.get(0).b_name } 외 ${book.size() - 1}';
 			} else{
 				var name = '${book.get(0).b_name }';
 			}
-			var price = ${sum};// 택배비 어떻게 할것인지 물어보자
+// 			var price = ${sum};// 택배비 어떻게 할것인지 물어보자
+			var price = 200;// 택배비 어떻게 할것인지 물어보자
 			var orderemail = $('#joinEmail').val();
 			var orderName =$('#name').val();
 			var orderphone = $('#phone').val();
@@ -333,12 +394,33 @@
 			buyer_postcode : orderPost
 			}, function(rsp) {
 				if ( rsp.success ) {
-					$('#buyForm').submit();
+					var pay = [];
+					var b_no = [];
+					var b_v = [];
+					<c:forEach var="p" items="${pay}">
+						pay.push(${p});
+					</c:forEach>
+					<c:forEach var="b" items="${book}">
+						b_no.push(${b.b_no});
+						b_v.push(${b.b_Q1});
+					</c:forEach>
+					$.ajax({
+						url: "paylast.tr",
+						traditional : true,
+						data:{b_no:b_no, b_v:b_v, pay:pay},
+						success: function(data){
+							if(data == 'success'){
+								$('#success-modal').show();
+								$('#success-modal .modal').show();
+							}
+						}
+					});
 			     } else {
-			        alert('결재에 실패하였습니다.');
+			    	 $('#cancel-modal').show();
+					$('#cancel-modal .modal').show();
 			     }
 			 });
-		}
+		});
 		//우편번호 검색
 		function ifindPostal() {
 	        new daum.Postcode({
@@ -395,10 +477,7 @@
 	            }
 	        }).open();
 	    }
-	</script>
-
-
-	
+  </script>
 
 <%@include file="../common/footer.jsp" %>
 </body>
