@@ -119,7 +119,10 @@
 				</tr>
 				<c:forEach var="b" items="${bList}" varStatus="vs">
 					<tr class="contentTR">
-						<td>${ listCount - vs.index}</td>
+						<td>
+							<input type="hidden" value="${l.boardNo}" class="boardNo-input"/>
+							${ listCount - vs.index}
+						</td>
 						<td class="list-title">
 							<c:url var="noDetail" value="ndetail.no">
 								<c:param name="boardNo" value="${ b.boardNo }"/>
@@ -141,7 +144,7 @@
 				}).mouseout(function(){
 					$(this).css({'background':'white'});
 				}).click(function(){
-					var boardNo = $(this).children('td').eq(0).text();
+					var boardNo = $(this).find('.boardNo-input').val();
 					location.href='ndetail.no?boardNo=' + boardNo +'&page=' + ${pi.currentPage};
 				});
 			}); 
