@@ -775,7 +775,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
+				$(".recommend_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_v(data){
@@ -787,7 +787,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].bNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
+				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].dNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
 			}
 		}
 		function insert_t(data){
