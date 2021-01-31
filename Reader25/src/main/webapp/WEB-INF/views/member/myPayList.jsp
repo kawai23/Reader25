@@ -88,7 +88,7 @@
 								
 								<td >${ b.book_v }</td>
 								<td >${ b.price }</td>
-								<td >${ b.PAY_DATE }</td>
+								<td >${ b.pay_date }</td>
 								<td >${ b.pay_status }</td>
 								
 								

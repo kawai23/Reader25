@@ -30,7 +30,7 @@
 		select p.*, book_name
 		from pay p
 			join book b on(p.book_no = b.book_no)
-		where p.status = 'N'
+		where p.status = 'Y'
 		order by pay_no desc
 	</select>
 	<resultMap type="Pay" id="payResultSet">
@@ -182,5 +182,27 @@
 			or (author like '%' || LOWER(#{author}) ||'%')
 		</if>
 	</select>
+	
+	<update id="countUpdate">
+		UPDATE BOOK
+		SET BOOK_Q1 = BOOK_Q1 - #{b_Q1}
+		WHERE BOOK_NO = #{b_no}
+	</update>
+	
+	<select id="selectPayNo" resultType="_int">
+		SELECT P_SEQ.CURRVAL FROM DUAL
+	</select>
+	
+	<update id="updatePay">
+		UPDATE PAY
+		SET PAY_DATE = SYSDATE, PAY_STATUS = 'Y'
+		WHERE PAY_NO = #{p_no}
+	</update>
+	
+	<update id="updateSb">
+		UPDATE SHOPPINGBASKET
+		SET STATUS = 'N'
+		WHERE BOOK_NO = #{b_no} AND USER_ID = #{userid} AND SB_V = #{b_v}
+	</update>
 	
 </mapper>

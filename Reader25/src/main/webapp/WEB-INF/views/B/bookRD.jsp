@@ -528,8 +528,10 @@ section {
          </div>
          <div class="purchase-btn">
             <div class="a">
+            <c:if test="${book.b_Q1 > 0 }">
                <span class="pcs-btn">구매하기</span> 
                <span class="cart-btn">장바구니</span>
+            </c:if>
             </div>
          </div>
          <script type="text/javascript">
@@ -564,6 +566,7 @@ section {
                }
             });
             var user_id = '${loginUser.id}';
+            
          $('.cart-btn').click(function(){
              var sb_v = 1;
              
@@ -582,12 +585,7 @@ section {
 	                	console.log(data);
 			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
 						if(check){
-							var b_no = [];
-							var book_v = [];
-							 b_no.push(book_no);
-							 book_v.push(amount);
-<%-- 							location.href="<%=request.getContextPath()%>/myBasketList.me"; --%>
-							location.href="<%=request.getContextPath()%>/cart.bo?b_no=" +b_no+"&book_v=" + book_v;
+							location.href="<%=request.getContextPath()%>/myBasketList.me";
 						}
 	                }
 	             });
@@ -628,11 +626,16 @@ section {
 				<tr>
 					<td>수량</td>
 					<td>
+						 <c:if test="${book.b_Q1 > 0 }">
 							<select class="book-info" id="amount-option" name="b_Q1">
 								<c:forEach begin="1" end="${book.b_Q1 }" var="i">
 									<option value="${i }">${i }</option>
 								</c:forEach>
 							</select>
+						</c:if>
+						 <c:if test="${book.b_Q1 < 1 }">
+						 	Sold Out
+						 </c:if>
 					</td>
 				</tr>
 			</table>

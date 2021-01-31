@@ -1,6 +1,7 @@
 package com.kh.Reader25.book.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,26 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public ArrayList<Board> selectAutoBookList(SearchReview sr) {
 		return b_DAO.selectAutoBookList(sqlSession, sr);
+	}
+
+	@Override
+	public int countUpdate(Book book) {
+		return b_DAO.countUpdate(sqlSession,book);
+	}
+
+	@Override
+	public int selectPayNo() {
+		return b_DAO.selectPayNo(sqlSession);
+	}
+
+	@Override
+	public int updatePay(Integer p_no) {
+		return b_DAO.updatePay(sqlSession, p_no);
+	}
+
+	@Override
+	public int updateSb(Map<String, Object> sb) {
+		return b_DAO.updateSb(sqlSession, sb);
 	}
 
 }

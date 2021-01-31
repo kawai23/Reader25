@@ -105,11 +105,11 @@ public class Pay {
 		this.pay_status = pay_status;
 	}
 
-	public Date getPAY_DATE() {
+	public Date getPay_date() {
 		return PAY_DATE;
 	}
 
-	public void setPAY_DATE(Date pAY_DATE) {
+	public void setPay_date(Date pAY_DATE) {
 		PAY_DATE = pAY_DATE;
 	}
 

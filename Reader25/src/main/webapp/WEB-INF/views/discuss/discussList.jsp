@@ -61,6 +61,9 @@
 	.subul {
 		list-style-image: url( "<%=request.getContextPath() %>/resources/images/icon/li_file.png" );
 	}
+	.subli{
+		margin-top: 10px;
+	}
 	.subli > span{
 		display:inline-block; 
 		width:300px; 
@@ -96,8 +99,9 @@
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none;}
 	#bimg{width: 100px;height: 100px;}
-	#orderTable{table-layout:fixed;}
-	#orderTable tr{margin-top: 100px;}/*나중에 확인하라*/
+	#orderTable{table-layout:fixed; border-spacing: 10px;}
+	tr.dtr{margin-bottom: 100px;}/*나중에 확인하라*/
+	tr.dtr2{margin-bottom: 100px;}/*나중에 확인하라*/
 	#dC{ /*글자수 제한(...) 포시*/
 		overflow:hidden;
 		text-overflow: ellipsis;
@@ -110,6 +114,7 @@
 	}
 	#dc-span{/*글제목*/
 		font-size: 20px;
+		font-weight:bold;
 	}
 </style>
 </head>
@@ -224,7 +229,6 @@
 						<td id="dC"><span id="dc-span">${d.dTitle}</span><br>${ d.dContent }</td>
 					</tr>
 					<tr class="dtr">
-<%-- 						<td><input type="hidden" value="${ d.dNo }"></td> --%>
 						<td><input type="hidden" value="${ d.dNo }">찬반여론 
 						<c:if test="${ d.dCount > 0}">
 						<c:set var="P" value="${d.dPros/(d.dPros+d.dNeutrality + d.dCons)}"/>

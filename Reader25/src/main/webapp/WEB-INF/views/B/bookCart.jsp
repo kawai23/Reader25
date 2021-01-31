@@ -148,6 +148,38 @@
 .tdbottom2{
 	border-bottom: 2px solid #F7B45E;
 }
+.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+		font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-back {
+		display: none; 
+		position: fixed; 
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%; 
+		height: 100%;
+		overflow: auto; 
+		background: rgba(0, 0, 0, 0.3); 
+		font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal-close, .modal-close-r{
+	background-color: #C4C4C4;
+	color:white; width: 80px;
+	height: 30px; border:none;
+	display:inline-block; left: 40%;
+	font-family: 카페24 아네모네에어; font-size:17px;
+}
+.modal p{
+		display:inline-block;
+}
+.modal img{
+		position:relative;
+		top: 10px;
+}
 </style>
 </head>
 <body id="body">
@@ -189,11 +221,11 @@
 										</c:otherwise>
 									</c:choose>
 									</td>
-									<td width="150" class="tdbottom">${b.b_name}</td>
+									<td width="150" class="tdbottom"><input type="hidden" value="${b.b_Q1}">${b.b_name}</td>
 									<td width="150" class="tdbottom">${b.b_price}원</td>
-									<td width="150" class="tdbottom">${b.b_Q1}</td>
+									<td width="150" class="tdbottom">${bv[vs.index]}</td>
 									<td width="150" class="tdbottom">2500원</td>
-									<td width="150" class="tdbottom">${(b.b_price * b.b_Q1)+ 2500}원</td>
+									<td width="150" class="tdbottom">${(b.b_price * bv[vs.index])+ 2500}원</td>
 									<td width="50" class="tdbottom"></td>
 								</c:when>
 								<c:otherwise>
@@ -210,11 +242,11 @@
 										</c:otherwise>
 									</c:choose>
 									</td>
-									<td width="150" class="tdbottom2">${b.b_name}</td>
+									<td width="150" class="tdbottom2"><input type="hidden" value="${b.b_Q1}">${b.b_name}</td>
 									<td width="150" class="tdbottom2">${b.b_price}원</td>
-									<td width="150" class="tdbottom2">${b.b_Q1}</td>
+									<td width="150" class="tdbottom2">${bv[vs.index]}</td>
 									<td width="150" class="tdbottom2">2500원</td>
-									<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + 2500}원</td>
+									<td width="150" class="tdbottom2">${(b.b_price * bv[vs.index]) + 2500}원</td>
 									<td width="50" class="tdbottom2"></td>
 								</c:otherwise>
 							</c:choose>
@@ -260,26 +292,86 @@
 			$(".allbuy").click(function(){
 				var b_no = [];
 				var book_v = [];
-				<c:forEach var="b" items="${book}">
+				var count = 0;
+				var check = [];
+				<c:forEach var="b" items="${book}" varStatus="vs">
 					 b_no.push(${b.b_no});
-					 book_v.push(${b.b_Q1});
+					 book_v.push(${bv[vs.index]});
+					 check.push(${b.b_Q1});
 				</c:forEach>
-				location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+				
+				for(var i = 0; i < b_no.length-1; i++){
+					count = check[i];
+					for(var j = i+1; j < b_no.length; j++){
+						if(b_no[i] == b_no[j]){
+							count -= book_v[i];
+							count = count - book_v[j];
+						}
+					}
+					if(count < 0){
+						break;
+					}
+				}
+				if(count >= 0){
+					location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+				} else {
+					$('#check-modal').show();
+		 			$('#check-modal .modal').show();
+				}
 			});
 			
 			$(".buy").click(function(){
 				var b_no = [];
 				var book_v = [];
+				var count = 0;
+				var check = [];
 				 $('.prodelete1:checked').each(function(){
 					 var bv = $(this).parent().parent().children().eq(4).text();
+					 var allbv = $(this).parent().parent().children().children().eq(3).val();
+					 check.push(allbv);
 					 b_no.push(Number($(this).val()));
 					 book_v.push(Number(bv));
 				 });
-				 location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+				 for(var i = 0; i < b_no.length-1; i++){
+						count = check[i];
+						for(var j = i+1; j < b_no.length; j++){
+							if(b_no[i] == b_no[j]){
+								count -= book_v[i];
+								count = count - book_v[j];
+							}
+						}
+						if(count < 0){
+							break;
+						}
+					}
+				if(count >= 0){
+					location.href="<%=request.getContextPath()%>/pcs.tr?b_no="+ b_no +"&book_v=" + book_v;
+				} else {
+					$('#check-modal').show();
+		 			$('#check-modal .modal').show();
+				}
 			});
 			
 			</script>
 		</section>
+		<div class="modal-back" id="check-modal">
+			<div class="modal">
+				<div class="modal-content">
+					<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+					<p>책의 수량이 초과되어 주문할수 없습니다.</p>
+					<br>
+					<button class="modal-close" value="Close" id="modal-ok">확인</button>
+				</div>
+			</div>
+		</div>
+		<script>
+		$(function(){
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+		});
+		</script>
 	</div>
 	<br>
 	<br>

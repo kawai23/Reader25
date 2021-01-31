@@ -95,7 +95,7 @@
 					<textarea name="dContent" id="smart_edit"></textarea>
 				</div>
 				<div style="text-align:right; width:90%; padding:0;">
-					<input type="button"class="btn" id="btn3" onclick="'javascript:history.go(-1)';" value="토론방 취소">
+					<input type="button"class="btn" id="btn3" onclick="history.back(-1);" value="토론방 취소">
 					<input type="button" class="btn" id="btn1" value="토론방 열기">
 				</div>
 			</div>

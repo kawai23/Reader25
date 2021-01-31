@@ -106,11 +106,11 @@ body{background:rgba(246, 246, 246, 1);}
 				<c:if test="${!empty payList }">
 					<c:forEach var="p" items="${payList }">
 						<tr>
-							<td>${p. pay_no}</td>
-							<td>${p. book_name}</td>
-							<td>${p. pay_no}</td>
-							<td>${p. pay_no}</td>
-							<td>${p. pay_no}</td>
+							<td>${p.pay_no}</td>
+							<td>${p.book_name}</td>
+							<td>${p.pay_no}</td>
+							<td>${p.pay_no}</td>
+							<td>${p.pay_no}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
