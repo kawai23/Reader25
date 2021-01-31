@@ -382,9 +382,30 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" style="width: 100px;height: 100px; ">
 				</div>
 					<h2>
-						<c:out value="${loginUser.name}" />
+						<c:out value="${loginUser.name}" />님
 					</h2>
-					<h4>${loginUser.rank }</h4>
+					<c:if test="${ Integer.parseInt(loginUser.grantId) eq 1}" >
+					<h3>관리자</h3>
+					</c:if>
+					<c:if test="${Integer.parseInt(loginUser.grantId) eq 2}" >
+					<h3>다이아몬드등급</h3>
+					</c:if>
+					<c:if test="${Integer.parseInt(loginUser.grantId) eq 3}" >
+					<h3>플래티넘등급</h3>
+					</c:if>
+					<c:if test="${Integer.parseInt(loginUser.grantId) eq 4}" >
+					<h3>골드등급</h3>
+					</c:if>
+					<c:if test="${Integer.parseInt(loginUser.grantId) eq 5}" >
+					<h3>실버등급</h3>
+					</c:if>
+					<c:if test="${Integer.parseInt(loginUser.grantId) eq 6}" >
+					<h3>브론즈등급</h3>
+					</c:if>
+					<c:if test=" ${Integer.parseInt(loginUser.grantId) eq 7}" >
+					<h3>아이언등급</h3>
+					</c:if>
+					<h4 style = "margin-top : 5%;">보유포인트 : ${loginUser.point }</h4>
 				<div id="Userpagelogout">
 					<c:url var="mypage" value="myList.me?code=2" />
 					<c:url var="logout" value="logout.me" />
@@ -787,7 +808,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].dNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
+				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?dNo=" + data[i].dNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
 			}
 		}
 		function insert_t(data){
