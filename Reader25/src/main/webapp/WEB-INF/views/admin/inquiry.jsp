@@ -144,7 +144,7 @@
 				<p>&lt;</p>
 			</c:if>
 			<c:if test="${ pi.currentPage > 1 }">
-				<c:url var="before" value="notice.no">
+				<c:url var="before" value="inquiry.ad">
 					<c:param name="page" value="${ pi.currentPage -1 }"/>
 				</c:url>
 				<a href="${ before }">&lt;</a>
@@ -152,7 +152,7 @@
 			<!------ 버튼 --------->
 			<c:forEach  var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 				<c:if test="${pi.currentPage ne p }">
-					<c:url var="pNo" value="notice.no">
+					<c:url var="pNo" value="${loc }">
 						<c:param name="page" value="${ p }"/>
 					</c:url>
 					<a href="${ pNo }">${ p }</a>

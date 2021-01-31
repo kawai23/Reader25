@@ -29,7 +29,7 @@ input[class*="tiw_radio"]{
 }
 .slide-wrap {
 	float: left;
-	height: 400px;
+	height: 300px;
 	width: 45%;
 	margin-left: 18%;
 	border: 1px solid #000000;
@@ -59,7 +59,7 @@ input[class*="tiw_radio"]{
 
 .slidelist>li>a img {
 	width: 100%;
-	height: 398px;
+	height: 298px;
 	object-fit: fill;
 }
 
@@ -181,7 +181,9 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .login_place {
+	position : relative;
 	float: right;
+	text-align : center;
 	height: 100%;
 	width: 13%;
 	margin-left: 2%;
@@ -194,7 +196,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 
 .news_login {
 	width: 100%;
-	height: 400px;
+	height: 300px;
 	margin-top: 50px;
 }
 
@@ -273,9 +275,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .loginbtn {
-	text-align: center;
 	margin-top: 24%;
-	margin-left: 25%;
 	width: 50%;
 	height: 16%;
 	font-family: Roboto;
@@ -288,9 +288,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 .enrollbtn {
-	text-align: center;
 	margin-top: 3%;
-	margin-left: 25%;
 	width: 50%;
 	height: 16%;
 	font-family: Roboto;
@@ -303,26 +301,18 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 }
 
 #UserImage {
-	float: left;
-	width: 35%;
-	height: 40%;
+ 	display: inline-block;
+	width: 100px;
+	height: 100px;
 	margin-top: 15%;
-	margin-left: 11%;
 	border: 1px solid #000000;
 }
 
-#UserInfomation {
-	text-align: center;
-	float: left;
-	margin-top: 15%;
-	margin-left: 9%;
-	width: 40%;
-	height: 25%;
-}
-
 #Userpagelogout {
-	text-align: center;
-	margin-top: 90%;
+	position : absolute;
+	display: inline-block;
+	bottom : 40px;
+	left : 0px;
 	width: 100%;
 	cursor: pointer
 }
@@ -352,7 +342,6 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
-#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>
@@ -389,14 +378,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 				</div>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser  }">
-				<div id="UserImage">사진</div>
-				<div id="UserInfomation">
+				<div id="UserImage">
+				<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" style="width: 100px;height: 100px; ">
+				</div>
 					<h2>
 						<c:out value="${loginUser.name}" />
 					</h2>
 					<h4>${loginUser.rank }</h4>
-				</div>
-
 				<div id="Userpagelogout">
 					<c:url var="mypage" value="myList.me?code=2" />
 					<c:url var="logout" value="logout.me" />
@@ -480,15 +468,13 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>
 			<div class = "tiw_f" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
 				<c:forEach var="t" items="${ tiw }" begin="0" end="4" varStatus="status">
-						<div id="todaywriter<c:out value='${status.count}'/>"style = "text-align : left">
-						<c:url var="TIWdetail" value="TIWdetail.to">
+						<c:url var='TIWdetail' value="TIWdetail.to">
 							<c:param name="boardNo" value="${ t.boardNo }"/>
 							<c:param name="page" value = "${ pi.currentPage }"/>
 							<c:param name="User" value="${ loginUser.id }"/>
 							<c:param name="code" value='${ t.code }'/>
 						</c:url>
-						<p class="ellipsis_t"><a style = "color : black;"href="${ TIWdetail }">${ t.bTitle }</a></p>
-						</div>
+						<p class="ellipsis_t"><a style = 'color : black;' href='${ TIWdetail }'>${ t.bTitle }</a></p>
 				</c:forEach>
 			</div>
 		</div>
@@ -775,41 +761,43 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 		}
 		
 		function Reset_r() { // 책추천
-			$('.ellipsis_r').remove();
+			$('.recommend_t').empty();
 		}
 		function Reset_v() { // 책 리뷰
-			$('.ellipsis_v').remove();
+			$('.review_t').empty();
 		}
 		function Reset_d() { // 토론
-			$('.ellipsis_d').remove();
+			$('.discuss_t').empty();
 		}
 		function Reset_t() { // 오나작
-			$('.ellipsis_t').remove();
+			$('.tiw_f').empty();
 		}
 		function insert_r(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".recommend_t").append("<p class= 'ellipsis_r' style = 'text-align : left'><a href = "+data[i].bTitle+"</p>");
-				
+				$(".review_t").append("<p class='ellipsis_r'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_v(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".review_t").append("<p class= 'ellipsis_v' style = 'text-align : left'></p>");
+				$(".review_t").append("<p class='ellipsis_v'><a style = 'color : black;' href='redetail.re?boardNo=" + data[i].boardNo +"&page=1'>"+ data[i].bTitle+"</a></p>");
 			}
 		}
 		function insert_d(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".discuss_t").append("<p class= 'ellipsis_d' style = 'text-align : left'>"+data[i].dTitle+"</p>");
+				$(".discuss_t").append("<p class='ellipsis_d'><a style = 'color : black;' href='dDetail.di?boardNo=" + data[i].bNo +"&page=1'>"+ data[i].dTitle+"</a></p>");
 			}
 		}
 		function insert_t(data){
 			for(var i = 0; i < data.length; i ++)
 			{
-				$(".tiw_f").append("<p class= 'ellipsis_t' style='text-align : left'><a style = 'color : black;'href='${ TIWdetail }''>${ t.bTitle }"+data[i].bTitle+"</a></p>");
+				$(".tiw_f").append("<p class='ellipsis_t'><a style = 'color : black;' href='TIWdetail.to?boardNo=" + data[i].boardNo +"&page=1&code=5'>"+ data[i].bTitle+"</a></p>");
 			}
+		}
+		function click_t(){
+			
 		}
 	</script>
 	<%@ include file="../common/footer.jsp" %>
