@@ -2763,7 +2763,7 @@ public class BoardController {
 			b.setCode(3); 
 			ArrayList<Attachment> atList = new ArrayList<Attachment>(); 
 			int result = 0;
-			if (uploadFile.length > 1) {
+			if (uploadFile.length > 0) {
 				b.setCode(3); 
 				for (int i = 0; i < uploadFile.length; i++) {
 					Attachment at = saveFile(uploadFile[i], request, 3); 
