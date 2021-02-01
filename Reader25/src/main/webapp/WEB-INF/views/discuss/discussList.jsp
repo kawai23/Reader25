@@ -92,7 +92,7 @@
 	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
-	#btn{width: 100px;height: 30px; background:#C95F12;}
+	#btn{width: 100px; height: 30px; float:right; background:#C95F12;}
 	#btn:hover{cursor: pointer;}
 	
 	/*검색관련*/
@@ -110,7 +110,7 @@
 		-webkit-line-clamp: 4;
 		-webkit-box-orient: vertical;
     	word-wrap:break-word;
-     	font-size: 20px; 
+     	font-size: 16px; 
 	}
 	#dc-span{/*글제목*/
 		font-size: 20px;
@@ -197,9 +197,7 @@
 			<div id="head"><br>
 				<div class="outerText">토론방</div>
 				<div class="outerBg">
-					<c:if test="${ !empty loginUser }">
-						<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
-					</c:if>
+					
 					<select id="search-type">
 						<option value="1">제목</option>
 						<option value="2">내용</option>
@@ -348,6 +346,9 @@
 					});
 				</script>
 			</div>
+		<c:if test="${ !empty loginUser }">
+			<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
+		</c:if>
 		</div>
 	</section>
 	<div style="clear:both;"><!-- float 명령 초기화시키기 -->

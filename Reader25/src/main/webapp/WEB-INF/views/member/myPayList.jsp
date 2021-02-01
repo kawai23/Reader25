@@ -23,7 +23,7 @@
 
 
 <style>
-
+#footer-company{margin-bottom: 30px;}
 
 </style>
 </head>
@@ -60,6 +60,7 @@
 							<th>가격</th>
 							<th>결제일</th>
 							<th>결제상태</th>
+							<th></th>
 							
 							
 						 </tr>
@@ -78,21 +79,34 @@
 					
 						<c:forEach var="b" items="${ list }">
 
-							<tr>
+							<tr id="myt">
 								<td><input type="checkbox"  name="mInfo" value="${ b.pay_no }" ></td>
 								
 								
-								<td >${ b.pay_no }</td>
-								<td >${ b.book_name }</td>
+								<td  class="contentTR">${ b.pay_no }</td>
+								<td  class="contentTR">${ b.book_name }</td>
 								
 								
-								<td >${ b.book_v }</td>
-								<td >${ b.price }</td>
-								<td >${ b.pay_date }</td>
-								<td >${ b.pay_status }</td>
+								<td  class="contentTR">${ b.book_v }</td>
+								<td  class="contentTR">${ b.price }</td>
+								<td  class="contentTR">${ b.pay_date }</td>
+								<td  class="contentTR">${ b.pay_status }</td>
 								
 								
-								<td>
+								<td style="display: none;">${ b.BOARD_NO }</td>
+								
+								<td style="display: none;">${ b.pay_no }</td>
+								
+								
+								<c:if test="PC_STATUS = 'N'">
+								<td><button class="pm btn btn-primary btn-xs">구매확정</button></td>
+								
+								</c:if>
+								
+								<c:if test="PC_STATUS = 'Y'">
+								<td>주문완료</td>
+								
+								</c:if>
 								
 							</tr>
 							
@@ -413,9 +427,13 @@
 	   
 	   
 	
+	
 	</div>
 	
-	 <%@ include file="../common/footer.jsp" %>
+							<br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
+	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">
@@ -535,8 +553,95 @@
 							    
 
 						});
+						 
+						 
+						 $('.contentTR').mouseenter(function(){
+								
+								$(this).parent().children('td').css({'font-weight' : 'bold' , 'cursor' : 'pointer'});
+								
+								
+								
+							}).mouseout(function(){
+								
+								$(this).parent().children('td').css({'color':'black' , 'font-weight' : 'normal'});
+								
+								
+							}).click(function(){
+								
+								
+								
+								
+
+							
 						
+							   var boardNo = $(this).parent().children('td').eq(7).text();
+							   
+							   var b_no = $(this).parent().children('td').eq(1).text();
+							   
+							   
+							   console.log(b_no);
+								
+
+								
+								location.href=  'redetail.bo?boardNo='+boardNo+"&b_no="+b_no+"&page=1";
+								
+								
+								
+							});
+						 
+						 
 						
+						 $('.pm').click(function(){
+								
+								
+								
+								
+
+							 var payNo =  $(this).parent().parent().children('td').eq(8).text();
+							 
+							 var td= $(this).parent();
+							 
+							 var bthis = $(this);
+							 
+							
+							 console.log(payNo);
+						
+							 $.ajax({
+									
+									
+									url: 'AddPay.bo',
+									
+									data: {payNo:payNo},
+										
+									success: function(data){
+										
+										if(data=='success'){
+											
+											alert('구매 확정 완료');
+											
+											
+											
+										
+											bthis.remove();
+											
+											td.append("주문완료");
+											
+											
+											
+										}
+										
+										
+										
+										
+										
+									}
+										
+										
+								});
+								
+								
+								
+							});
 				       
 						
 						

@@ -25,7 +25,7 @@
 <style>
 
 	
-
+#footer-company{margin-bottom: 30px;}
 
 </style>
 </head>
@@ -423,11 +423,11 @@
 	   
 	   </div>
 	   
-	   
-	 <%@ include file="../common/footer.jsp" %>
+	
 	</div>
 	
-
+    <br><br><br>
+	 <%@ include file="../common/footer.jsp" %>
    
 	
 	

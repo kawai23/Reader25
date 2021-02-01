@@ -153,10 +153,8 @@ public class BookController {
 			sb.put("b_no", b.get(i));
 			sb.put("b_v", b_v.get(i));
 			int result = b_Service.updateSb(sb);
+			String sendMailCheck = sendMailCheck(4);
 		}
-		
-//		String sendMailCheck = sendMailCheck(book.getBoardNo()); 여기서 에러난다. 일어나서 물어보자
-		
 		return "success";
 	}
 

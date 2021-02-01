@@ -24,6 +24,9 @@ public class Pay {
 	
 	private String seller;
 	
+	private int BOARD_NO;
+	
+	private String PC_STATUS;
 
 	public Pay() {
 		
@@ -97,6 +100,23 @@ public class Pay {
 		this.book_no = book_no;
 	}
 
+	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
+			int book_no, String status, String seller, int bOARD_NO, String pC_STATUS) {
+		super();
+		this.pay_no = pay_no;
+		this.book_name = book_name;
+		this.book_v = book_v;
+		this.price = price;
+		this.pay_status = pay_status;
+		this.pay_date = pay_date;
+		this.userId = userId;
+		this.book_no = book_no;
+		this.status = status;
+		this.seller = seller;
+		BOARD_NO = bOARD_NO;
+		PC_STATUS = pC_STATUS;
+	}
+
 	public int getPay_no() {
 		return pay_no;
 	}
@@ -137,11 +157,10 @@ public class Pay {
 		this.pay_status = pay_status;
 	}
 
-	
-
 	public Date getPay_date() {
 		return pay_date;
 	}
+
 	public void setPay_date(Date pay_date) {
 		this.pay_date = pay_date;
 	}
@@ -162,7 +181,6 @@ public class Pay {
 		this.book_no = book_no;
 	}
 
-	
 	public String getStatus() {
 		return status;
 	}
@@ -170,9 +188,7 @@ public class Pay {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
+
 	public String getSeller() {
 		return seller;
 	}
@@ -181,11 +197,33 @@ public class Pay {
 		this.seller = seller;
 	}
 
+	public int getBOARD_NO() {
+		return BOARD_NO;
+	}
+
+	public void setBOARD_NO(int bOARD_NO) {
+		BOARD_NO = bOARD_NO;
+	}
+
+	public String getPC_STATUS() {
+		return PC_STATUS;
+	}
+
+	public void setPC_STATUS(String pC_STATUS) {
+		PC_STATUS = pC_STATUS;
+	}
+
 	@Override
 	public String toString() {
 		return "Pay [pay_no=" + pay_no + ", book_name=" + book_name + ", book_v=" + book_v + ", price=" + price
 				+ ", pay_status=" + pay_status + ", pay_date=" + pay_date + ", userId=" + userId + ", book_no="
-				+ book_no + ", status=" + status + ", seller=" + seller + "]";
+				+ book_no + ", status=" + status + ", seller=" + seller + ", BOARD_NO=" + BOARD_NO + ", PC_STATUS="
+				+ PC_STATUS + "]";
 	}
+
+	
+
+	
+	
 
 }
