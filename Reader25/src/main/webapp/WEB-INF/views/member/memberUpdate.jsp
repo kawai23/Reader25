@@ -30,7 +30,7 @@
 
 
 <style>
-
+.container-fluid{font-family: 카페24 아네모네에어;font-size: 20px;}
 #footer-company{margin-bottom: 30px;}
 .outer{
 		width: 900px; height: 900px; font-size: 13px;
@@ -89,7 +89,7 @@ td{ margin: 5px; padding: 5px }
 		
 		<form action="myUpdate.me" method="post" id="joinForm" name="joinForm" style="margin-left: 10%">
 			
-			<table style="text-align: center; width: 500px " >
+			<table style="text-align: center; width: 700px " >
 			
 				<tr>
 					<td class="txt_signup_tb">이름</td>

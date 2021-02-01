@@ -27,7 +27,7 @@
 
 
 <style>
-
+.container-fluid{font-family: 카페24 아네모네에어;font-size: 20px;}
   
 	th{max-width: 15%}
 

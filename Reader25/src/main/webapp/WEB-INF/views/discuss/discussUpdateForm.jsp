@@ -9,12 +9,15 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <style>
   	section{
+  	font-family: 카페24 아네모네에어;	
   		background:rgba(246, 246, 246, 1);
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
   	}
+	input{font-family: 카페24 아네모네에어;	}
+	h1{font-family: 카페24 아네모네;font-size:40px;}
 	.title-div{
 		width: 80%;
 		margin: auto;
@@ -38,6 +41,7 @@
 		width: 300px;
 		margin:auto;
 	}
+
 	.file-img{
 		min-height: 250px;
 		margin-top: 20px;
@@ -63,6 +67,7 @@
 		background: white;
 		color: black;
 	}
+	button{font-family: 카페24 아네모네에어;	}
 	.btn{
 		width: 165px;
 		height: 40px;

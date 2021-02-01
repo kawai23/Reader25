@@ -22,6 +22,7 @@
 		margin:auto;
 		padding-top: 20px;
 		font-family: 카페24 아네모네에어;
+		font-size: 20px;
 	}
 	#myimg{max-width: 250px;}
 	.inquiry-div{
