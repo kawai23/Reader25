@@ -2286,6 +2286,20 @@ public class BoardController {
 
 	}
 	
+	
+	
+	@RequestMapping("AddPay.bo")
+	@ResponseBody
+	public String AddPay(@RequestParam(value = "payNo") String payNo) {
+		
+		
+		System.out.println(payNo);
+		
+		
+		return "success"; 
+	}
+	
+	
 	@RequestMapping("myLikeDelete.me")
 	public ModelAndView myLikeDelete(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
 	
