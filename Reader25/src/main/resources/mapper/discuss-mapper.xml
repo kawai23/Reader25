@@ -234,7 +234,7 @@
 	<!-- 토론방 리스트 메인페이지로 -->
 	<select id="discussf" resultMap="discussResultSet">
 		<![CDATA[
-        SELECT D_TITLE
+        SELECT D_NO, D_TITLE
         FROM DISCUSS
         WHERE ENROLL_DATE > SYSDATE-1 AND ROWNUM <= 17
         ORDER BY D_COUNT DESC
@@ -242,7 +242,7 @@
 	</select>
 	<select id="discussd" resultMap="discussResultSet">
 	<![CDATA[
-        SELECT D_TITLE
+        SELECT D_NO, D_TITLE
         FROM DISCUSS
         WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
         ORDER BY D_COUNT DESC
@@ -250,7 +250,7 @@
 	</select>
 	<select id="discussw" resultMap="discussResultSet">
 	<![CDATA[
-        SELECT D_TITLE
+        SELECT D_NO, D_TITLE
         FROM DISCUSS
         WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
         ORDER BY D_COUNT DESC
@@ -258,7 +258,7 @@
 	</select>
 	<select id="discussm" resultMap="discussResultSet">
 	<![CDATA[
-        SELECT D_TITLE
+        SELECT D_NO, D_TITLE
         FROM DISCUSS
         WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
         ORDER BY D_COUNT DESC
