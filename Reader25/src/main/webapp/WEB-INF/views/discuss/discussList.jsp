@@ -99,9 +99,13 @@
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none;}
 	#bimg{width: 100px;height: 100px;}
-	#orderTable{table-layout:fixed; border-spacing: 10px;}
-	tr.dtr{margin-bottom: 100px;}/*나중에 확인하라*/
-	tr.dtr2{margin-bottom: 100px;}/*나중에 확인하라*/
+	#orderTable{
+  	table-layout:fixed;  
+	border-collapse: separate;
+ 	border-spacing: 5px 15px;
+	}
+	.dtr{margin-bottom: 100px;}/*나중에 확인하라*/ 
+ 	.dtr2{margin-bottom: 100px;} 
 	#dC{ /*글자수 제한(...) 포시*/
 		overflow:hidden;
 		text-overflow: ellipsis;
