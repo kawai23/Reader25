@@ -269,21 +269,14 @@
 				});
 				
 				 $('#searchList').click(function() {
-			    	
-			    	
-			    	
+	
 			    	var data = '';
 			    	
 			    	var code = ${code};
 			    		
-			    		
 			    	var searchCondition = $('#Search1').text();
 			    	var searchValue = $('#seachDate').val();
-	
-			    	
-			    
-			    
-			    	
+
  		    		location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
 			    	 
 			 

@@ -1962,8 +1962,8 @@ public class BoardController {
 	
 	@RequestMapping("mBlistDelete.me")
 	public ModelAndView boardList(@RequestParam(value = "searchCondition", required = false) String searchCondition,
-									@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo") String inFo, 
-									ModelAndView mv ,@RequestParam(value = "code") Integer code , @RequestParam(value = "page") Integer page,HttpSession session) {
+		@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo") String inFo, 
+			ModelAndView mv ,@RequestParam(value = "code") Integer code , @RequestParam(value = "page") Integer page,HttpSession session) {
 	
 
 
@@ -2072,16 +2072,13 @@ public class BoardController {
 
 	@RequestMapping("myList.me")
 	public ModelAndView mSearchList(@RequestParam(value = "searchCondition", required = false) String searchCondition,
-									@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv ,@RequestParam("code") Integer code ,
-																							   @RequestParam(value = "page", required = false) Integer page,HttpSession session, Model model) {
+					@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv ,@RequestParam("code") Integer code ,
+				    @RequestParam(value = "page", required = false) Integer page,HttpSession session, Model model) {
 
 	 	 Member loginUser = mService.memberLogin((Member)session.getAttribute("loginUser"));
 	 	 model.addAttribute("loginUser", loginUser);
 	
-		
 		String mId = loginUser.getId();
-
-		
 		
 		int currentPage = 1 ;
 		
@@ -2090,14 +2087,10 @@ public class BoardController {
 			currentPage = page;
 			
 		}
-		
 		SearchCondition sc = new SearchCondition();
 		
-		
 		sc.setCode(code);
-	
 		sc.setmId(mId);
-		
 		
 		String condition =null;
 		

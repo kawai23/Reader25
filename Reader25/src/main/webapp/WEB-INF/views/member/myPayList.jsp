@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 
 
+ <%@ include file="../common/menubar.jsp"%> 
+
+
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 
@@ -29,7 +32,7 @@
 </head>
 <body>
 
- <%@ include file="../common/menubar.jsp"%> <br><br><br>
+<br><br><br>
 
 <div class="container-fluid" style="justify-content: center;"> 
 
@@ -99,7 +102,14 @@
 								
 								
 								<c:if test="${ b.PC_STATUS eq 'N' }">
-								<td><button class="pm btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit">구매확정</button></td>
+								<td>
+									<button class="pm btn btn-primary btn-xs" >구매확정</button>
+									
+									
+								
+								
+									
+									</td>
 								
 								</c:if>
 								
@@ -179,6 +189,8 @@
 					
 					
 					$('#pay').addClass('active');
+					
+					
 					
 
 				
@@ -432,7 +444,7 @@
 	
 							<br><br><br>
  
-  <%@ include file="../common/footer.jsp" %>
+<%--   <%@ include file="../common/footer.jsp" %> --%>
 	
 	
 		<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -446,7 +458,7 @@
       
       <div class="modal-body">
 					
-										<div class="alert alert-danger">
+										<div class="alert">
 											<span class="glyphicon glyphicon glyphicon-ok"></span> 구매확정 하시겠습니까?
 										</div>
 					
@@ -498,7 +510,8 @@
 								<!-- /.modal-content -->
 							</div>
 							<!-- /.modal-dialog -->
-						</div>						
+						</div>		
+							
 						
 						
 						
@@ -623,19 +636,37 @@
 							});
 						 
 						 
+						 
+						 
+						 
 						
-						 $('#pmBtn').click(function(){
+							 
+							 
+
+							 
+						
+
+							 
+						 
+						 
+						 $('.pm').click(function(){
+							 
+	 						var payNo =  $(this).parent().parent().children('td').eq(8).text();
+							 
+							 var td= $(this).parent();
+							 
+							 var bthis = $(this);
+							 
+						
+							 
+							 
+// 						 $('#pmBtn').click(function(){
 								
 								
 								
 								
 
-							 var payNo =  $('.pm').parent().parent().children('td').eq(8).text();
-							 
-							 var td= $('.pm').parent();
-							 
-							 var bthis = $('.pm');
-							 
+						
 							
 							 console.log(payNo);
 						
@@ -674,10 +705,10 @@
 								
 								
 								
-							});
+// 							});
 				       
 						
-						
+						 });
 						
 						
 						</script>
