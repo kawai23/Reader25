@@ -104,7 +104,7 @@
 	#orderTable{
   	table-layout:fixed;  
 	border-collapse: separate;
- 	border-spacing: 5px 15px;
+ 	border-spacing: 5px 45px;
 	}
 	.dtr{margin-bottom: 100px;}/*나중에 확인하라*/ 
  	.dtr2{margin-bottom: 100px;} 
