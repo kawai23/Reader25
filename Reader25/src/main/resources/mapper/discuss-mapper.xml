@@ -270,4 +270,7 @@
 		FROM DISCUSS
 		ORDER BY D_CREATE DESC
 	</select>
+	
+	
+	
 </mapper>

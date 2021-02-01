@@ -15,11 +15,12 @@
 		padding-top: 15px;
 		background-color:  #F6F6F6; 
 		font-family: 카페24 아네모네에어;
+		font-size:20px;
 		min-height: 750px;
 	}
 /*테이블*/
 #TIWTable{
-	font-size:18px;
+	font-size:25px;
 	font-family: 카페24 아네모네에어;
 	text-align: center;
 	margin: auto; 
@@ -413,25 +414,19 @@ hr{
 				var currencies;
 				
 				if(tTitle.length>0){
-					
 					$.ajax({
 						type: 'POST',
 						url: "searchTIWsub.to",
 						data: {tTitle:tTitle,searchCondition:searchCondition},
 						dataType: 'json',
 						success:function(data){		
-							console.log(data);
-								
 							currencies  = data;
-								
 							$("#autocomplete").autocomplete({
 								lookup: currencies
 							});
 						}
 					});
-					
 				}
-				
 			});
 		
 		</script>

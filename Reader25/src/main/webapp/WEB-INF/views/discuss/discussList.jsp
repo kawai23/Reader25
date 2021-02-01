@@ -10,6 +10,7 @@
 <style>
 	/*세션*/
 	section{
+		font-family: 카페24 아네모네에어;	font-size:18px;
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
@@ -40,7 +41,7 @@
 	#find_pwd{ margin-top : 397px; }
 	#find_pwd:hover{cursor: pointer;}
 	.login_font{
-		font-family: Roboto;
+		font-family: 카페24 아네모네에어;
 		font-style: normal;
 		font-weight: normal;
 		font-size: 20px;
@@ -49,7 +50,7 @@
 		background:#C95F12;
 	}
 	.Sign_Up_font{
-		font-family: Roboto;
+		font-family: 카페24 아네모네에어;
 		font-style: normal;
 		font-weight: normal;
 		font-size: 20px;
@@ -83,6 +84,7 @@
  		border-bottom: 1px solid black;
 	}
 	.outerText {
+		font-family: 카페24 아네모네;
 		font-size: 60px;
 		display: inline;
 	}
@@ -92,7 +94,7 @@
 	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
-	#btn{width: 100px; height: 30px; float:right; background:#C95F12;}
+	#btn{width: 150px; height: 50px; float:right; background:#C95F12;font-family: 카페24 아네모네;font-size: 20px;}
 	#btn:hover{cursor: pointer;}
 	
 	/*검색관련*/
@@ -114,10 +116,10 @@
 		-webkit-line-clamp: 4;
 		-webkit-box-orient: vertical;
     	word-wrap:break-word;
-     	font-size: 16px; 
+     	font-size: 19px; 
 	}
 	#dc-span{/*글제목*/
-		font-size: 20px;
+		font-size: 25px;
 		font-weight:bold;
 	}
 </style>

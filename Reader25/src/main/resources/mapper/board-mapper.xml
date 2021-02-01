@@ -53,7 +53,7 @@
 		select *
 		from board
 		where code='5' and b_status='Y'
-		order by BOARD_NO desc
+		order by ENROLL_DAY desc
 	</select>
 	
 	<insert id="insertTIW" parameterType="Board">

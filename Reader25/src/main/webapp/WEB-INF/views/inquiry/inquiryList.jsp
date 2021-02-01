@@ -15,6 +15,7 @@
 		margin:auto;
 		padding-top: 20px;
 		font-family: 카페24 아네모네에어;
+		font-size: 20px;
 	}
 	.inquiry-div{
 		min-height: 100px; 

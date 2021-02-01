@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
 section {
+font-family: 카페24 아네모네에어;	
+font-size: 18px;
 	background: rgba(246, 246, 246, 1);
 	width: 80%;
 	margin:auto;

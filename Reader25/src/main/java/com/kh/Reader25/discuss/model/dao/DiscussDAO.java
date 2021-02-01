@@ -104,4 +104,6 @@ public class DiscussDAO {
 		return (ArrayList)sqlSession.selectList("DiscussMapper.discussm", value);
 	}
 	
+	
+	
 }

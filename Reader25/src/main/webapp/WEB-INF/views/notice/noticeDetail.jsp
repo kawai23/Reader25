@@ -19,22 +19,27 @@
 		min-width: 1000px;
 		margin:auto;
 		padding-top: 20px;
+		font-family: 카페24 아네모네에어;
+		font-size: 20px;
 	}
 	.notice-div{
 		min-height: 100px; 
 		background: white;
 		margin: auto;
 		margin-top: 20px;
+		padding-top:40px; padding-bottom:40px;
+		padding-left:50px;padding-right:50px;
 		border-radius: 2px;
 		box-shadow: 0px 2px 2px 3px lightgray;
-		padding: 20px;
+		
 		width: 80%;
 		max-width: 1000px;
 		line-height: 110%;
 	}
 	.notice-header{
+	font-family: 카페24 아네모네;
 		text-align: center;
-		font-size: 25px;
+		font-size: 50px;
 		margin-bottom: 10px;
 		font-weight: bolder;
 	}

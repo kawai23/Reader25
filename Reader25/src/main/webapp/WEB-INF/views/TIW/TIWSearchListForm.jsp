@@ -19,11 +19,11 @@
 	}
 /*테이블*/
 #TIWTable{
-	font-size:18px;
+	font-size:25px;18px;
 	font-family: 카페24 아네모네에어;
 	text-align: center;
 	margin: auto; 
-	width: 850px;
+	min-width: 950px; 
 }
 #TIWTable th{
 	background: #F7B45E;
