@@ -240,7 +240,23 @@
         ORDER BY D_COUNT DESC
         ]]>
 	</select>
-		<select id="discussd" resultMap="discussResultSet">
+	<select id="discussd" resultMap="discussResultSet">
+	<![CDATA[
+        SELECT D_TITLE
+        FROM DISCUSS
+        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
+        ORDER BY D_COUNT DESC
+	]]>
+	</select>
+	<select id="discussw" resultMap="discussResultSet">
+	<![CDATA[
+        SELECT D_TITLE
+        FROM DISCUSS
+        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
+        ORDER BY D_COUNT DESC
+	]]>
+	</select>
+	<select id="discussm" resultMap="discussResultSet">
 	<![CDATA[
         SELECT D_TITLE
         FROM DISCUSS
