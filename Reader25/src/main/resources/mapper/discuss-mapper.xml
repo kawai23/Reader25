@@ -271,21 +271,6 @@
 		ORDER BY D_CREATE DESC
 	</select>
 	
-	   <select id="discussw" resultMap="discussResultSet">
-   <![CDATA[
-        SELECT D_TITLE
-        FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
-        ORDER BY D_COUNT DESC
-   ]]>
-   </select>
-   <select id="discussm" resultMap="discussResultSet">
-   <![CDATA[
-        SELECT D_TITLE
-        FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
-        ORDER BY D_COUNT DESC
-   ]]>
-   </select>
+	
 	
 </mapper>
