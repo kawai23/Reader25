@@ -680,6 +680,10 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.searchBookSendEmail", boardNo);
 	}
 
+	public int AddPay(SqlSessionTemplate sqlSession, String payNo) {
+		return sqlSession.update("boardMapper.AddPay", payNo);
+	}
+
 
 
 

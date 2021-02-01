@@ -98,10 +98,10 @@ public class DiscussDAO {
 		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
 	}
 	public ArrayList<Discuss> discussw(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussw", value);
 	}
 	public ArrayList<Discuss> discussm(SqlSessionTemplate sqlSession, int value) {
-		return (ArrayList)sqlSession.selectList("DiscussMapper.discussd", value);
+		return (ArrayList)sqlSession.selectList("DiscussMapper.discussm", value);
 	}
 	
 	

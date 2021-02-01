@@ -1961,24 +1961,15 @@ public class BoardController {
 	}
 	
 	@RequestMapping("mBlistDelete.me")
-	public ModelAndView boardList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo", required = false) String inFo, ModelAndView mv ,@RequestParam(value = "code", required = false) Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
+	public ModelAndView boardList(@RequestParam(value = "searchCondition", required = false) String searchCondition,
+									@RequestParam(value = "searchValue", required = false) String searchValue,@RequestParam(value = "inFo") String inFo, 
+									ModelAndView mv ,@RequestParam(value = "code") Integer code , @RequestParam(value = "page") Integer page,HttpSession session) {
 	
 
-		
-		
-		
-		
+
 		String list = inFo;
 		
 		String [] lists = list.split(",");
-		
-		for(String s : lists) {
-			
-			System.out.println(s);
-			
-			
-			
-		}
 		
 		
 		int result = bService.deletemBList(lists);
@@ -2080,19 +2071,15 @@ public class BoardController {
 
 
 	@RequestMapping("myList.me")
-	public ModelAndView mSearchList(@RequestParam(value = "searchCondition", required = false) String searchCondition,@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv ,@RequestParam("code") Integer code , @RequestParam(value = "page", required = false) Integer page,HttpSession session) {
-		// 마이페이지에서 검색
-		
-		
-		Member loginUser = (Member)session.getAttribute("loginUser");
-	 	
-	 	String mId = loginUser.getId();
-		
-	 	
-	 	
+	public ModelAndView mSearchList(@RequestParam(value = "searchCondition", required = false) String searchCondition,
+									@RequestParam(value = "searchValue", required = false) String searchValue, ModelAndView mv ,@RequestParam("code") Integer code ,
+																							   @RequestParam(value = "page", required = false) Integer page,HttpSession session, Model model) {
+
+	 	 Member loginUser = mService.memberLogin((Member)session.getAttribute("loginUser"));
+	 	 model.addAttribute("loginUser", loginUser);
 	
 		
-		
+		String mId = loginUser.getId();
 
 		
 		
@@ -2118,10 +2105,7 @@ public class BoardController {
 		
 		if(searchValue != null) {
 			
-			
-			
 			condition =searchCondition;
-			
 			value =  searchValue;
 			
 			
@@ -2135,49 +2119,29 @@ public class BoardController {
 		}
 		
 		
-		
-		System.out.println("sc= " +sc);
-		
-		
+
 		try {
 			int listCount = bService.getSearchMyListCount(sc);
-			
-			System.out.println("listcount= "+ listCount);
-			
-			
-			
+
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-			
 			
 			ArrayList<Board> list = bService.SeachMyList(sc,pi);
 			
-			System.out.println(list);
 			
 			mv.addObject("list", list);
-			
 			mv.addObject("pi", pi);
 			
 			
-			
-			mv.addObject("searchCondition",condition);
-				
-			mv.addObject("searchValue",value);
-			
+			mv.addObject("searchCondition",condition);	
+			mv.addObject("searchValue",value);	
 			mv.addObject("code",code);
-			
-			
 			
 			mv.setViewName("myPageList");
 			
 			
 		} catch (BoardException e) {
-			
-			
-			throw new BoardException("마이페이지 게시글 검색 실패");
-			
+			throw new BoardException("마이페이지 조회/검색 실패");
 		}
-
-		
 
 		return mv;
 
@@ -2296,7 +2260,16 @@ public class BoardController {
 		System.out.println(payNo);
 		
 		
-		return "success"; 
+		int result = bService.AddPay(payNo);
+		
+		if(result > 0) {
+			
+			return "success"; 
+		}
+		
+		
+		
+		return "fail";
 	}
 	
 	
