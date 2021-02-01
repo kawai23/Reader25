@@ -413,25 +413,19 @@ hr{
 				var currencies;
 				
 				if(tTitle.length>0){
-					
 					$.ajax({
 						type: 'POST',
 						url: "searchTIWsub.to",
 						data: {tTitle:tTitle,searchCondition:searchCondition},
 						dataType: 'json',
 						success:function(data){		
-							console.log(data);
-								
 							currencies  = data;
-								
 							$("#autocomplete").autocomplete({
 								lookup: currencies
 							});
 						}
 					});
-					
 				}
-				
 			});
 		
 		</script>

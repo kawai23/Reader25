@@ -197,7 +197,7 @@
 						</td>
 						<td width="200" class="tdtop">책 이미지</td>
 						<td width="300" class="tdtop">책 제목</td>
-						<td width="120" class="tdtop">판매가</td>
+						<td width="120" class="tdtop">판매가</td> 
 						<td width="180" class="tdtop">수량</td>
 						<td width="100" class="tdtop">배송비</td>
 						<td width="100" class="tdtop">합계</td>
