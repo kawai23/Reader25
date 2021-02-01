@@ -65,7 +65,6 @@ public class HomeController {
 		ArrayList<Discuss> discuss = dService.discuss();
 		ArrayList<Board> tiw = bService.tiw();
 		ArrayList<Board> views = bService.views();
-		System.out.println(tiw);
 		mv.addObject("pi", pi);
 		mv.addObject("review", review);
 		mv.addObject("discuss", discuss);
