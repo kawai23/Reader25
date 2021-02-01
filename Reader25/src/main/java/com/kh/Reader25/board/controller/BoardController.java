@@ -2296,7 +2296,16 @@ public class BoardController {
 		System.out.println(payNo);
 		
 		
-		return "success"; 
+		int result = bService.AddPay(payNo);
+		
+		if(result > 0) {
+			
+			return "success"; 
+		}
+		
+		
+		
+		return "fail";
 	}
 	
 	

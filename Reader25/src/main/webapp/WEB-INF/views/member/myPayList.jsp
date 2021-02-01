@@ -98,12 +98,12 @@
 								<td style="display: none;">${ b.pay_no }</td>
 								
 								
-								<c:if test="PC_STATUS = 'N'">
+								<c:if test="${ b.PC_STATUS eq 'Y' }">
 								<td><button class="pm btn btn-primary btn-xs">구매확정</button></td>
 								
 								</c:if>
 								
-								<c:if test="PC_STATUS = 'Y'">
+								<c:if test="${ b.PC_STATUS eq 'N' }">
 								<td>주문완료</td>
 								
 								</c:if>

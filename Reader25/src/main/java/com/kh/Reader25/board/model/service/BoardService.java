@@ -277,6 +277,8 @@ public interface BoardService {
 
 	String searchBookSendEmail(Integer boardNo);
 
+	int AddPay(String payNo);
+
 
 
 
