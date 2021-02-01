@@ -161,6 +161,15 @@
 	
 	</select>
 	
+	
+	<update id="AddPay">
+	
+	UPDATE pay SET PC_STATUS = 'Y' WHERE pay_no = #{payNo} 
+	
+	
+	
+	</update>
+	
 	<select id="SeachMyPayList" parameterType="SearchCondition" resultType="Pay">
  	
  	

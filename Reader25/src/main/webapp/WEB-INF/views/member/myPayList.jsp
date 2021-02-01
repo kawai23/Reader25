@@ -98,13 +98,13 @@
 								<td style="display: none;">${ b.pay_no }</td>
 								
 								
-								<c:if test="PC_STATUS = 'N'">
-								<td><button class="pm btn btn-primary btn-xs">구매확정</button></td>
+								<c:if test="${ b.PC_STATUS eq 'N' }">
+								<td><button class="pm btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit">구매확정</button></td>
 								
 								</c:if>
 								
-								<c:if test="PC_STATUS = 'Y'">
-								<td>주문완료</td>
+								<c:if test="${ b.PC_STATUS eq 'Y' }">
+								<td>거래완료</td>
 								
 								</c:if>
 								
@@ -434,6 +434,39 @@
  
   <%@ include file="../common/footer.jsp" %>
 	
+	
+		<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">구매 확정</h4>
+      </div>
+      
+      
+      <div class="modal-body">
+					
+										<div class="alert alert-danger">
+											<span class="glyphicon glyphicon glyphicon-ok"></span> 구매확정 하시겠습니까?
+										</div>
+					
+									</div>
+          
+          
+      <div class="modal-footer ">
+										<button type="button" class="btn btn-success" data-dismiss="modal" id="pmBtn">
+											<span class="glyphicon glyphicon-ok-sign"></span> Yes
+										</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">
+											<span class="glyphicon glyphicon-remove"></span> No
+										</button>
+									</div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+    
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">
@@ -591,17 +624,17 @@
 						 
 						 
 						
-						 $('.pm').click(function(){
+						 $('#pmBtn').click(function(){
 								
 								
 								
 								
 
-							 var payNo =  $(this).parent().parent().children('td').eq(8).text();
+							 var payNo =  $('.pm').parent().parent().children('td').eq(8).text();
 							 
-							 var td= $(this).parent();
+							 var td= $('.pm').parent();
 							 
-							 var bthis = $(this);
+							 var bthis = $('.pm');
 							 
 							
 							 console.log(payNo);
@@ -624,7 +657,7 @@
 										
 											bthis.remove();
 											
-											td.append("주문완료");
+											td.append("거래완료");
 											
 											
 											
