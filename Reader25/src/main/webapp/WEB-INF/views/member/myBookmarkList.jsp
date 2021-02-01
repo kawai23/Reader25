@@ -27,6 +27,8 @@
 
 <style>
 
+#footer-company{margin-bottom: 30px;}
+
 	th{max-width: 16%}
 
 
@@ -485,6 +487,10 @@
 	
 	</div>
 	
+							<br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
+	
 	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
@@ -520,9 +526,7 @@
 						</div>
 						
 						
-						<br><br><br>
- 
-  <%@ include file="../common/footer.jsp" %>
+
 
 	<script>
 						

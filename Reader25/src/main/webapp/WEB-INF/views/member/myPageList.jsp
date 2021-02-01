@@ -28,10 +28,7 @@
 
 <style>
 
-  section{
-  		
-  		min-width: 1000px;
-  	}
+  
 	th{max-width: 15%}
 
 	#footer-company{margin-bottom: 30px;}
@@ -505,14 +502,17 @@
 	
 	</div>
 	
+	 						<br><br><br>
+ 
+  	<%@ include file="../common/footer.jsp" %>
 	
 	
 	
-	<div class="clearfix"></div>
+	
 		
 
  
-  <%@include file="../common/footer.jsp" %>
+ 
   
 
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
@@ -558,12 +558,12 @@
 						 $('#yBtn').click(function() {
 					        	
 					        	
-					        	console.log("?");
+					        	
 								
 					        	var code = ${code};
 					        	
-					        	var check = ${ !empty searchValue } ; 
-					        	
+					        	var check = ${ check } ; 
+
 					        	var searchCondition = null;
 					        	
 					        	var searchValue = null;

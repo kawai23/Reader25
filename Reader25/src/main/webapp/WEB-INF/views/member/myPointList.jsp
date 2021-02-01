@@ -24,7 +24,7 @@
 
 <style>
 
-
+#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>
@@ -415,7 +415,12 @@
 	
 	</div>
 	
-	 <%@ include file="../common/footer.jsp" %>
+	
+	
+							<br><br><br>
+ 
+  <%@ include file="../common/footer.jsp" %>
+	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">
 							<div class="modal-dialog">

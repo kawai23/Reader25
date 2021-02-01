@@ -32,6 +32,8 @@
 
 
 <style>
+
+#footer-company{margin-bottom: 30px;}
 .outer{
 		width: 900px; height: 900px; font-size: 13px;
 		margin-left: auto; margin-right: auto; margin-top: 5%; 
@@ -131,6 +133,7 @@ td{ margin: 5px; padding: 5px }
  <br><br><br>
  
   <%@ include file="../common/footer.jsp" %>
+  
 	<script>
 		
 	$(function(){

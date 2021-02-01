@@ -30,6 +30,8 @@
 
 
 <style>
+
+#footer-company{margin-bottom: 30px;}
 .outer{
 		width: 900px; height: 900px; font-size: 13px;
 		margin-left: auto; margin-right: auto; margin-top: 5%; 
