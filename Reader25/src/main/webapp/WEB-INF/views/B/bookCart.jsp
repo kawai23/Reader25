@@ -17,7 +17,8 @@
 	margin: auto;
 	width: 800px;
 }
-
+input{font-family: 카페24 아네모네에어;}
+table{font-family: 카페24 아네모네에어;}
 .writetitle1 {
 	display: inline-block;
 	margin-left: 400px;
@@ -82,9 +83,8 @@
    position:relative;
    top:1px;
 }
-
 .list-table {
-	width: 1300px;
+	width: 1100px;
 	margin-top: 80px;
 	margin-left: 280px;
 	position: relative;

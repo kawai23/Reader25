@@ -14,6 +14,8 @@
 		min-width: 1000px;
 		margin:auto;
 		padding-top: 20px;
+		font-family: 카페24 아네모네에어;
+		font-size: 20px;
 	}
 	.notice-div{
 		min-height: 100px; 

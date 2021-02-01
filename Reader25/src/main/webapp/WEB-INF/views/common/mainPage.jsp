@@ -198,7 +198,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 }
 
 	.rt_debate {
-	padding : auto;
+	
 	float: left;
 	width: 12.5%;
 	height: 100%;
@@ -283,6 +283,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 	white-space: nowrap;
 	text-align: left;
 }
+.recommend_t, .review_t, .discuss_t, .tiw_f{font-size: 20px;padding-top: 10%;}
 </style>
 </head>
 <body>

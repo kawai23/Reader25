@@ -7,11 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 	section{
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
+  		font-family: 카페24 아네모네에어;	
   	}
   	#first{
   		text-align: center;
@@ -29,8 +31,9 @@
   	.head{margin:auto; text-align: center; width: 80%;}
   	.body{margin:auto; width: 80%;}
   	.dradio{margin-left: 50px;}
+  	button{font-family: 카페24 아네모네에어;font-size: 20px;}
   	.btn{
-  		width:100px;
+  		width:150px;
   		height:50px;
   		float: right;
   		margin: 5px;
@@ -67,6 +70,7 @@
 		height: 230px;
 	}
 	#area1{height: 130px;}
+	select{font-family: 카페24 아네모네에어;}
 </style>
 </head>
 <body>

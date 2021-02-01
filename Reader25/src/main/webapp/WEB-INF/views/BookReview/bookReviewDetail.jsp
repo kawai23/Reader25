@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
 	 section{
+	 font-family: 카페24 아네모네에어;
+	 font-size:23px;
   		border: 1px solid rgba(246, 246, 246, 1);
   		background: rgba(246, 246, 246, 1);
   		width: 80%;
@@ -281,6 +283,8 @@
 		top: 10px;
 	}
 	#comment-input-update{width:450px;height:70px; resize: none;}
+	button{font-family: 카페24 아네모네에어;}
+	.modal{font-family: 카페24 아네모네에어;}
 </style>
 </head>
 <body>

@@ -9,19 +9,24 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <style>
   	section{
+  	font-family: 카페24 아네모네에어;	
   		background:rgba(246, 246, 246, 1);
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
   	}
+  	input{font-family: 카페24 아네모네에어;	}
 	.title-div{
+	font-family: 카페24 아네모네;
+	font-size:30px;
 		width: 80%;
 		margin: auto;
 		margin-top: 10px;
 		padding: 0;
 	}
 	#dTitle{
+	
 		height: 32px;
 		margin-left: -7px;
 		width: 100%;
@@ -57,6 +62,7 @@
 		color: black;
 	}
 	.btn{
+	font-family: 카페24 아네모네에어;
 		width: 165px;
 		height: 40px;
 		margin-bottom: 20px;
@@ -64,6 +70,7 @@
 		font-size: 25px;
 	}
 	.btn0{
+	font-family: 카페24 아네모네에어;
 		width: 110px;
 		height: 32px;
 		padding: 5px;
