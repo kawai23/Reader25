@@ -17,9 +17,10 @@
   		text-align: center;
   	}
   	#title{margin:auto; text-align: center; width: 80%;}
-  	b{font-size:60px;}
+  	b{font-size:45px;}
   	#info{
   		margin:auto;
+  		padding:5px;
   		width: 80%;
   		background: #F5715C;
   		font-size:20px;
@@ -36,7 +37,7 @@
   	}
   	#btn1{background: #FFC398;}
   	#btn2{background: #67492C;}
-  	#btn3{background: #C95F12;}
+  	#btn3{margin: 5px; float: right; background: #C95F12;}
   	#load-img{wdith:713px; height:427px;}
   	hr{border: 2px solid #F5715C}
   	#contentP{font-size:20px;}
@@ -50,9 +51,22 @@
   	.Atext{float:left; margin-right: 20px;}
   	#text{background: white; border: 1px solid black; width:85%; border-radius: 5px; padding: 10px;}
   	#user-icon{wdith:50px; height:50px; border-radius:50%;}
-  	.wid{width:99%; margin: 3px;}
-  	.rBtn1{float: right; margin: 3px;background: #FFC398;}
-  	.rBtn2{float: right; margin: 3px;background: #67492C;}
+  	.wid{width:98%; margin: 3px;}
+  	.wid2{width:98%; margin: 3px; border:none;}
+  	.rBtn1{float: right; margin: 3px; color: white; background: #FFC398;}
+  	.rBtn2{float: right; margin: 3px; color: white; background: #67492C;}
+  	.comment-box{
+		margin:auto;
+		margin-top:10px;
+		border-bottom: 1px solid rgb(200, 200, 200);
+		padding-bottom: 40px;
+	}
+	.comment-write{
+		border: 1px solid rgb(200, 200, 200);
+		background: white;
+		height: 230px;
+	}
+	#area1{height: 130px;}
 </style>
 </head>
 <body>
@@ -69,7 +83,8 @@
 		</c:if>
 		<c:if test="${d.dStatus=='Y' }"><br>
 			<div class="head" id="info">
-				의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
+				의견을 내주시면 감사하겠습니다. 글을 읽어본 뒤 <br>
+				찬성인지 반대인지 아래를 클릭하여 선택 후 자신의 주장을 펼치시면 됩니다!
 			</div>
 			<div class="head">
 				<input type="radio"  name="discuss" value="찬성"> 찬성
@@ -123,19 +138,23 @@
 			</ol>
 		</div>
 		<c:if test="${d.dStatus == 'Y' }">
-		<select class="wid" id="dis">
-			<option value="P">찬성</option>
-			<option selected value="N">중립</option>
-			<option value="C">반대</option>
-		</select><br>
-			<c:if test="${ !empty loginUser }">
-				<input type="text" class="wid" id="id" readonly value="${loginUser.id }"><br>
-			</c:if>
-			<c:if test="${ empty loginUser }">
-				<input type="text" class="wid" id="id" readonly value="로그인이 필요한 기능입니다."><br>
-			</c:if>
-			<textarea id="area1" class="wid" rows="10" cols="55"></textarea><br>
-			<button class="btn" id="btn3">작성하기</button>
+			<div class="comment-box">
+				<div class="comment-write">
+					<select class="wid" id="dis">
+						<option value="P">찬성</option>
+						<option selected value="N">중립</option>
+						<option value="C">반대</option>
+					</select><br>
+					<c:if test="${ !empty loginUser }">
+						<input type="text" class="wid2" id="id" readonly value="${loginUser.id }"><br>
+					</c:if>
+					<c:if test="${ empty loginUser }">
+						<input type="text" class="wid2" id="id" readonly value="로그인이 필요한 기능입니다."><br>
+					</c:if>
+					<textarea id="area1" class="wid2" placeholder="주장을 작성해주세요"></textarea><br>
+					<button id="btn3">작성하기</button>
+				</div>
+			</div>
 		</c:if>
 		</div>
 		<br><%@include file="../common/footer.jsp" %>
@@ -205,7 +224,7 @@
 								$li = $('<li id="comment-'+ data[i].rNo +'">');
 								$div1 = $('<div class="Atext">');
 								$img = $('<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">');
-								$rContent = $('<p>').text(data[i].rContent);
+								$rContent = $('<pre>').text(data[i].rContent);
 								$div2 = $('<div class="Atext" id="text">');
 								$div2_1 = $('<div id="div-'+ data[i].rNo +'">');
 								$div3 = $('<div style="clear:both;"><br>');
