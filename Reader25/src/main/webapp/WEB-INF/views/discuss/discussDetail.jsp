@@ -205,7 +205,6 @@
 					url:"rList.di",
 					data: {dNo:dNo, cho:cho},
 					success: function(data){
-						console.log(data);
 						$olBody = $('#rol');
 						$olBody.html('');
 						var $li;
@@ -387,11 +386,9 @@
 			// 댓글 삭제
 			function rDelete(rNo){
 				var check = confirm("정말로 댓글을 끝내갰습니까?");
-				var PCN = $('#comment-'+rNo).children().children().children().eq(0).text();
-				var dNo = $('#comment-'+rNo).children().children().eq(3).val();
-				if(PCN == '반대'){
-					dNo = $('#comment-'+rNo).children().children().eq(2).val();
-				}
+				var PCN = $('#comment-'+rNo).children().children().children().children().eq(0).text();
+				var dNo = $('#comment-'+rNo).children().children().children().eq(3).val();
+				
 				if(check){
 					$.ajax({
 						url: 'rDelete.di',
