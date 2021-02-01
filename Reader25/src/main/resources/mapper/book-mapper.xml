@@ -163,7 +163,7 @@
 	
 	<insert id="insertPay">
 		INSERT INTO PAY
-		VALUES(P_SEQ.nextval, #{book_v}, #{price}, sysdate, default,default,#{userId}, #{book_no})
+		VALUES(P_SEQ.nextval, #{book_v}, #{price}, sysdate, default,default,default,#{userId}, #{book_no})
 	</insert>
 	
 	<select id="selectAutoBookList" resultType="string">
