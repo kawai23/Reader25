@@ -32,7 +32,7 @@ input[class*="tiw_radio"]{
 	height: 300px;
 	width: 45%;
 	margin-left: 18%;
-	border: 1px solid #000000;
+	
 	box-sizing: border-box;
 	border-radius: 50px;
 }
@@ -189,7 +189,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	margin-left: 2%;
 	margin-right: 18%;
 	background: #FFFFFF;
-	border: 1px solid #000000;
+	
 	box-sizing: border-box;
 	border-radius: 50px;
 }
@@ -285,6 +285,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	line-height: 29px;
 	color: #FFFFFF;
 	background: #C95F12;
+	font-family: 카페24 아네모네에어;
 }
 
 .enrollbtn {
@@ -298,13 +299,14 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	line-height: 29px;
 	color: #000000;
 	background: #FFC398;
+	font-family: 카페24 아네모네에어;
 }
 
 #UserImage {
  	display: inline-block;
 	width: 100px;
 	height: 100px;
-	margin-top: 15%;
+	margin-top: 15%;margin-bottom: 15%;
 	border: 1px solid #000000;
 }
 
@@ -342,6 +344,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
+.recommend_t, .review_t, .rt_debate, .tiw_f{padding-top: 10%;}
 </style>
 </head>
 <body>
