@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <style>
 	body{line-height: 1;clear:both;}
-	footer{clear:both;background:rgba(245, 113, 92, 1);color:white;margin:0;padding:1%;width: 80%;margin:auto; 
+	footer{clear:both;background:rgba(245, 113, 92, 1);color:white;margin:0;width: 80%;margin:auto; 
 			min-width: 1000px; bottom:0;border: 1px solid rgba(245, 113, 92, 1);
 			font-family: 카페24 아네모네에어;
 			}
