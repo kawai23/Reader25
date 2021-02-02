@@ -240,7 +240,7 @@
 				</div>
 				<div class="wise-div">
 					<img src="resources/images/bookreview/quote4.png">
-					<input name="wise" type="text" id="wise"placeholder="명언을 작성해주세요">
+					<input name="wise" type="text" id="wise"placeholder="명언을 작성해주세요" maxlength="50">
 					<img src="resources/images/bookreview/quote3.png">
 				</div>
 				<div class="tag-div">

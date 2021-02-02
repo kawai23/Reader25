@@ -721,12 +721,13 @@
 						
 						$reTable = $('#reTable');
 						$reTable.html('');
-						if(reList.length <= 1){
+						if(reList.length <= 0){
 							$tr = $('<tr>');
 							$td = $('<td class="td-left" colspan=6 id="none-reList">').text('다른 리뷰가 없습니다.');
 							$tr.append($td);
 							$reTable.append($tr);
 						}else{
+							$reTable.html('');
 							for(var i in reList){
 								if(reList[i].boardNo != '${board.boardNo}'){
 									$tr = $('<tr>').on('click', function(){

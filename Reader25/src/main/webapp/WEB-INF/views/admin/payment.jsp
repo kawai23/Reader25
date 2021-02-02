@@ -99,6 +99,7 @@ body{background:rgba(246, 246, 246, 1);}
 					<th>판매자</th>
 					<th>거래날짜</th>
 					<th>결제상태</th>
+					<th>구매확정여부</th>
 				</tr>
 				<c:if test="${empty payList }">
 					<tr>
@@ -116,6 +117,14 @@ body{background:rgba(246, 246, 246, 1);}
 							<td>${p.seller}</td>
 							<td>${p.pay_date}</td>
 							<td>${p.pay_status}</td>
+							<td>
+							<c:if test="${p.PC_STATUS == 'N'}">
+								미확정
+							</c:if>
+							<c:if test="${p.PC_STATUS != 'N'}">
+								확정
+							</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</c:if>
