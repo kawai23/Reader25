@@ -48,7 +48,6 @@ select::-ms-expand {
 	display: inline-block;
 	border-bottom: 1px solid black;
 }
-
 .search-option {
 	border: none;
 	width: 70px;
@@ -69,7 +68,7 @@ input:focus{outline: none;}
 }
 
 .sort-div {
-	margin-left: 13px;
+	margin-left: 10px;
 }
 
 .sort-div, .sort-div>h4 {

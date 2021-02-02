@@ -50,18 +50,18 @@ input[class*="tiw_radio"]{
 	vertical-align: middle;
 	width: 100%;
 	transition: all .5s;
+	background: white;
 }
 
-.slidelist>li>a {
+ .slidelist>li>a {
 	display: block;
 	position: relative;
-}
-
-.slidelist>li>a img {
+} 
+ .slidelist>li>a img {
 	width: 100%;
 	height: 298px;
 	object-fit: fill;
-}
+} 
 
 .slidelist label {
 	position: absolute;
@@ -296,15 +296,15 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 		<div class="slide-wrap">
 			<ul class="slidelist">
 				<li><a> <label for="slide03" class="left"></label> <img
-						src="<%=request.getContextPath()%>/resources/images/img/배너1.png">
+						src="<%=request.getContextPath()%>/resources/images/img/배너0.jpg">
 						<label for="slide02" class="right"></label>
 				</a></li>
 				<li><a> <label for="slide01" class="left"></label> <img
-						src="<%=request.getContextPath()%>/resources/images/img/slide02.jpg">
+						src="<%=request.getContextPath()%>/resources/images/img/배너1.png">
 						<label for="slide03" class="right"></label>
 				</a></li>
 				<li><a> <label for="slide02" class="left"></label> <img
-						src="<%=request.getContextPath()%>/resources/images/img/slide03.jpg">
+						src="<%=request.getContextPath()%>/resources/images/img/배너2.jpg">
 						<label for="slide01" class="right"></label>
 				</a></li>
 			</ul>
