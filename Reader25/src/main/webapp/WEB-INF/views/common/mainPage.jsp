@@ -296,7 +296,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 		<div class="slide-wrap">
 			<ul class="slidelist">
 				<li><a> <label for="slide03" class="left"></label> <img
-						src="<%=request.getContextPath()%>/resources/images/img/slide01.jpg">
+						src="<%=request.getContextPath()%>/resources/images/img/배너1.png">
 						<label for="slide02" class="right"></label>
 				</a></li>
 				<li><a> <label for="slide01" class="left"></label> <img
