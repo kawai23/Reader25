@@ -721,7 +721,7 @@
 						
 						$reTable = $('#reTable');
 						$reTable.html('');
-						if(reList.length <= 0){
+						if(reList.length <= 1 && pi1.currentPage == 1){
 							$tr = $('<tr>');
 							$td = $('<td class="td-left" colspan=6 id="none-reList">').text('다른 리뷰가 없습니다.');
 							$tr.append($td);
@@ -812,7 +812,7 @@
 						
 						$wiseTable = $('#wiseTable');
 						$wiseTable.html('');
-						if(wiseList.length <= 1){
+						if(wiseList.length <= 1 && pi2.currentPage <= 1){
 							$tr = $('<tr>');
 							$td = $('<td class="td-left" colspan=7 id="none-wiseList">').text('다른 리뷰가 없습니다.');
 							$tr.append($td);
