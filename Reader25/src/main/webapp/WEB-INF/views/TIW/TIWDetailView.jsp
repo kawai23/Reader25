@@ -17,14 +17,14 @@
 		min-width: 1000px;
 		padding-top: 1%;
 		background-color:  #F6F6F6; display: inline-block;
-		font-family: 카페24 아네모네에어; font-size:17px;
+		font-family: 카페24 아네모네에어; font-size:23px;
 	}
 .title, .cate1, .date, .cate2, .writer, .like, .count  {
 	display: inline-block;
 	background: rgba(235, 235, 235, 1);
 	text-align: center;
 	vertical-align: middle;
-	width: 50px;
+	width: 60px;
 	height: 27px;
 	border: 1px solid rgba(235, 235, 235, 1);
 	border-radius: 3px 0px 0px 3px;

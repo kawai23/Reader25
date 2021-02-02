@@ -254,7 +254,22 @@
             <th width="100px">합계</th>
           </tr>
           <c:set var="sum" value="0"/>
+          <c:set var="sh" value="2500"/>
+          <c:set var="count" value="0"/>
           <c:forEach var="b" items="${book}" varStatus="vs">
+		  		<c:if test="${vs.index > 0 }">
+					<c:forEach var="i" begin="0" end="${book.size()-1 }" step="1">
+						<c:if test="${book.get(i).b_no == b.b_no}">
+							<c:set var="count" value="${count+1}"/>
+						</c:if>
+					</c:forEach>
+					<c:if test="${count != 1 }">
+						 <c:set var="sh" value="0"/>
+					</c:if>
+					<c:if test="${count == 1 }">
+					     <c:set var="sh" value="2500"/>
+					</c:if>
+				</c:if>
 			<tr>
 				<c:choose>
 					<c:when test="${vs.last}">
@@ -273,8 +288,8 @@
 							<td width="150" class="tdbottom">${b.b_name}</td>
 							<td width="150" class="tdbottom">${b.b_price}원</td>
 							<td width="150" class="tdbottom">${b.b_Q1}</td>
-							<td width="150" class="tdbottom">2500원</td>
-							<td width="150" class="tdbottom">${(b.b_price * b.b_Q1)+ 2500}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) }"/></td>
+							<td width="150" class="tdbottom">${sh}원</td>
+							<td width="150" class="tdbottom">${(b.b_price * b.b_Q1) + sh}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) + sh }"/></td>
 					</c:when>
 						<c:otherwise>
 							<td width="150" class="tdbottom2">
@@ -292,8 +307,8 @@
 							<td width="150" class="tdbottom2">${b.b_name}</td>
 							<td width="150" class="tdbottom2">${b.b_price}원</td>
 							<td width="150" class="tdbottom2">${b.b_Q1}</td>
-							<td width="150" class="tdbottom2">2500원</td>
-							<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + 2500}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) }"/></td>
+							<td width="150" class="tdbottom2">${sh}원</td>
+							<td width="150" class="tdbottom2">${(b.b_price * b.b_Q1) + sh}원<c:set var="sum" value="${sum + (b.b_price * b.b_Q1) + sh }"/></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>

@@ -23,7 +23,7 @@
 
 
 <style>
-
+.container-fluid{font-family: 카페24 아네모네에어;font-size: 20px;}
 	
 #footer-company{margin-bottom: 30px;}
 
@@ -116,7 +116,7 @@
 				<div style="text-align: left ; ">
 				
 					<button  data-title="Delete" data-toggle="modal" data-target="#Delete"  class="btn btn-danger">선택삭제</button>
-					<button  class="btn btn-primary" id = "eBtn">주문 하기</button>
+					<button  class="btn btn-primary" id = "eBtn"  >주문 하기</button>
 				
 				</div>
 				
@@ -430,6 +430,10 @@
 	 <%@ include file="../common/footer.jsp" %>
    
 	
+
+    
+    
+    
 	
 	 <div class="modal fade" id="Delete" tabindex="-1" role="dialog"
 							aria-labelledby="edit" aria-hidden="true">

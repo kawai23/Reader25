@@ -156,8 +156,9 @@
         }
         .chart{width: 80%;min-width: 1000px; min-height: 500px; margin:auto; }
         .chart .img-div{width:800px; margin:auto;}
-        .chart-title{margin-top: 50px; margin-bottom: 20px;font-size: 35px; 
+        .chart-title{margin-top: 50px; margin-bottom: 20px;font-size: 35px; margin-left:35%;
         	padding-bottom: 10px;color:rgb(100, 100, 100); font-weight: bolder;
+        	font-family: 카페24 아네모네;
         }
         
 </style>

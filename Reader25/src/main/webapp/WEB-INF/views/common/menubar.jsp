@@ -8,8 +8,9 @@
 <script src="${ contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <title>Insert title here</title>
 <style>
+	.menubar{font-family: 카페24 아네모네에어;font-size: 23px;}
 	.wrap{background: #F5715C; width: 80%; height: 50px; margin:auto; min-width: 1000px;}
-	.small-menu{font-size: 10px; height: 20px; padding:0;width:80%; margin:auto;}
+	.small-menu{font-size: 16px; height: 20px; padding:0;width:80%; margin:auto;}
 	.small-menu ul{margin:0;float: right;}
 	.small-menu li{list-style:none; display:inline-block;}
 	.small-menu li:hover{font-weight:bolder;}

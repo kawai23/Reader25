@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
   	section{
+  	font-family: 카페24 아네모네에어;
   		background:rgba(246, 246, 246, 1);
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;

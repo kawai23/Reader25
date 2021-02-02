@@ -7,11 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 	section{
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
+  		font-family: 카페24 아네모네에어;	
   	}
   	#first{
   		text-align: center;
@@ -29,8 +31,9 @@
   	.head{margin:auto; text-align: center; width: 80%;}
   	.body{margin:auto; width: 80%;}
   	.dradio{margin-left: 50px;}
+  	button{font-family: 카페24 아네모네에어;font-size: 20px;}
   	.btn{
-  		width:100px;
+  		width:150px;
   		height:50px;
   		float: right;
   		margin: 5px;
@@ -67,6 +70,7 @@
 		height: 230px;
 	}
 	#area1{height: 130px;}
+	select{font-family: 카페24 아네모네에어;}
 </style>
 </head>
 <body>
@@ -205,7 +209,6 @@
 					url:"rList.di",
 					data: {dNo:dNo, cho:cho},
 					success: function(data){
-						console.log(data);
 						$olBody = $('#rol');
 						$olBody.html('');
 						var $li;
@@ -387,11 +390,9 @@
 			// 댓글 삭제
 			function rDelete(rNo){
 				var check = confirm("정말로 댓글을 끝내갰습니까?");
-				var PCN = $('#comment-'+rNo).children().children().children().eq(0).text();
-				var dNo = $('#comment-'+rNo).children().children().eq(3).val();
-				if(PCN == '반대'){
-					dNo = $('#comment-'+rNo).children().children().eq(2).val();
-				}
+				var PCN = $('#comment-'+rNo).children().children().children().children().eq(0).text();
+				var dNo = $('#comment-'+rNo).children().children().children().eq(3).val();
+				
 				if(check){
 					$.ajax({
 						url: 'rDelete.di',

@@ -32,7 +32,7 @@ input[class*="tiw_radio"]{
 	height: 300px;
 	width: 45%;
 	margin-left: 18%;
-	border: 1px solid #000000;
+	
 	box-sizing: border-box;
 	border-radius: 50px;
 }
@@ -86,32 +86,6 @@ input[class*="tiw_radio"]{
 		center center/100% no-repeat;
 }
 
-.slidelist .textbox {
-	position: absolute;
-	z-index: 1;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	line-height: 1.6;
-	text-align: center;
-}
-
-.slidelist .textbox h3 {
-	font-size: 50px;
-	color: #fff;
-	opacity: 0;
-	transform: translateY(30px);
-	transition: all .5s;
-}
-
-.slidelist .textbox p {
-	font-size: 24px;
-	color: #fff;
-	opacity: 0;
-	transform: translateY(30px);
-	transition: all .5s;
-}
-
 input[id="slide01"]:checked ~ .slide-wrap .slidelist>li {
 	transform: translateX(0%);
 }
@@ -122,42 +96,6 @@ input[id="slide02"]:checked ~ .slide-wrap .slidelist>li {
 
 input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 	transform: translateX(-200%);
-}
-
-input[id="slide01"]:checked ~ .slide-wrap li:nth-child(1) .textbox h3 {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .2s;
-}
-
-input[id="slide01"]:checked ~ .slide-wrap li:nth-child(1) .textbox p {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .4s;
-}
-
-input[id="slide02"]:checked ~ .slide-wrap li:nth-child(2) .textbox h3 {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .2s;
-}
-
-input[id="slide02"]:checked ~ .slide-wrap li:nth-child(2) .textbox p {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .4s;
-}
-
-input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox h3 {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .2s;
-}
-
-input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
-	opacity: 1;
-	transform: translateY(0);
-	transition-delay: .4s;
 }
 
 .font_black {
@@ -189,7 +127,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	margin-left: 2%;
 	margin-right: 18%;
 	background: #FFFFFF;
-	border: 1px solid #000000;
+	
 	box-sizing: border-box;
 	border-radius: 50px;
 }
@@ -256,16 +194,17 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	height: 100%;
 	margin-left: 4%;
 	text-align: center;
+
 }
 
-.rt_debate {
+	.rt_debate {
+	
 	float: left;
 	width: 12.5%;
 	height: 100%;
 	margin-left: 4%;
 	text-align: center;
 }
-
 .tiw_t {
 	float: left;
 	width: 12.5%;
@@ -285,6 +224,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	line-height: 29px;
 	color: #FFFFFF;
 	background: #C95F12;
+	font-family: 카페24 아네모네에어;
 }
 
 .enrollbtn {
@@ -298,13 +238,14 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	line-height: 29px;
 	color: #000000;
 	background: #FFC398;
+	font-family: 카페24 아네모네에어;
 }
 
 #UserImage {
  	display: inline-block;
 	width: 100px;
 	height: 100px;
-	margin-top: 15%;
+	margin-top: 15%;margin-bottom: 15%;
 	border: 1px solid #000000;
 }
 
@@ -342,6 +283,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	white-space: nowrap;
 	text-align: left;
 }
+.recommend_t, .review_t, .discuss_t, .tiw_f{font-size: 20px;padding-top: 10%;}
 </style>
 </head>
 <body>
@@ -349,8 +291,8 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 	<div class="news_login">
 		<!-- 로그인 공지사항 알리미 div -->
 		<input type="radio" name="slide" id="slide01" checked>
-		 <inputtype="radio" name="slide" id="slide02"> 
-		 <input type="radio"name="slide" id="slide03">
+		<input type="radio" name="slide" id="slide02"> 
+		<input type="radio"name="slide" id="slide03">
 		<div class="slide-wrap">
 			<ul class="slidelist">
 				<li><a> <label for="slide03" class="left"></label> <img
@@ -424,8 +366,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
 			<div class = "recommend_t"  style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="r" items="${ views }" begin="0" end="4" varStatus="status">
-						<div id="recommend<c:out value='${status.count}'/>" style = "text-align : left">
+				<c:forEach var="r" items="${ views }" begin="0" end="4">
 						<c:url var="redetail" value="redetail.re">
 							<c:param name="boardNo" value="${ r.boardNo }"/>
 							<c:param name="page" value = "${ pi.currentPage }"/>
@@ -435,7 +376,6 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 								<c:out value="${ r.bTitle }" />
 							</a>
 						</p>
-						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -446,8 +386,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
 			<div class = "review_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="r" items="${ review }" begin="0" end="4" varStatus="status">
-						<div id="reviews<c:out value='${status.count}'/>"style = "text-align : left">
+				<c:forEach var="r" items="${ review }" begin="0" end="4">
 						<c:url var="redetail" value="redetail.re">
 							<c:param name="boardNo" value="${ r.boardNo }"/>
 							<c:param name="page" value = "${ pi.currentPage }"/>
@@ -457,7 +396,6 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 								<c:out value="${ r.bTitle }" />
 							</a>
 						</p>
-						</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -467,8 +405,7 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
 			<div class = "discuss_t" style="width: 98%; height: 85%; border: 1px solid #000000; display : flex; flex-direction : column">
-				<c:forEach var="d" items="${ discuss }" begin="0" end="4" varStatus="status">
-						<div id="discuss<c:out value='${status.count}'/>"style = "text-align : left">
+				<c:forEach var="d" items="${ discuss }" begin="0" end="4">
 						<c:url var="dDetail" value="dDetail.di">
 							<c:param name="boardNo" value="${ d.dNo }"/>
 							<c:param name="page" value = "${ pi.currentPage }"/>
@@ -478,7 +415,6 @@ input[id="slide03"]:checked ~ .slide-wrap li:nth-child(3) .textbox p {
 								<c:out value="${ d.dTitle }" />
 							</a>
 						</p>
-						</div>
 				</c:forEach>
 			</div>
 		</div>

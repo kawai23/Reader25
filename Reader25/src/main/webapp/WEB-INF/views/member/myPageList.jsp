@@ -27,7 +27,7 @@
 
 
 <style>
-
+.container-fluid{font-family: 카페24 아네모네에어;font-size: 20px;}
   
 	th{max-width: 15%}
 
@@ -269,22 +269,15 @@
 				});
 				
 				 $('#searchList').click(function() {
-			    	
-			    	
-			    	
+	
 			    	var data = '';
 			    	
 			    	var code = ${code};
 			    		
-			    		
 			    	var searchCondition = $('#Search1').text();
 			    	var searchValue = $('#seachDate').val();
-	
-			    	
-			    	console.log(data);
-			    
-			    	
- 		    	location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
+
+ 		    		location.href='myList.me?searchCondition='+searchCondition+'&searchValue='+searchValue+'&code='+code; 
 			    	 
 			 
 			    
@@ -548,6 +541,18 @@
 							<!-- /.modal-dialog -->
 						</div>
 						
+						<c:if test="${ !empty searchValue}">
+					
+							<c:set var="check" value="true"></c:set>
+					
+					   </c:if>
+					   
+					   <c:if test="${ empty searchValue}">
+					
+							<c:set var="check" value="false"></c:set>
+					
+					   </c:if>
+						
 											
 						
 
@@ -598,7 +603,7 @@
 							    
 							    
 							    
-							    console.log(select_obj);
+							   
 							    
 							    
 							    

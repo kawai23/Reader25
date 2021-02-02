@@ -770,6 +770,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.searchBookSendEmail(sqlSession, boardNo);
 	}
 
+	@Override
+	public int AddPay(String payNo) {
+		
+		return bDAO.AddPay(sqlSession ,payNo);
+	}
+
 
 	
 	
