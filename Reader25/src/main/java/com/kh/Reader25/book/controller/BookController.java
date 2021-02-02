@@ -139,7 +139,7 @@ public class BookController {
 	// 결제완료 장바구니 리스트 N으로, 주문목록 Y로, 메일 보내기
 	@RequestMapping("paylast.tr")
 	@ResponseBody
-	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="pay") List<Integer> p_no, HttpSession session) {
+	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="board_no") List<Integer> board_no, @RequestParam(value="pay") List<Integer> p_no, HttpSession session) {
 		String userid = ((Member)session.getAttribute("loginUser")).getId();
 		for(int i = 0; i< p_no.size(); i++) {
 			int result = b_Service.updatePay(p_no.get(i));
@@ -153,7 +153,7 @@ public class BookController {
 			sb.put("b_no", b.get(i));
 			sb.put("b_v", b_v.get(i));
 			int result = b_Service.updateSb(sb);
-			String sendMailCheck = sendMailCheck(4);
+			String sendMailCheck = sendMailCheck(board_no.get(i));
 		}
 		return "success";
 	}

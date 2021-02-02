@@ -412,17 +412,19 @@
 					var pay = [];
 					var b_no = [];
 					var b_v = [];
+					var board_no = [];
 					<c:forEach var="p" items="${pay}">
 						pay.push(${p});
 					</c:forEach>
 					<c:forEach var="b" items="${book}">
 						b_no.push(${b.b_no});
 						b_v.push(${b.b_Q1});
+						board_no.push(${b.boardNo});
 					</c:forEach>
 					$.ajax({
 						url: "paylast.tr",
 						traditional : true,
-						data:{b_no:b_no, b_v:b_v, pay:pay},
+						data:{b_no:b_no, b_v:b_v, board_no:board_no, pay:pay},
 						success: function(data){
 							if(data == 'success'){
 								$('#success-modal').show();
