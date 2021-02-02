@@ -16,20 +16,10 @@ import com.kh.Reader25.visit.model.dao.VisitorDAO;
 import com.kh.Reader25.visit.model.vo.Visitor;
 
 public class VisitCounter implements HttpSessionListener{
-	
-	private VisitCounter vDAO;
-	
-//	@Autowired
-//	private SqlSessionTemplate sqlSession;
-	
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		System.out.println("리스너시작!!!!!!!!!!!!!!!!!!!!!!!");
-		
 		SqlSessionTemplate sqlSession = getSessionService(se);
-		
 		HttpSession session = se.getSession();
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
 		ServletRequestAttributes sra = (ServletRequestAttributes)ra;
 		HttpServletRequest request = sra.getRequest();
@@ -38,8 +28,6 @@ public class VisitCounter implements HttpSessionListener{
 		v.setVisit_ip(request.getRemoteAddr());
 		v.setVisit_agent(request.getHeader("User-Agent")); //브라우저 정보
 		v.setVisit_refer(request.getHeader("referer")); //접 속 전 사이트 정보
-		
-		System.out.println(v);
 		
 		VisitorDAO vDAO = new VisitorDAO();
 		try {
@@ -53,15 +41,12 @@ public class VisitCounter implements HttpSessionListener{
 		
 		session.setAttribute("totalCount", totalCount);
 		session.setAttribute("todayCount", todayCount);
-		
 	}
 	private SqlSessionTemplate getSessionService(HttpSessionEvent se) {
 		WebApplicationContext context = WebApplicationContextUtils
 				.getWebApplicationContext(se.getSession().getServletContext());
-		
 		return  (SqlSessionTemplate) context.getBean("sqlSessionTemplate");
 	}
-
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 	}

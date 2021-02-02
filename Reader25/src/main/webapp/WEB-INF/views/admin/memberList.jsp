@@ -342,7 +342,7 @@
 						<th>이름</th>
 						<th>회원 등급</th>
 						<th>이메일</th>
-						<th>탈퇴일</th>
+						<th>상태</th>
 					</tr>
 					<c:if test="${empty delList}">
 						<tr>
