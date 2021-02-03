@@ -327,32 +327,32 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 					<h2>
 						<c:out value="${loginUser.name}" />님
 					</h2>
-					<c:if test="${ Integer.parseInt(loginUser.grantId) eq 0}" >
+					<c:if test="${ loginUser.grantId eq 0}" >
 					<h3>관리자</h3>
 					</c:if>
-					<c:if test="${Integer.parseInt(loginUser.grantId) eq 6}" >
+					<c:if test="${loginUser.grantId eq 6}" >
 					<h3>다이아몬드등급</h3>
 					</c:if>
-					<c:if test="${Integer.parseInt(loginUser.grantId) eq 5}" >
+					<c:if test="${loginUser.grantId eq 5}" >
 					<h3>플래티넘등급</h3>
 					</c:if>
-					<c:if test="${Integer.parseInt(loginUser.grantId) eq 4}" >
+					<c:if test="${loginUser.grantId eq 4}" >
 					<h3>골드등급</h3>
 					</c:if>
-					<c:if test="${Integer.parseInt(loginUser.grantId) eq 3}" >
+					<c:if test="${loginUser.grantId eq 3}" >
 					<h3>실버등급</h3>
 					</c:if>
-					<c:if test="${Integer.parseInt(loginUser.grantId) eq 2}" >
+					<c:if test="${loginUser.grantId eq 2}" >
 					<h3>브론즈등급</h3>
 					</c:if>
-					<c:if test=" ${Integer.parseInt(loginUser.grantId) eq 1}" >
+					<c:if test="${loginUser.grantId eq 1}" >
 					<h3>아이언등급</h3>
 					</c:if>
 					<h4 style = "margin-top : 5%;">보유포인트 : ${loginUser.point }</h4>
 				<div id="Userpagelogout">
 					<c:url var="mypage" value="myList.me?code=2" />
 					<c:url var="logout" value="logout.me" />
-					<span id="mypage" onclick="location.href='${mypage}'"><a>마이페이지</a></span>|
+					<span id="mypage" onclick="location.href='${mypage}'"><a>마이페이지</a></span><br>
 					<span id="logout" onclick="location.href='${logout}'"><a>로그아웃</a></span>
 				</div>
 			</c:if>
