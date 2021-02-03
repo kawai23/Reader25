@@ -64,6 +64,7 @@ public class DiscussDAO {
 	}
 	// 댓글 리스트 가져오기
 	public ArrayList<Reply> selectRList(SqlSessionTemplate sqlSession, Map<String, Integer> d) {
+		System.out.println(d);
 		return (ArrayList)sqlSession.selectList("DiscussMapper.selectRList", d);
 	}
 	// 댓글수 업데이트

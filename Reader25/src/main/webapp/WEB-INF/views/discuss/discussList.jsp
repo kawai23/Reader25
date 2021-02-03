@@ -10,17 +10,19 @@
 <style>
 	/*세션*/
 	section{
-		font-family: 카페24 아네모네에어;	font-size:18px;
+		font-family: 카페24 아네모네에어;
+		font-size:18px;
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
-  		min-height: 800px;
+  		overflow:auto; 
+  		background: #F6F6F6;
   	}
 	/* 회원, 메뉴바 관련*/
 	#infomenu{
 		float:left; 
-		margin-left:50px; 
-		margin-right:100px; 
+		margin-left:10%; 
+		margin-right:50px; 
 		width: 23%;
 	}
   	/* 회원 정보 메뉴*/
@@ -31,6 +33,7 @@
 		border: 1px solid black;
 		border-radius:50px;
 		text-align: center;
+		background:white;
 	}
 	.sub{display:inline-block;}
 	#info{margin-top: 20px;}
@@ -94,13 +97,13 @@
 	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
-	#btn{width: 150px; height: 50px; float:right; background:#C95F12;font-family: 카페24 아네모네;font-size: 20px;}
+	#btn{float:right; background:#C95F12; font-family: 카페24 아네모네; font-size:20px; color:white;}
 	#btn:hover{cursor: pointer;}
 	
 	/*검색관련*/
 	#search-input{width: 110px;border: none;background: none;}
-	#search-type{border: none;}
-	#bimg{width: 100px;height: 100px;}
+	#search-type{border: none; background: none;}
+	#bimg{width: 100px;height: 110px;}
 	#orderTable{
   	table-layout:fixed;  
 	border-collapse: separate;
@@ -125,8 +128,8 @@
 <body>
 	<%@ include file="../common/menubar.jsp" %>
 
-	<br><br>
 	<section>
+	<br><br>
 		<div id="infomenu">
 			<div id="subBlue">
 				<c:if test="${ !empty loginUser }">
@@ -289,7 +292,7 @@
 							</c:url> 
 							<a href="${ after }">[>]</a>
 						</c:if>
-				</div>
+				</div><br>
 				<script>
 					//상세페이지이동
 					$(function(){
@@ -352,11 +355,12 @@
 			</div>
 		<c:if test="${ !empty loginUser }">
 			<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
+			<br><br>
 		</c:if>
 		</div>
 	</section>
 	<div style="clear:both;"><!-- float 명령 초기화시키기 -->
-		<br><br><%@include file="../common/footer.jsp" %>
+		<%@include file="../common/footer.jsp" %>
 	</div>
 </body>
 </html>

@@ -249,7 +249,7 @@ public class DiscussController {
 		Map<String, Integer> d = new HashMap<String, Integer>();
 		d.put("dNo", dNo);
 		d.put("cho", cho);
-		ArrayList<Reply> rList = dService.selectRList(d); 
+		ArrayList<Reply> rList = dService.selectRList(d);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
 		try {

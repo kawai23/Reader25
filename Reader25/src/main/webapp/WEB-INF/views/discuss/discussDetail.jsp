@@ -7,13 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 	section{
   		border: 1px solid rgba(246, 246, 246, 1);
   		width: 80%;
   		margin:auto;
   		min-width: 1000px;
-  		font-family: 카페24 아네모네에어;	
+  		font-family: 카페24 아네모네에어;
+  		background: #F6F6F6;
   	}
   	#first{
   		text-align: center;
@@ -40,7 +40,7 @@
   	}
   	#btn1{background: #FFC398;}
   	#btn2{background: #67492C;}
-  	#btn3{margin: 5px; float: right; background: #C95F12;}
+  	#btn3{margin: 5px; float: right; color:white; background: #C95F12; font-size:16px;}
   	#load-img{wdith:713px; height:427px;}
   	hr{border: 2px solid #F5715C}
   	#contentP{font-size:20px;}
@@ -51,7 +51,7 @@
   	}
   	#stime{float:right;}
    	ol{list-style: none;}
-  	.Atext{float:left; margin-right: 20px;}
+  	.Atext{float:left; margin-right: 20px; max-width:890px;}
   	#text{background: white; border: 1px solid black; width:85%; border-radius: 5px; padding: 10px;}
   	#user-icon{wdith:50px; height:50px; border-radius:50%;}
   	.wid{width:98%; margin: 3px;}
@@ -61,7 +61,6 @@
   	.comment-box{
 		margin:auto;
 		margin-top:10px;
-		border-bottom: 1px solid rgb(200, 200, 200);
 		padding-bottom: 40px;
 	}
 	.comment-write{
@@ -75,8 +74,8 @@
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
-	<br><br>
 	<section>
+		<br>
 		<div id="title">
 			<b>${d.getdTitle()}</b>
 		</div>
@@ -161,7 +160,6 @@
 			</div>
 		</c:if>
 		</div>
-		<br><%@include file="../common/footer.jsp" %>
 		<script>	
 			// 라디오버튼으로 댓글작성시 찬성,중립,반대 자동으로 체크
 			$("input:radio[name=discuss]").click(function(){
@@ -209,6 +207,7 @@
 					url:"rList.di",
 					data: {dNo:dNo, cho:cho},
 					success: function(data){
+						console.log(data);
 						$olBody = $('#rol');
 						$olBody.html('');
 						var $li;
@@ -408,5 +407,6 @@
 			
 		</script>
 	</section>
+	<%@include file="../common/footer.jsp" %>
 </body>
 </html>
