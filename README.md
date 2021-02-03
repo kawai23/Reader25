@@ -21,13 +21,13 @@ For final Project
 >**Development Tool:** Eclipse 4.16.0, sqlDeveloper version 20.2.0.175, Spring, Mybatis<br/>
 >**Development Language:** JAVA , HTML5, CSS3, JavaScript, jQuery, SQL, JSP, Servlet<br/>
 >**Team Coop:** ithub, ERDCloud, Figma, Google Docs<br/>
->**Open API:**
->로그인_Naver API<br/>
->로그인_Kakao API<br/>
->Daum 우편 API<br/>
->iamport API<br/>
->smartEdit2<br/>
->Google Chart API<br/>
+>**Open API:**<br/>
+>-로그인_Naver API<br/>
+>-로그인_Kakao API<br/>
+>-Daum 우편 API<br/>
+>-iamport API<br/>
+>-smartEdit2<br/>
+>-Google Chart API<br/>
 
 
 <br/>
@@ -39,7 +39,8 @@ For final Project
 |UI 설계|2020. 11. 27 - 2020. 12. 03|
 |DB 설계|2020. 12. 04 - 2020. 12. 07|
 |화면 설계| 2020.12.08 - 2021. 01. 02|
-|기능구현|2021. 01. 03 - 2020. 02. 07|
+|기능구현|2021. 01. 03 - 2020. 02. 01|
+|통합테스트|2021. 02. 02 - 2020. 02. 07|
 |담당 파트|이유준: 메인페이지/Top Rank Ajax<br/>최혜진: 로그인/회원가입/작가방/문의사항/댓글작성/포인트<br/>김수연: 관리자창/공지사항/독서방/책방<br/>강병현: 토론방/결제/댓글수정,삭제/토론방댓글AJAX<br/>임형준: 마이페이지/회원정보수정<br/>
 
 <br/>
@@ -47,6 +48,6 @@ For final Project
 ### 프로젝트 정보
 <ul>
 	<li><a href="https://drive.google.com/file/d/1gcL1t7G2OBIFKS-Pb8Vr6Lx3XqROzew3/view?usp=sharing/">프로젝트 소개</a></li>
-	<li><a href="https://docs.google.com/spreadsheets/d/1hUrmkvb_V8iHkxYVtnMePUhJWeH3_vd8bvSJLSmqVrg/edit?usp=sharing">데이터 테이블</a></li>
+	<li><a href="#">데이터 테이블</a></li>
 	<li><a href="https://www.figma.com/file/mA0hHXhWPoytx4muVjMIKb/Reader25?node-id=24%3A56">화면 설계</a></li>
 </ul>
