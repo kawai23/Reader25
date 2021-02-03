@@ -27,7 +27,7 @@
 		where status = 'N' <!-- 삭제 여부 -->
 	</select>
 	<select id="selectPayList" resultMap="payResultSet">
-		select p.*, book_name, b.user_id as seller
+		select p.*, book_name, b.user_id as seller, boo.book_q3 as account
 		from pay p
 			join book boo on(p.book_no=boo.book_no)
             join board b on(b.board_no=boo.board_no)
@@ -45,6 +45,7 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="book_no" column="BOOK_NO"/>
 		<result property="seller" column="seller"/>
+		<result property="account" column="account"/>
 	</resultMap>
 	
 	<select id="selectBookList" resultMap="bookResultSet">
