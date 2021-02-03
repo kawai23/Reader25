@@ -1,5 +1,4 @@
-# ![logo](https://user-images.githubusercontent.com/37166886/106740095-4f199380-665d-11eb-9f54-822bd13ee41c.png) Reader25
-독서인을 위한 독서사이트
+# ![logo](https://user-images.githubusercontent.com/37166886/106740095-4f199380-665d-11eb-9f54-822bd13ee41c.png) 
 
 <br/>
 
