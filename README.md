@@ -1,4 +1,4 @@
- ![logo](https://user-images.githubusercontent.com/37166886/106740095-4f199380-665d-11eb-9f54-822bd13ee41c.png) 
+![logo123](https://user-images.githubusercontent.com/37166886/106740938-65741f00-665e-11eb-9adb-748f4b60dc24.png)
 
 ## 프로젝트 개요
 코로나19의 여파로 밖에서 독서 모임, 독서 토론을 즐기지 못하는 사람들을 위해 웹적으로나마 독서의 즐거움, 토론의 즐거움을 느낄 수 있게 하고 싶다는 생각으로 인해 구현하게 되었습니다.
