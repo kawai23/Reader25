@@ -107,7 +107,7 @@
 	#orderTable{
   	table-layout:fixed;  
 	border-collapse: separate;
- 	border-spacing: 5px 45px;
+ 	border-spacing: 15px 45px;
 	}
 	#dC{ /*글자수 제한(...) 포시*/
 		overflow:hidden;

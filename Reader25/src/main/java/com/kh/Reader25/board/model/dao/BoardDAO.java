@@ -684,6 +684,11 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.AddPay", payNo);
 	}
 
+	public int downPoint(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.downPoint", map);
+	}
+
 
 
 

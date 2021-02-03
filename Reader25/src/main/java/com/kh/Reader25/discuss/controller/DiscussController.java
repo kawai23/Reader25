@@ -117,14 +117,14 @@ public class DiscussController {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
 		int point = 150;
-		String message = "토론방 글 작성!";
+		String message = "토론방 글 작성! 포인트 차감";
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("point", point);
 		map.put("pCon", message);
 		
-		int pointUpU = mService.upPointUser(map);
+		int pointDownU = mService.downPointUser(map);
 		int pointUp = bService.upPoint(map);
 		
 		int rankCheck = mService.muchPoint(id);
@@ -157,8 +157,8 @@ public class DiscussController {
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
 		}
-		if(pointUpU >0 && pointUp >0) {
-			login.setPoint(login.getPoint()+point);
+		if(pointDownU >0 && pointDownU >0) {
+			login.setPoint(login.getPoint()-point);
 		}
 		session.setAttribute("loginUser", login);
 		return rankChange;

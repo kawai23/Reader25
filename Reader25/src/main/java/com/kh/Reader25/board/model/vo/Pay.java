@@ -24,6 +24,8 @@ public class Pay {
 	
 	private String seller;
 	
+	private String account;
+	
 	private int BOARD_NO;
 	
 	private String PC_STATUS;
@@ -33,7 +35,7 @@ public class Pay {
 	}
 	
 	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
-			int book_no, String status, String seller) {
+			int book_no, String status, String seller,String account) {
 		super();
 		this.pay_no = pay_no;
 		this.book_name = book_name;
@@ -45,12 +47,13 @@ public class Pay {
 		this.book_no = book_no;
 		this.status = status;
 		this.seller = seller;
+		this.account = account;
 	}
 	
 	
 	
 	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
-			String seller) {
+			String seller, String account) {
 		super();
 		this.pay_no = pay_no;
 		this.book_name = book_name;
@@ -60,6 +63,7 @@ public class Pay {
 		this.pay_date = pay_date;
 		this.userId = userId;
 		this.seller = seller;
+		this.account = account;
 	}
 
 	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
@@ -101,7 +105,7 @@ public class Pay {
 	}
 
 	public Pay(int pay_no, String book_name, int book_v, int price, String pay_status, Date pay_date, String userId,
-			int book_no, String status, String seller, int bOARD_NO, String pC_STATUS) {
+			int book_no, String status, String seller, int bOARD_NO, String pC_STATUS, String account) {
 		super();
 		this.pay_no = pay_no;
 		this.book_name = book_name;
@@ -115,6 +119,7 @@ public class Pay {
 		this.seller = seller;
 		BOARD_NO = bOARD_NO;
 		PC_STATUS = pC_STATUS;
+		this.account = account;
 	}
 
 	public int getPay_no() {
@@ -212,18 +217,24 @@ public class Pay {
 	public void setPC_STATUS(String pC_STATUS) {
 		PC_STATUS = pC_STATUS;
 	}
+	
+	
+	
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
 	@Override
 	public String toString() {
 		return "Pay [pay_no=" + pay_no + ", book_name=" + book_name + ", book_v=" + book_v + ", price=" + price
 				+ ", pay_status=" + pay_status + ", pay_date=" + pay_date + ", userId=" + userId + ", book_no="
-				+ book_no + ", status=" + status + ", seller=" + seller + ", BOARD_NO=" + BOARD_NO + ", PC_STATUS="
-				+ PC_STATUS + "]";
+				+ book_no + ", status=" + status + ", seller=" + seller + ", account=" + account + ", BOARD_NO="
+				+ BOARD_NO + ", PC_STATUS=" + PC_STATUS + "]";
 	}
 
-	
-
-	
-	
 
 }

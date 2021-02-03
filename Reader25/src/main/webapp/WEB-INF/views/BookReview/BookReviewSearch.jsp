@@ -95,7 +95,8 @@ select::-ms-expand {
 }
 
 .list-all-div {
-	width: 90%;
+	width: 70%;
+	max-width: 1000px;
 	min-height: 800px;
 	margin: auto;
 	margin-top: 20px;

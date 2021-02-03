@@ -776,6 +776,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.AddPay(sqlSession ,payNo);
 	}
 
+	@Override
+	public int downPoint(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return bDAO.downPoint(sqlSession ,map);
+	}
+
 
 	
 	

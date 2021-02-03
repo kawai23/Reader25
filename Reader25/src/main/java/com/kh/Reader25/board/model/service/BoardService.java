@@ -279,6 +279,8 @@ public interface BoardService {
 
 	int AddPay(String payNo);
 
+	int downPoint(HashMap<String, Object> map);
+
 
 
 
