@@ -216,7 +216,7 @@ public class MemberController {
 			
 			String encPwd = bcrypt.encode(m.getPwd());
 			m.setPwd(encPwd);
-			
+			System.out.println(m);
 			int result = mService.insertKMember(m);
 			
 			if(result != 0) {

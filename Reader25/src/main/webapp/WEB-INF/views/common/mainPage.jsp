@@ -21,6 +21,7 @@
 		font-family: 카페24 아네모네에어;
 		min-height: 750px;
 }
+#find_pwd{font-size: 20px;}
 input[id*="slide"] {
 	display: none;
 }
@@ -30,7 +31,7 @@ input[class*="tiw_radio"]{
 .slide-wrap {
 	float: left;
 	height: 300px;
-	width: 45%;
+	width: 48%;
 	margin-left: 18%;
 	
 	box-sizing: border-box;
@@ -215,7 +216,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 
 .loginbtn {
 	margin-top: 24%;
-	width: 50%;
+	width: 60%;
 	height: 16%;
 	font-family: Roboto;
 	font-style: normal;
@@ -229,7 +230,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 
 .enrollbtn {
 	margin-top: 3%;
-	width: 50%;
+	width: 60%;
 	height: 16%;
 	font-family: Roboto;
 	font-style: normal;
@@ -316,7 +317,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 				<div
 					style="margin-top: 40%; text-align: center; width: 100%; cursor: pointer">
 					<span id="find_pwd" onclick="location.href='searchUserForm.me'"><a>아이디
-							찾기 | 비밀번호 찾기</a></span>
+							찾기 <br> 비밀번호 찾기</a></span>
 				</div>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser  }">
