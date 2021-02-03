@@ -63,15 +63,6 @@
       height: 30px;
     }
 
-    .Btn {
-      font-size: 14px;
-      color: #fff;
-      border: 1px solid #F5715C;
-      background-color: #F5715C;
-      width: 150px;
-      height: 30px;
-    }
-  
   </style>
 
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -106,10 +97,11 @@
 }
 #total_price{
 	display: inline-block;
-	font-size:35px;
+	font-size: 35px;
 	font-family: 카페24 아네모네;
-	margin-left: 60%;
+ 	float:right;
 }
+
 .list-A{
 	min-height: 100px; 
 	background: white;
@@ -174,6 +166,10 @@
     background-color:  #C4C4C4;
     font-family: 카페24 아네모네에어;
 }
+#findPostal{color:white;}
+#poingdiv{text-align: center;}
+#pointbtn{color:white; background: #C4C4C4; border:none; height:35px;}
+#pointinput{width:200px; height:30px;}
 #sumTable{
 	min-width: 400px; margin-left: 10%
 }
@@ -237,6 +233,17 @@
 			<p>결제에 성공 하셨습니다.</p>
 			<br>
 			<button class="modal-close-r" id="success" value="Close">확인</button>
+		</div>
+	</div>
+</div>
+
+<div class="modal-back" id="point-modal">
+	<div class="modal">
+		<div class="modal-content">
+			<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+			<p>보유포인트가 적습니다.</p>
+			<br>
+			<button class="modal-close-r" id="cancel2" value="Close">확인</button>
 		</div>
 	</div>
 </div>
@@ -315,9 +322,14 @@
 			</c:forEach>
         </table>
         <br><br>
-        <div id="total_price">
-       	 총 금액 : <span>${sum + 2500} 원</span>
+        <div id="poingdiv">
+        	<span>현재 고객님의 보유 포인트는 ${loginUser.getPoint() }포인트 최대사용 가능 포인트는 <c:if test="${loginUser.getPoint() >sum}">${sum }포인트</c:if><c:if test="${loginUser.getPoint() <=sum}">${loginUser.getPoint() }포인트</c:if>입니다.</span><br><br>
+        	포인트 사용 : <input type="number" id="pointinput" placeholder="사용 포인트를 적어주세요">
+        	<input type="button" id="pointbtn" value="모든 포인트 사용">
         </div>
+        <div id="total_price">
+       		총 금액 : <span id="sp">${sum}</span> 원
+        </div><br>
       </div>
       <br><br>
       <div class="sum">
@@ -380,6 +392,26 @@
 		$('.modal-back').hide();
 		location.href="<%=request.getContextPath()%>/gobookr.bo"
 	});
+	$('#pointinput').keyup(function(){
+		if($(this).val() > ${loginUser.getPoint()}){
+			$('#point-modal').show();
+			$('#point-modal .modal').show();
+			$(this).val(${loginUser.getPoint()});
+		}
+	});
+	$('#pointinput').on("propertychange change keyup paste input",function(){
+		console.log($(this).val());
+		$('#sp').text(${sum}-Number($(this).val()));
+	});
+	
+	$('#pointbtn').click(function(){
+		$('#pointinput').val(${loginUser.getPoint()});
+		$('#sp').text(${sum}-${loginUser.getPoint()});
+	});
+	$('#cancel2').click(function(){
+		$('.modal').hide();
+		$('.modal-back').hide();
+	});
 		// 결제 api
 		$('#btn1').click(function(){
 			if(${book.size()>1}){
@@ -387,21 +419,22 @@
 			} else{
 				var name = '${book.get(0).b_name }';
 			}
-// 			var price = ${sum};// 택배비 어떻게 할것인지 물어보자
-			var price = 200;// 택배비 어떻게 할것인지 물어보자
+			var price = Number($('#sp').text());// 택배비 어떻게 할것인지 물어보자
+// 			var price = 200;// 택배비 어떻게 할것인지 물어보자
 			var orderemail = $('#joinEmail').val();
 			var orderName =$('#name').val();
 			var orderphone = $('#phone').val();
 			var orderaddress = $('#joinAddress1').val() + $('#joinAddress12').val();
 			var orderPost = $('#joinPostal').val();
-			
-			IMP.init('imp09501430');//내가맹점고유번호
+
+			console.log(price);
+			IMP.init('imp09501430');
 			IMP.request_pay({
-			pg : 'html5_inicis', // version 1.1.0부터 지원.
+			pg : 'html5_inicis',
 			pay_method : 'card',
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : name,
-			amount : price, //판매 가격
+			amount : price,
 			buyer_email : orderemail,
 			buyer_name : orderName,
 			buyer_tel : orderphone,
@@ -413,6 +446,7 @@
 					var b_no = [];
 					var b_v = [];
 					var board_no = [];
+					var point = $('#pointinput').val();
 					<c:forEach var="p" items="${pay}">
 						pay.push(${p});
 					</c:forEach>
@@ -424,7 +458,7 @@
 					$.ajax({
 						url: "paylast.tr",
 						traditional : true,
-						data:{b_no:b_no, b_v:b_v, board_no:board_no, pay:pay},
+						data:{b_no:b_no, b_v:b_v, board_no:board_no, pay:pay, point:point},
 						success: function(data){
 							if(data == 'success'){
 								$('#success-modal').show();

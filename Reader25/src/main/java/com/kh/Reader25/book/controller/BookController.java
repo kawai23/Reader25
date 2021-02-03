@@ -39,6 +39,7 @@ import com.kh.Reader25.book.model.service.BookService;
 import com.kh.Reader25.book.model.vo.Book;
 import com.kh.Reader25.book.model.vo.ShoppingBasket;
 import com.kh.Reader25.common.Pagination;
+import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
 
 @Controller
@@ -47,6 +48,8 @@ public class BookController {
 	private BookService b_Service;
 	@Autowired
 	private BoardService bService;
+	@Autowired
+	private MemberService mService;
 	
 	//메일 발송 관련
 	@Autowired
@@ -139,8 +142,26 @@ public class BookController {
 	// 결제완료 장바구니 리스트 N으로, 주문목록 Y로, 메일 보내기
 	@RequestMapping("paylast.tr")
 	@ResponseBody
-	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="board_no") List<Integer> board_no, @RequestParam(value="pay") List<Integer> p_no, HttpSession session) {
-		String userid = ((Member)session.getAttribute("loginUser")).getId();
+	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="board_no") List<Integer> board_no, @RequestParam(value="pay") List<Integer> p_no, @RequestParam("point") int point, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		m.setPoint(point);
+		int result2 = mService.changePoint(m);
+		int rankCheck = mService.muchPoint(m.getId());
+		HashMap<String, Object> cap = new HashMap<String, Object>();
+		int rank = 0;
+		cap.put("id", m.getId());
+		if(result2>0 && rankCheck>=0 && rankCheck<=1000) {
+			rank = 1;
+		}else if(result2>0 && rankCheck>1000 && rankCheck<=3000) {
+			rank = 2;
+		} else if(result2>0 && rankCheck>3000 && rankCheck<=7000) {
+			rank = 3;
+		} else if(result2>0 && rankCheck>7000 && rankCheck<=10000) {
+			rank = 4;
+		}
+		cap.put("rank", rank);
+		int rankChange=mService.changeRank(cap);
+		
 		for(int i = 0; i< p_no.size(); i++) {
 			int result = b_Service.updatePay(p_no.get(i));
 			if(result < 0) {
@@ -149,12 +170,13 @@ public class BookController {
 		}
 		for(int i = 0; i< b.size(); i++) {
 			Map<String, Object> sb = new HashMap<String, Object>();
-			sb.put("userid", userid);
+			sb.put("userid", m.getId());
 			sb.put("b_no", b.get(i));
 			sb.put("b_v", b_v.get(i));
 			int result = b_Service.updateSb(sb);
 			String sendMailCheck = sendMailCheck(board_no.get(i));
 		}
+		session.setAttribute("loginUser", m);
 		return "success";
 	}
 

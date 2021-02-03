@@ -18,13 +18,14 @@
   	}
   	input{font-family: 카페24 아네모네에어;	}
 	.title-div{
-	font-family: 카페24 아네모네;
-	font-size:30px;
+		font-family: 카페24 아네모네;
+		font-size:30px;
 		width: 80%;
 		margin: auto;
 		margin-top: 10px;
 		padding: 0;
 	}
+	#s{font-size:15px; background: #F5715C; color: white; text-align: center; padding: 2px;}
 	#dTitle{
 	
 		height: 32px;
@@ -62,12 +63,13 @@
 		color: black;
 	}
 	.btn{
-	font-family: 카페24 아네모네에어;
+		font-family: 카페24 아네모네에어;
 		width: 165px;
 		height: 40px;
 		margin-bottom: 20px;
 		margin-top: 20px;
 		font-size: 25px;
+		color: white;
 	}
 	.btn0{
 	font-family: 카페24 아네모네에어;
@@ -87,16 +89,11 @@
 		<form action="discussInsert.di" id="write-discuss" method="post" enctype="multipart/form-data">
 			<div class="title-div">
 				<h1>토론방 열기</h1>
+				<div id="s"> 토론방을 열면 현재 포인트에서 150포인트가 차감됩니다.</div>
 				<input type="text" id="dTitle" name="dTitle" placeholder="제목을 작성하세요"><br>
 				<input type="file" id="input-file" name="uploadFile" onchange="loadImg(this);" 
 				accept="image/jpg, image/jpeg, image/png">
 			</div>
-<!-- 			<div class="file-div"> -->
-<!-- 				<div class="file-img" id="file-img"> -->
-<!-- 					<img src="#" id="load-img" > -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 				<span class="btn0" id="spanbtn">이미지 추가</span> -->
 			<div class="content">
 				<div class="content-edit">
 					<textarea name="dContent" id="smart_edit"></textarea>

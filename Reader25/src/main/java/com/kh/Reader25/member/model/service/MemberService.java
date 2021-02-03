@@ -63,6 +63,8 @@ public interface MemberService {
 
 	List<Map<String, String>> getRankCount();
 
+	int changePoint(Member m);
+
 	
 
 

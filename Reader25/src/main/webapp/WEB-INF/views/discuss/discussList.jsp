@@ -109,7 +109,7 @@
 	border-collapse: separate;
  	border-spacing: 15px 45px;
 	}
-	#dC{ /*글자수 제한(...) 포시*/
+	#dC{
 		overflow:hidden;
 		text-overflow: ellipsis;
 		max-width: 800px;
@@ -123,11 +123,53 @@
 		font-size: 25px;
 		font-weight:bold;
 	}
+	.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+		font-family: 카페24 아네모네에어;
+		font-size:17px;
+	}
+	.modal-back {
+			display: none; 
+			position: fixed; 
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%; 
+			height: 100%;
+			overflow: auto; 
+			background: rgba(0, 0, 0, 0.3); 
+			font-family: 카페24 아네모네에어; font-size:17px;
+	}
+	.modal-close, .modal-close-r{
+		background-color: #C4C4C4;
+		color:white; width: 80px;
+		height: 30px; border:none;
+		display:inline-block; left: 40%;
+		font-family: 카페24 아네모네에어; font-size:17px;
+	}
+	.modal p{
+			display:inline-block;
+	}
+	.modal img{
+			position:relative;
+			top: 10px;
+	}
 </style>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
-
+	<div class="modal-back" id="cancel-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p> 포인트가 부족합니다. </p>
+				<br>
+				<button class="modal-close-r" id="cancel" value="Close">확인</button>
+			</div>
+		</div>
+	</div>
 	<section>
 	<br><br>
 		<div id="infomenu">
@@ -354,8 +396,23 @@
 				</script>
 			</div>
 		<c:if test="${ !empty loginUser }">
-			<button id="btn" onclick="location.href='discussWrite.di'">토론방 열기</button>
+			<button id="btn" >토론방 열기</button>
 			<br><br>
+			<script>
+				$('#btn').click(function(){
+					var point = ${loginUser.getPoint()};
+					if(point < 150){
+						$('#cancel-modal').show();
+						$('#cancel-modal .modal').show();
+					} else{
+						location.href='discussWrite.di';
+					}
+				});
+				$('#cancel').click(function(){
+					$('.modal').hide();
+					$('.modal-back').hide();
+				});
+			</script>
 		</c:if>
 		</div>
 	</section>

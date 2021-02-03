@@ -169,6 +169,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.getRankCount(sqlSession);
 	}
 
+	@Override
+	public int changePoint(Member m) {
+		return mDAO.changePoint(sqlSession, m);
+	}
+
 
 
 	

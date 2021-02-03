@@ -164,6 +164,10 @@ public class MemberDAO {
 	public List<Map<String, String>> getRankCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("memberMapper.getRankCount");
 	}
+
+	public int changePoint(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.changePoint", m);
+	}
 	
 
 
