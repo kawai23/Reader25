@@ -103,10 +103,9 @@
 	/*검색관련*/
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none; background: none;}
-	#bimg{width: 100px;height: 110px;}
+	#bimg{width: 200px;height: 150;}
+	#imgdiv{background: white; width: 200px;height: 200;}
 	#orderTable{
-  	table-layout:fixed;  
-	border-collapse: separate;
  	border-spacing: 15px 45px;
 	}
 	#dC{
@@ -114,7 +113,7 @@
 		text-overflow: ellipsis;
 		max-width: 800px;
 		display: -webkit-box;
-		-webkit-line-clamp: 4;
+		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
     	word-wrap:break-word;
      	font-size: 19px; 
@@ -146,9 +145,10 @@
 		background-color: #C4C4C4;
 		color:white; width: 80px;
 		height: 30px; border:none;
-		display:inline-block; left: 40%;
+		display:inline-block; 
 		font-family: 카페24 아네모네에어; font-size:17px;
 	}
+	.modal-content{text-align: center;}
 	.modal p{
 			display:inline-block;
 	}
@@ -156,8 +156,11 @@
 			position:relative;
 			top: 10px;
 	}
-
+	pre{overflow: auto;white-space: break-word;}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
@@ -272,9 +275,9 @@
 							</c:if>
 						</c:forEach>
 						<c:if test="${ d.atcNo == 0 }">
-							<td rowspan="2"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="bimg"/></td>
+							<td rowspan="2" id="imgdiv"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/img/discuss.jpg" id="bimg"/></td>
 						</c:if>
-						<td id="dC"><span id="dc-span">${d.dTitle}</span><br>${ d.dContent }</td>
+						<td ><span id="dc-span">${d.dTitle}</span><br><span id="dC">${ d.dContent }</span></td>
 					</tr>
 					<tr class="dtr">
 						<td><input type="hidden" value="${ d.dNo }">찬반여론 

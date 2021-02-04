@@ -90,7 +90,6 @@ public class DiscussController {
 	public String discussInsert(@ModelAttribute Discuss d, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) {
 		d.setdWriter(((Member)(request.getSession().getAttribute("loginUser"))).getId());
 		
-		//System.out.println("잘받아오나?"+d);
 		Attachment at = null;
 		if(uploadFile != null && !uploadFile.isEmpty()) {
 			at = saveFile(uploadFile, request);
@@ -105,7 +104,6 @@ public class DiscussController {
 		if(result >0) {
 			//포인트 관련
 			int point = pointChange(session);
-			//System.out.println("point"+point);
 			
 			return "redirect:discuss.di";
 		} else {
@@ -247,7 +245,6 @@ public class DiscussController {
 		for(Reply r: rList) {
 			rList.get(i++).setRank(mService.selectRank(r.getrWriter()));
 		}
-		System.out.println(rList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
 		try {
@@ -263,7 +260,6 @@ public class DiscussController {
 	@RequestMapping("rDelete.di")
 	@ResponseBody
 	public String rDelete(@ModelAttribute Reply r) {
-		System.out.println(r);
 		int result = dService.rDelete(r);
 		if(result > 0) {
 			return "success";
