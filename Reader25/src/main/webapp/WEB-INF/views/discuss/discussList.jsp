@@ -179,7 +179,7 @@
 			<div id="subBlue">
 				<c:if test="${ !empty loginUser }">
 					<div class="sub">
-						<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.rank }.png" id="user-icon">
+						<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.grantId }.png" id="user-icon">
 					</div>
 					<div class="sub" id="info">
 							${ loginUser.getName() }님<br>
