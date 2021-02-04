@@ -21,6 +21,7 @@
 		font-family: 카페24 아네모네에어;
 		min-height: 750px;
 }
+#small-menu{margin-top:7px;}
 #find_pwd{font-size: 20px;}
 input[id*="slide"] {
 	display: none;
