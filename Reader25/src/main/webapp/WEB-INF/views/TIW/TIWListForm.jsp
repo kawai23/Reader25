@@ -101,6 +101,7 @@ a:hover{
 		display: inline-block;
 		width: 30px;
 		height: 30px;
+		line-height: 30px;
 		color: rgba(85, 83, 83, 1);
 		font-size: 17px;
 		background: rgba(229, 229, 229, 1);

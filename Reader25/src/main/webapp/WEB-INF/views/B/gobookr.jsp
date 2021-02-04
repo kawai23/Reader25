@@ -166,6 +166,7 @@ input:focus{outline: none;}
 	display: inline-block;
 	width: 26px;
 	height: 26px;
+	line-height: 26px;
 	color: rgba(85, 83, 83, 1);
 	font-size: 17px;
 	background: rgba(229, 229, 229, 1);
