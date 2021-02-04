@@ -240,7 +240,6 @@ public class DiscussController {
 		d.put("dNo", dNo);
 		d.put("cho", cho);
 		ArrayList<Reply> rList = dService.selectRList(d);
-		ArrayList<Integer>rankList = new ArrayList<Integer>();
 		int i = 0;
 		for(Reply r: rList) {
 			rList.get(i++).setRank(mService.selectRank(r.getrWriter()));
