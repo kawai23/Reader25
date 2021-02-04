@@ -21,6 +21,7 @@
 		font-family: 카페24 아네모네에어;
 		min-height: 750px;
 }
+#small-menu{margin-top:7px;}
 #find_pwd{font-size: 20px;}
 input[id*="slide"] {
 	display: none;
@@ -195,10 +196,9 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 	height: 100%;
 	margin-left: 4%;
 	text-align: center;
-
 }
 
-	.rt_debate {
+.rt_debate {
 	
 	float: left;
 	width: 12.5%;
@@ -263,27 +263,47 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-align: left;
+	height: 25px;
+	border-bottom: 1px dashed lightgray;
+	margin-top:5px;
 }
+.ellipsis_r a, .ellipsis_v a, .ellipsis_d a,.ellipsis_t a{
+	text-decoration: none;
+	font-size: 18px;
+	margin-left: 5px;
+}
+.title-h2{margin-bottom: 7px;}
+.ellipsis_r a:hover,.ellipsis_v a:hover,.ellipsis_d a:hover,.ellipsis_t a:hover{font-weight: bolder;}
 .ellipsis_v {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-align: left;
+	height: 25px;
+	border-bottom: 1px dashed lightgray;
+	margin-top:5px;
 }
 .ellipsis_d {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-align: left;
+	height: 25px;
+	border-bottom: 1px dashed lightgray;
+	margin-top:5px;
 }
 .ellipsis_t {
-	
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-align: left;
+	height: 25px;
+	border-bottom: 1px dashed lightgray;
+	margin-top:5px;
 }
-.recommend_t, .review_t, .discuss_t, .tiw_f{font-size: 20px;padding-top: 10%;}
+.recommend_t, .review_t, .discuss_t, .tiw_f{font-size: 20px;}
+#company-link{margin-top: -15px;}
+#footer-company{margin-bottom: 30px;}
 </style>
 </head>
 <body>
@@ -361,7 +381,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 		<!--  실시간 현황 div 알리미 -->
 
 		<div class="bookreco">
-			<h2>이달의 책 추천</h2>
+			<h2 class="title-h2">이달의 책 추천</h2>
 			<button class="b_reco" id="button_brown" onclick="clickbutton1()">일간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton2()">주간</button>
 			<button class="b_reco" id="button_pink" onclick="clickbutton3()">월간</button>
@@ -381,7 +401,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 		</div>
 		<!-- 이달의 책 추천 List -->
 		<div class="bestreview">
-			<h2>이달의BEST리뷰</h2>
+			<h2 class="title-h2">이달의BEST리뷰</h2>
 			<button class="best_re" id="button_brown" onclick="clickbutton4()">일간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton5()">주간</button>
 			<button class="best_re" id="button_pink" onclick="clickbutton6()">월간</button>
@@ -400,7 +420,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 			</div>
 		</div>
 		<div class="rt_debate">
-			<h2>실시간 토론 현황</h2>
+			<h2 class="title-h2">실시간 토론 현황</h2>
 			<button class="debate" id="button_brown" onclick="clickbutton7()">일간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton8()">주간</button>
 			<button class="debate" id="button_pink" onclick="clickbutton9()">월간</button>
@@ -419,7 +439,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 			</div>
 		</div>
 		<div class="tiw_t">
-			<h2>오나작 인기글</h2>
+			<h2 class="title-h2">오나작 인기글</h2>
 			<button class="TIW" id="button_brown" onclick="clickbutton10()">일간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton11()">주간</button>
 			<button class="TIW" id="button_pink" onclick="clickbutton12()">월간</button>

@@ -132,31 +132,22 @@ public class DiscussController {
 		int rankChange = 0;
 		int rank = 0;
 		HashMap<String, Object> cap = new HashMap<String, Object>();
-		if(rankCheck>=0 && rankCheck<=1000) {
+		cap.put("id", id);
+		if(rankCheck>=0 && rankCheck<=2000) {
 			rank = 1;
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
-		} else if(rankCheck>1000 && rankCheck<=3000) {
+		} else if(rankCheck>2000 && rankCheck<=10000) {
 			rank = 2;
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
-		} else if(rankCheck>3000 && rankCheck<=7000) {
+		} else if(rankCheck>10000 && rankCheck<=20000) {
 			rank = 3;
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
-		} else if(rankCheck>7000 && rankCheck<=10000) {
+		} else if(rankCheck>20000 && rankCheck<=35000) {
 			rank = 4;
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
-		} else {
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
+		} else if(rankCheck>35000 && rankCheck<=55000) {
+			rank = 5;
+		} else if(rankCheck>55000) {
+			rank = 6;
 		}
+		cap.put("rank", rank);
+		rankChange=mService.changeRank(cap);
 		if(pointDownU >0 && pointDownU >0) {
 			login.setPoint(login.getPoint()-point);
 		}

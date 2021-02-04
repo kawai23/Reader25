@@ -158,6 +158,10 @@ public class BookController {
 			rank = 3;
 		} else if(result2>0 && rankCheck>7000 && rankCheck<=10000) {
 			rank = 4;
+		} else if(result2>0 &&rankCheck>35000 && rankCheck<=55000) {
+			rank = 5;
+		} else if(result2>0 &&rankCheck>55000) {
+			rank = 6;
 		}
 		cap.put("rank", rank);
 		int rankChange=mService.changeRank(cap);

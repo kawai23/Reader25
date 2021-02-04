@@ -782,6 +782,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.downPoint(sqlSession ,map);
 	}
 
+	@Override
+	public int searchAGrade(int boardNo) {
+		// TODO Auto-generated method stub
+		return bDAO.searchAGrade(sqlSession ,boardNo);
+	}
+
 
 	
 	

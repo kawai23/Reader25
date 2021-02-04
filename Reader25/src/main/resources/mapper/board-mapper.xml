@@ -1301,4 +1301,11 @@
 		from selleremail
 		where board_no=#{boardNo}
 	</select>
+	
+	
+	<select id="searchAGrade" resultType="_int">
+		select grant_id
+		from TWIGrade
+		where board_no=#{boardNo}
+	</select>
 </mapper>
