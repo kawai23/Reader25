@@ -341,7 +341,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser  }">
 				<div id="UserImage">
-					<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.rank }.png" style="width: 100px;height: 100px; ">
+					<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.grantId }.png" style="width: 100px;height: 100px; ">
 				</div>
 					<h2>
 						<c:out value="${loginUser.name}" />님

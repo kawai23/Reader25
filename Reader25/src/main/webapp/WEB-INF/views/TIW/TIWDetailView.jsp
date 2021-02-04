@@ -460,24 +460,7 @@ textarea{
 				<table id="con_table" align="center">
 					<tr>
 						<td colspan="3" rowspan="4" id="img_td">
-							<c:if test="${aGrade eq 6}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/diamond.png" style="width: 100px;height: 100px; ">
-							</c:if>
-							<c:if test="${aGrade eq 5}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/platinum.png" style="width: 100px;height: 100px; ">
-							</c:if>
-							<c:if test="${aGrade eq 4}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/gold.png" style="width: 100px;height: 100px; ">
-							</c:if>
-							<c:if test="${aGrade eq 3}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/silver.png" style="width: 100px;height: 100px; ">
-							</c:if>
-							<c:if test="${aGrade eq 2}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/bronze.png" style="width: 100px;height: 100px; ">
-							</c:if>
-							<c:if test="${aGrade eq 1}" >
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/iron.png" style="width: 100px;height: 100px; ">
-							</c:if>
+							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.grantId }.png" style="width: 100px;height: 100px; ">
 						</td>
 						<td width="55px">
 							<div class="title">title</div>

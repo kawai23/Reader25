@@ -101,7 +101,7 @@
 				<img src="<%=request.getContextPath() %>/resources/buploadFiles/${ at.atcName }" id="load-img"/>
 			</c:if>
 			<c:if test="${ d.atcNo != at.atcNo }">
-				<img src="<%=request.getContextPath() %>/resources/images/bookreview/book.jpg" id="load-img"/>
+				<img src="<%=request.getContextPath() %>/resources/images/img/discuss.jpg" id="load-img"/>
 			</c:if>
 		</div><br><br>
 		<div class="body">
