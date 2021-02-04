@@ -657,44 +657,64 @@ public class BoardController {
 		int rankCheck = mService.muchPoint(id);
 		
 		
-		if(rankCheck>=0 && rankCheck<=1000) {
+		if(rankCheck>=0 && rankCheck<=2000) {
 			int rank = 1;
-				
+					
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-			
+				
 			int rankChange=mService.changeRank(cap);
-			
+				
 			return rankChange;
-		} else if(rankCheck>1000 && rankCheck<=3000) {
+		} else if(rankCheck>2000 && rankCheck<=10000) {
 			int rank = 2;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-		
-			int rankChange=mService.changeRank(cap);
 			
+			int rankChange=mService.changeRank(cap);
+				
 			return rankChange;
-		} else if(rankCheck>3000 && rankCheck<=7000) {
+		} else if(rankCheck>10000 && rankCheck<=20000) {
 			int rank = 3;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-				
+					
 			int rankChange=mService.changeRank(cap);
 			return rankChange;
-		} else if(rankCheck>7000 && rankCheck<=10000) {
+		} else if(rankCheck>20000 && rankCheck<=35000) {
 			int rank = 4;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-				
+					
 			int rankChange=mService.changeRank(cap);
-			
+				
+			return rankChange;
+		} else if(rankCheck>35000 && rankCheck<=55000) {
+			int rank = 5;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}else if(rankCheck>55000) {
+			int rank = 6;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
 			return rankChange;
 		} else {
 			int rank = 0;
@@ -1115,44 +1135,64 @@ public class BoardController {
 		
 		int rankCheck = mService.muchPoint(id);
 		
-		if(rankCheck>=0 && rankCheck<=1000) {
+		if(rankCheck>=0 && rankCheck<=2000) {
 			int rank = 1;
-				
+					
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-			
+				
 			int rankChange=mService.changeRank(cap);
-			
+				
 			return rankChange;
-		} else if(rankCheck>1000 && rankCheck<=3000) {
+		} else if(rankCheck>2000 && rankCheck<=10000) {
 			int rank = 2;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-		
-			int rankChange=mService.changeRank(cap);
 			
+			int rankChange=mService.changeRank(cap);
+				
 			return rankChange;
-		} else if(rankCheck>3000 && rankCheck<=7000) {
+		} else if(rankCheck>10000 && rankCheck<=20000) {
 			int rank = 3;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-				
+					
 			int rankChange=mService.changeRank(cap);
 			return rankChange;
-		} else if(rankCheck>7000 && rankCheck<=10000) {
+		} else if(rankCheck>20000 && rankCheck<=35000) {
 			int rank = 4;
-			
+				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);
 			cap.put("rank", rank);
-				
+					
 			int rankChange=mService.changeRank(cap);
-			
+				
+			return rankChange;
+		} else if(rankCheck>35000 && rankCheck<=55000) {
+			int rank = 5;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}else if(rankCheck>55000) {
+			int rank = 6;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
 			return rankChange;
 		} else {
 			int rank = 0;
@@ -1328,7 +1368,7 @@ public class BoardController {
 		int rankCheck = mService.muchPoint(id);
 		int pointUp = bService.upPoint(map);
 			
-		if(rankCheck>=0 && rankCheck<=1000) {
+		if(rankCheck>=0 && rankCheck<=2000) {
 			int rank = 1;
 					
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1338,7 +1378,7 @@ public class BoardController {
 			int rankChange=mService.changeRank(cap);
 				
 			return rankChange;
-		} else if(rankCheck>1000 && rankCheck<=3000) {
+		} else if(rankCheck>2000 && rankCheck<=10000) {
 			int rank = 2;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1348,7 +1388,7 @@ public class BoardController {
 			int rankChange=mService.changeRank(cap);
 				
 			return rankChange;
-		} else if(rankCheck>3000 && rankCheck<=7000) {
+		} else if(rankCheck>10000 && rankCheck<=20000) {
 			int rank = 3;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1357,7 +1397,7 @@ public class BoardController {
 					
 			int rankChange=mService.changeRank(cap);
 			return rankChange;
-		} else if(rankCheck>7000 && rankCheck<=10000) {
+		} else if(rankCheck>20000 && rankCheck<=35000) {
 			int rank = 4;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1367,7 +1407,27 @@ public class BoardController {
 			int rankChange=mService.changeRank(cap);
 				
 			return rankChange;
-		} else {
+		} else if(rankCheck>35000 && rankCheck<=55000) {
+			int rank = 5;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}else if(rankCheck>55000) {
+			int rank = 6;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}else {
 			int rank = 0;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1379,7 +1439,7 @@ public class BoardController {
 			return rankChange;
 		}
 	}
-	//후원 후 포인트 변화-준 사람
+	//후원 후  변화-준 사람
 	public int pointChangeSupD(HttpSession session) {
 		Member login = (Member)session.getAttribute("loginUser");
 		String id = login.getId();	
@@ -1394,7 +1454,7 @@ public class BoardController {
 		int rankCheck = mService.muchPoint(id);
 		int pointUp = bService.upPoint(map);
 			
-		if(rankCheck>=0 && rankCheck<=1000) {
+		if(rankCheck>=0 && rankCheck<=2000) {
 			int rank = 1;
 					
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1404,7 +1464,7 @@ public class BoardController {
 			int rankChange=mService.changeRank(cap);
 				
 			return rankChange;
-		} else if(rankCheck>1000 && rankCheck<=3000) {
+		} else if(rankCheck>2000 && rankCheck<=10000) {
 			int rank = 2;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1414,7 +1474,7 @@ public class BoardController {
 			int rankChange=mService.changeRank(cap);
 				
 			return rankChange;
-		} else if(rankCheck>3000 && rankCheck<=7000) {
+		} else if(rankCheck>10000 && rankCheck<=20000) {
 			int rank = 3;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
@@ -1423,8 +1483,28 @@ public class BoardController {
 					
 			int rankChange=mService.changeRank(cap);
 			return rankChange;
-		} else if(rankCheck>7000 && rankCheck<=10000) {
+		} else if(rankCheck>20000 && rankCheck<=35000) {
 			int rank = 4;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		} else if(rankCheck>35000 && rankCheck<=55000) {
+			int rank = 5;
+				
+			HashMap<String, Object> cap = new HashMap<String, Object>();
+			cap.put("id", id);
+			cap.put("rank", rank);
+					
+			int rankChange=mService.changeRank(cap);
+				
+			return rankChange;
+		}else if(rankCheck>55000) {
+			int rank = 6;
 				
 			HashMap<String, Object> cap = new HashMap<String, Object>();
 			cap.put("id", id);

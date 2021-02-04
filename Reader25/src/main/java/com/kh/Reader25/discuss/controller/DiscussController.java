@@ -156,12 +156,7 @@ public class DiscussController {
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
-		} else if(rankCheck>55000 && rankCheck<=80000) {
-			int rank = 6;
-			cap.put("id", id);
-			cap.put("rank", rank);
-			rankChange=mService.changeRank(cap);
-		} else if(rankCheck>80000) {
+		} else if(rankCheck>55000) {
 			int rank = 6;
 			cap.put("id", id);
 			cap.put("rank", rank);
