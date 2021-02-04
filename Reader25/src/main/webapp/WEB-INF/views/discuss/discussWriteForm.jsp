@@ -78,9 +78,8 @@
 		padding: 5px;
 		background: #C95F12;
 	}
-	#btn1{background: #C95F12;}
-	#btn2{background: #FFC398;}
-	#btn3{background: #67492C;}
+	#btn1{background: #C95F12; color: white;}
+	#btn3{background: #67492C; color: white;}
 </style>
 </head>
 <body>

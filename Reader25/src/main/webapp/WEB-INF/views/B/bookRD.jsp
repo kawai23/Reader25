@@ -491,6 +491,17 @@ button{font-family: 카페24 아네모네에어;}
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="success-modal">
+	<div class="modal">
+		<div class="modal-content">
+			<img src="${contextPath }/resources/images/mark/check.png" width="40px;"/>
+			<p>장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?</p>
+			<br>
+			<button class="modal-accept" id="success">예</button>
+			<button class="modal-close" id="cancel">아니오</button>
+		</div>
+	</div>
+</div>
 	<script>
 		$(function(){
 			$('.modal-close').click(function(){
@@ -584,16 +595,15 @@ button{font-family: 카페24 아네모네에어;}
 	                url: 'insertCart.tr',
 	                data:{price:price, book_no:book_no, sb_v:amount, user_id:user_id, board_no:boardNo},
 	                success: function(data){
-	                	console.log(data);
-			        	var check = confirm("장바구니 추가가 되었습니다. 장바구니로 이동하겠습니까?");
-						if(check){
-							location.href="<%=request.getContextPath()%>/myBasketList.me";
-						}
+	                	$('#success-modal').show();
+	                  	$('#success-modal .modal').show();
 	                }
 	             });
              }
          });
-         
+         $('#success').click(function(){
+        	 location.href="<%=request.getContextPath()%>/myBasketList.me";
+         });
          $('.pcs-btn').click(function(){
         	 if(user_id == ''){
             	 $('#login-modal').show();

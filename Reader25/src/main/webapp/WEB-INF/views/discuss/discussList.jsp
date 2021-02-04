@@ -156,7 +156,6 @@
 			position:relative;
 			top: 10px;
 	}
-	pre{overflow: auto;white-space: break-word;}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -362,7 +361,6 @@
 							$(this).css({'border-bottom':'none'});
 						}).click(function(){
 							var dNo = $(this).children().val();
-							console.log(dNo);
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
 						});
 					});
