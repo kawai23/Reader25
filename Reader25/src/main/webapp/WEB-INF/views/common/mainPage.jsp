@@ -321,25 +321,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser  }">
 				<div id="UserImage">
-<%-- 				<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" style="width: 100px;height: 100px; "> --%>
-					<c:if test="${loginUser.grantId eq 6}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/diamond.png" >
-					</c:if>
-					<c:if test="${loginUser.grantId eq 5}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/platinum.png" >
-					</c:if>
-					<c:if test="${loginUser.grantId eq 4}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/gold.png" >
-					</c:if>
-					<c:if test="${loginUser.grantId eq 3}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/silver.png">
-					</c:if>
-					<c:if test="${loginUser.grantId eq 2}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/bronze.png">
-					</c:if>
-					<c:if test="${loginUser.grantId eq 1}" >
-					<img src="<%=request.getContextPath() %>/resources/images/rank/iron.png">
-					</c:if>
+					<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.rank }.png" style="width: 100px;height: 100px; ">
 				</div>
 					<h2>
 						<c:out value="${loginUser.name}" />님

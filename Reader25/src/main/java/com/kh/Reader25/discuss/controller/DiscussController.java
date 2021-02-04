@@ -130,29 +130,29 @@ public class DiscussController {
 		int rankCheck = mService.muchPoint(id);
 		
 		int rankChange = 0;
+		int rank = 0;
 		HashMap<String, Object> cap = new HashMap<String, Object>();
 		if(rankCheck>=0 && rankCheck<=1000) {
-			int rank = 1;
+			rank = 1;
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
 		} else if(rankCheck>1000 && rankCheck<=3000) {
-			int rank = 2;
+			rank = 2;
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
 		} else if(rankCheck>3000 && rankCheck<=7000) {
-			int rank = 3;
+			rank = 3;
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
 		} else if(rankCheck>7000 && rankCheck<=10000) {
-			int rank = 4;
+			rank = 4;
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
 		} else {
-			int rank = 0;
 			cap.put("id", id);
 			cap.put("rank", rank);
 			rankChange=mService.changeRank(cap);
@@ -160,6 +160,7 @@ public class DiscussController {
 		if(pointDownU >0 && pointDownU >0) {
 			login.setPoint(login.getPoint()-point);
 		}
+		login.setRank(rank);
 		session.setAttribute("loginUser", login);
 		return rankChange;
 	}
@@ -250,6 +251,12 @@ public class DiscussController {
 		d.put("dNo", dNo);
 		d.put("cho", cho);
 		ArrayList<Reply> rList = dService.selectRList(d);
+		ArrayList<Integer>rankList = new ArrayList<Integer>();
+		int i = 0;
+		for(Reply r: rList) {
+			rList.get(i++).setRank(mService.selectRank(r.getrWriter()));
+		}
+		System.out.println(rList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
 		try {

@@ -65,6 +65,8 @@ public interface MemberService {
 
 	int changePoint(Member m);
 
+	Integer selectRank(String getrWriter);
+
 	
 
 

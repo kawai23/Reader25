@@ -161,7 +161,9 @@ public class BookController {
 		}
 		cap.put("rank", rank);
 		int rankChange=mService.changeRank(cap);
-		
+		if(rankChange > 0) {
+			m.setRank(rank);
+		}
 		for(int i = 0; i< p_no.size(); i++) {
 			int result = b_Service.updatePay(p_no.get(i));
 			if(result < 0) {

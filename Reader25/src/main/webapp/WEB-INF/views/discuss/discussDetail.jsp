@@ -53,7 +53,7 @@
    	ol{list-style: none;}
   	.Atext{float:left; margin-right: 20px; max-width:890px;}
   	#text{background: white; border: 1px solid black; width:85%; border-radius: 5px; padding: 10px;}
-  	#user-icon{wdith:50px; height:50px; border-radius:50%;}
+  	#user-icon{wdith:50px; height:50px; border-radius:10%;}
   	.wid{width:98%; margin: 3px;}
   	.wid2{width:98%; margin: 3px; border:none;}
   	.rBtn1{float: right; margin: 3px; color: white; background: #FFC398;}
@@ -225,7 +225,7 @@
 							for(var i in data){
 								$li = $('<li id="comment-'+ data[i].rNo +'">');
 								$div1 = $('<div class="Atext">');
-								$img = $('<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">');
+								$img = $('<img src="<%=request.getContextPath() %>/resources/images/rank/rank'+data[i].rank+'.png" id="user-icon">');
 								$rContent = $('<pre>').text(data[i].rContent);
 								$div2 = $('<div class="Atext" id="text">');
 								$div2_1 = $('<div id="div-'+ data[i].rNo +'">');

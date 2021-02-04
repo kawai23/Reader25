@@ -194,4 +194,9 @@
 		SET MPOINT = MPOINT - #{point} 
 		WHERE user_id = #{id}
 	</update>
+	<select id="selectRank" resultType="_int">
+		SELECT MRANK
+		FROM MEMBER
+		WHERE USER_ID = '${userid}'
+	</select>
 </mapper>

@@ -10,6 +10,7 @@ public class Reply {
 	private String rWhether;
 	private String rWriter;
 	private int dNo;
+	private int rank;
 	
 	public Reply() {}
 
@@ -23,7 +24,7 @@ public class Reply {
 		this.rWriter = rWriter;
 		this.dNo = dNo;
 	}
-
+	
 	public int getrNo() {
 		return rNo;
 	}
@@ -80,11 +81,18 @@ public class Reply {
 		this.dNo = dNo;
 	}
 
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
 	@Override
 	public String toString() {
 		return "Reply [rNo=" + rNo + ", rContent=" + rContent + ", rDate=" + rDate + ", rStatus=" + rStatus
-				+ ", rWhether=" + rWhether + ", rWriter=" + rWriter + ", dNo=" + dNo + "]";
+				+ ", rWhether=" + rWhether + ", rWriter=" + rWriter + ", dNo=" + dNo + ", rank=" + rank + "]";
 	}
-	
 	
 }

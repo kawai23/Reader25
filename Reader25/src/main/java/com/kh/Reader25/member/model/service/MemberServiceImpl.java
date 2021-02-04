@@ -174,6 +174,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.changePoint(sqlSession, m);
 	}
 
+	@Override
+	public Integer selectRank(String userid) {
+		return mDAO.selectRank(sqlSession, userid);
+	}
+
 
 
 	

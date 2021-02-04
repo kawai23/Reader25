@@ -168,6 +168,10 @@ public class MemberDAO {
 	public int changePoint(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.changePoint", m);
 	}
+
+	public Integer selectRank(SqlSessionTemplate sqlSession, String userid) {
+		return sqlSession.selectOne("memberMapper.selectRank", userid);
+	}
 	
 
 

@@ -37,7 +37,7 @@
 	}
 	.sub{display:inline-block;}
 	#info{margin-top: 20px;}
-	#user-icon{width: 100px;height: 100px; border-radius:50%;}
+	#user-icon{width: 100px;height: 100px; border-radius:10%;}
 	/*아이디 찾기*/
 	#find_id{ margin-top : 397px; }
 	#find_id:hover{cursor: pointer;}
@@ -156,6 +156,7 @@
 			position:relative;
 			top: 10px;
 	}
+
 </style>
 </head>
 <body>
@@ -176,7 +177,7 @@
 			<div id="subBlue">
 				<c:if test="${ !empty loginUser }">
 					<div class="sub">
-						<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
+						<img src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.rank }.png" id="user-icon">
 					</div>
 					<div class="sub" id="info">
 							${ loginUser.getName() }님<br>
