@@ -195,7 +195,7 @@
 		WHERE user_id = #{id}
 	</update>
 	<select id="selectRank" resultType="_int">
-		SELECT MRANK
+		SELECT GRANT_ID
 		FROM MEMBER
 		WHERE USER_ID = '${userid}'
 	</select>
