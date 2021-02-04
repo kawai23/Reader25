@@ -1197,16 +1197,20 @@ public class BoardController {
 		int bookmark = bService.findbookmark(bap);
 		
 		String cate = board.getCate();
-		
 		String[] cates = cate.split("/");
 		String categori = cates[0];
 		String bookname = cates[1];
+		
+		int aGrade = bService.searchAGrade(boardNo);
+		
+		
 	
 		if(board != null) {
 			mv.addObject("board", board)
 				.addObject("page", page)
 				.addObject("categori", categori)
 				.addObject("bookname", bookname)
+				.addObject("aGrade", aGrade)
 				.setViewName("TIWDetailView");
 			mv.addObject("heart", heart);
 			mv.addObject("support", support);

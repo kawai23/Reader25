@@ -281,6 +281,8 @@ public interface BoardService {
 
 	int downPoint(HashMap<String, Object> map);
 
+	int searchAGrade(int boardNo);
+
 
 
 

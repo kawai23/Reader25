@@ -689,6 +689,11 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.downPoint", map);
 	}
 
+	public int searchAGrade(SqlSessionTemplate sqlSession, int boardNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.searchAGrade", boardNo);
+	}
+
 
 
 
