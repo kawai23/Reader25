@@ -33,7 +33,7 @@
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 
 	<div class="menubar">
-		<div class="small-menu">
+		<div class="small-menu" id="small-menu">
 			<ul>
 				<c:if test="${ empty sessionScope.loginUser }">
 					<li><a href="loginView.me">로그인</a></li>
