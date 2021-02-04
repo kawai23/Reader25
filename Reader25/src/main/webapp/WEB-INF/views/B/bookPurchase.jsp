@@ -222,7 +222,7 @@
 			<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 			<p>결제를 취소 하셨습니다.</p>
 			<br>
-			<button class="modal-close-r" id="cancel" value="Close">확인</button>
+			<button class="modal-close" id="cancel" value="Close">확인</button>
 		</div>
 	</div>
 </div>
@@ -243,7 +243,7 @@
 			<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
 			<p>보유포인트가 적습니다.</p>
 			<br>
-			<button class="modal-close-r" id="cancel2" value="Close">확인</button>
+			<button class="modal-close" id="cancel2" value="Close">확인</button>
 		</div>
 	</div>
 </div>
@@ -383,7 +383,7 @@
       <br>
   </div>
   <script>
-	$('#cancel').click(function(){
+	$('.modal-close').click(function(){
 		$('.modal').hide();
 		$('.modal-back').hide();
 	});
@@ -400,17 +400,12 @@
 		}
 	});
 	$('#pointinput').on("propertychange change keyup paste input",function(){
-		console.log($(this).val());
 		$('#sp').text(${sum}-Number($(this).val()));
 	});
 	
 	$('#pointbtn').click(function(){
 		$('#pointinput').val(${loginUser.getPoint()});
 		$('#sp').text(${sum}-${loginUser.getPoint()});
-	});
-	$('#cancel2').click(function(){
-		$('.modal').hide();
-		$('.modal-back').hide();
 	});
 		// 결제 api
 		$('#btn1').click(function(){
@@ -419,15 +414,14 @@
 			} else{
 				var name = '${book.get(0).b_name }';
 			}
-			var price = Number($('#sp').text());// 택배비 어떻게 할것인지 물어보자
-// 			var price = 200;// 택배비 어떻게 할것인지 물어보자
+// 			var price = Number($('#sp').text());// 택배비 어떻게 할것인지 물어보자
+			var price = 200;// 택배비 어떻게 할것인지 물어보자
 			var orderemail = $('#joinEmail').val();
 			var orderName =$('#name').val();
 			var orderphone = $('#phone').val();
 			var orderaddress = $('#joinAddress1').val() + $('#joinAddress12').val();
 			var orderPost = $('#joinPostal').val();
 
-			console.log(price);
 			IMP.init('imp09501430');
 			IMP.request_pay({
 			pg : 'html5_inicis',

@@ -248,7 +248,6 @@
 		$(function(){
 			$('.modal-close').click(function(){
 				var num = $(this).val();
-				console.log(num);
 				$('.modal').hide();
 				$('.modal-back').hide();
 				document.getElementById(num).focus();

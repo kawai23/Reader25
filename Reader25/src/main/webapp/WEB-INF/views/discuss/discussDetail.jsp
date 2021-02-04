@@ -38,8 +38,8 @@
   		float: right;
   		margin: 5px;
   	}
-  	#btn1{background: #FFC398;}
-  	#btn2{background: #67492C;}
+  	#btn1{background: #FFC398; color:white;}
+  	#btn2{background: #67492C; color:white;}
   	#btn3{margin: 5px; float: right; color:white; background: #C95F12; font-size:16px;}
   	#load-img{wdith:713px; height:427px;}
   	hr{border: 2px solid #F5715C}
@@ -70,9 +70,67 @@
 	}
 	#area1{height: 130px;}
 	select{font-family: 카페24 아네모네에어;}
+	.modal {
+		margin: 40% auto; 
+		padding: 20px;
+		text-align: center;
+		font-family: 카페24 아네모네에어;
+		font-size:17px;
+	}
+	.modal-back {
+			display: none; 
+			position: fixed; 
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%; 
+			height: 100%;
+			overflow: auto; 
+			background: rgba(0, 0, 0, 0.3); 
+			font-family: 카페24 아네모네에어; font-size:17px;
+	}
+	.modal-close, .modal-close-r{
+		background-color: #C4C4C4;
+		color:white; width: 80px;
+		height: 30px; border:none;
+		display:inline-block; 
+		font-family: 카페24 아네모네에어; font-size:17px;
+	}
+	.modal-content{text-align: center;}
+	.modal p{
+			display:inline-block;
+	}
+	.modal img{
+			position:relative;
+			top: 10px;
+	}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
+	<div class="modal-back" id="delete-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p> 정말로 토론방을 끝내갰습니까? </p>
+				<br>
+				<button class="modal-close-r" id="success">확인</button>
+				<button class="modal-close" id="cancel">취소</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-back" id="delete2-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p> 정말로 댓글을 끝내갰습니까? </p>
+				<br>
+				<button class="modal-close-r" id="success2">확인</button>
+				<button class="modal-close" id="cancel2">취소</button>
+			</div>
+		</div>
+	</div>
 	<%@ include file="../common/menubar.jsp" %>
 	<section>
 		<br>
@@ -120,15 +178,6 @@
 			<button class="btn" id="btn1" onclick="location.href='${ dupdate }'">토론방 수정</button>
 			<button class="btn" id="btn2" onclick="javascript:ddelete();">토론방 끝내기</button>
 		</c:if>
-		
-		<script>
-			function ddelete(){
-				var check = confirm("정말로 토론방을 끝내갰습니까?");
-				if(check){
-					location.href="${dDelete}";
-				}
-			}
-		</script>
 		<br><br>
 		<h2>주장</h2>
 		<hr>
@@ -207,7 +256,6 @@
 					url:"rList.di",
 					data: {dNo:dNo, cho:cho},
 					success: function(data){
-						console.log(data);
 						$olBody = $('#rol');
 						$olBody.html('');
 						var $li;
@@ -295,9 +343,7 @@
 			var dup = 0;
 			// 댓글 수정 폼 생성
 			function rUpdateFrom(rNo){
-				console.log(dup);
 				if(dup == 0){
-					console.log("들어옴");
 					dup = rNo;
 				var PCN = $('#div-'+rNo).children().children().children().text();
 				$div = $('#div-'+rNo);
@@ -345,7 +391,6 @@
 					dup = 0;
 					setTimeout(function() { rUpdateFrom(rNo);}, 10);
 				}
-				console.log(dup);
 			}
 			
 			// 댓글 수정
@@ -369,7 +414,6 @@
 						check="중립";
 					}
 				}
-				console.log(check);
 				$.ajax({
 					url: "rUpdate.di",
 					data: {rNo:rNo, rWriter:rWriter, rContent:rContent, rWhether:rWhether, check:check, dNo:dNo},
@@ -385,25 +429,44 @@
 				dup = 0;
 				getRList();
 			}
-			
+
 			// 댓글 삭제
+			var REPLY = 0;
 			function rDelete(rNo){
-				var check = confirm("정말로 댓글을 끝내갰습니까?");
-				var PCN = $('#comment-'+rNo).children().children().children().children().eq(0).text();
-				var dNo = $('#comment-'+rNo).children().children().children().eq(3).val();
-				
-				if(check){
-					$.ajax({
-						url: 'rDelete.di',
-						data:{rNo:rNo, rWhether: PCN, dNo: dNo},
-						success: function(data){
-							if(data == "success"){
-								getRList();
-							}
-						}
-					});
-				}
+				$('#delete2-modal').show();
+				$('#delete2-modal .modal').show();
+				REPLY = rNo;
 			}
+			$('#success2').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+				var PCN = $('#comment-'+REPLY).children().children().children().children().eq(0).text();
+				var dNo = $('#comment-'+REPLY).children().children().children().eq(3).val();
+				$.ajax({
+					url: 'rDelete.di',
+					data:{rNo:REPLY, rWhether: PCN, dNo: dNo},
+					success: function(data){
+						if(data == "success"){
+							getRList();
+						}
+					}
+				});
+			});
+			
+			// 토론방 삭제
+			function ddelete(){
+				$('#delete-modal').show();
+				$('#delete-modal .modal').show();
+			}
+			$('.modal-close').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+			});
+			$('#success').click(function(){
+				$('.modal').hide();
+				$('.modal-back').hide();
+				location.href="${dDelete}";
+			});
 			
 		</script>
 	</section>
