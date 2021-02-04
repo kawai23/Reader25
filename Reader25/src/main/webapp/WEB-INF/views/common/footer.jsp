@@ -31,7 +31,7 @@
 				<span>|</span>
 				<p>주소 : kh정보교육원</p>
 			</div>
-			<div class="company-link">
+			<div class="company-link" id="company-link">
 				<a href="https://github.com/kawai23/Reader25">Reader25 정보</a>
 				<span>|</span>
 				<a href="https://docs.google.com/spreadsheets/d/1hUrmkvb_V8iHkxYVtnMePUhJWeH3_vd8bvSJLSmqVrg/edit?usp=sharing">Reader25 기획</a>
