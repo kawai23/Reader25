@@ -176,7 +176,24 @@
 			<div id="subBlue">
 				<c:if test="${ !empty loginUser }">
 					<div class="sub">
-						<img src="<%=request.getContextPath() %>/resources/images/icon/usericon.png" id="user-icon">
+						<c:if test="${loginUser.grantId eq 6}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/diamond.png" id="user-icon" >
+						</c:if>
+						<c:if test="${loginUser.grantId eq 5}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/platinum.png" id="user-icon" >
+						</c:if>
+						<c:if test="${loginUser.grantId eq 4}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/gold.png" id="user-icon" >
+						</c:if>
+						<c:if test="${loginUser.grantId eq 3}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/silver.png" id="user-icon">
+						</c:if>
+						<c:if test="${loginUser.grantId eq 2}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/bronze.png" id="user-icon">
+						</c:if>
+						<c:if test="${loginUser.grantId eq 1}" >
+						<img src="<%=request.getContextPath() %>/resources/images/rank/iron.png" id="user-icon">
+						</c:if>
 					</div>
 					<div class="sub" id="info">
 							${ loginUser.getName() }님<br>
