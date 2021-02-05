@@ -27,16 +27,15 @@
 	}
   	/* 회원 정보 메뉴*/
   	#subBlue{
-	    width: 300px; 
-	    height: 110px;
+	    width: 100%; 
+	    min-height: 110px;
 	    padding:5px; 
-		border: 1px solid black;
-		border-radius:50px;
+		border-radius:10px;
 		text-align: center;
 		background:white;
 	}
 	.sub{display:inline-block;}
-	#info{margin-top: 20px;}
+	#info{position:relative; left:5px;}
 	#user-icon{width: 100px;height: 100px; border-radius:10%;}
 	/*아이디 찾기*/
 	#find_id{ margin-top : 397px; }
@@ -52,6 +51,7 @@
 		color: #FFFFFF;
 		background:#C95F12;
 	}
+	
 	.Sign_Up_font{
 		font-family: 카페24 아네모네에어;
 		font-style: normal;
@@ -70,7 +70,7 @@
 	}
 	.subli > span{
 		display:inline-block; 
-		width:300px; 
+		width:100%; 
 		overflow:hidden; 
 		text-overflow:ellipsis; 
 		white-space:nowrap;
@@ -104,7 +104,7 @@
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none; background: none;}
 	#bimg{width: 200px;height: 150;}
-	#imgdiv{background: white; width: 200px;height: 200;}
+	#imgdiv{background: white; width: 200px;height: 180px;}
 	#orderTable{
  	border-spacing: 15px 45px;
 	}
@@ -121,7 +121,9 @@
 	#dc-span{/*글제목*/
 		font-size: 25px;
 		font-weight:bold;
+		height: 150px;
 	}
+	.dtr{color: rgb(185,185,185);}
 	.modal {
 		margin: 40% auto; 
 		padding: 20px;
@@ -184,7 +186,7 @@
 					</div>
 					<div class="sub" id="info">
 							${ loginUser.getName() }님<br>
-							반갑습니다.<br>
+							반갑습니다.<br><br>
 							보유포인트 = ${ loginUser.getPoint() }PT<br>
 					</div>
 				</c:if>
@@ -277,7 +279,7 @@
 						<c:if test="${ d.atcNo == 0 }">
 							<td rowspan="2" id="imgdiv"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/img/discuss.jpg" id="bimg"/></td>
 						</c:if>
-						<td ><span id="dc-span">${d.dTitle}</span><br><span id="dC">${ d.dContent }</span></td>
+						<td ><span id="dc-span">${d.dTitle}</span><br><br><span id="dC">${ d.dContent }</span></td>
 					</tr>
 					<tr class="dtr">
 						<td><input type="hidden" value="${ d.dNo }">찬반여론 
@@ -298,7 +300,7 @@
 							찬성 : 0%  중립 : 0%  반대 : 0% 
 						</c:if>
 						댓글참여 : ${ d.dCount }개</td>
-					</tr>					
+					</tr>
 				</c:forEach>
 				</table>
 				<!-- 페이징 처리 -->
@@ -350,7 +352,9 @@
 						});
 
 						$('.dtr2').mouseenter(function(){
-							$(this).css({'cursor':'pointer'});
+							$(this).css({'cursor':'pointer','text-decoration':'underline'});
+						}).mouseout(function(){
+							$(this).css({'text-decoration':'none'});
 						}).click(function(){
 							var dNo = $(this).children().children().val();
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
