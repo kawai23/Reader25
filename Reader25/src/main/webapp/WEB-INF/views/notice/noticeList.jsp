@@ -122,7 +122,7 @@
 				<c:forEach var="b" items="${bList}" varStatus="vs">
 					<tr class="contentTR">
 						<td>
-							<input type="hidden" value="${l.boardNo}" class="boardNo-input"/>
+							<input type="hidden" value="${b.boardNo}" class="boardNo-input"/>
 							${ listCount - vs.index}
 						</td>
 						<td class="list-title">
