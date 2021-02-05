@@ -236,7 +236,7 @@
 		<![CDATA[
         SELECT *
         FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE-1 AND ROWNUM <= 17
+        WHERE ENROLL_DATE > SYSDATE-1 AND ROWNUM <= 5
         ORDER BY D_COUNT DESC
         ]]>
 	</select>
@@ -244,7 +244,7 @@
 	<![CDATA[
         SELECT *
         FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
+        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 5
         ORDER BY D_COUNT DESC
 	]]>
 	</select>
@@ -252,7 +252,7 @@
 	<![CDATA[
         SELECT *
         FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
+        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 5
         ORDER BY D_COUNT DESC
 	]]>
 	</select>
@@ -260,7 +260,7 @@
 	<![CDATA[
         SELECT *
         FROM DISCUSS
-        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 17
+        WHERE ENROLL_DATE > SYSDATE- #{value} AND ROWNUM <= 5
         ORDER BY D_COUNT DESC
 	]]>
 	</select>
