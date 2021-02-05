@@ -27,17 +27,16 @@
 	}
   	/* 회원 정보 메뉴*/
   	#subBlue{
-	    width: 300px; 
-	    height: 110px;
+	    width: 100%; 
+	    min-height: 110px;
 	    padding:5px; 
-		border: 1px solid black;
-		border-radius:50px;
+		border-radius:10px;
 		text-align: center;
 		background:white;
 	}
 	.sub{display:inline-block;}
-/* 	#info{margin-top: 20px;} */
-	#user-icon{width: 90px;height: 90px; border-radius:30%;}
+	#info{position:relative; left:5px;}
+	#user-icon{width: 100px;height: 100px; border-radius:10%;}
 	/*아이디 찾기*/
 	#find_id{ margin-top : 397px; }
 	#find_id:hover{cursor: pointer;}
@@ -52,6 +51,7 @@
 		color: #FFFFFF;
 		background:#C95F12;
 	}
+	
 	.Sign_Up_font{
 		font-family: 카페24 아네모네에어;
 		font-style: normal;
@@ -70,11 +70,13 @@
 	}
 	.subli > span{
 		display:inline-block; 
-		width:300px; 
+		width:100%; 
 		overflow:hidden; 
 		text-overflow:ellipsis; 
 		white-space:nowrap;
 	}
+	.sub-discuss{border-bottom: 1px solid lightgray;}
+	.sub-title{border-bottom: 1px solid lightgray; padding-bottom: 10px; }
 	/*토론방 리스트 관련*/
   	.outer{
     	float:left;
@@ -83,13 +85,15 @@
 	}
 	.outerBg {
  		display: inline;
- 		margin-left: 400px;
+		float:right;
+		margin-right: 200px;
  		border-bottom: 1px solid black;
 	}
 	.outerText {
 		font-family: 카페24 아네모네;
-		font-size: 60px;
+		font-size: 30px;
 		display: inline;
+		margin-left: 20px;
 	}
 	#head{float:none;}
 	#body{float:none;}
@@ -97,14 +101,14 @@
 	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
-	#btn{float:right; background:#C95F12; font-family: 카페24 아네모네; font-size:20px; color:white;}
+	#btn{float:right; background:#C95F12; font-family: 카페24 아네모네; font-size:20px; color:white;margin-bottom: 15px;}
 	#btn:hover{cursor: pointer;}
 	
 	/*검색관련*/
 	#search-input{width: 110px;border: none;background: none;}
 	#search-type{border: none; background: none;}
 	#bimg{width: 200px;height: 150;}
-	#imgdiv{background: white; width: 200px;height: 200;}
+	#imgdiv{background: white; width: 200px;height: 180px;}
 	#orderTable{
  	border-spacing: 15px 45px;
 	}
@@ -121,7 +125,9 @@
 	#dc-span{/*글제목*/
 		font-size: 25px;
 		font-weight:bold;
+		height: 150px;
 	}
+	.dtr{color: rgb(185,185,185);}
 	.modal {
 		margin: 40% auto; 
 		padding: 20px;
@@ -156,6 +162,7 @@
 			position:relative;
 			top: 10px;
 	}
+	pre{overflow: auto;white-space: break-word;}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -183,7 +190,7 @@
 					</div>
 					<div class="sub" id="info">
 							${ loginUser.getName() }님<br>
-							반갑습니다.<br>
+							반갑습니다.<br><br>
 							보유포인트 = ${ loginUser.getPoint() }PT<br>
 					</div>
 				</c:if>
@@ -197,9 +204,9 @@
 				</c:if>
 			</div>
 			<br><br>
-			<div>
+			<div class="sub-discuss">
 				<c:set var="count" value="0"/>
-				<h3>현재 열린 토론방</h3>
+				<h3 class="sub-title">현재 열린 토론방</h3>
 				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
@@ -212,9 +219,8 @@
 					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
 				</ul>
 			</div>
-			<br><hr><br>
-			<div>
-				<h3>현재 닫힌 토론방</h3>
+			<div class="sub-discuss">
+				<h3 class="sub-title">현재 닫힌 토론방</h3>
 				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
@@ -224,13 +230,12 @@
 						</c:if>
 					</c:if>
 					</c:forEach>
-					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
+					<c:if test="${count <= 5 }"><c:set var="count" value="0"/>현재 닫힌 토론방이 없습니다.</c:if>
 				</ul>
 			</div>
 			<c:if test="${ !empty loginUser }">
-			<br><hr><br>
-				<div>
-					<h3>내가 연 토론방</h3>
+				<div class="sub-discuss">
+					<h3 class="sub-title">내가 연 토론방</h3>
 					<ul class="subul">
 						<c:forEach var="d" items="${ dAllList }">
 						<c:if test="${count < 5 }">
@@ -247,7 +252,7 @@
 		</div>
 		<div class="outer">
 			<div id="head"><br>
-				<div class="outerText">토론방</div>
+				<div class="outerText">[토론방]</div>
 				<div class="outerBg">
 					
 					<select id="search-type">
@@ -276,7 +281,7 @@
 						<c:if test="${ d.atcNo == 0 }">
 							<td rowspan="2" id="imgdiv"><input type="hidden" value="${ d.dNo }"><img src="<%=request.getContextPath() %>/resources/images/img/discuss.jpg" id="bimg"/></td>
 						</c:if>
-						<td ><span id="dc-span">${d.dTitle}</span><br><span id="dC">${ d.dContent }</span></td>
+						<td ><span id="dc-span">${d.dTitle}</span><br><br><span id="dC">${ d.dContent }</span></td>
 					</tr>
 					<tr class="dtr">
 						<td><input type="hidden" value="${ d.dNo }">찬반여론 
@@ -297,7 +302,7 @@
 							찬성 : 0%  중립 : 0%  반대 : 0% 
 						</c:if>
 						댓글참여 : ${ d.dCount }개</td>
-					</tr>					
+					</tr>
 				</c:forEach>
 				</table>
 				<!-- 페이징 처리 -->
@@ -349,7 +354,9 @@
 						});
 
 						$('.dtr2').mouseenter(function(){
-							$(this).css({'cursor':'pointer'});
+							$(this).css({'cursor':'pointer','text-decoration':'underline'});
+						}).mouseout(function(){
+							$(this).css({'text-decoration':'none'});
 						}).click(function(){
 							var dNo = $(this).children().children().val();
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
@@ -361,6 +368,7 @@
 							$(this).css({'border-bottom':'none'});
 						}).click(function(){
 							var dNo = $(this).children().val();
+							console.log(dNo);
 							location.href='dDetail.di?dNo=' + dNo + '&page=' + ${pi.currentPage};
 						});
 					});

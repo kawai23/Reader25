@@ -183,6 +183,7 @@ input:focus{outline: none;}
 	display:inline-block;
 	max-width: 250px;
 	margin-top: 50px;
+	vertical-align: middle;
 }
 .paging-div>a, .paging-div>p {
 	padding: 0;
@@ -190,6 +191,7 @@ input:focus{outline: none;}
 	display: inline-block;
 	width: 26px;
 	height: 26px;
+	line-height: 26px;
 	color: rgba(85, 83, 83, 1);
 	font-size: 17px;
 	background: rgba(229, 229, 229, 1);

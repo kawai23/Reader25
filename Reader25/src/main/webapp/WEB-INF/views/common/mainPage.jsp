@@ -189,7 +189,7 @@ input[id="slide03"]:checked ~ .slide-wrap .slidelist>li {
 	margin-left: 19%;
 	text-align: center;
 }
-
+.b_reco:hover,.best_re:hover,.debate:hover,.TIW:hover{cursor: pointer;}
 .bestreview {
 	float: left;
 	width: 12.5%;
