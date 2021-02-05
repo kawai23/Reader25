@@ -460,7 +460,7 @@ textarea{
 				<table id="con_table" align="center">
 					<tr>
 						<td colspan="3" rowspan="4" id="img_td">
-							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/rank${loginUser.grantId }.png" style="width: 100px;height: 100px; ">
+							<img id="myimg" alt="기본이미지"  src="<%=request.getContextPath() %>/resources/images/rank/rank${aGrade }.png" style="width: 100px;height: 100px; ">
 						</td>
 						<td width="55px">
 							<div class="title">title</div>
