@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ import com.kh.Reader25.common.Pagination;
 import com.kh.Reader25.member.model.service.MemberService;
 import com.kh.Reader25.member.model.vo.Member;
 
+@SessionAttributes("loginUser")
 @Controller
 public class BookController {
 	@Autowired
@@ -117,14 +119,13 @@ public class BookController {
 		mv.addObject("book", bList).addObject("at", atList).addObject("pay", pNoList).setViewName("bookPurchase");
 		return mv;	
 	}
-	private String sendMailCheck(Integer integer) {
+	private String sendMailCheck(Integer integer, Book b) {
 		Integer boardNo = integer;
 		String bookSendEmail = bService.searchBookSendEmail(boardNo);
-		//System.out.println(bookSendEmail);
 		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 판매자 님</h2><br><br>" 
-				+ "<p>해당 메일은 등록하신 책에 대한 주문이 발생하여 안내 메일입니다.</p>"
+				+ "<p>해당 메일은 등록하신 책("+b.getB_name()+") "+b.getB_Q1()+"권에 대한 주문이 발생하여 안내 메일입니다.</p>"
 				+ "<p>주문이 발생된 후 3일 이내에 발송을 해주셔야합니다.</p><br>"
 				+ "<h3><a href='http://localhost:8105/Reader25'>Reader25 홈페이지 접속 (클릭!) </a></h3><br><br>"
 				+ "Reader25에 향한 무한한 관심과 사랑 감사드립니다.";
@@ -144,6 +145,7 @@ public class BookController {
 	@ResponseBody
 	public String patLast(@RequestParam(value="b_no") List<Integer> b, @RequestParam(value="b_v") List<Integer> b_v, @RequestParam(value="board_no") List<Integer> board_no, @RequestParam(value="pay") List<Integer> p_no, @RequestParam("point") int point, HttpSession session) {
 		Member m = (Member)session.getAttribute("loginUser");
+		int p = m.getPoint();
 		m.setPoint(point);
 		int result2 = mService.changePoint(m);
 		int rankCheck = mService.muchPoint(m.getId());
@@ -180,8 +182,12 @@ public class BookController {
 			sb.put("b_no", b.get(i));
 			sb.put("b_v", b_v.get(i));
 			int result = b_Service.updateSb(sb);
-			String sendMailCheck = sendMailCheck(board_no.get(i));
+			Book book = b_Service.selectBook(b.get(i));
+			book.setB_Q1(b_v.get(i));
+			Board board = bService.selectBoard2(board_no.get(i));
+			String sendMailCheck = sendMailCheck(board_no.get(i), book);
 		}
+		m.setPoint(p-m.getPoint());
 		session.setAttribute("loginUser", m);
 		return "success";
 	}

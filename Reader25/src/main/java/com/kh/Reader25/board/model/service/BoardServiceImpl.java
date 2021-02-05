@@ -788,6 +788,11 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.searchAGrade(sqlSession ,boardNo);
 	}
 
+	@Override
+	public Board selectBoard2(Integer boardNo) {
+		return bDAO.selectBoard(sqlSession, boardNo);
+	}
+
 
 	
 	

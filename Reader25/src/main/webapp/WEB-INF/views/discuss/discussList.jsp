@@ -36,8 +36,8 @@
 		background:white;
 	}
 	.sub{display:inline-block;}
-	#info{margin-top: 20px;}
-	#user-icon{width: 100px;height: 100px; border-radius:10%;}
+/* 	#info{margin-top: 20px;} */
+	#user-icon{width: 90px;height: 90px; border-radius:30%;}
 	/*아이디 찾기*/
 	#find_id{ margin-top : 397px; }
 	#find_id:hover{cursor: pointer;}

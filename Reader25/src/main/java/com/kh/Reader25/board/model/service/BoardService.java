@@ -283,6 +283,8 @@ public interface BoardService {
 
 	int searchAGrade(int boardNo);
 
+	Board selectBoard2(Integer integer);
+
 
 
 
