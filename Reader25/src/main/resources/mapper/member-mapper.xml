@@ -139,7 +139,7 @@
 	
 	<update id="changeRank">
 		UPDATE member 
-		SET MRANK = #{rank} 
+		SET GRANT_ID = #{grantId} 
 		WHERE user_id = #{id}
 	</update>
 	

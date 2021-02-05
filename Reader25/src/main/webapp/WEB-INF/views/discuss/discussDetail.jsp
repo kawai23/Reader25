@@ -15,6 +15,7 @@
   		font-family: 카페24 아네모네에어;
   		background: #F6F6F6;
   	}
+  	pre{font-family: 카페24 아네모네에어;line-height:170%}
   	#first{
   		text-align: center;
   	}

@@ -144,7 +144,7 @@ public class DiscussController {
 		} else if(rankCheck>55000) {
 			rank = 6;
 		}
-		cap.put("rank", rank);
+		cap.put("grantId", rank);
 		rankChange=mService.changeRank(cap);
 		if(pointDownU >0 && pointDownU >0) {
 			login.setPoint(login.getPoint()-point);
