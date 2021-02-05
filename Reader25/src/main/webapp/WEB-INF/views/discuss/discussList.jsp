@@ -75,6 +75,8 @@
 		text-overflow:ellipsis; 
 		white-space:nowrap;
 	}
+	.sub-discuss{border-bottom: 1px solid lightgray;}
+	.sub-title{border-bottom: 1px solid lightgray; padding-bottom: 10px; }
 	/*토론방 리스트 관련*/
   	.outer{
     	float:left;
@@ -83,13 +85,15 @@
 	}
 	.outerBg {
  		display: inline;
- 		margin-left: 400px;
+		float:right;
+		margin-right: 200px;
  		border-bottom: 1px solid black;
 	}
 	.outerText {
 		font-family: 카페24 아네모네;
-		font-size: 60px;
+		font-size: 30px;
 		display: inline;
+		margin-left: 20px;
 	}
 	#head{float:none;}
 	#body{float:none;}
@@ -97,7 +101,7 @@
 	#search-icon:hover {cursor: pointer;}
 	.img-span{width: 30px; height: 30px;}
 	.img-span:hover{cursor: pointer;}
-	#btn{float:right; background:#C95F12; font-family: 카페24 아네모네; font-size:20px; color:white;}
+	#btn{float:right; background:#C95F12; font-family: 카페24 아네모네; font-size:20px; color:white;margin-bottom: 15px;}
 	#btn:hover{cursor: pointer;}
 	
 	/*검색관련*/
@@ -200,9 +204,9 @@
 				</c:if>
 			</div>
 			<br><br>
-			<div>
+			<div class="sub-discuss">
 				<c:set var="count" value="0"/>
-				<h3>현재 열린 토론방</h3>
+				<h3 class="sub-title">현재 열린 토론방</h3>
 				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
@@ -215,9 +219,8 @@
 					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
 				</ul>
 			</div>
-			<br><hr><br>
-			<div>
-				<h3>현재 닫힌 토론방</h3>
+			<div class="sub-discuss">
+				<h3 class="sub-title">현재 닫힌 토론방</h3>
 				<ul class="subul">
 					<c:forEach var="d" items="${ dAllList }">
 					<c:if test="${count < 5 }">
@@ -227,13 +230,12 @@
 						</c:if>
 					</c:if>
 					</c:forEach>
-					<c:if test="${count <= 5 }"><c:set var="count" value="0"/></c:if>
+					<c:if test="${count <= 5 }"><c:set var="count" value="0"/>현재 닫힌 토론방이 없습니다.</c:if>
 				</ul>
 			</div>
 			<c:if test="${ !empty loginUser }">
-			<br><hr><br>
-				<div>
-					<h3>내가 연 토론방</h3>
+				<div class="sub-discuss">
+					<h3 class="sub-title">내가 연 토론방</h3>
 					<ul class="subul">
 						<c:forEach var="d" items="${ dAllList }">
 						<c:if test="${count < 5 }">
@@ -250,7 +252,7 @@
 		</div>
 		<div class="outer">
 			<div id="head"><br>
-				<div class="outerText">토론방</div>
+				<div class="outerText">[토론방]</div>
 				<div class="outerBg">
 					
 					<select id="search-type">

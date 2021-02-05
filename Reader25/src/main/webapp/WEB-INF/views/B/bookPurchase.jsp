@@ -440,7 +440,12 @@
 					var b_no = [];
 					var b_v = [];
 					var board_no = [];
-					var point = $('#pointinput').val();
+					if($('#pointinput').val() > 0){
+// 						var point = Number($('#pointinput').val());
+						var point = $('#pointinput').val();
+					} else {
+						var point = 0;
+					}
 					<c:forEach var="p" items="${pay}">
 						pay.push(${p});
 					</c:forEach>
