@@ -45,7 +45,6 @@
 	.file-img{
 		min-height: 250px;
 		margin-top: 20px;
-/* 		background: lightgray; */
 		text-align: center;
 		position: relative;
 	}

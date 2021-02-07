@@ -114,7 +114,7 @@
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-				<p> 정말로 토론방을 끝내갰습니까? </p>
+				<p> 정말로 토론방을 끝내겠습니까? </p>
 				<br>
 				<button class="modal-close-r" id="success">확인</button>
 				<button class="modal-close" id="cancel">취소</button>
@@ -125,7 +125,7 @@
 		<div class="modal">
 			<div class="modal-content">
 				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
-				<p> 정말로 댓글을 끝내갰습니까? </p>
+				<p> 정말로 댓글을 끝내겠습니까? </p>
 				<br>
 				<button class="modal-close-r" id="success2">확인</button>
 				<button class="modal-close" id="cancel2">취소</button>
