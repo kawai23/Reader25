@@ -224,6 +224,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal-back" id="b-account-modal">
+		<div class="modal">
+			<div class="modal-content">
+				<img src="${contextPath }/resources/images/mark/errormark2.png" width="40px;"/>
+				<p>계좌번호를 입력해 주세요</p>
+				<br>
+				<button class="modal-close" value="account">Close</button>
+			</div>
+		</div>
+	</div>
 	<div class="modal-back" id="b-publisher-modal">
 		<div class="modal">
 			<div class="modal-content">
@@ -309,6 +319,10 @@
 						<td>수량</td>
 						<td><input type="number" class="book-input" name="b_Q1" id="amount" value="${book.b_Q1 }"></td>
 					</tr>
+					<tr>
+						<td>계좌번호</td>
+						<td><input type="number" class="book-input" name="b_Q3" id="account" value="${book.b_Q3}"></td>
+					</tr>
 					</table>
 				</div>
 				<div class="content-edit" style="text-align:center;">
@@ -316,7 +330,7 @@
 				</div>
 			</div>
 			<div class="btn">
-				<button id="submit-btn">등록하기</button>
+				<button id="submit-btn">수정하기</button>
 			</div>
 		</form>
 		<script>
@@ -364,6 +378,16 @@
 					this.blur();
 					$('#b-publisher-modal').show();
 					$('#b-publisher-modal .modal').show();
+				}else if(amount < 1){
+					event.preventDefault();
+					this.blur();
+					$('#b-amount-modal').show();
+					$('#b-amount-modal .modal').show();
+				}else if(account.length <= 6){
+					event.preventDefault();
+					this.blur();
+					$('#b-account-modal').show();
+					$('#b-account-modal .modal').show();
 				}else if(price == ''){
 					event.preventDefault();
 					this.blur();

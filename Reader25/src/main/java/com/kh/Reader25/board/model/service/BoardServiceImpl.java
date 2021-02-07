@@ -454,9 +454,7 @@ public class BoardServiceImpl implements BoardService {
 		int result = bDAO.updateBoard(sqlSession, b);
 		if (result > 0) {
 			result = bDAO.deleteAttachmentList(sqlSession, b.getBoardNo());
-			if (result > 0) {
-				result = bDAO.insertAttachmentList2(sqlSession, uploadAtList);
-			}
+			result = bDAO.insertAttachmentList2(sqlSession, uploadAtList);
 		}
 		return result;
 	}

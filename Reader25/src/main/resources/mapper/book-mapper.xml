@@ -61,7 +61,7 @@
 	</select>
 	<insert id="insertBook">
 		insert into book
-		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, null,
+		values(book_seq.nextval, #{b_name}, #{b_price},#{b_Q1}, #{b_Q2}, #{b_Q3},
 			#{author}, default, SYSDATE, seq_bid.currval)
 	</insert>
 	

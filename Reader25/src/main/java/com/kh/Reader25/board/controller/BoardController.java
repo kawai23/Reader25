@@ -100,7 +100,7 @@ public class BoardController {
 							HttpServletRequest request) {
 		ArrayList<Attachment> atList =  new ArrayList<Attachment>();
 		int result = 0;
-		if(uploadFile.length > 0) {
+		if(!uploadFile[0].getOriginalFilename().isEmpty()) {
 			b.setCode(0); //공지사항 코드
 			for(int i = 0; i < uploadFile.length; i++ ){
 				Attachment at = saveFile(uploadFile[i], request, 0);
@@ -164,7 +164,7 @@ public class BoardController {
 							HttpServletRequest request) {
 		ArrayList<Attachment> uploadAtList =  new ArrayList<Attachment>();
 		int result = 0;
-		if(uploadFile.length > 1) {
+		if(!uploadFile[0].getOriginalFilename().isEmpty()) {
 			for(String str : nameArr) {
 				deleteFile(str, request);
 			}
@@ -2827,7 +2827,7 @@ public class BoardController {
 			b.setCode(3); 
 			ArrayList<Attachment> atList = new ArrayList<Attachment>(); 
 			int result = 0;
-			if (uploadFile.length > 0) {
+			if ( !uploadFile[0].getOriginalFilename().isEmpty()) {
 				b.setCode(3); 
 				for (int i = 0; i < uploadFile.length; i++) {
 					Attachment at = saveFile(uploadFile[i], request, 3); 
@@ -2907,10 +2907,11 @@ public class BoardController {
 			ArrayList<Attachment> atList = new ArrayList<Attachment>();
 			int result = 0;
 			int result2 = 0;
-			if (reloadFile.length > 1) { 
+			if (!reloadFile[0].getOriginalFilename().isEmpty()) { 
 				for(String str: nameArr) {
 					deleteFile(str, request);
 				}
+				b.setCode(3); 
 				for (int i = 0; i < reloadFile.length; i++) {
 					Attachment at = saveFile(reloadFile[i], request, 3);
 					at.setBoardNo(b.getBoardNo());

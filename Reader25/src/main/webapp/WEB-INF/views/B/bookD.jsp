@@ -424,7 +424,7 @@
 					this.blur();
 					$('#b-amount-modal').show();
 					$('#b-amount-modal .modal').show();
-				}else if(account == ''){
+				}else if(account.length <= 6){
 					event.preventDefault();
 					this.blur();
 					$('#b-account-modal').show();
